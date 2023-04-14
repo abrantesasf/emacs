@@ -1,0 +1,84 @@
+;;----------------------------------------------------------;;
+;; Inicializa packages e diretórios
+;;----------------------------------------------------------;;
+
+;; Configura diretório para packages e configurações adicionais:
+(setq load-path (append (list "~/.emacs.d/config") load-path))
+
+;; Configura repositórios MELPA e outros:
+(require 'package)
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+
+;; Inicializa packages:
+(package-initialize)
+
+;; Instala packages neessários, se não estiverem instalados:
+(load "instala_packages.el")
+
+
+;;----------------------------------------------------------;;
+;; Configurações para aparência/layout do Emacs:
+;;----------------------------------------------------------;;
+
+;; Aparência geral do Emacs
+(load "aparencia.el")
+
+;; Tamanho padrão da fonte e Firefox-font-size-style
+(load "firefox_font_size.el")
+
+;; Firefox-fullscreen
+(load "firefox_fullscreen.el")
+
+
+;;----------------------------------------------------------;;
+;; Configurações para edição de texto
+;;----------------------------------------------------------;;
+
+;; Diversos utilitários para facilitar a edição de texto
+(load "edicao_texto.el")
+
+;; Desabilita setas e teclas "fáceis" que prejudicam o uso
+;; das teclas de movimentação próprias do Emacs
+(load "no-easy-keys.el")
+
+;; Templates do yasnippet
+(load "templates.el")
+
+
+;;----------------------------------------------------------;;
+;; Configurações para impressão em PDF
+;;----------------------------------------------------------;;
+
+;; Imprimir buffer em PDF
+(load "imprimir_pdf.el")
+
+
+;;----------------------------------------------------------;;
+;; Ajustes automáticos e por M-x customize-browser
+;;----------------------------------------------------------;;
+
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(calendar-date-display-form '(year "-" month "-" day))
+ '(calendar-date-style 'iso)
+ '(custom-enabled-themes '(leuven))
+ '(global-display-line-numbers-mode t)
+ '(indent-tabs-mode nil)
+ '(package-selected-packages
+   '(org-board org ess ag all-the-icons async company company-quickhelp dash-functional doom-modeline doom-themes elisp-refs expand-region f git-commit helpful loop macrostep magit memoize multiple-cursors neotree paredit pos-tip s shrink-path slime slime-company smex sublime-themes transient with-editor yasnippet yasnippet-snippets dash))
+ '(ps-font-size '(11 . 11))
+ '(ps-left-margin 24)
+ '(ps-right-header
+   '("/pagenumberstring load" ps-time-stamp-yyyy-mm-dd ps-time-stamp-hh:mm:ss))
+ '(ps-right-margin 24)
+ '(ps-show-n-of-n t))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(default ((t (:background nil)))))
+
