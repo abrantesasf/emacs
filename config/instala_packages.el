@@ -9,7 +9,10 @@
     elisp-refs expand-region transient with-editor git-commit
     helpful loop macrostep magit memoize multiple-cursors neotree
     paredit slime slime-company smex sublime-themes yasnippet
-    yasnippet-snippets ess org auto-package-update use-package))
+    yasnippet-snippets yasnippet-classic-snippets ess org
+    auto-package-update use-package markdown-toc markdown-soma
+    markdown-mode sml-mode slime-repl-ansi-color
+    company-quickhelp-terminal))
 
 ; fetch the list of packages available 
 (unless package-archive-contents

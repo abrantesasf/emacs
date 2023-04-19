@@ -54,6 +54,33 @@
 
 
 ;;----------------------------------------------------------;;
+;; Configurações para desenvolvimento C
+;;----------------------------------------------------------;;
+
+;; Configuração de opções para C:
+(load "c.el")
+
+
+;;----------------------------------------------------------;;
+;; Configurações para desenvolvimento Common Lisp
+;;----------------------------------------------------------;;
+
+;; Configuração do SLIME
+(load "slime_config.el")
+
+;; Configuração do company
+(load "company_config.el")
+
+
+;;----------------------------------------------------------;;
+;; Configurações para desenvolvimento MIT Scheme
+;;----------------------------------------------------------;;
+
+;; Configuração da library xscheme
+(load "mit_scheme.el")
+
+
+;;----------------------------------------------------------;;
 ;; Ajustes automáticos e por M-x customize-browser
 ;;----------------------------------------------------------;;
 

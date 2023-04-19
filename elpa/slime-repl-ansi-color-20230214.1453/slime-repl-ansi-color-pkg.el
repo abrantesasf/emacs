@@ -1,0 +1,2 @@
+;;; Generated package description from slime-repl-ansi-color.el  -*- no-byte-compile: t -*-
+(define-package "slime-repl-ansi-color" "20230214.1453" "Turn on ANSI colors in REPL output;" '((emacs "24") (slime "2.3.1")) :commit "9e8af90490332217e45d7568f1690df3f4e25d4b" :authors '(("Max Mikhanosha" . "max@openchat.com")) :maintainer '("Augustin Fabre" . "augustin@augfab.fr") :keywords '("lisp") :url "https://gitlab.com/augfab/slime-repl-ansi-color")
