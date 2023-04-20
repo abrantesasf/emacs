@@ -44,6 +44,9 @@
 ;; Templates do yasnippet
 (load "templates.el")
 
+;; Carrega corretor ortográfico
+(load "aspell.el")
+
 
 ;;----------------------------------------------------------;;
 ;; Configurações para impressão em PDF
