@@ -1,0 +1,25 @@
+# -*- mode: snippet -*-
+# name: roberts
+# key: roberts
+# --
+/* =============================================================================
+ * Nome       : (.c)
+ * Descrição  : 
+ * Livro      : "The Art and Science of C: An Introduction to Computer Science",
+ *            : de Eric S. Roberts (Addison-Wesley, 1995).
+ * Capítulo   : 
+ * Seção      : 
+ * =============================================================================
+ */
+
+#include <stdio.h>
+#include "genlib.h"
+#include "simpio.h"
+
+
+/* Programa principal */
+
+int main(void)
+{
+    return 0;
+}
