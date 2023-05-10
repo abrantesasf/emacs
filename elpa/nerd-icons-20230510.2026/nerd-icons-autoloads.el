@@ -40,6 +40,14 @@ inserting functions.
 
 \(fn FILE &rest ARG-OVERRIDES)" nil nil)
 
+(autoload 'nerd-icons-icon-for-extension "nerd-icons" "\
+Get the formatted icon for EXT.
+ARG-OVERRIDES should be a plist containining `:height',
+`:v-adjust' or `:face' properties like in the normal icon
+inserting functions.
+
+\(fn EXT &rest ARG-OVERRIDES)" nil nil)
+
 (autoload 'nerd-icons-icon-for-mode "nerd-icons" "\
 Get the formatted icon for MODE.
 ARG-OVERRIDES should be a plist containining `:height',
@@ -65,12 +73,12 @@ discern the icon when its `major-mode' matches its auto mode,
 otherwise it will use the buffers `major-mode' to decide its
 icon." nil nil)
 
-(register-definition-prefixes "nerd-icons" '("nerd-icons-"))
+(register-definition-prefixes "nerd-icons" '("all-the-icons--web-mode-icon-family" "nerd-icons-"))
 
 ;;;***
 
-;;;### (autoloads nil nil ("nerd-icons-faces.el" "nerd-icons-pkg.el")
-;;;;;;  (0 0 0 0))
+;;;### (autoloads nil nil ("nerd-icons-data.el" "nerd-icons-faces.el"
+;;;;;;  "nerd-icons-pkg.el") (0 0 0 0))
 
 ;;;***
 

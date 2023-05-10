@@ -1748,7 +1748,7 @@ refspec.
 (autoload 'magit-list-repositories "magit-repos" "\
 Display a list of repositories.
 
-Use the options `magit-repository-directories' to control which
+Use the option `magit-repository-directories' to control which
 repositories are displayed." t nil)
 
 (register-definition-prefixes "magit-repos" '("magit-"))

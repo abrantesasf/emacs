@@ -38,17 +38,7 @@
 
 (require 'cl-lib)
 
-(require 'nerd-icons-data-iec-power-symbols "./data/nerd-icons-data-iec-power-symbols")
-(require 'nerd-icons-data-pomicons "./data/nerd-icons-data-pomicons")
-(require 'nerd-icons-data-octicons "./data/nerd-icons-data-octicons")
-(require 'nerd-icons-data-powerline "./data/nerd-icons-data-powerline")
-(require 'nerd-icons-data-font-awesome "./data/nerd-icons-data-font-awesome")
-(require 'nerd-icons-data-weather-icons "./data/nerd-icons-data-weather-icons")
-(require 'nerd-icons-data-seti-ui-custom "./data/nerd-icons-data-seti-ui-custom")
-(require 'nerd-icons-data-devicons "./data/nerd-icons-data-devicons")
-(require 'nerd-icons-data-codicons "./data/nerd-icons-data-codicons")
-(require 'nerd-icons-data-font-logos "./data/nerd-icons-data-font-logos")
-(require 'nerd-icons-data-material-design "./data/nerd-icons-data-material-design")
+(require 'nerd-icons-data)
 
 (require 'nerd-icons-faces)
 
@@ -599,7 +589,7 @@
     (Custom-mode               nerd-icons-octicon "nf-oct-settings"            )
 
     ;; Special matcher for Web Mode based on the `web-mode-content-type' of the current buffer
-    (web-mode             nerd-icons--web-mode-icon)
+    (web-mode nerd-icons--web-mode-icon)
 
     (fundamental-mode                   nerd-icons-sucicon "nf-custom-emacs"              :face nerd-icons-dsilver)
     (special-mode                       nerd-icons-sucicon "nf-custom-emacs"              :face nerd-icons-yellow)
@@ -898,15 +888,12 @@ string."
     (mapcar
      (lambda (it)
        (let* ((icon-name (car it))
-              (icon-name-head (substring icon-name 0 1))
-              (icon-name-tail (substring icon-name 1))
 
-              (icon-display (propertize icon-name-head 'display (format "%s\t%s" (funcall icon-f icon-name) icon-name-head)))
+              (icon-display (funcall icon-f icon-name))
               (icon-glyph-set (if show-glyph-set (format "\t[%s]" glyph-set) ""))
 
-              (candidate-name (format "%s%s%s" icon-display icon-name-tail icon-glyph-set))
+              (candidate-name (format "%s\t%s%s" icon-display icon-name icon-glyph-set))
               (candidate-icon (funcall (nerd-icons--function-name glyph-set) icon-name)))
-
          (cons candidate-name candidate-icon)))
      data)))
 
@@ -1004,13 +991,29 @@ inserting functions."
     (apply (car icon) args)))
 
 ;;;###autoload
+(defun nerd-icons-icon-for-extension (ext &rest arg-overrides)
+  "Get the formatted icon for EXT.
+ARG-OVERRIDES should be a plist containining `:height',
+`:v-adjust' or `:face' properties like in the normal icon
+inserting functions."
+  (let* ((icon (or
+                (and ext
+                     (cdr (assoc (downcase ext)
+                                 nerd-icons-extension-icon-alist)))
+                nerd-icons-default-file-icon))
+         (args (cdr icon)))
+    (when arg-overrides (setq args (append `(,(car args)) arg-overrides (cdr args))))
+    (apply (car icon) args)))
+
+;;;###autoload
 (defun nerd-icons-icon-for-mode (mode &rest arg-overrides)
   "Get the formatted icon for MODE.
 ARG-OVERRIDES should be a plist containining `:height',
 `:v-adjust' or `:face' properties like in the normal icon
 inserting functions."
-  (let* ((icon (cdr (or (assoc mode nerd-icons-mode-icon-alist)
-                        (assoc (get mode 'derived-mode-parent) nerd-icons-mode-icon-alist))))
+  (let* ((icon (or (cdr (or (assoc mode nerd-icons-mode-icon-alist)
+                            (assoc (get mode 'derived-mode-parent) nerd-icons-mode-icon-alist)))
+                   nerd-icons-default-file-icon))
          (args (cdr icon)))
     (when arg-overrides (setq args (append `(,(car args)) arg-overrides (cdr args))))
     (if icon (apply (car icon) args) mode)))
@@ -1059,6 +1062,7 @@ icon."
 
 (nerd-icons-cache #'nerd-icons-icon-for-dir)
 (nerd-icons-cache #'nerd-icons-icon-for-file)
+(nerd-icons-cache #'nerd-icons-icon-for-extension)
 (nerd-icons-cache #'nerd-icons-icon-for-mode)
 (nerd-icons-cache #'nerd-icons-icon-for-url)
 
@@ -1079,6 +1083,34 @@ When F is provided, the info function is calculated with the format
   "Get an icon for a WEATHER status."
   (let ((icon (nerd-icons-match-to-alist weather nerd-icons-weather-icon-alist)))
     (if icon (apply (car icon) (cdr icon)) weather)))
+
+;; For `web-mode'
+(defun nerd-icons--web-mode-icon (&rest arg-overrides)
+  "Get icon for a `web-mode' buffer with ARG-OVERRIDES."
+  (nerd-icons--web-mode arg-overrides))
+(defun all-the-icons--web-mode-icon-family ()
+  "Get icon family for a `web-mode' buffer."
+  (nerd-icons--web-mode t))
+
+(defvar web-mode-content-type)          ; external
+(defun nerd-icons--web-mode (&optional arg-overrides)
+  "Return icon or FAMILY for `web-mode' based on `web-mode-content-type'.
+Providing ARG-OVERRIDES will modify the creation of the icon."
+  (let ((non-nil-args (cl-reduce (lambda (acc it) (if it (append acc (list it)) acc))
+                                 arg-overrides :initial-value '())))
+    (cond
+     ((equal web-mode-content-type "jsx")
+      (apply 'nerd-icons-devicon (append '("javascript") non-nil-args)))
+     ((equal web-mode-content-type "javascript")
+      (apply 'nerd-icons-devicon (append '("javascript") non-nil-args)))
+     ((equal web-mode-content-type "json")
+      (apply 'nerd-icons-devicon (append '("nf-dev-less") non-nil-args)))
+     ((equal web-mode-content-type "xml")
+      (apply 'nerd-icons-faicon (append '("nf-fa-file_code_o") non-nil-args)))
+     ((equal web-mode-content-type "css")
+      (apply 'nerd-icons-devicon (append '("nf-dev-css3") non-nil-args)))
+     (t
+      (apply 'nerd-icons-devicon (append '("nf-dev-html5") non-nil-args))))))
 
 (eval-and-compile
   (defun nerd-icons--function-name (name)
@@ -1117,6 +1149,32 @@ pause for DURATION seconds between printing each character."
        (insert (format "%s - %s\n" (funcall insert-f (car it) :height height) (car it)))
        (when duration (sit-for duration)))
      data)))
+
+(defun nerd-icons-set-font (&optional font-family frame)
+  "Modify nerd font charsets to use FONT-FAMILY for FRAME."
+  (let ((font-f (or font-family nerd-icons-font-family))
+        (charsets '((#xe5fa . #xe631)  ;; Seti-UI + Custom
+                    (#xe700 . #xe7c5)  ;; Devicons
+                    (#xf000 . #xf2e0)  ;; Font Awesome
+                    (#xe200 . #xe2a9)  ;; Font Awesome Extension
+                    (#xf500 . #xfd46) (#xf0001 . #xf1af0) ;; Material Design Icons
+                    (#xe300 . #xe3eb)  ;; Weather
+                    (#xf400 . #xf4a9) #x2665 #x26A1  ;; Octicons
+                    (#xe0a0 . #xe0a2) (#xe0b0 . #xe0b3)  ;; Powerline Symbols
+                    #xe0a3 (#xe0b4 . #xe0c8) #xe0ca (#xe0cc . #xe0d4)  ;; Powerline Extra Symbols
+                    (#x23fb . #x23fe) #x2b58  ;; IEC Power Symbols
+                    (#xf300 . #xf32d)  ;; Font Logos
+                    (#xe000 . #xe00a)  ;; Pomicons
+                    (#xea60 . #xebeb))))  ;; Codicons
+    (cl-loop for charset in charsets do
+             (set-fontset-font
+              (frame-parameter nil 'font)
+              charset
+              (font-spec :family font-f
+                         :weight nil
+                         :size   nil)
+              frame
+              'prepend))))
 
 (defmacro nerd-icons-define-icon (name alist family glyph-set)
   "Macro to generate functions for inserting icons for icon set NAME.

@@ -2880,9 +2880,8 @@ File: magit.info,  Node: Repository List,  Next: Logging,  Prev: Status Buffer, 
  -- Command: magit-list-repositories
      This command displays a list of repositories in a separate buffer.
 
-     The options ‘magit-repository-directories’ and
-     ‘magit-repository-directories-depth’ control which repositories are
-     displayed.
+     The option ‘magit-repository-directories’ controls which
+     repositories are displayed.
 
  -- User Option: magit-repolist-columns
      This option controls what columns are displayed by the command
@@ -2947,6 +2946,13 @@ The following functions can be added to the above option:
         • ‘S’ if there is at least one staged file.
 
      Only the first one of these that applies is shown.
+
+ -- Function: magit-repolist-column-flags
+     This functions insert all flags as specified by
+     ‘magit-repolist-column-flag-alist’.
+
+     This is an alternative to function ‘magit-repolist-column-flag’,
+     which only lists the first one found.
 
  -- Function: magit-repolist-column-unpulled-from-upstream
      This function inserts the number of upstream commits not in the
@@ -9652,7 +9658,7 @@ Appendix C Keystroke Index
 * 2:                                     Section Visibility.  (line  26)
 * 3:                                     Section Visibility.  (line  26)
 * 4:                                     Section Visibility.  (line  26)
-* 5:                                     Repository List.     (line 109)
+* 5:                                     Repository List.     (line 115)
 * ::                                     Running Git Manually.
                                                               (line  25)
 * =:                                     Log Buffer.          (line  59)
@@ -9837,7 +9843,7 @@ Appendix C Keystroke Index
 * E u:                                   Ediffing.            (line  91)
 * E w:                                   Ediffing.            (line  97)
 * E z:                                   Ediffing.            (line 103)
-* f:                                     Repository List.     (line 105)
+* f:                                     Repository List.     (line 111)
 * f <1>:                                 Editing Rebase Sequences.
                                                               (line  52)
 * f <2>:                                 Fetching.            (line  10)
@@ -9892,7 +9898,7 @@ Appendix C Keystroke Index
 * L s:                                   Refreshing Logs.     (line  21)
 * l u:                                   Logging.             (line  43)
 * L w:                                   Refreshing Logs.     (line  27)
-* m:                                     Repository List.     (line  99)
+* m:                                     Repository List.     (line 105)
 * m <1>:                                 Merging.             (line  10)
 * M:                                     Remote Commands.     (line  14)
 * m a:                                   Merging.             (line  42)
@@ -9995,7 +10001,7 @@ Appendix C Keystroke Index
 * r s <1>:                               Rebasing.            (line 103)
 * r u:                                   Rebasing.            (line  35)
 * r w:                                   Rebasing.            (line  87)
-* RET:                                   Repository List.     (line  96)
+* RET:                                   Repository List.     (line 102)
 * RET <1>:                               References Buffer.   (line 159)
 * RET <2>:                               Visiting Files and Blobs from a Diff.
                                                               (line   9)
@@ -10030,7 +10036,7 @@ Appendix C Keystroke Index
 * t t:                                   Tagging.             (line  14)
 * T T:                                   Notes.               (line  14)
 * TAB:                                   Section Visibility.  (line  10)
-* u:                                     Repository List.     (line 102)
+* u:                                     Repository List.     (line 108)
 * u <1>:                                 Staging and Unstaging.
                                                               (line  42)
 * U:                                     Staging and Unstaging.
@@ -10611,27 +10617,28 @@ Appendix D Function and Command Index
 * magit-remote-remove:                   Remote Commands.     (line  60)
 * magit-remote-rename:                   Remote Commands.     (line  52)
 * magit-remote-set-url:                  Remote Commands.     (line  56)
-* magit-repolist-column-branch:          Repository List.     (line  52)
-* magit-repolist-column-branches:        Repository List.     (line  59)
-* magit-repolist-column-flag:            Repository List.     (line  65)
-* magit-repolist-column-ident:           Repository List.     (line  41)
-* magit-repolist-column-path:            Repository List.     (line  45)
-* magit-repolist-column-stashes:         Repository List.     (line  62)
+* magit-repolist-column-branch:          Repository List.     (line  51)
+* magit-repolist-column-branches:        Repository List.     (line  58)
+* magit-repolist-column-flag:            Repository List.     (line  64)
+* magit-repolist-column-flags:           Repository List.     (line  76)
+* magit-repolist-column-ident:           Repository List.     (line  40)
+* magit-repolist-column-path:            Repository List.     (line  44)
+* magit-repolist-column-stashes:         Repository List.     (line  61)
 * magit-repolist-column-unpulled-from-pushremote: Repository List.
-                                                              (line  81)
+                                                              (line  87)
 * magit-repolist-column-unpulled-from-upstream: Repository List.
-                                                              (line  77)
+                                                              (line  83)
 * magit-repolist-column-unpushed-to-pushremote: Repository List.
-                                                              (line  89)
+                                                              (line  95)
 * magit-repolist-column-unpushed-to-upstream: Repository List.
-                                                              (line  85)
-* magit-repolist-column-upstream:        Repository List.     (line  55)
-* magit-repolist-column-version:         Repository List.     (line  48)
-* magit-repolist-fetch:                  Repository List.     (line 105)
-* magit-repolist-find-file-other-frame:  Repository List.     (line 109)
-* magit-repolist-mark:                   Repository List.     (line  99)
-* magit-repolist-status:                 Repository List.     (line  96)
-* magit-repolist-unmark:                 Repository List.     (line 102)
+                                                              (line  91)
+* magit-repolist-column-upstream:        Repository List.     (line  54)
+* magit-repolist-column-version:         Repository List.     (line  47)
+* magit-repolist-fetch:                  Repository List.     (line 111)
+* magit-repolist-find-file-other-frame:  Repository List.     (line 115)
+* magit-repolist-mark:                   Repository List.     (line 105)
+* magit-repolist-status:                 Repository List.     (line 102)
+* magit-repolist-unmark:                 Repository List.     (line 108)
 * magit-reset-hard:                      Resetting.           (line  24)
 * magit-reset-index:                     Staging and Unstaging.
                                                               (line  78)
@@ -11000,7 +11007,7 @@ Appendix E Variable Index
 * magit-remote-add-set-remote.pushDefault: Remote Commands.   (line  83)
 * magit-remote-direct-configure:         Remote Commands.     (line  20)
 * magit-remote-git-executable:           Git Executable.      (line  32)
-* magit-repolist-columns:                Repository List.     (line  13)
+* magit-repolist-columns:                Repository List.     (line  12)
 * magit-repository-directories:          Status Buffer.       (line  57)
 * magit-revision-filter-files-on-follow: Revision Buffer.     (line  55)
 * magit-revision-insert-related-refs:    Revision Buffer.     (line   6)
@@ -11107,129 +11114,129 @@ Node: Status Header Sections113277
 Node: Status Module Sections115896
 Node: Status Options118393
 Node: Repository List119856
-Node: Logging124423
-Node: Refreshing Logs127265
-Node: Log Buffer128686
-Node: Log Margin132886
-Node: Select from Log136039
-Node: Reflog138249
-Node: Cherries139886
-Node: Diffing141724
-Node: Refreshing Diffs144758
-Node: Commands Available in Diffs148447
-Node: Diff Options150960
-Node: Revision Buffer156423
-Node: Ediffing159743
-Node: References Buffer165793
-Node: References Sections176387
-Node: Bisecting177244
-Node: Visiting Files and Blobs179555
-Node: General-Purpose Visit Commands180025
-Node: Visiting Files and Blobs from a Diff180978
-Node: Blaming184422
-Node: Manipulating190557
-Node: Creating Repository190899
-Node: Cloning Repository191436
-Node: Staging and Unstaging197877
-Node: Staging from File-Visiting Buffers201858
-Node: Applying202964
-Node: Committing205037
-Node: Initiating a Commit205620
-Node: Editing Commit Messages210810
-Node: Using the Revision Stack213583
-Node: Commit Pseudo Headers216628
-Node: Commit Mode and Hooks217923
-Node: Commit Message Conventions220781
-Node: Branching222768
-Node: The Two Remotes222994
-Node: Branch Commands225647
-Node: Branch Git Variables238497
-Node: Auxiliary Branch Commands243870
-Node: Merging244986
-Node: Resolving Conflicts249142
-Node: Rebasing254516
-Node: Editing Rebase Sequences259305
-Node: Information About In-Progress Rebase263521
-Ref: Information About In-Progress Rebase-Footnote-1272634
-Node: Cherry Picking273230
-Node: Reverting277564
-Node: Resetting278983
-Node: Stashing280809
-Node: Transferring285420
-Node: Remotes285642
-Node: Remote Commands285794
-Node: Remote Git Variables289833
-Node: Fetching291104
-Node: Pulling293550
-Node: Pushing294576
-Node: Plain Patches298867
-Node: Maildir Patches300338
-Node: Miscellaneous301817
-Node: Tagging302163
-Node: Notes304056
-Node: Submodules306391
-Node: Listing Submodules306609
-Node: Submodule Transient308755
-Node: Subtree311242
-Node: Worktree313173
-Node: Sparse checkouts314249
-Node: Bundle317025
-Node: Common Commands317400
-Node: Wip Modes320028
-Node: Wip Graph324919
-Node: Legacy Wip Modes327232
-Node: Commands for Buffers Visiting Files330119
-Node: Minor Mode for Buffers Visiting Blobs335677
-Node: Customizing336475
-Node: Per-Repository Configuration338071
-Node: Essential Settings340325
-Node: Safety340670
-Node: Performance342431
-Ref: Log Performance345460
-Ref: Diff Performance346765
-Ref: Refs Buffer Performance348106
-Ref: Committing Performance348681
-Node: Microsoft Windows Performance349663
-Node: MacOS Performance350854
-Ref: MacOS Performance-Footnote-1351877
-Node: Default Bindings351959
-Node: Plumbing354200
-Node: Calling Git355029
-Node: Getting a Value from Git356554
-Node: Calling Git for Effect360282
-Node: Section Plumbing366176
-Node: Creating Sections366404
-Node: Section Selection370300
-Node: Matching Sections372096
-Node: Refreshing Buffers378017
-Node: Conventions381161
-Node: Theming Faces381353
-Node: FAQ389458
-Node: FAQ - How to ...?389896
-Node: How to pronounce Magit?390253
-Node: How to show git's output?391056
-Node: How to install the gitman info manual?391842
-Node: How to show diffs for gpg-encrypted files?392812
-Node: How does branching and pushing work?393408
-Node: Should I disable VC?393741
-Node: FAQ - Issues and Errors394344
-Node: Magit is slow395289
-Node: I changed several thousand files at once and now Magit is unusable395582
-Node: I am having problems committing396308
-Node: I am using MS Windows and cannot push with Magit396789
-Node: I am using macOS and SOMETHING works in shell but not in Magit397407
-Node: Expanding a file to show the diff causes it to disappear398241
-Node: Point is wrong in the COMMIT_EDITMSG buffer398823
-Node: The mode-line information isn't always up-to-date399869
-Node: A branch and tag sharing the same name breaks SOMETHING400932
-Node: My Git hooks work on the command-line but not inside Magit401818
-Node: git-commit-mode isn't used when committing from the command-line402664
-Node: Point ends up inside invisible text when jumping to a file-visiting buffer404935
-Node: I am no longer able to save popup defaults405784
-Node: Debugging Tools406765
-Node: Keystroke Index409939
-Node: Function and Command Index444267
-Node: Variable Index496297
+Node: Logging124632
+Node: Refreshing Logs127474
+Node: Log Buffer128895
+Node: Log Margin133095
+Node: Select from Log136248
+Node: Reflog138458
+Node: Cherries140095
+Node: Diffing141933
+Node: Refreshing Diffs144967
+Node: Commands Available in Diffs148656
+Node: Diff Options151169
+Node: Revision Buffer156632
+Node: Ediffing159952
+Node: References Buffer166002
+Node: References Sections176596
+Node: Bisecting177453
+Node: Visiting Files and Blobs179764
+Node: General-Purpose Visit Commands180234
+Node: Visiting Files and Blobs from a Diff181187
+Node: Blaming184631
+Node: Manipulating190766
+Node: Creating Repository191108
+Node: Cloning Repository191645
+Node: Staging and Unstaging198086
+Node: Staging from File-Visiting Buffers202067
+Node: Applying203173
+Node: Committing205246
+Node: Initiating a Commit205829
+Node: Editing Commit Messages211019
+Node: Using the Revision Stack213792
+Node: Commit Pseudo Headers216837
+Node: Commit Mode and Hooks218132
+Node: Commit Message Conventions220990
+Node: Branching222977
+Node: The Two Remotes223203
+Node: Branch Commands225856
+Node: Branch Git Variables238706
+Node: Auxiliary Branch Commands244079
+Node: Merging245195
+Node: Resolving Conflicts249351
+Node: Rebasing254725
+Node: Editing Rebase Sequences259514
+Node: Information About In-Progress Rebase263730
+Ref: Information About In-Progress Rebase-Footnote-1272843
+Node: Cherry Picking273439
+Node: Reverting277773
+Node: Resetting279192
+Node: Stashing281018
+Node: Transferring285629
+Node: Remotes285851
+Node: Remote Commands286003
+Node: Remote Git Variables290042
+Node: Fetching291313
+Node: Pulling293759
+Node: Pushing294785
+Node: Plain Patches299076
+Node: Maildir Patches300547
+Node: Miscellaneous302026
+Node: Tagging302372
+Node: Notes304265
+Node: Submodules306600
+Node: Listing Submodules306818
+Node: Submodule Transient308964
+Node: Subtree311451
+Node: Worktree313382
+Node: Sparse checkouts314458
+Node: Bundle317234
+Node: Common Commands317609
+Node: Wip Modes320237
+Node: Wip Graph325128
+Node: Legacy Wip Modes327441
+Node: Commands for Buffers Visiting Files330328
+Node: Minor Mode for Buffers Visiting Blobs335886
+Node: Customizing336684
+Node: Per-Repository Configuration338280
+Node: Essential Settings340534
+Node: Safety340879
+Node: Performance342640
+Ref: Log Performance345669
+Ref: Diff Performance346974
+Ref: Refs Buffer Performance348315
+Ref: Committing Performance348890
+Node: Microsoft Windows Performance349872
+Node: MacOS Performance351063
+Ref: MacOS Performance-Footnote-1352086
+Node: Default Bindings352168
+Node: Plumbing354409
+Node: Calling Git355238
+Node: Getting a Value from Git356763
+Node: Calling Git for Effect360491
+Node: Section Plumbing366385
+Node: Creating Sections366613
+Node: Section Selection370509
+Node: Matching Sections372305
+Node: Refreshing Buffers378226
+Node: Conventions381370
+Node: Theming Faces381562
+Node: FAQ389667
+Node: FAQ - How to ...?390105
+Node: How to pronounce Magit?390462
+Node: How to show git's output?391265
+Node: How to install the gitman info manual?392051
+Node: How to show diffs for gpg-encrypted files?393021
+Node: How does branching and pushing work?393617
+Node: Should I disable VC?393950
+Node: FAQ - Issues and Errors394553
+Node: Magit is slow395498
+Node: I changed several thousand files at once and now Magit is unusable395791
+Node: I am having problems committing396517
+Node: I am using MS Windows and cannot push with Magit396998
+Node: I am using macOS and SOMETHING works in shell but not in Magit397616
+Node: Expanding a file to show the diff causes it to disappear398450
+Node: Point is wrong in the COMMIT_EDITMSG buffer399032
+Node: The mode-line information isn't always up-to-date400078
+Node: A branch and tag sharing the same name breaks SOMETHING401141
+Node: My Git hooks work on the command-line but not inside Magit402027
+Node: git-commit-mode isn't used when committing from the command-line402873
+Node: Point ends up inside invisible text when jumping to a file-visiting buffer405144
+Node: I am no longer able to save popup defaults405993
+Node: Debugging Tools406974
+Node: Keystroke Index410148
+Node: Function and Command Index444476
+Node: Variable Index496579
 
 End Tag Table
 
