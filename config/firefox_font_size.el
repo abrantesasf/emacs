@@ -17,11 +17,11 @@
 
 (defun font-increase ()
   (interactive)
-  (change-font-size 5))
+  (change-font-size 10))
 
 (defun font-decrease ()
   (interactive)
-  (change-font-size -5))
+  (change-font-size -10))
 
 (defun font-restore ()
   (interactive)
