@@ -11,7 +11,7 @@ cd $HOME
 # Inicia Emacs:
 /opt/emacs/bin/emacs
 
-# Faz push para repositório do Emacs
+# Faz push para repositório do Emacs:
 cd $DIR
 git add .
 git commit -m "Atualizações"
