@@ -287,12 +287,12 @@ Uses `nerd-icons-mdicon' to fetch the icon."
             (concat
              (cond (buffer-read-only
                     (doom-modeline-buffer-file-state-icon
-                     "nf-md-lock_outline" "🔒" "%1*"
+                     "nf-md-lock" "🔒" "%1*"
                      'doom-modeline-warning))
                    ((and buffer-file-name (buffer-modified-p)
                          doom-modeline-buffer-modification-icon)
                     (doom-modeline-buffer-file-state-icon
-                     "nf-md-content_save_edit_outline" "💾" "%1*"
+                     "nf-md-content_save_edit" "💾" "%1*"
                      'doom-modeline-warning))
                    ((and buffer-file-name
                          ;; Avoid freezing while connection is lost
@@ -649,7 +649,7 @@ mouse-1: Display minor modes menu"
 
 UNICODE and TEXT are fallbacks.
 Uses `nerd-icons-octicon' to fetch the icon."
-  (doom-modeline-icon 'octicon icon unicode text :face face))
+  (doom-modeline-icon 'devicon icon unicode text :face face))
 
 (defvar-local doom-modeline--vcs-icon nil)
 (defun doom-modeline-update-vcs-icon (&rest _)
@@ -659,15 +659,15 @@ Uses `nerd-icons-octicon' to fetch the icon."
           (let* ((backend (vc-backend buffer-file-name))
                  (state   (vc-state buffer-file-name backend)))
             (cond ((memq state '(edited added))
-                   (doom-modeline-vcs-icon "nf-oct-git_compare" "🔃" "*" 'doom-modeline-info))
+                   (doom-modeline-vcs-icon "nf-dev-git_compare" "🔃" "*" 'doom-modeline-info))
                   ((eq state 'needs-merge)
-                   (doom-modeline-vcs-icon "nf-oct-git_merge" "🔀" "?" 'doom-modeline-info))
+                   (doom-modeline-vcs-icon "nf-dev-git_merge" "🔀" "?" 'doom-modeline-info))
                   ((eq state 'needs-update)
-                   (doom-modeline-vcs-icon "nf-oct-git_pull_request" "⬇" "!" 'doom-modeline-warning))
+                   (doom-modeline-vcs-icon "nf-dev-git_pull_request" "⬇" "!" 'doom-modeline-warning))
                   ((memq state '(removed conflict unregistered))
-                   (doom-modeline-vcs-icon "nf-oct-alert" "⚠" "!" 'doom-modeline-urgent))
+                   (doom-modeline-icon 'octicon "nf-oct-alert" "⚠" "!" :face 'doom-modeline-urgent))
                   (t
-                   (doom-modeline-vcs-icon "nf-oct-git_branch" "" "@" 'doom-modeline-info)))))))
+                   (doom-modeline-vcs-icon "nf-dev-git_branch" "" "@" 'doom-modeline-info)))))))
 (add-hook 'find-file-hook #'doom-modeline-update-vcs-icon)
 (add-hook 'after-save-hook #'doom-modeline-update-vcs-icon)
 (advice-add #'vc-refresh-state :after #'doom-modeline-update-vcs-icon)
@@ -1209,7 +1209,7 @@ Requires `anzu', also `evil-anzu' if using `evil-mode' for compatibility with
      'face (doom-modeline-face 'doom-modeline-panel))))
 
 (defsubst doom-modeline--evil-substitute ()
-  "Show number of matches for evil-ex substitutions and highlightings in real time."
+  "Show number of matches for `evil-ex' substitutions and highlightings in real time."
   (when (and (bound-and-true-p evil-local-mode)
              (or (assq 'evil-ex-substitute evil-ex-active-highlights-alist)
                  (assq 'evil-ex-global-match evil-ex-active-highlights-alist)
@@ -1760,22 +1760,40 @@ TEXT is alternative if icon is not available."
       ((evil-operator-state-p) 'doom-modeline-evil-operator-state)
       ((evil-replace-state-p) 'doom-modeline-evil-replace-state)
       (t 'doom-modeline-evil-normal-state))
-     (evil-state-property evil-state :name t))))
+     (evil-state-property evil-state :name t)
+     (cond
+      ((evil-normal-state-p) "nf-md-alpha_n_circle")
+      ((evil-emacs-state-p) "nf-md-alpha_e_circle")
+      ((evil-insert-state-p) "nf-md-alpha_i_circle")
+      ((evil-motion-state-p) "nf-md-alpha_m_circle")
+      ((evil-visual-state-p) "nf-md-alpha_v_circle")
+      ((evil-operator-state-p) "nf-md-alpha_o_circle")
+      ((evil-replace-state-p) "nf-md-alpha_r_circle")
+      (t "nf-md-alpha_n_circle"))
+     (cond
+      ((evil-normal-state-p) "🅝")
+      ((evil-emacs-state-p) "🅔")
+      ((evil-insert-state-p) "🅘")
+      ((evil-motion-state-p) "🅜")
+      ((evil-visual-state-p) "🅥")
+      ((evil-operator-state-p) "🅞")
+      ((evil-replace-state-p) "🅡")
+      (t "🅝")))))
 
 (defsubst doom-modeline--overwrite ()
   "The current overwrite state which is enabled by command `overwrite-mode'."
   (when (and (bound-and-true-p overwrite-mode)
              (not (bound-and-true-p evil-local-mode)))
     (doom-modeline--modal-icon
-     "<O>" 'doom-modeline-overwrite "Overwrite mode"
-     "nf-md-note_edit" "🧷")))
+     "<W>" 'doom-modeline-overwrite "Overwrite mode"
+     "nf-md-note_edit" "🅦")))
 
 (defsubst doom-modeline--god ()
   "The current god state which is enabled by the command `god-mode'."
   (when (bound-and-true-p god-local-mode)
     (doom-modeline--modal-icon
      "<G>" 'doom-modeline-god "God mode"
-     "nf-md-account_circle" "🙇")))
+     "nf-md-account_circle" "🅖")))
 
 (defsubst doom-modeline--ryo ()
   "The current ryo-modal state which is enabled by the command `ryo-modal-mode'."
@@ -1793,7 +1811,7 @@ TEXT is alternative if icon is not available."
          "nf-md-airplane_edit" "🛧")
       (doom-modeline--modal-icon
        "<C>" 'doom-modeline-fly-normal-state "Xah-fly command mode"
-       "nf-md-airplane_edit" "🛧"))))
+       "nf-md-airplane_cog" "🛧"))))
 
 (defsubst doom-modeline--boon ()
   "The current Boon state. Requires `boon-mode' to be enabled."
