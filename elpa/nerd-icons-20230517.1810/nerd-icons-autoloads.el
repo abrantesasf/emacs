@@ -28,7 +28,6 @@ Get the formatted icon for DIR.
 ARG-OVERRIDES should be a plist containining `:height',
 `:v-adjust' or `:face' properties like in the normal icon
 inserting functions.
-Note: You want chevron, please use `nerd-icons-icon-for-dir-with-chevron'.
 
 \(fn DIR &rest ARG-OVERRIDES)" nil nil)
 
@@ -73,7 +72,7 @@ discern the icon when its `major-mode' matches its auto mode,
 otherwise it will use the buffers `major-mode' to decide its
 icon." nil nil)
 
-(register-definition-prefixes "nerd-icons" '("all-the-icons--web-mode-icon-family" "nerd-icons-"))
+(register-definition-prefixes "nerd-icons" '("nerd-icons-"))
 
 ;;;***
 
