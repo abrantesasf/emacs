@@ -126,10 +126,12 @@ is run in the top-level directory of the current working tree.
 
 (autoload 'magit-version "magit" "\
 Return the version of Magit currently in use.
-If optional argument PRINT-DEST is non-nil, output
-stream (interactively, the echo area, or the current buffer with
-a prefix argument), also print the used versions of Magit, Git,
-and Emacs to it.
+
+If optional argument PRINT-DEST is non-nil, also print the used
+versions of Magit, Transient, Git and Emacs to the output stream
+selected by that argument.  Interactively use the echo area, or
+with a prefix argument use the current buffer.  Additionally put
+the output in the kill ring.
 
 \(fn &optional PRINT-DEST)" t nil)
 
