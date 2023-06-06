@@ -1,6 +1,6 @@
-(define-package "nerd-icons" "20230531.1757" "Emacs Nerd Font Icons Library"
+(define-package "nerd-icons" "20230603.1813" "Emacs Nerd Font Icons Library"
   '((emacs "24.3"))
-  :commit "470b263501868decca2bf77776f49a2fc3691b69" :authors
+  :commit "f7536c5fb9d61da091cb510bdbb545a7b7ea7480" :authors
   '(("Hongyu Ding <rainstormstudio@yahoo.com>, Vincent Zhang" . "seagle0128@gmail.com"))
   :maintainers
   '(("Hongyu Ding <rainstormstudio@yahoo.com>, Vincent Zhang" . "seagle0128@gmail.com"))
