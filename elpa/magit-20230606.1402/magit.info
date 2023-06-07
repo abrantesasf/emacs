@@ -9477,9 +9477,9 @@ File: magit.info,  Node: Expanding a file to show the diff causes it to disappea
 A.2.6 Expanding a file to show the diff causes it to disappear
 --------------------------------------------------------------
 
-This is probably caused by a change of a ‘diff.*’ Git variable.  You
-probably set that variable for a reason, and should therefore only undo
-that setting in Magit by customizing ‘magit-git-global-arguments’.
+This is probably caused by a customization of a ‘diff.*’ Git variable.
+You probably set that variable for a reason, and should therefore only
+undo that setting in Magit by customizing ‘magit-git-global-arguments’.
 
 
 File: magit.info,  Node: Point is wrong in the COMMIT_EDITMSG buffer,  Next: The mode-line information isn't always up-to-date,  Prev: Expanding a file to show the diff causes it to disappear,  Up: FAQ - Issues and Errors
@@ -9490,11 +9490,11 @@ A.2.7 Point is wrong in the ‘COMMIT_EDITMSG’ buffer
 Neither Magit nor ‘git-commit‘ fiddle with point in the buffer used to
 write commit messages, so something else must be doing it.
 
-   You have probably globally enabled a mode which does restore point in
+   You have probably globally enabled a mode which restores point in
 file-visiting buffers.  It might be a bit surprising, but when you write
 a commit message, then you are actually editing a file.
 
-   So you have to figure out which package is doing.  ‘saveplace’,
+   So you have to figure out which package is doing it.  ‘saveplace’,
 ‘pointback’, and ‘session’ are likely candidates.  These snippets might
 help:
 
@@ -9541,7 +9541,7 @@ Or more generally, ambiguous refnames break SOMETHING.
 the names remain unique when those prefixes are stripped).  We consider
 ambiguous refnames unsupported and recommend that you use a
 non-ambiguous naming scheme.  However, if you do work with a repository
-that has ambiguous refnames, please report any issues you encounter so
+that has ambiguous refnames, please report any issues you encounter, so
 that we can investigate whether there is a simple fix.
 
 
@@ -11504,17 +11504,17 @@ Node: I am having problems committing400937
 Node: I am using MS Windows and cannot push with Magit401418
 Node: I am using macOS and SOMETHING works in shell but not in Magit402036
 Node: Expanding a file to show the diff causes it to disappear402870
-Node: Point is wrong in the COMMIT_EDITMSG buffer403452
-Node: The mode-line information isn't always up-to-date404498
-Node: A branch and tag sharing the same name breaks SOMETHING405561
-Node: My Git hooks work on the command-line but not inside Magit406447
-Node: git-commit-mode isn't used when committing from the command-line407293
-Node: Point ends up inside invisible text when jumping to a file-visiting buffer409564
-Node: I am no longer able to save popup defaults410413
-Node: Debugging Tools411394
-Node: Keystroke Index414568
-Node: Function and Command Index456109
-Node: Variable Index514310
+Node: Point is wrong in the COMMIT_EDITMSG buffer403458
+Node: The mode-line information isn't always up-to-date404503
+Node: A branch and tag sharing the same name breaks SOMETHING405566
+Node: My Git hooks work on the command-line but not inside Magit406453
+Node: git-commit-mode isn't used when committing from the command-line407299
+Node: Point ends up inside invisible text when jumping to a file-visiting buffer409570
+Node: I am no longer able to save popup defaults410419
+Node: Debugging Tools411400
+Node: Keystroke Index414574
+Node: Function and Command Index456115
+Node: Variable Index514316
 
 End Tag Table
 
