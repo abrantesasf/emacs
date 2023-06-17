@@ -1110,7 +1110,7 @@
 		     (:url . "https://elpa.gnu.org/packages/elisp-benchmarks.html")
 		     (:commit . "70e38dbfa8f4acbdebfd0f417410d99f5031e05f"))])
  (emacs-gc-stats .
-		 [(1 1)
+		 [(1 2 1)
 		  ((emacs
 		    (25 1)))
 		  "Collect Emacs GC statistics" tar
@@ -1118,7 +1118,7 @@
 		   (:maintainer "Ihor Radchenko" . "yantar92@posteo.net")
 		   (:authors
 		    ("Ihor Radchenko" . "yantar92@posteo.net"))
-		   (:commit . "19c24e427fcee57fe834b7842cd48f0e23ba8a84"))])
+		   (:commit . "478b9fcb0810592dfdf6417d780169e7fbeb13ba"))])
  (embark .
 	 [(0 22 1)
 	  ((emacs
@@ -1148,7 +1148,7 @@
 		    ("Omar Antolín Camarena" . "omar@matem.unam.mx"))
 		   (:commit . "127492fac048cecfdba145d496a902022a68d1d5"))])
  (ement .
-	[(0 9 3)
+	[(0 10)
 	 ((emacs
 	   (27 1))
 	  (map
@@ -1156,7 +1156,7 @@
 	  (persist
 	   (0 5))
 	  (plz
-	   (0 2))
+	   (0 6))
 	  (taxy
 	   (0 10))
 	  (taxy-magit-section
@@ -1171,7 +1171,7 @@
 	  (:maintainer "Adam Porter" . "adam@alphapapa.net")
 	  (:authors
 	   ("Adam Porter" . "adam@alphapapa.net"))
-	  (:commit . "16e05cf4d3f3cc8dcfa30a4c2426066dbef798ad"))])
+	  (:commit . "fba18f941289e607ad5e296783fc410e58f5d07e"))])
  (emms .
        [(15)
 	((cl-lib
@@ -2719,7 +2719,7 @@
 	      ("Daiki Ueno" . "ueno@gnu.org"))
 	     (:maintainer "Daiki Ueno" . "ueno@gnu.org"))])
  (plz .
-      [(0 5 4)
+      [(0 6)
        ((emacs
 	 (26 3)))
        "HTTP library" tar
@@ -2728,7 +2728,7 @@
 	(:maintainer "Adam Porter" . "adam@alphapapa.net")
 	(:authors
 	 ("Adam Porter" . "adam@alphapapa.net"))
-	(:commit . "367c6a5a9a4bf320dcccb54bdd80ac46aa8be06f"))])
+	(:commit . "271d0aa8e7d6b0575135a94fcb64af125e23323d"))])
  (poke .
        [(3 2)
 	((emacs
@@ -3449,14 +3449,14 @@
 	       ("Ulf Jasper" . "ulf.jasper@web.de"))
 	      (:maintainer "Ulf Jasper" . "ulf.jasper@web.de"))])
  (svg-lib .
-	  [(0 2 6)
+	  [(0 2 7)
 	   ((emacs
 	     (27 1)))
 	   "SVG tags, progress bars & icons" tar
 	   ((:url . "https://github.com/rougier/svg-lib")
 	    (:keywords "svg" "icons" "tags" "convenience")
 	    (:maintainer "Nicolas P. Rougier" . "Nicolas.Rougier@inria.fr")
-	    (:commit . "5ba4e4ea2b5c66e8811beb53251dee13685b2cb2"))])
+	    (:commit . "cde8a8c2ba153963cbe4d233069bc053943f0974"))])
  (svg-tag-mode .
 	       [(0 3 2)
 		((emacs
@@ -3729,7 +3729,7 @@
 	  ("Toby Cubitt" . "toby-predictive@dr-qubit.org"))
 	 (:keywords "extensions" "matching" "data structures trie" "ternary search tree" "tree" "completion" "regexp"))])
  (triples .
-	  [(0 3 1)
+	  [(0 3 2)
 	   ((seq
 	     (2 0))
 	    (emacs
@@ -3740,7 +3740,7 @@
 	    (:maintainer "Andrew Hyatt" . "ahyatt@gmail.com")
 	    (:authors
 	     ("Andrew Hyatt" . "ahyatt@gmail.com"))
-	    (:commit . "b68552830075617c06c502d4d97cb8c9c0fc0ccb"))])
+	    (:commit . "d2f69592fb7dac3d5c12c01811442c868fda6f3e"))])
  (typo .
        [(1 0 1)
 	((emacs
