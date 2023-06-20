@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: ltsubsection
+# key: ltsubsection
+# --
+%%%%%%%%%%%%%%%%%%%%
+\subsection{}
+\label{}
+
