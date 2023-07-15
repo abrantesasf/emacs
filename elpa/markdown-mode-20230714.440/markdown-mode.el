@@ -7,8 +7,6 @@
 ;; Maintainer: Jason R. Blevins <jblevins@xbeta.org>
 ;; Created: May 24, 2007
 ;; Version: 2.6-alpha
-;; Package-Version: 20230607.320
-;; Package-Commit: f3ee31ffc28b3d8e86da2208c87eac75fd6e6eae
 ;; Package-Requires: ((emacs "26.1"))
 ;; Keywords: Markdown, GitHub Flavored Markdown, itex
 ;; URL: https://jblevins.org/projects/markdown-mode/
@@ -4594,7 +4592,7 @@ at the beginning of the block."
 (defun markdown-insert-foldable-block ()
   "Insert details disclosure element to make content foldable.
 If a region is active, wrap this region with the disclosure
-element. More detais here https://developer.mozilla.org/en-US/docs/Web/HTML/Element/details."
+element. More details here https://developer.mozilla.org/en-US/docs/Web/HTML/Element/details."
   (interactive)
   (let ((details-open-tag "<details>")
         (details-close-tag "</details>")
