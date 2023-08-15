@@ -101,6 +101,7 @@
     ("cr"             nerd-icons-sucicon "nf-seti-crystal"       :face nerd-icons-yellow)
     ("ecr"            nerd-icons-sucicon "nf-seti-crystal"       :face nerd-icons-yellow)
     ("ini"            nerd-icons-codicon "nf-cod-settings"       :face nerd-icons-yellow)
+    ("properties"     nerd-icons-codicon "nf-cod-settings"       :face nerd-icons-yellow)
     ("eslintignore"   nerd-icons-mdicon "nf-md-eslint"           :face nerd-icons-purple)
     ("eslint"         nerd-icons-mdicon "nf-md-eslint"           :face nerd-icons-lpurple)
     ("git"            nerd-icons-devicon "nf-dev-git"            :face nerd-icons-lred)
@@ -112,6 +113,7 @@
     ("dockerignore"   nerd-icons-devicon "nf-dev-docker"         :face nerd-icons-dblue)
     ("xml"            nerd-icons-faicon "nf-fa-file_code_o"      :face nerd-icons-lorange)
     ("json"           nerd-icons-codicon "nf-cod-settings"       :face nerd-icons-yellow)
+    ("jsonl"          nerd-icons-codicon "nf-cod-settings"       :face nerd-icons-yellow)
     ("cson"           nerd-icons-codicon "nf-cod-settings"       :face nerd-icons-yellow)
     ("yml"            nerd-icons-codicon "nf-cod-settings"       :face nerd-icons-dyellow)
     ("yaml"           nerd-icons-codicon "nf-cod-settings"       :face nerd-icons-dyellow)
@@ -132,6 +134,7 @@
     ("dll"            nerd-icons-faicon "nf-fa-cogs"             :face nerd-icons-silver)
     ("ds_store"       nerd-icons-faicon "nf-fa-cogs"             :face nerd-icons-silver)
     ("exe"            nerd-icons-octicon "nf-oct-file_binary"    :face nerd-icons-dsilver)
+    ("msg"            nerd-icons-octicon "nf-oct-mail"           :face nerd-icons-dsilver)
     ;; Source Codes
     ("scpt"           nerd-icons-devicon "nf-dev-apple"          :face nerd-icons-pink)
     ;; ("aup"         nerd-icons-fileicon "audacity") TODO: audacity
@@ -205,6 +208,7 @@
     ("coffee"         nerd-icons-devicon "nf-dev-coffeescript"   :face nerd-icons-maroon)
     ("iced"           nerd-icons-devicon "nf-dev-coffeescript"   :face nerd-icons-lmaroon)
     ("dart"           nerd-icons-devicon "nf-dev-dart"           :face nerd-icons-blue)
+    ("ledger"         nerd-icons-mdicon "nf-md-file_table_box_multiple"       :face nerd-icons-green)
     ;; ("rkt"         nerd-icons-devicon "racket") TODO: racket
     ;; ("scrbl"       nerd-icons-devicon "racket") TODO: racket
     ;; Stylesheeting
@@ -548,6 +552,7 @@
     ;; (sly-mrepl-mode                 nerd-icons-fileicon "clisp"                    :face nerd-icons-orange)
     ;; (slime-repl-mode                nerd-icons-fileicon "clisp"                    :face nerd-icons-orange)
     (org-mode                          nerd-icons-sucicon "nf-custom-orgmode"         :face nerd-icons-lgreen)
+    (ledger-mode                       nerd-icons-mdicon "nf-md-file_table_box_multiple"   :face nerd-icons-green)
     (typescript-mode                   nerd-icons-mdicon "nf-md-language_typescript"  :face nerd-icons-blue-alt)
     (typescript-ts-mode                nerd-icons-mdicon "nf-md-language_typescript"  :face nerd-icons-blue-alt)
     (typescript-tsx-mode               nerd-icons-mdicon "nf-md-language_typescript"  :face nerd-icons-blue-alt)
@@ -700,7 +705,6 @@
     (markdown-mode                     nerd-icons-octicon "nf-oct-markdown"           :face nerd-icons-lblue)
     (markdown-ts-mode                  nerd-icons-octicon "nf-oct-markdown"           :face nerd-icons-lblue)
     ;; (bibtex-mode                    nerd-icons-fileicon "bib"                      :face nerd-icons-maroon)
-    (org-mode                          nerd-icons-sucicon "nf-custom-orgmode"         :face nerd-icons-lgreen)
     (compilation-mode                  nerd-icons-faicon "nf-fa-cogs")
     (objc-mode                         nerd-icons-faicon "nf-fa-apple")
     (tuareg-mode                       nerd-icons-sucicon "nf-seti-ocaml")

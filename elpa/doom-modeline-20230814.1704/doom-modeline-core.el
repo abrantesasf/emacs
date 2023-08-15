@@ -60,7 +60,8 @@ Must be set to a symbol.  Acceptable values are:
     "Return the width of STR in pixels."
     (if (fboundp 'string-pixel-width)
         (string-pixel-width str)
-      (* (string-width str) (window-font-width nil 'mode-line) 1.05)))
+      (* (string-width str) (window-font-width nil 'mode-line)
+         (if (display-graphic-p) 1.05 1.0))))
 
   (defun mode--line-format-right-align ()
     "Right-align all following mode-line constructs.
@@ -960,8 +961,9 @@ Also see the face `doom-modeline-unread-number'."
 ;; @see https://github.com/seagle0128/doom-modeline/issues/183
 ;; @see https://github.com/seagle0128/doom-modeline/issues/483
 (unless (>= emacs-major-version 29)
-  (defun doom-modeline-redisplay (&rest _)
-    "Call `redisplay' to trigger mode-line height calculations.
+  (eval-and-compile
+    (defun doom-modeline-redisplay (&rest _)
+      "Call `redisplay' to trigger mode-line height calculations.
 
 Certain functions, including e.g. `fit-window-to-buffer', base
 their size calculations on values which are incorrect if the
@@ -978,10 +980,10 @@ but it will only trigger a redisplay when there is a non nil
 `mode-line-format' and the height of the mode-line is different
 from that of the `default' face. This function is intended to be
 used as an advice to window creation functions."
-    (when (and (bound-and-true-p doom-modeline-mode)
-               mode-line-format
-               (/= (frame-char-height) (window-mode-line-height)))
-      (redisplay t)))
+      (when (and (bound-and-true-p doom-modeline-mode)
+                 mode-line-format
+                 (/= (frame-char-height) (window-mode-line-height)))
+        (redisplay t))))
   (advice-add #'fit-window-to-buffer :before #'doom-modeline-redisplay))
 
 ;; For `flychecker-color-mode-line'
@@ -1097,10 +1099,8 @@ used as an advice to window creation functions."
                      (format "%s modeline segment" name))))
     (cond ((and (symbolp (car body))
                 (not (cdr body)))
-           (add-to-list 'doom-modeline-var-alist (cons name (car body)))
            `(add-to-list 'doom-modeline-var-alist (cons ',name ',(car body))))
           (t
-           (add-to-list 'doom-modeline-fn-alist (cons name sym))
            `(progn
               (defun ,sym () ,docstring ,@body)
               (add-to-list 'doom-modeline-fn-alist (cons ',name ',sym))
@@ -1117,9 +1117,9 @@ used as an advice to window creation functions."
       (cond ((stringp seg)
              (push seg forms))
             ((symbolp seg)
-             (cond ((setq it (cdr (assq seg doom-modeline-fn-alist)))
+             (cond ((setq it (alist-get seg doom-modeline-fn-alist))
                     (push (list :eval (list it)) forms))
-                   ((setq it (cdr (assq seg doom-modeline-var-alist)))
+                   ((setq it (alist-get seg doom-modeline-var-alist))
                     (push it forms))
                    ((error "%s is not a defined segment" seg))))
             ((error "%s is not a valid segment" seg))))
