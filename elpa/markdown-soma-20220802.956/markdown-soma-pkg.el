@@ -1,2 +1,0 @@
-;;; Generated package description from markdown-soma.el  -*- no-byte-compile: t -*-
-(define-package "markdown-soma" "20220802.956" "Live preview for Markdown" '((emacs "25") (s "1.11.0") (dash "2.19.1") (f "0.20.0")) :commit "e604b9e4a65bbd2057befbfaebfa73d00bd9826a" :authors '(("Jason Milkins" . "jasonm23@gmail.com")) :maintainer '("Jason Milkins" . "jasonm23@gmail.com") :keywords '("wp" "docs" "text" "markdown") :url "https://github.com/jasonm23/markdown-soma")
