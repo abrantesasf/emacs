@@ -1208,14 +1208,15 @@ The face should be the first attribute, or the font family may be overridden.
 So convert the face \":family XXX :height XXX :inherit XXX\" to
 \":inherit XXX :family XXX :height XXX\".
 See https://github.com/seagle0128/doom-modeline/issues/301."
-  (if (doom-modeline-icon-displayable-p)
+  (when icon
+      (if (doom-modeline-icon-displayable-p)
       (when-let ((props (get-text-property 0 'face icon)))
         (when (listp props)
           (cl-destructuring-bind (&key family height inherit &allow-other-keys) props
             (propertize icon 'face `(:inherit (doom-modeline ,(or face inherit props))
                                      :family  ,(or family "")
                                      :height  ,(or height 1.0))))))
-    (propertize icon 'face `(:inherit (doom-modeline ,face)))))
+    (propertize icon 'face `(:inherit (doom-modeline ,face))))))
 
 (defun doom-modeline-icon (icon-set icon-name unicode text &rest args)
   "Display icon of ICON-NAME with ARGS in mode-line.
@@ -1231,12 +1232,11 @@ ARGS is same as `nerd-icons-octicon' and others."
      ((and (doom-modeline-icon-displayable-p)
            icon-name
            (not (string-empty-p icon-name)))
-      (let* ((func (nerd-icons--function-name icon-set))
-             (icon (and (fboundp func)
-                        (apply func icon-name args))))
-        (if icon
-            (doom-modeline-propertize-icon icon face)
-          "")))
+      (if-let* ((func (nerd-icons--function-name icon-set))
+                (icon (and (fboundp func)
+                           (apply func icon-name args))))
+          (doom-modeline-propertize-icon icon face)
+        ""))
      ;; Unicode fallback
      ((and doom-modeline-unicode-fallback
            unicode
