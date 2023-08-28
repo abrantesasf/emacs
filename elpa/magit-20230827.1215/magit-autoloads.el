@@ -2097,16 +2097,43 @@ while two prefix arguments are equivalent to `--all'.
 
 (autoload 'magit-stash-apply "magit-stash" "\
 Apply a stash to the working tree.
-If nothing is staged, then try to reinstate the stashed index.
-Doing so is not possible if there are staged changes.
+
+First try \"git stash apply --index\", which tries to preserve
+the index stored in the stash, if any.  This may fail because
+applying the stash could result in conflicts and those have to
+be stored in the index, making it impossible to also store the
+stash's index there as well.
+
+If the above failed, then try \"git stash apply\".  This fails
+\(with or without \"--index\") if there are any uncommitted
+changes to files that are also modified in the stash.
+
+If both of the above failed, then apply using \"git apply\".
+If there are no conflicting files, use \"--3way\".  If there are
+conflicting files, then using \"--3way\" requires that those
+files are staged first, which may be undesirable, so prompt
+the user whether to use \"--3way\" or \"--reject\".
 
 \(fn STASH)" t nil)
 
 (autoload 'magit-stash-pop "magit-stash" "\
-Apply a stash to the working tree and remove it from stash list.
-If nothing is staged, then try to reinstate the stashed index.
-Doing so is not possible if there are staged changes.  Do not
-remove the stash, if it cannot be applied.
+Apply a stash to the working tree, on success remove it from stash list.
+
+First try \"git stash pop --index\", which tries to preserve
+the index stored in the stash, if any.  This may fail because
+applying the stash could result in conflicts and those have to
+be stored in the index, making it impossible to also store the
+stash's index there as well.
+
+If the above failed, then try \"git stash apply\".  This fails
+\(with or without \"--index\") if there are any uncommitted
+changes to files that are also modified in the stash.
+
+If both of the above failed, then apply using \"git apply\".
+If there are no conflicting files, use \"--3way\".  If there are
+conflicting files, then using \"--3way\" requires that those
+files are staged first, which may be undesirable, so prompt
+the user whether to use \"--3way\" or \"--reject\".
 
 \(fn STASH)" t nil)
 

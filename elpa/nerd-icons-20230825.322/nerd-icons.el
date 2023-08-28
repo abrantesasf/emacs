@@ -148,6 +148,7 @@
     ("exs"            nerd-icons-sucicon "nf-seti-elixir"        :face nerd-icons-lred)
     ("livemd"         nerd-icons-sucicon "nf-seti-elixir"        :face nerd-icons-lblue)
     ("java"           nerd-icons-devicon "nf-dev-java"           :face nerd-icons-purple)
+    ("groovy"         nerd-icons-devicon "nf-dev-groovy"         :face nerd-icons-cyan)
     ("gradle"         nerd-icons-sucicon "nf-seti-gradle"        :face nerd-icons-silver)
     ("ebuild"         nerd-icons-mdicon "nf-md-gentoo"           :face nerd-icons-cyan)
     ("eclass"         nerd-icons-mdicon "nf-md-gentoo"           :face nerd-icons-blue)
@@ -479,6 +480,7 @@
     ("^\\*scratch\\*$"         nerd-icons-faicon "nf-fa-sticky_note"         :face nerd-icons-lyellow)
     ("^\\*scratch.*"           nerd-icons-faicon "nf-fa-sticky_note"         :face nerd-icons-yellow)
     ("^\\*new-tab\\*$"         nerd-icons-mdicon "nf-md-star"                :face nerd-icons-cyan)
+    ("Cask\\'"                 nerd-icons-sucicon "nf-custom-emacs"          :face nerd-icons-blue)
 
     ("^\\."                    nerd-icons-octicon "nf-oct-gear")))
 
@@ -605,6 +607,7 @@
 
     (fundamental-mode                  nerd-icons-sucicon "nf-custom-emacs"           :face nerd-icons-dsilver)
     (special-mode                      nerd-icons-sucicon "nf-custom-emacs"           :face nerd-icons-yellow)
+    (cask-mode                         nerd-icons-sucicon "nf-custom-emacs"           :face nerd-icons-blue)
     (text-mode                         nerd-icons-faicon "nf-fa-file_text"            :face nerd-icons-cyan)
     (enh-ruby-mode                     nerd-icons-devicon "nf-dev-ruby"               :face nerd-icons-lred)
     (ruby-mode                         nerd-icons-devicon "nf-dev-ruby"               :face nerd-icons-lred)
@@ -643,6 +646,7 @@
     (elixir-mode                       nerd-icons-sucicon "nf-custom-elixir"          :face nerd-icons-lorange)
     (elixir-ts-mode                    nerd-icons-sucicon "nf-custom-elixir"          :face nerd-icons-lorange)
     (java-mode                         nerd-icons-devicon "nf-dev-java"               :face nerd-icons-purple)
+    (groovy-mode                       nerd-icons-devicon "nf-dev-groovy"             :face nerd-icons-cyan)
     (java-ts-mode                      nerd-icons-devicon "nf-dev-java"               :face nerd-icons-purple)
     (go-mode                           nerd-icons-devicon "nf-dev-go"                 :face nerd-icons-blue)
     (go-ts-mode                        nerd-icons-devicon "nf-dev-go"                 :face nerd-icons-blue)
@@ -745,9 +749,13 @@
     (calibredb-search-mode             nerd-icons-codicon  "nf-cod-library"           :face nerd-icons-dblue)
     (calibredb-show-mode               nerd-icons-codicon  "nf-cod-library"           :face nerd-icons-lblue)
     (osm-mode                          nerd-icons-mdicon   "nf-md-map_search"         :face nerd-icons-lgreen)
-    (spacemacs-buffer-mode             nerd-icons-sucicon "nf-custom-emacs"           :face nerd-icons-purple)
+    (spacemacs-buffer-mode             nerd-icons-sucicon  "nf-custom-emacs"          :face nerd-icons-purple)
+
     (elfeed-search-mode                nerd-icons-faicon   "nf-fa-rss_square"         :face nerd-icons-orange)
     (elfeed-show-mode                  nerd-icons-faicon   "nf-fa-rss_square"         :face nerd-icons-yellow)
+    (newsticker-treeview-mode          nerd-icons-faicon   "nf-fa-rss_square"         :face nerd-icons-orange)
+    (newsticker-treeview-list-mode     nerd-icons-faicon   "nf-fa-rss_square"         :face nerd-icons-lorange)
+    (newsticker-treeview-item-mode     nerd-icons-faicon   "nf-fa-rss_square"         :face nerd-icons-yellow)
 
     (emms-browser-mode                 nerd-icons-faicon   "nf-fa-music"              :face nerd-icons-silver)
     (emms-lyrics-mode                  nerd-icons-faicon   "nf-fa-music"              :face nerd-icons-silver)
@@ -766,6 +774,10 @@
     (telega-root-mode                  nerd-icons-faicon "nf-fae-telegram"            :face nerd-icons-purple)
     (telega-chat-mode                  nerd-icons-faicon "nf-fae-telegram"            :face nerd-icons-blue)
     (mastodon-mode                     nerd-icons-mdicon "nf-md-mastodon"             :face nerd-icons-blue)
+
+    (fanyi-mode                        nerd-icons-codicon "nf-cod-library"            :face nerd-icons-lcyan)
+    (osx-dictionary-mode               nerd-icons-codicon "nf-cod-library"            :face nerd-icons-lcyan)
+    (youdao-dictionary-mode            nerd-icons-codicon "nf-cod-library"            :face nerd-icons-lcyan)
 
     (magik-mode                        nerd-icons-faicon "nf-fa-magic"                :face nerd-icons-blue)
     (magik-ts-mode                     nerd-icons-faicon "nf-fa-magic"                :face nerd-icons-blue)

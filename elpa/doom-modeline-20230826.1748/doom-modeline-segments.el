@@ -455,7 +455,7 @@ project directory is important."
      (and doom-modeline-major-mode-icon
           (concat
            (doom-modeline-icon
-            'octicon "nf-oct-file_directory" "🖿" "" :face face)
+            'octicon "nf-oct-file_directory_fill" "🖿" "" :face face)
            (doom-modeline-vspc)))
      (doom-modeline--buffer-state-icon)
      (propertize (abbreviate-file-name default-directory) 'face face))))
@@ -471,7 +471,7 @@ project directory is important."
      (and doom-modeline-major-mode-icon
           (concat
            (doom-modeline-icon
-            'octicon "nf-oct-file_directory" "🖿" "" :face face)
+            'octicon "nf-oct-file_directory_fill" "🖿" "" :face face)
            (doom-modeline-vspc)))
      (propertize (abbreviate-file-name default-directory) 'face face))))
 
@@ -2225,7 +2225,7 @@ Example:
                           (token (or (ghub--token ghub-default-host username 'forge t)
                                      (ghub--token ghub-default-host username 'ghub t))))
                 (ghub-get "/notifications"
-                          '((all . t))
+                          '((notifications . t))
                           :host ghub-default-host
                           :username username
                           :auth token
