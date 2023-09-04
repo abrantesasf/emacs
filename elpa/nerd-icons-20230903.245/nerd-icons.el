@@ -383,6 +383,7 @@
     ("md"             nerd-icons-octicon "nf-oct-markdown"       :face nerd-icons-lblue)
     ("bib"            nerd-icons-mdicon "nf-md-book"             :face nerd-icons-lblue)
     ("org"            nerd-icons-sucicon "nf-custom-orgmode"     :face nerd-icons-lgreen)
+    ("org_archive"    nerd-icons-sucicon "nf-custom-orgmode"     :face nerd-icons-lgreen)
     ("pps"            nerd-icons-mdicon "nf-md-file_powerpoint"  :face nerd-icons-orange)
     ("ppt"            nerd-icons-mdicon "nf-md-file_powerpoint"  :face nerd-icons-orange)
     ("pptsx"          nerd-icons-mdicon "nf-md-file_powerpoint"  :face nerd-icons-orange)
@@ -402,7 +403,11 @@
     ("crt"            nerd-icons-octicon "nf-oct-key"            :face nerd-icons-lblue)
     ("pub"            nerd-icons-octicon "nf-oct-key"            :face nerd-icons-blue)
     ("gpg"            nerd-icons-octicon "nf-oct-key"            :face nerd-icons-lblue)
-    ("cache"          nerd-icons-octicon "nf-oct-database"       :face nerd-icons-green)))
+    ("cache"          nerd-icons-octicon "nf-oct-database"       :face nerd-icons-green)
+    ;; backup
+    ("backup"         nerd-icons-mdicon "nf-md-file_restore"     :face nerd-icons-lblue)
+    ("old"            nerd-icons-mdicon "nf-md-file_restore"     :face nerd-icons-lblue)
+    ("bak"            nerd-icons-mdicon "nf-md-file_restore"     :face nerd-icons-lblue)))
 
 (defvar                        nerd-icons-regexp-icon-alist
   '(
