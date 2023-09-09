@@ -949,6 +949,15 @@
 	    (:authors
 	     ("The go-mode Authors"))
 	    (:commit . "3273fcece5d9ab7edd4f15b2d6bce61f4e5a0666"))])
+ (golden-ratio .
+	       [(1 0 1)
+		nil "Automatic resizing of Emacs windows to the golden ratio" tar
+		((:keywords "window" "resizing")
+		 (:maintainer "Roman Gonzalez" . "romanandreg@gmail.com")
+		 (:authors
+		  ("Roman Gonzalez" . "romanandreg@gmail.com"))
+		 (:url . "https://elpa.nongnu.org/nongnu/golden-ratio.html")
+		 (:commit . "362ab0ede7ee2bb9fd11aea119b9c22248649c0d"))])
  (gotham-theme .
 	       [(1 1 9)
 		((emacs
@@ -1036,7 +1045,7 @@
 		    ((:url . "https://gitlab.com/tseenshe/haskell-tng-mode")
 		     (:keywords "languages"))])
  (helm .
-       [(3 9 4)
+       [(3 9 5)
 	((helm-core
 	  (3 9 4))
 	 (wfnames
@@ -1048,9 +1057,9 @@
 	 (:maintainer "Thierry Volpiatto" . "thievol@posteo.net")
 	 (:authors
 	  ("Thierry Volpiatto" . "thievol@posteo.net"))
-	 (:commit . "497f479ec113583c2570c03a526c999e3d410f95"))])
+	 (:commit . "ffff39b542196565dcec5641e287265aaa5517ed"))])
  (helm-core .
-	    [(3 9 4)
+	    [(3 9 5)
 	     ((emacs
 	       (25 1))
 	      (async
@@ -1060,7 +1069,7 @@
 	      (:maintainer "Thierry Volpiatto" . "thievol@posteo.net")
 	      (:authors
 	       ("Thierry Volpiatto" . "thievol@posteo.net"))
-	      (:commit . "497f479ec113583c2570c03a526c999e3d410f95"))])
+	      (:commit . "ffff39b542196565dcec5641e287265aaa5517ed"))])
  (highlight-parentheses .
 			[(2 1 1)
 			 ((emacs
@@ -2035,7 +2044,7 @@
 	   ("Random User"))
 	  (:commit . "6ce7de37f21e123467ef1191db7a37cd99881c00"))])
  (sweeprolog .
-	     [(0 23 1)
+	     [(0 24 0)
 	      ((emacs
 		(27 1))
 	       (compat
@@ -2046,7 +2055,7 @@
 	       (:maintainer "Eshel Yaron" . "~eshel/dev@lists.sr.ht")
 	       (:authors
 		("Eshel Yaron" . "me@eshelyaron.com"))
-	       (:commit . "38ebce23cc857a81aba4f10f2bbca5868c0e0112"))])
+	       (:commit . "8eac70fba4a37c3124fa0fe32d96f06c747a7469"))])
  (swift-mode .
 	     [(9 0 0)
 	      ((emacs
@@ -2244,14 +2253,14 @@
 			("Joost Kremers" . "joostkremers@fastmail.fm"))
 		       (:commit . "695a59789209c42fa08a5bce92963ee32f4455be"))])
  (web-mode .
-	   [(17 3 13)
+	   [(17 3 14)
 	    ((emacs
 	      (23 1)))
 	    "major mode for editing web templates" tar
 	    ((:url . "https://web-mode.org")
 	     (:keywords "languages")
 	     (:maintainer "François-Xavier Bois" . "fxbois@gmail.com")
-	     (:commit . "90502d9cd2b5bc9a13d2628e48fd66b78243e090"))])
+	     (:commit . "443a09423d23727df7efd4e60beedd3919e4800a"))])
  (webpaste .
 	   [(3 2 2)
 	    ((emacs
