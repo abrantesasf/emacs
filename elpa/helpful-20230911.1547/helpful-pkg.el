@@ -1,10 +1,10 @@
-(define-package "helpful" "20230808.1519" "A better *help* buffer"
+(define-package "helpful" "20230911.1547" "A better *help* buffer"
   '((emacs "25")
     (dash "2.18.0")
     (s "1.11.0")
     (f "0.20.0")
     (elisp-refs "1.2"))
-  :commit "c57ff0d284b50ff430fe1f13fd48deaa0d1a910e" :authors
+  :commit "66ba816b26b68dd7df08e86f8b96eaae16c8d6a2" :authors
   '(("Wilfred Hughes" . "me@wilfred.me.uk"))
   :maintainers
   '(("Wilfred Hughes" . "me@wilfred.me.uk"))

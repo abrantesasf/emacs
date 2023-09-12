@@ -674,6 +674,7 @@ for performance sake.")
     (java-ts-mode                       all-the-icons-alltheicon "java"           :height 1.0 :face all-the-icons-purple)
     (go-mode                            all-the-icons-fileicon "go"               :height 1.0 :face all-the-icons-blue)
     (go-ts-mode                         all-the-icons-fileicon "go"               :height 1.0 :face all-the-icons-blue)
+    (go-mod-ts-mode                     all-the-icons-fileicon "config-go"        :height 1.0 :face all-the-icons-blue-alt)
     (go-dot-mod-mode                    all-the-icons-fileicon "config-go"        :height 1.0 :face all-the-icons-blue-alt)
     (go-dot-work-mode                   all-the-icons-fileicon "config-go"        :height 1.0 :face all-the-icons-blue-alt)
     (graphql-mode                       all-the-icons-fileicon "graphql"          :face all-the-icons-dpink)
@@ -759,7 +760,7 @@ for performance sake.")
     (zig-mode                           all-the-icons-fileicon "zig"              :face all-the-icons-orange)
     (exwm-mode                          all-the-icons-octicon "browser"           :v-adjust 0.2 :face all-the-icons-purple)
     (beancount-mode                     all-the-icons-faicon "credit-card"        :face all-the-icons-lgreen)
-    (ledger-mode                        all-the-icons-faicon "credit-card"        :face all-the-icons-lgreen)))
+    (ledger-mode                        all-the-icons-faicon "credit-card"        :face all-the-icons-lgreen)
     (odin-mode                          all-the-icons-fileicon "odin"             :height 1.1 :face all-the-icons-lblue)
     (pdf-view-mode                      all-the-icons-octicon  "file-pdf"         :v-adjust 0.0 :face all-the-icons-dred)
     (spacemacs-buffer-mode              all-the-icons-fileicon "elisp"            :height 1.0 :v-adjust -0.1 :face all-the-icons-purple)
@@ -775,7 +776,8 @@ for performance sake.")
     (magik-session-mode                 all-the-icons-alltheicon "terminal"       :face all-the-icons-blue)
     (magik-cb-mode                      all-the-icons-faicon "book"               :face all-the-icons-blue)
     (meson-mode                         all-the-icons-fileicon "meson"            :face all-the-icons-purple)
-    (man-common                         all-the-icons-fileicon "man-page"         :face all-the-icons-blue)))
+    (man-common                         all-the-icons-fileicon "man-page"         :face all-the-icons-blue)
+    (ess-r-mode                         all-the-icons-fileicon "R"                :face all-the-icons-lblue)))
 
 (defvar all-the-icons-url-alist
   '(
@@ -888,8 +890,8 @@ for performance sake.")
     (eq major-mode auto-mode)))
 
 (defun all-the-icons-match-to-alist (file alist)
-  "Match FILE against an entry in ALIST using `string-match'."
-  (cdr (cl-find-if (lambda (it) (string-match (car it) file)) alist)))
+  "Match FILE against an entry in ALIST using `string-match-p'."
+  (cdr (cl-find-if (lambda (it) (string-match-p (car it) file)) alist)))
 
 (defun all-the-icons-dir-is-submodule (dir)
   "Checker whether or not DIR is a git submodule."
@@ -1050,7 +1052,7 @@ inserting functions."
 (defun all-the-icons-icon-family-for-file (file)
   "Get the icons font family for FILE."
   (let* ((ext (file-name-extension file))
-	     (icon (or (all-the-icons-match-to-alist file all-the-icons-regexp-icon-alist)
+         (icon (or (all-the-icons-match-to-alist file all-the-icons-regexp-icon-alist)
                    (and ext
                         (cdr (assoc (downcase ext)
                                     all-the-icons-extension-icon-alist)))
