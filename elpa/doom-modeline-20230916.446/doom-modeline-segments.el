@@ -1174,19 +1174,24 @@ block selection."
   "Display current Emacs or evil macro being recorded."
   (when (and (doom-modeline--active)
              (or defining-kbd-macro executing-kbd-macro))
-    (let ((sep (propertize " " 'face 'doom-modeline-panel ))
+    (let ((sep (propertize " " 'face 'doom-modeline-panel))
           (vsep (propertize " " 'face
-                            '(:inherit (doom-modeline-panel variable-pitch)))))
+                            '(:inherit (doom-modeline-panel variable-pitch))))
+          (macro-name (if (bound-and-true-p evil-this-macro)
+                          (format " @%s "
+                                  (char-to-string evil-this-macro))
+                        "Macro")))
       (concat
        sep
-       (doom-modeline-icon 'mdicon "nf-md-record" "●"
-                           (if (bound-and-true-p evil-this-macro)
-                               (char-to-string evil-this-macro)
-                             "Macro")
-                           :face 'doom-modeline-panel)
-       vsep
-       (doom-modeline-icon 'octicon "nf-oct-triangle_right" "▶" ">"
-                           :face 'doom-modeline-panel)
+       (if doom-modeline-always-show-macro-register
+           (propertize macro-name 'face 'doom-modeline-panel)
+         (concat
+          (doom-modeline-icon 'mdicon "nf-md-record" "●"
+                              macro-name
+                              :face '(:inherit (doom-modeline-urgent doom-modeline-panel)))
+          vsep
+          (doom-modeline-icon 'mdicon "nf-md-menu_right" "▶" ">"
+                              :face 'doom-modeline-panel)))
        sep))))
 
 ;; `anzu' and `evil-anzu' expose current/total state that can be displayed in the
