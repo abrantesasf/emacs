@@ -39,13 +39,13 @@
 		(:authors
 		 ("Jordon Biondo" . "jordonbiondo@gmail.com")))])
  (annotate .
-	   [(2 0 2)
+	   [(2 0 3)
 	    nil "annotate files without changing them" tar
 	    ((:url . "https://github.com/bastibe/annotate.el")
 	     (:maintainer
 	      ("Bastian Bechtold" . "bastibe.dev@mailbox.org")
 	      ("cage" . "cage-dev@twistfold.it"))
-	     (:commit . "bf42792154c003ac34de794b63aa530d9fdbc22f"))])
+	     (:commit . "b2767cdba2cd7c4520811d75154b2489ff1e4d9f"))])
  (anti-zenburn-theme .
 		     [(2 5 1)
 		      nil "Low-contrast Zenburn-inverted theme" tar
@@ -156,6 +156,17 @@
 	 (:authors
 	  ("Akib Azmain Turja" . "akib@disroot.org"))
 	 (:commit . "19152095662c95bc73f1f25b8dcce432294b06a1"))])
+ (blueprint-ts-mode .
+		    [(0 0 2)
+		     ((emacs
+		       (29 1)))
+		     "tree-sitter support for Blueprint files" tar
+		     ((:url . "https://github.com/huanie/blueprint-ts-mode")
+		      (:keywords "languages" "blueprint" "tree-sitter" "gnome" "gtk")
+		      (:maintainer "Huan Thieu Nguyen" . "nguyenthieuhuan@gmail.com")
+		      (:authors
+		       ("Huan Thieu Nguyen" . "nguyenthieuhuan@gmail.com"))
+		      (:commit . "19b91fca0bce72cc44fe96df95abd97c1fc05c35"))])
  (boxquote .
 	   [(2 3)
 	    ((cl-lib
@@ -1169,20 +1180,18 @@
 		(:maintainer "Bozhidar Batsov" . "bozhidar@batsov.dev")
 		(:commit . "151b20ba9d3ae39b88f91aecbab98bd5a5215f1a"))])
  (inf-ruby .
-	   [(2 7 0)
+	   [(2 8 0)
 	    ((emacs
-	      (24 3)))
+	      (26 1)))
 	    "Run a Ruby process in a buffer" tar
 	    ((:url . "http://github.com/nonsequitur/inf-ruby")
 	     (:keywords "languages" "ruby")
-	     (:maintainer "Dmitry Gutov" . "dgutov@yandex.ru")
+	     (:maintainer "Dmitry Gutov" . "dmitry@gutov.dev")
 	     (:authors
-	      ("Yukihiro Matsumoto")
-	      ("Nobuyoshi Nakada")
 	      ("Cornelius Mika" . "cornelius.mika@gmail.com")
 	      ("Dmitry Gutov" . "dgutov@yandex.ru")
 	      ("Kyle Hargraves" . "pd@krh.me"))
-	     (:commit . "997b3c5f9d9d7ff72b1a1cbdb55b1f575748a9ca"))])
+	     (:commit . "991fe74b1c1b83412b42832a39aafc2d88ae625c"))])
  (inkpot-theme .
 	       [(0 1)
 		((emacs
@@ -2055,7 +2064,7 @@
 		("Eshel Yaron" . "me@eshelyaron.com"))
 	       (:commit . "dba83e95e67a0bca703ef535663b4a4de03538b7"))])
  (swift-mode .
-	     [(9 0 0)
+	     [(9 1 0)
 	      ((emacs
 		(24 4))
 	       (seq
@@ -2069,7 +2078,7 @@
 		("Chris Barrett" . "chris.d.barrett@me.com")
 		("Bozhidar Batsov" . "bozhidar@batsov.com")
 		("Arthur Evstifeev" . "lod@pisem.net"))
-	       (:commit . "55da7a32c97c84c2d12295a0eeb1f8fca8a6f71a"))])
+	       (:commit . "e58417ec871d260fe47183ffe4b7e47ac09bc682"))])
  (symbol-overlay .
 		 [(4 1)
 		  ((emacs
@@ -2362,14 +2371,14 @@
 	      (:authors
 	       ("Le Wang")))])
  (xah-fly-keys .
-	       [(24 11 20230921082343)
+	       [(24 12 20230930093650)
 		((emacs
-		  (27 1)))
+		  (29)))
 		"ergonomic modal keybinding minor mode." tar
 		((:url . "http://xahlee.info/emacs/misc/xah-fly-keys.html")
 		 (:keywords "convenience" "emulations" "vim" "ergoemacs")
 		 (:maintainer "Xah Lee" . "xah@xahlee.org")
-		 (:commit . "45c68854ce8f896feb0bbc30621c92a80e3a9eaa"))])
+		 (:commit . "afdd2e6bee1b5823a598cf27431a0e6af88e6477"))])
  (xkcd .
        [(1 1)
 	((json
@@ -2389,16 +2398,17 @@
 	    (:maintainer "Mark A. Hershberger" . "mah@everybody.org")
 	    (:commit . "fc0c82eb5c8a5d5d837a21bca50f7c8169165f03"))])
  (yaml-mode .
-	    [(0 0 15)
+	    [(0 0 16)
 	     ((emacs
 	       (24 1)))
 	     "Major mode for editing YAML files" tar
 	     ((:url . "https://github.com/yoshiki/yaml-mode")
+	      (:keywords "data" "yaml")
 	      (:maintainer "Vasilij Schneidermann" . "mail@vasilij.de")
 	      (:authors
 	       ("Yoshiki Kurihara" . "clouder@gmail.com")
 	       ("Marshall T. Vandegrift" . "llasram@gmail.com"))
-	      (:keywords "data" "yaml"))])
+	      (:commit . "6bb9e7f6e1c9224f743a8a68bc210d10eb8cb788"))])
  (yasnippet-snippets .
 		     [(1 0)
 		      ((yasnippet
