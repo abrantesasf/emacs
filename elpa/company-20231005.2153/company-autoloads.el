@@ -324,7 +324,7 @@ confirm the selection and finish the completion.
 
 \(fn COMMAND)" nil nil)
 
-(define-obsolete-function-alias 'company-tng-configure-default 'company-tng-mode "0.9.14" "\
+(define-obsolete-function-alias 'company-tng-configure-default 'company-tng-mode "0.10.0" "\
 Applies the default configuration to enable company-tng.")
 
 (defvar company-tng-mode nil "\
