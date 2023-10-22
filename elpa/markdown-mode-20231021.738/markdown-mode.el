@@ -1140,6 +1140,10 @@ If POS is not given, use point instead."
                  thereis (memq face faces))
       (memq face-prop faces))))
 
+(defsubst markdown--math-block-p (&optional pos)
+  (when markdown-enable-math
+    (markdown--face-p (or pos (point)) '(markdown-math-face))))
+
 (defun markdown-syntax-propertize-extend-region (start end)
   "Extend START to END region to include an entire block of text.
 This helps improve syntax analysis for block constructs.
@@ -3588,7 +3592,8 @@ SEQ may be an atom or a sequence."
   (when (markdown-search-until-condition
          (lambda () (and (not (markdown-code-block-at-point-p))
                          (not (markdown-inline-code-at-point-p))
-                         (not (markdown-in-comment-p))))
+                         (not (markdown-in-comment-p))
+                         (not (markdown--math-block-p))))
          markdown-regex-sub-superscript last t)
     (let* ((subscript-p (string= (match-string 2) "~"))
            (props
@@ -7861,7 +7866,8 @@ Value is a list of elements describing the link:
                 ((string-match "\\([^ ]+\\)\\s-+\\(.+\\)" destination-part)
                  (setq url (match-string-no-properties 1 destination-part)
                        title (substring (match-string-no-properties 2 destination-part) 1 -1)))
-                (t (setq url destination-part)))))
+                (t (setq url destination-part)))
+          (setq url (url-unhex-string url))))
        ;; Reference link at point.
        ((thing-at-point-looking-at markdown-regex-link-reference)
         (setq bang (match-string-no-properties 1)
