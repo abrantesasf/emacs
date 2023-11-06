@@ -716,6 +716,7 @@ slot is non-nil."
    (description :initarg :description :initform nil)
    (face        :initarg :face        :initform nil)
    (show-help   :initarg :show-help   :initform nil)
+   (inapt-face  :initarg :inapt-face  :initform 'transient-inapt-suffix)
    (inapt                             :initform nil)
    (inapt-if
     :initarg :inapt-if
@@ -752,7 +753,8 @@ slot is non-nil."
   "Superclass for suffix command.")
 
 (defclass transient-information (transient-suffix)
-  ((format :initform " %k %d"))
+  ((format :initform " %k %d")
+   (key    :initform " "))
   "Display-only information.
 A suffix object with no associated command.")
 
@@ -1437,7 +1439,9 @@ Usually it remains selected while the transient is active.")
   "The buffer that was current before the transient was invoked.
 Usually it remains current while the transient is active.")
 
-(defvar transient--current-buffer nil
+(define-obsolete-variable-alias 'transient--current-buffer
+  'transient--shadowed-buffer "0.4.4") ; TODO Remove before that release.
+(defvar transient--shadowed-buffer nil
   "The buffer that is temporarily shadowed by the transient buffer.
 This is bound while the suffix predicate is being evaluated and while
 drawing in the transient buffer.")
@@ -2003,7 +2007,7 @@ value.  Otherwise return CHILDREN as is."
            (<= level (oref transient--prefix level)))))
 
 (defun transient--use-suffix-p (obj)
-  (let ((transient--current-buffer (current-buffer))
+  (let ((transient--shadowed-buffer (current-buffer))
         (transient--pending-suffix obj))
     (transient--do-suffix-p
      (oref obj if)
@@ -2017,7 +2021,7 @@ value.  Otherwise return CHILDREN as is."
      t)))
 
 (defun transient--inapt-suffix-p (obj)
-  (let ((transient--current-buffer (current-buffer))
+  (let ((transient--shadowed-buffer (current-buffer))
         (transient--pending-suffix obj))
     (transient--do-suffix-p
      (oref obj inapt-if)
@@ -3409,7 +3413,7 @@ have a history of their own.")
 (defun transient--show ()
   (transient--timer-cancel)
   (setq transient--showp t)
-  (let ((transient--current-buffer (current-buffer))
+  (let ((transient--shadowed-buffer (current-buffer))
         (buf (get-buffer-create transient--buffer-name))
         (focus nil))
     (with-current-buffer buf
@@ -3466,6 +3470,12 @@ have a history of their own.")
         ;; another buffer and is going to display that again.
         (fit-window-to-buffer window nil (window-height window))
       (fit-window-to-buffer window nil 1))))
+
+(defmacro transient-with-shadowed-buffer (&rest body)
+  "While in the transient buffer, temporarly make the shadowed buffer current."
+  (declare (indent 0) (debug t))
+  `(with-current-buffer (or transient--shadowed-buffer (current-buffer))
+     ,@body))
 
 (defun transient--insert-groups ()
   (let ((groups (cl-mapcan (lambda (group)
@@ -3609,9 +3619,8 @@ Optional support for popup buttons is also implemented here."
                                            'transient-enabled-suffix
                                          'transient-disabled-suffix))))
               (cl-call-next-method obj))))
-    (when (oref obj inapt)
-      (add-face-text-property 0 (length str) 'transient-inapt-suffix nil str))
-    (if transient-enable-popup-navigation
+    (if (and transient-enable-popup-navigation
+             (slot-boundp obj 'command))
         (make-text-button str nil
                           'type 'transient
                           'command (oref obj command))
@@ -3637,6 +3646,12 @@ Optional support for popup buttons is also implemented here."
 
 (cl-defgeneric transient-format-key (obj)
   "Format OBJ's `key' for display and return the result.")
+
+(cl-defmethod transient-format-key :around ((obj transient-suffix))
+  (let ((str (cl-call-next-method)))
+    (when (oref obj inapt)
+      (add-face-text-property 0 (length str) 'transient-inapt-suffix nil str))
+    str))
 
 (cl-defmethod transient-format-key ((obj transient-suffix))
   "Format OBJ's `key' for display and return the result."
@@ -3707,13 +3722,14 @@ called inside the correct buffer (see `transient--insert-group')
 and its value is returned to the caller."
   (and-let* ((desc (oref obj description))
              (desc (if (functionp desc)
-                       (with-current-buffer transient--original-buffer
+                       (transient-with-shadowed-buffer
                          (if (= (car (func-arity desc)) 1)
                              (funcall desc obj)
                            (funcall desc)))
                      desc)))
     (progn ; work around debbugs#31840
-      (when-let ((face (and (slot-exists-p obj 'face) (oref obj face))))
+      (when-let* ((face (and (slot-exists-p obj 'face) (oref obj face)))
+                  (face (if (functionp face) (funcall face) face)))
         (add-face-text-property 0 (length desc) face t desc))
       desc)))
 
@@ -3736,7 +3752,11 @@ If the OBJ's `key' is currently unreachable, then apply the face
                        (funcall (oref transient--prefix suffix-description)
                                 obj))
                   (propertize "(BUG: no description)" 'face 'error))))
-    (cond ((and (slot-boundp obj 'key)
+    (cond ((oref obj inapt)
+           (when-let ((face (oref obj inapt-face)))
+             (add-face-text-property 0 (length desc) face nil desc))
+           desc)
+          ((and (slot-boundp obj 'key)
                 (transient--key-unreachable-p obj))
            (propertize desc 'face 'transient-unreachable))
           ((if transient--all-levels-p
