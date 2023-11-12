@@ -382,7 +382,7 @@
 		  (:maintainer "Clemens Radermacher" . "clemera@posteo.net")
 		  (:url . "https://github.com/clemera/buffer-expose"))])
  (bufferlo .
-	   [(0 2)
+	   [(0 3)
 	    ((emacs
 	      (27 1)))
 	    "Manage frame/tab-local buffer lists" tar
@@ -391,7 +391,7 @@
 	     (:maintainer "Florian Rommel" . "mail@florommel.de")
 	     (:authors
 	      ("Florian Rommel" . "mail@florommel.de"))
-	     (:commit . "931b9ee3462164d6541d3b6078c46eb75f962592"))])
+	     (:commit . "02de3c5e3ae47c152997ced2f92341a1ffe23ef6"))])
  (bug-hunter .
 	     [(1 3 1)
 	      ((seq
@@ -917,6 +917,17 @@
 	      ("Tino Calancha" . "tino.calancha@gmail.com"))
 	     (:keywords "files" "unix" "convenience")
 	     (:url . "http://elpa.gnu.org/packages/dired-du.html"))])
+ (dired-duplicates .
+		   [(0 2)
+		    ((emacs
+		      (27 1)))
+		    "Find duplicate files locally and remotely" tar
+		    ((:url . "https://codeberg.org/hjudt/dired-duplicates")
+		     (:keywords "files")
+		     (:maintainer "Harald Judt" . "h.judt@gmx.at")
+		     (:authors
+		      ("Harald Judt" . "h.judt@gmx.at"))
+		     (:commit . "349eebbd8b3fc10fa2a4551426769d20744e2eb2"))])
  (dired-git-info .
 		 [(0 3 1)
 		  ((emacs
