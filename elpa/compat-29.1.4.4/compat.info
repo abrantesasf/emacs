@@ -1,4 +1,4 @@
-This is docjMWMLj.info, produced by makeinfo version 6.8 from
+This is docuyZlI2.info, produced by makeinfo version 6.8 from
 compat.texi.
 
 Copyright © 2022-2023 Free Software Foundation, Inc.
@@ -20,14 +20,14 @@ START-INFO-DIR-ENTRY
 END-INFO-DIR-ENTRY
 
 
-File: docjMWMLj.info,  Node: Top,  Next: Introduction,  Up: (dir)
+File: docuyZlI2.info,  Node: Top,  Next: Introduction,  Up: (dir)
 
 "Compat" Manual
 ***************
 
 This manual documents the usage of the "Compat" Emacs lisp library, the
 forward-compatibility library for Emacs Lisp, corresponding to version
-29.1.4.3.
+29.1.4.4.
 
    Copyright © 2022-2023 Free Software Foundation, Inc.
 
@@ -68,7 +68,7 @@ Support
 
 
 
-File: docjMWMLj.info,  Node: Introduction,  Next: Support,  Prev: Top,  Up: Top
+File: docuyZlI2.info,  Node: Introduction,  Next: Support,  Prev: Top,  Up: Top
 
 1 Introduction
 **************
@@ -80,7 +80,7 @@ File: docjMWMLj.info,  Node: Introduction,  Next: Support,  Prev: Top,  Up: Top
 * Limitations::
 
 
-File: docjMWMLj.info,  Node: Overview,  Next: Usage,  Up: Introduction
+File: docuyZlI2.info,  Node: Overview,  Next: Usage,  Up: Introduction
 
 1.1 Overview
 ============
@@ -95,7 +95,7 @@ audience are package developers that are interested in using newer
 developments, without having to break compatibility.
 
 
-File: docjMWMLj.info,  Node: Usage,  Next: Limitations,  Prev: Overview,  Up: Introduction
+File: docuyZlI2.info,  Node: Usage,  Next: Limitations,  Prev: Overview,  Up: Introduction
 
 1.2 Usage
 =========
@@ -105,7 +105,7 @@ as a dependency in the header.  The version of the Compat library
 mirrors the version of Emacs releases.  The current version of Compat
 corresponds to the upcoming Emacs 29 release.
 
-     ;; Package-Requires: ((emacs "24.4") (compat "29.1.4.3"))
+     ;; Package-Requires: ((emacs "24.4") (compat "29.1.4.4"))
 
    There is no need to depend on ‘emacs 24.4’ specifically.  One can
 choose any newer version, if features not provided by Compat necessitate
@@ -185,7 +185,7 @@ provide a development mailing list
 <~pkal/compat-devel@lists.sr.ht>).
 
 
-File: docjMWMLj.info,  Node: Limitations,  Prev: Usage,  Up: Introduction
+File: docuyZlI2.info,  Node: Limitations,  Prev: Usage,  Up: Introduction
 
 1.3 Limitations
 ===============
@@ -277,7 +277,7 @@ belong here, a *note report: Development. would be much appreciated.
      on the level of Compat.
 
 
-File: docjMWMLj.info,  Node: Support,  Next: Development,  Prev: Introduction,  Up: Top
+File: docuyZlI2.info,  Node: Support,  Next: Development,  Prev: Introduction,  Up: Top
 
 2 Support
 *********
@@ -294,7 +294,7 @@ manage to provide for each Emacs version.
 * Emacs 29.1::                   Compatibility support for Emacs 29.1
 
 
-File: docjMWMLj.info,  Node: Emacs 25.1,  Next: Emacs 26.1,  Up: Support
+File: docuyZlI2.info,  Node: Emacs 25.1,  Next: Emacs 26.1,  Up: Support
 
 2.1 Emacs 25.1
 ==============
@@ -525,7 +525,7 @@ implemented in 25.1:
    • The ‘thunk’ library.
 
 
-File: docjMWMLj.info,  Node: Emacs 26.1,  Next: Emacs 27.1,  Prev: Emacs 25.1,  Up: Support
+File: docuyZlI2.info,  Node: Emacs 26.1,  Next: Emacs 27.1,  Prev: Emacs 25.1,  Up: Support
 
 2.2 Emacs 26.1
 ==============
@@ -936,7 +936,7 @@ implemented in 26.1:
    • The ‘svg’ library (published separately as a :core package).
 
 
-File: docjMWMLj.info,  Node: Emacs 27.1,  Next: Emacs 28.1,  Prev: Emacs 26.1,  Up: Support
+File: docuyZlI2.info,  Node: Emacs 27.1,  Next: Emacs 28.1,  Prev: Emacs 26.1,  Up: Support
 
 2.3 Emacs 27.1
 ==============
@@ -1405,7 +1405,7 @@ implemented in 27.1:
    • The ‘image-converter’ library.
 
 
-File: docjMWMLj.info,  Node: Emacs 28.1,  Next: Emacs 29.1,  Prev: Emacs 27.1,  Up: Support
+File: docuyZlI2.info,  Node: Emacs 28.1,  Next: Emacs 29.1,  Prev: Emacs 27.1,  Up: Support
 
 2.4 Emacs 28.1
 ==============
@@ -1866,7 +1866,7 @@ implemented in 28.1:
    • The ‘multisession’ library.
 
 
-File: docjMWMLj.info,  Node: Emacs 29.1,  Prev: Emacs 28.1,  Up: Support
+File: docuyZlI2.info,  Node: Emacs 29.1,  Prev: Emacs 28.1,  Up: Support
 
 2.5 Emacs 29.1
 ==============
@@ -2700,7 +2700,7 @@ implemented in 29.1:
    • Support for symbols with position information.
 
 
-File: docjMWMLj.info,  Node: Development,  Next: Function Index,  Prev: Support,  Up: Top
+File: docuyZlI2.info,  Node: Development,  Next: Function Index,  Prev: Support,  Up: Top
 
 3 Development
 *************
@@ -2737,7 +2737,7 @@ version has been reasonably stabilized, e.g., around the time when the
 Emacs version branch is created in the Emacs repository on Savannah.
 
 
-File: docjMWMLj.info,  Node: Function Index,  Next: Variable Index,  Prev: Development,  Up: Top
+File: docuyZlI2.info,  Node: Function Index,  Next: Variable Index,  Prev: Development,  Up: Top
 
 Appendix A Function Index
 *************************
@@ -2956,7 +2956,7 @@ Appendix A Function Index
 * xor:                                   Emacs 27.1.          (line 142)
 
 
-File: docjMWMLj.info,  Node: Variable Index,  Prev: Function Index,  Up: Top
+File: docuyZlI2.info,  Node: Variable Index,  Prev: Function Index,  Up: Top
 
 Appendix B Variable Index
 *************************
