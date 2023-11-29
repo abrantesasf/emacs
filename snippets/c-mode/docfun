@@ -1,0 +1,25 @@
+# -*- mode: snippet -*-
+# name: docfun
+# key: docfun
+# --
+/**
+ * NOME DA FUNÇÃO
+ * Explique o que a função faz, não explique como faz, sem perder
+ * tempo explicando como a função faz o que faz. Dê instruções
+ * completas sobre o uso correto da função. Diga o que a função
+ * recebe, o que a função devolve e que efeitos a função produz,
+ * ou seja, qual a relação entre o que a função recebe e o que
+ * a função devolve. Informe os valores válidos para todos os
+ * argumentos.
+ *
+ * Parâmetros:
+ *    (tipo, faixa): nome, explicação
+ *
+ * Retorno: (tipo), explicação
+ *
+ * Efeitos colaterais:
+ *    Explicar se houver.
+ *
+ * Obs.:
+ *    Outras coisas importantes, se houver.
+ */
