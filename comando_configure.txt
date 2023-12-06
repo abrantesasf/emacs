@@ -1,0 +1,1 @@
+./configure --prefix=/opt/emacs-29.1 --enable-checking --enable-autodepend --enable-gcc-warnings=warn-only --enable-check-lisp-object-type --with-mailutils --with-kerberos5 --with-hesiod --with-sound=yes --with-x-toolkit=gtk3 --with-imagemagick --with-json --with-xwidgets --with-x --with-gpm
