@@ -98,7 +98,7 @@
  '(global-display-line-numbers-mode t)
  '(indent-tabs-mode nil)
  '(package-selected-packages
-   '(lua-mode org-board org ess ag all-the-icons async company company-quickhelp dash-functional doom-modeline doom-themes elisp-refs expand-region f git-commit helpful loop macrostep magit memoize multiple-cursors neotree paredit pos-tip s shrink-path slime slime-company smex sublime-themes transient with-editor yasnippet yasnippet-snippets dash))
+   '(pinentry lua-mode org-board org ess ag all-the-icons async company company-quickhelp dash-functional doom-modeline doom-themes elisp-refs expand-region f git-commit helpful loop macrostep magit memoize multiple-cursors neotree paredit pos-tip s shrink-path slime slime-company smex sublime-themes transient with-editor yasnippet yasnippet-snippets dash))
  '(ps-font-size '(11 . 11))
  '(ps-left-margin 24)
  '(ps-right-header
