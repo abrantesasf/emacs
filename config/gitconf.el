@@ -7,5 +7,6 @@
 ;; In ~/.gnupg/gpg-agent.conf:
 ;; allow-emacs-pinentry
 (require 'epg)
-(setq epg-pinentry-mode 'loopback)
+(setq epg-gpg-program "gpg")
 (setenv "GPG_AGENT_INFO" nil)
+(setq epa-pinentry-mode 'loopback)
