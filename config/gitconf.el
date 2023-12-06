@@ -8,3 +8,4 @@
 ;; allow-emacs-pinentry
 (require 'epg)
 (setq epg-pinentry-mode 'loopback)
+(setenv "GPG_AGENT_INFO" nil)
