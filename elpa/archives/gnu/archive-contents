@@ -52,12 +52,15 @@
 		   ("Stefan Monnier" . "monnier@iro.umontreal.ca"))
 		  (:url . "https://elpa.gnu.org/packages/adaptive-wrap.html"))])
  (adjust-parens .
-		[(3 1)
-		 nil "Indent and dedent Lisp code, automatically adjust close parens" tar
+		[(3 2)
+		 ((emacs
+		   (24 3)))
+		 "Indent and dedent Lisp code, automatically adjust close parens" tar
 		 ((:maintainer "Barry O'Reilly" . "gundaetiapo@gmail.com")
 		  (:authors
 		   ("Barry O'Reilly" . "gundaetiapo@gmail.com"))
-		  (:url . "http://elpa.gnu.org/packages/adjust-parens.html"))])
+		  (:url . "https://elpa.gnu.org/packages/adjust-parens.html")
+		  (:commit . "a7e0ece3037821ea438fe401ade6d3c60b3d24e0"))])
  (advice-patch .
 	       [(0 1)
 		((emacs
@@ -164,14 +167,14 @@
 	   ("John Wiegley" . "jwiegley@gmail.com"))
 	  (:commit . "00e07e060218fbd1e16faaf10116c03b12e62580"))])
  (auctex .
-	 [(13 2 3)
+	 [(13 2 4)
 	  ((emacs
 	    (26 1)))
 	  "Integrated environment for *TeX*" tar
 	  ((:url . "https://www.gnu.org/software/auctex/")
 	   (:keywords "tex" "latex" "texinfo" "context" "doctex" "preview-latex")
 	   (:maintainer nil . "auctex-devel@gnu.org")
-	   (:commit . "ef2999e6d7c3232c0fe82d1de89ddda17b88c5b0"))])
+	   (:commit . "62befc2176987f202770b974cbda89314abc254e"))])
  (aumix-mode .
 	     [(7)
 	      nil "run the aumix program in a buffer" single
@@ -1108,7 +1111,7 @@
 	       ("Markus Triska" . "triska@metalevel.at"))
 	      (:commit . "cfcdf9e42821d246b7fbc84877aa4ecacc184a1c"))])
  (eev .
-      [(20240105)
+      [(20240107)
        ((emacs
 	 (24 4)))
        "Support for e-scripts (eepitch blocks, elisp hyperlinks, etc)" tar
@@ -1117,9 +1120,9 @@
 	(:maintainer "Eduardo Ochs" . "eduardoochs@gmail.com")
 	(:authors
 	 ("Eduardo Ochs" . "eduardoochs@gmail.com"))
-	(:commit . "2e57f21bc1e866deef17bfa3bb79da941d803682"))])
+	(:commit . "5d022a462045dfd8d7c23da7ee0e696ed84f1531"))])
  (ef-themes .
-	    [(1 4 1)
+	    [(1 5 0)
 	     ((emacs
 	       (27 1)))
 	     "Colorful and legible themes" tar
@@ -1128,7 +1131,7 @@
 	      (:maintainer "Ef-Themes Development" . "~protesilaos/ef-themes@lists.sr.ht")
 	      (:authors
 	       ("Protesilaos Stavrou" . "info@protesilaos.com"))
-	      (:commit . "abe9503a693e5561db7049606b47459236c2699f"))])
+	      (:commit . "f7659477e583a4ca72dce0364a74ba539c014a2c"))])
  (eglot .
 	[(1 16)
 	 ((emacs
@@ -1196,7 +1199,7 @@
 		     (:url . "https://elpa.gnu.org/packages/elisp-benchmarks.html")
 		     (:commit . "70e38dbfa8f4acbdebfd0f417410d99f5031e05f"))])
  (ellama .
-	 [(0 4 13)
+	 [(0 5 6)
 	  ((emacs
 	    (28 1))
 	   (llm
@@ -1209,7 +1212,7 @@
 	   (:maintainer "Sergey Kostyaev" . "sskostyaev@gmail.com")
 	   (:authors
 	    ("Sergey Kostyaev" . "sskostyaev@gmail.com"))
-	   (:commit . "4bf9c6c08d43779a0ae838ba6a1045772050f8a4"))])
+	   (:commit . "62344f56337d10c39f8a8f1f92d45b8be3618363"))])
  (emacs-gc-stats .
 		 [(1 4 2)
 		  ((emacs
@@ -1276,7 +1279,7 @@
 	   ("Adam Porter" . "adam@alphapapa.net"))
 	  (:commit . "17ea7f6fc11d8e7747c87e9efa76d04e815fd32e"))])
  (emms .
-       [(17)
+       [(18)
 	((cl-lib
 	  (0 5))
 	 (nadvice
@@ -1289,7 +1292,7 @@
 	 (:maintainer "Yoni Rabkin" . "yrk@gnu.org")
 	 (:authors
 	  ("Jorgen Schäfer" . "forcer@forcix.cx"))
-	 (:commit . "192c5d4321ecfaa74790e0e73beaf6ed48715b13"))])
+	 (:commit . "1d7547f3fd2659b1b9a4b4534b4673341ee81c92"))])
  (engrave-faces .
 		[(0 3 1)
 		 ((emacs
@@ -2619,7 +2622,7 @@
 	       ("Omar Antolín Camarena" . "omar@matem.unam.mx"))
 	      (:commit . "847694e78c12d903d5e3f6cb365a5d3b984db537"))])
  (org .
-      [(9 6 15)
+      [(9 6 16)
        ((emacs
 	 (26 1)))
        "Outline-based notes management and organizer" tar
@@ -2628,7 +2631,7 @@
 	(:maintainer "Bastien Guerry" . "bzg@gnu.org")
 	(:authors
 	 ("Carsten Dominik" . "carsten.dominik@gmail.com"))
-	(:commit . "478b40d99e0526edc54acfe723bcdff8354d504a"))])
+	(:commit . "804d032685d4c69a0030b81cff9dc646b3b44991"))])
  (org-contacts .
 	       [(1 1)
 		((emacs
@@ -2734,15 +2737,16 @@
 		  (:url . "https://elpa.gnu.org/packages/org-translate.html")
 		  (:commit . "bdc5d169ef0c502f46aa673918ccf34fcc8415f2"))])
  (orgalist .
-	   [(1 13)
+	   [(1 14)
 	    ((emacs
 	      (24 4)))
-	    "Manage Org-like lists in non-Org buffers" single
-	    ((:url . "http://elpa.gnu.org/packages/orgalist.html")
-	     (:keywords "convenience")
+	    "Manage Org-like lists in non-Org buffers" tar
+	    ((:keywords "convenience")
+	     (:maintainer "Nicolas Goaziou" . "mail@nicolasgoaziou.fr")
 	     (:authors
 	      ("Nicolas Goaziou" . "mail@nicolasgoaziou.fr"))
-	     (:maintainer "Nicolas Goaziou" . "mail@nicolasgoaziou.fr"))])
+	     (:url . "https://elpa.gnu.org/packages/orgalist.html")
+	     (:commit . "06c62e23c7bdeb743ac4d2fc38a25720f2598ff6"))])
  (osc .
       [(0 4)
        nil "Open Sound Control protocol library" tar
@@ -2807,7 +2811,7 @@
 	    ("Junpeng Qiu" . "qjpchmail@gmail.com"))
 	   (:keywords "extensions"))])
  (parser-generator .
-		   [(0 1 6)
+		   [(0 2 0)
 		    ((emacs
 		      (26)))
 		    "Parser Generator library" tar
@@ -2816,7 +2820,7 @@
 		     (:maintainer "Christian Johansson" . "christian@cvj.se")
 		     (:authors
 		      ("Christian Johansson" . "christian@cvj.se"))
-		     (:commit . "db91a5f203ac39bcdfcd5276d3488394361c7f90"))])
+		     (:commit . "6f09a9ca67f7abfbfcec722edfc37ce5a6278c65"))])
  (path-iterator .
 		[(1 0)
 		 ((emacs
@@ -2848,13 +2852,13 @@
 	      ("Harald Jörg" . "haj@posteo.de"))
 	     (:commit . "638009f98a144790ea85fd0fa311d7499fdac94f"))])
  (persist .
-	  [(0 5)
+	  [(0 6)
 	   nil "Persist Variables between Emacs Sessions" tar
-	   ((:maintainer "Phillip Lord" . "phillip.lord@russet.org.uk")
+	   ((:maintainer "Joseph Turner" . "persist-el@breatheoutbreathe.in")
 	    (:authors
 	     ("Phillip Lord" . "phillip.lord@russet.org.uk"))
 	    (:url . "https://elpa.gnu.org/packages/persist.html")
-	    (:commit . "25d675307c03f720e592c3dc9a5a0ae8db0836eb"))])
+	    (:commit . "737d095b4504436e6d870923ed471687f16b992e"))])
  (phps-mode .
 	    [(0 4 46)
 	     ((emacs
@@ -2875,7 +2879,7 @@
 	      ("Daiki Ueno" . "ueno@gnu.org"))
 	     (:maintainer "Daiki Ueno" . "ueno@gnu.org"))])
  (plz .
-      [(0 7 1)
+      [(0 7 2)
        ((emacs
 	 (26 3)))
        "HTTP library" tar
@@ -2884,7 +2888,7 @@
 	(:maintainer "Adam Porter" . "adam@alphapapa.net")
 	(:authors
 	 ("Adam Porter" . "adam@alphapapa.net"))
-	(:commit . "c701f5d3722b38d9e1a4223d7c06e879ddba5e69"))])
+	(:commit . "e98989a1816458d2940f99beda2b85c37f6b1f3e"))])
  (plz-see .
 	  [(0 1)
 	   ((emacs
@@ -3223,7 +3227,7 @@
 	    ("Mattias Engdegård" . "mattiase@acm.org"))
 	   (:commit . "a88d83f420e2fdcfff4408cf967df2b2f9176ba1"))])
  (repology .
-	   [(1 2 3)
+	   [(1 2 4)
 	    ((emacs
 	      (26 1)))
 	    "Repology API access via Elisp" tar
@@ -3232,7 +3236,7 @@
 	     (:authors
 	      ("Nicolas Goaziou" . "mail@nicolasgoaziou.fr"))
 	     (:url . "https://elpa.gnu.org/packages/repology.html")
-	     (:commit . "b5829003decbdbe9002e7e1d29f45989a4659927"))])
+	     (:commit . "a6b41709525e60bdac807f153a3199003ee9d50f"))])
  (rich-minority .
 		[(1 0 3)
 		 ((cl-lib

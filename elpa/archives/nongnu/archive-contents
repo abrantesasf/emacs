@@ -442,7 +442,7 @@
 	 ("Akib Azmain Turja" . "akib@disroot.org"))
 	(:commit . "c91451f2d17453c19d3fa76faa4945cbe54e14ce"))])
  (edit-indirect .
-		[(0 1 10)
+		[(0 1 11)
 		 ((emacs
 		   (24 3)))
 		 "Edit regions in separate buffers" tar
@@ -450,7 +450,7 @@
 		  (:maintainer "Fanael Linithien" . "fanael4@gmail.com")
 		  (:authors
 		   ("Fanael Linithien" . "fanael4@gmail.com"))
-		  (:commit . "f80f63822ffae78de38dbe72cacaeb1aaa96c732"))])
+		  (:commit . "d0378d9747791fcd78370a0e52ec018d5970c482"))])
  (editorconfig .
 	       [(0 10 1)
 		((emacs
@@ -1857,7 +1857,7 @@
 	       ("David Christiansen" . "david@davidchristiansen.dk"))
 	      (:keywords "convenience"))])
  (racket-mode .
-	      [(1 0 20231224 162603)
+	      [(1 0 20240111 83028)
 	       ((emacs
 		 (25 1)))
 	       "Racket editing, REPL, and more" tar
@@ -2433,14 +2433,14 @@
 	      (:authors
 	       ("Le Wang")))])
  (xah-fly-keys .
-	       [(24 19 20240101152046)
+	       [(24 19 20240112095825)
 		((emacs
 		  (27)))
 		"ergonomic modal keybinding minor mode." tar
 		((:url . "http://xahlee.info/emacs/misc/xah-fly-keys.html")
 		 (:keywords "convenience" "vi" "vim" "ergoemacs" "keybinding")
 		 (:maintainer "Xah Lee" . "xah@xahlee.org")
-		 (:commit . "d74760a2553f2b2275495ae99659451156639deb"))])
+		 (:commit . "d3f95185de11b2f4dac6195cc0f0b6df3706e444"))])
  (xkcd .
        [(1 1)
 	((json
