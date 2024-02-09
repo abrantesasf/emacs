@@ -1,4 +1,4 @@
-(define-package "pos-tip" "20230721.834" "Show tooltip at point" 'nil :commit "90a9babc829b298af36be695009894fc00a97935" :authors
+(define-package "pos-tip" "20240209.837" "Show tooltip at point" 'nil :commit "4889e08cf9077c8589ea6fea4e2ce558614dfcde" :authors
   '(("S. Irie"))
   :maintainers
   '(("S. Irie"))
