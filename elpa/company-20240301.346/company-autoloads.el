@@ -154,15 +154,6 @@ comments or strings.
 (register-definition-prefixes "company-dabbrev-code" '("company-dabbrev-code-"))
 
 
-;;; Generated autoloads from company-elisp.el
-
-(autoload 'company-elisp "company-elisp" "\
-`company-mode' completion backend for Emacs Lisp.
-
-(fn COMMAND &optional ARG &rest IGNORED)" t)
-(register-definition-prefixes "company-elisp" '("company-elisp-"))
-
-
 ;;; Generated autoloads from company-etags.el
 
 (autoload 'company-etags "company-etags" "\
