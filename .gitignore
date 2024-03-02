@@ -3,8 +3,8 @@
 
 *~
 \#*\#
-/.emacs.desktop
-/.emacs.desktop.lock
+#/.emacs.desktop
+#/.emacs.desktop.lock
 *.elc
 auto-save-list
 tramp
