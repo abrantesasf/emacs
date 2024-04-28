@@ -351,15 +351,18 @@
 		     ("Nicholas M. Van Horn" . "nvanhorn@protonmail.com"))
 		    (:commit . "81004fc774d373777d426926fc11abcf1e7ab334"))])
  (cycle-at-point .
-		 [(0 1)
+		 [(0 2)
 		  ((emacs
-		    (27 1))
+		    (29 1))
 		   (recomplete
 		    (0 2)))
 		  "Cycle (rotate) the thing under the cursor" tar
-		  ((:url . "https://gitlab.com/ideasman42/emacs-cycle-at-point")
+		  ((:url . "https://codeberg.org/ideasman42/emacs-cycle-at-point")
 		   (:keywords "convenience")
-		   (:commit . "ea22b90f35f4cef73387047b3ef3fad83787d4e2"))])
+		   (:maintainer "Campbell Barton" . "ideasman42@gmail.com")
+		   (:authors
+		    ("Campbell Barton" . "ideasman42@gmail.com"))
+		   (:commit . "83d94733fd8ed64f2ba40f4e1df7ecbfe8260e51"))])
  (d-mode .
 	 [(202003130913)
 	  ((emacs
@@ -2043,15 +2046,15 @@
 	      ("Chen Bin" . "chenbin.sh@gmail.com"))
 	     (:commit . "4e71f5b9199a0ad10017104a6b2bf5ef5f207dfc"))])
  (slime .
-	[(2 29 1)
-	 ((cl-lib
-	   (0 5))
+	[(2 30)
+	 ((emacs
+	   (24 3))
 	  (macrostep
 	   (0 9)))
 	 "Superior Lisp Interaction Mode for Emacs" tar
 	 ((:url . "https://github.com/slime/slime")
 	  (:keywords "languages" "lisp" "slime")
-	  (:commit . "d85dd9899f7524513c8ad1bd47b0dd248b1915cb"))])
+	  (:commit . "ef2af895a9e79306f0789e72b101aa39e960c900"))])
  (sly .
       [(1 0 43)
        ((emacs
@@ -2472,14 +2475,14 @@
 	     ((:url . "https://github.com/lewang/ws-butler")
 	      (:commit . "323b651dd70ee40a25accc940b8f80c3a3185205"))])
  (xah-fly-keys .
-	       [(24 24 20240406145635)
+	       [(25 1 20240423172921)
 		((emacs
 		  (27)))
 		"ergonomic modal keybinding minor mode." tar
 		((:url . "http://xahlee.info/emacs/misc/xah-fly-keys.html")
 		 (:keywords "convenience" "vi" "vim" "ergoemacs" "keybinding")
 		 (:maintainer "Xah Lee" . "xah@xahlee.org")
-		 (:commit . "ab78ee6092507be9a8b45dee54f69d93c1f055e6"))])
+		 (:commit . "c9b5215c009aa6a9ee5e291e07489d8e9c6ec741"))])
  (xkcd .
        [(1 1)
 	((json
