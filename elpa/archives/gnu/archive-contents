@@ -587,6 +587,19 @@
 	       (:authors
 		("Augusto Stoffel" . "arstoffel@gmail.com"))
 	       (:commit . "44546ca256f3da29e3ac884e3d699c8455acbd6e"))])
+ (colorful-mode .
+		[(1 0 0)
+		 ((emacs
+		   (28 1))
+		  (compat
+		   (29 1 4 4)))
+		 "Preview any color in your buffer in real time" tar
+		 ((:url . "https://github.com/DevelopmentCool2449/colorful-mode")
+		  (:keywords "faces" "tools" "matching")
+		  (:maintainer "Elias G. Perez" . "eg642616@gmail.com")
+		  (:authors
+		   ("Elias G. Perez" . "eg642616@gmail.com"))
+		  (:commit . "9d1e386f7ed3493b0196cf699bdd17d5610d43b3"))])
  (comint-mime .
 	      [(0 4)
 	       ((emacs
@@ -1224,7 +1237,7 @@
 	 ("Eduardo Ochs" . "eduardoochs@gmail.com"))
 	(:commit . "eda749bc689591a8f43a98e002d63b4ef2d4602d"))])
  (ef-themes .
-	    [(1 6 1)
+	    [(1 7 0)
 	     ((emacs
 	       (27 1)))
 	     "Colorful and legible themes" tar
@@ -1233,7 +1246,7 @@
 	      (:maintainer "Protesilaos Stavrou" . "info@protesilaos.com")
 	      (:authors
 	       ("Protesilaos Stavrou" . "info@protesilaos.com"))
-	      (:commit . "96aaab126510bfd303558e2a9b85a745dab32f41"))])
+	      (:commit . "4d7cd1fdef459b9f76b9c1f35ec063d0eafe469a"))])
  (eglot .
 	[(1 17)
 	 ((emacs
@@ -2700,14 +2713,14 @@
 		(:maintainer "Nicolas P. Rougier" . "Nicolas.Rougier@inria.fr")
 		(:commit . "6c38e95b8e846aceb88398c682fd283052924556"))])
  (nano-modeline .
-		[(1 0 1)
+		[(1 1 0)
 		 ((emacs
 		   (27 1)))
 		 "N Λ N O modeline" tar
 		 ((:url . "https://github.com/rougier/nano-modeline")
 		  (:keywords "convenience" "mode-line" "header-line")
 		  (:maintainer "Nicolas P. Rougier" . "Nicolas.Rougier@inria.fr")
-		  (:commit . "a18780c277838983932623870752f0adddef0345"))])
+		  (:commit . "04676d57a1e602123a593836745a744d1b2028fb"))])
  (nano-theme .
 	     [(0 3 4)
 	      ((emacs
@@ -3805,7 +3818,7 @@
 	     ("Artur Malabarba" . "emacs@endlessparentheses.com"))
 	    (:commit . "fffe8d0b42b143a2e7df0470d9049fa57b6ecac5"))])
  (spacious-padding .
-		   [(0 4 1)
+		   [(0 5 0)
 		    ((emacs
 		      (28 1)))
 		    "Increase the padding/spacing of frames and windows" tar
@@ -3814,7 +3827,7 @@
 		     (:maintainer "Protesilaos Stavrou" . "info@protesilaos.com")
 		     (:authors
 		      ("Protesilaos Stavrou" . "info@protesilaos.com"))
-		     (:commit . "21be66a8293292234a7e4624c35f6645a044f7fa"))])
+		     (:commit . "e48f3335f50217e40081631abacc40964150f3ab"))])
  (spinner .
 	  [(1 7 4)
 	   ((emacs
