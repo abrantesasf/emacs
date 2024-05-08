@@ -1,0 +1,6 @@
+" Configuração para o OCaml:
+"set rtp^="/home/computacao/.opam/default/share/ocp-indent/vim"
+
+" Numeração de linhas:
+"set nonumber
+set number
