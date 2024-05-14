@@ -1,12 +1,12 @@
-(define-package "macrostep" "20240509.2157" "Interactive macro expander"
+(define-package "macrostep" "20240513.2203" "Interactive macro expander"
   '((cl-lib "0.5")
     (compat "29"))
-  :commit "31d4adcca4f08cfd7a45f85e691aaa7a9316b355" :authors
+  :commit "4939d88779761e8b5461b4cf73f86600172987db" :authors
   '(("Jon Oddie" . "j.j.oddie@gmail.com"))
   :maintainers
-  '(("Jon Oddie" . "j.j.oddie@gmail.com"))
+  '(("Jeremy Bryant" . "jb@jeremybryant.net"))
   :maintainer
-  '("Jon Oddie" . "j.j.oddie@gmail.com")
+  '("Jeremy Bryant" . "jb@jeremybryant.net")
   :keywords
   '("lisp" "languages" "macro" "debugging")
   :url "https://github.com/emacsorphanage/macrostep")
