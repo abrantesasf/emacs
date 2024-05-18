@@ -1,0 +1,18 @@
+# -*- mode: snippet -*-
+# name: cs50argc
+# key: cs50argc
+# --
+/**
+ * 
+ */
+
+/* INCLUDES */
+#include <cs50.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+/* MAIN */
+int main(int argc, string argv[])
+{
+    return EXIT_SUCCESS;
+}
