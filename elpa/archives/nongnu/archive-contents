@@ -837,7 +837,7 @@
 		("Akib Azmain Turja" . "akib@disroot.org"))
 	       (:commit . "ce2ea016a67b200862788e81f0ff1f8f7e4e0454"))])
  (geiser .
-	 [(0 30)
+	 [(0 31)
 	  ((emacs
 	    (27 1))
 	   (project
@@ -848,7 +848,7 @@
 	   (:maintainer "Jose Antonio Ortega Ruiz" . "(jao@gnu.org)")
 	   (:authors
 	    ("Jose Antonio Ortega Ruiz" . "(jao@gnu.org)"))
-	   (:commit . "f343592a52da0f947989d07c208a51ad6c972a5e"))])
+	   (:commit . "b6b4ac070d136345345c80ff649f0084e3c512a5"))])
  (geiser-chez .
 	      [(0 18)
 	       ((emacs
@@ -1460,7 +1460,7 @@
 		   ("Jason R. Blevins" . "jblevins@xbeta.org"))
 		  (:commit . "193b61605f44c85d261b8bd82e0a213fd8f1ff32"))])
  (mastodon .
-	   [(1 0 12)
+	   [(1 0 21)
 	    ((emacs
 	      (27 1))
 	     (request
@@ -1473,7 +1473,7 @@
 	     (:authors
 	      ("Johnson Denen" . "johnson.denen@gmail.com")
 	      ("Marty Hiatt" . "martianhiatus@riseup.net"))
-	     (:commit . "cd2d6f23b4f7af63df3000f2fb68227c22bc8dee"))])
+	     (:commit . "316ab00be17e4b86a16319301f74708ecf2e13ca"))])
  (material-theme .
 		 [(2015)
 		  ((emacs
@@ -2002,7 +2002,7 @@
 	      (:keywords "markup" "language" "css")
 	      (:commit . "aee28ea552dce5aade05d8a7f91514e6eb37e59f"))])
  (scad-mode .
-	    [(93 3)
+	    [(94 0)
 	     ((emacs
 	       (27 1))
 	      (compat
@@ -2013,7 +2013,7 @@
 	      (:maintainer
 	       ("Len Trigg" . "lenbok@gmail.com")
 	       ("Daniel Mendler" . "mail@daniel-mendler.de"))
-	      (:commit . "8d5650c5cfee96c42d64427bfcadb89f6bda66be"))])
+	      (:commit . "3c32b141f083c31539bb24700eb0aa23ea55918c"))])
  (scala-mode .
 	     [(0 23)
 	      nil "Major mode for editing Scala" tar
@@ -2489,14 +2489,14 @@
 	     ((:url . "https://github.com/lewang/ws-butler")
 	      (:commit . "323b651dd70ee40a25accc940b8f80c3a3185205"))])
  (xah-fly-keys .
-	       [(25 5 20240515230030)
+	       [(25 6 20240523134425)
 		((emacs
 		  (27)))
 		"ergonomic modal keybinding minor mode." tar
 		((:url . "http://xahlee.info/emacs/misc/xah-fly-keys.html")
 		 (:keywords "convenience" "vi" "vim" "ergoemacs" "keybinding")
 		 (:maintainer "Xah Lee" . "xah@xahlee.org")
-		 (:commit . "c8a34178419058c0fcdb821ae6c958a1e7f5d95e"))])
+		 (:commit . "470c612021ad5370312feefeed48fdcb30088145"))])
  (xkcd .
        [(1 1)
 	((json
