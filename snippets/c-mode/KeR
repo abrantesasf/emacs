@@ -1,0 +1,18 @@
+# -*- mode: snippet -*-
+# name: Kernighan & Ritchie
+# key: ker
+# --
+/**
+ * The C Programming Language
+ * Brian W. Kernighan & Dennis M. Ritchie
+ * 2ª edição, 1988
+ * 
+ * c_s_c.c (página )
+ */
+
+#include <stdio.h>
+
+int main (void)
+{
+    
+}
