@@ -1,0 +1,24 @@
+# -*- mode: snippet -*-
+# name: Exam class: verdadeiro ou falxo
+# key: exvf
+# --
+\question
+
+\begin{parts}
+  \part \vf[V] 
+  \part \vf[F] 
+  \part \vf[V] 
+  \part \vf[V] 
+  \part \vf[F] 
+  \part \vf[F] 
+\end{parts}
+
+Assinale a alternativa que mostra a seqüência correta de letras V e F,
+de cima para baixo:
+\begin{choices}
+\choice 
+\choice 
+\choice 
+\choice 
+\choice 
+\end{choices}

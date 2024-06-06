@@ -1,0 +1,23 @@
+# -*- mode: snippet -*-
+# name: Exam class: asserção razao
+# key: exassraz
+# --
+\question
+
+\begin{itemize}
+\item[I.] 
+          \begin{center}
+          PORQUE
+          \end{center}
+\item[II.] 
+\end{itemize}
+A respeito dessas asserções, assinale a opção correta:
+\begin{choices}
+\choice As asserções I e II são proposições verdadeiras, e a II é uma
+        justificativa correta da I.
+\choice As asserções I e II são proposições verdadeiras, mas a II não é uma
+        justificativa correta da I.
+\choice A asserção I é uma proposição verdadeira, e a II é uma proposição falsa.
+\choice A asserção I é uma proposição falsa, e a II é uma proposição verdadeira.
+\choice As asserções I e II são proposições falsas.
+\end{choices}

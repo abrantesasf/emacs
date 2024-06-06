@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+# name: Exam class: choices
+# key: exchoices
+# --
+\question
+
+\begin{choices}
+\choice 
+\choice 
+\choice 
+\choice 
+\choice
+\end{choices}

@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# name: Exam class: one parapraph choices
+# key: exoneparchoices
+# --
+\question
+
+
+\hspace{0.92cm}\begin{oneparchoices}
+\choice 
+\choice 
+\choice 
+\choice 
+\choice 
+\end{oneparchoices}

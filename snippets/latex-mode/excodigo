@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: Exam class: bloco de código
+# key: excodigo
+# --
+\question
+
+\begin{tcolorbox}\smaller
+\begin{verbatim}
+
+\end{verbatim}
+\end{tcolorbox}
