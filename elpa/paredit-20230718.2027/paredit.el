@@ -1,11 +1,9 @@
 ;;; paredit.el --- minor mode for editing parentheses  -*- Mode: Emacs-Lisp -*-
 
-;; Copyright (C) 2005--2022 Taylor R. Campbell
+;; Copyright (C) 2005--2023 Taylor R. Campbell
 
 ;; Author: Taylor R. Campbell <campbell@paredit.org>
 ;; Version: 27beta
-;; Package-Version: 20221127.1452
-;; Package-Commit: d700549d8aad684f1fabcfff565a9ad8b468199b
 ;; Created: 2005-07-31
 ;; Keywords: lisp
 ;; URL: https://paredit.org
@@ -915,7 +913,7 @@ If in a character literal, do nothing.  This prevents accidentally
 
 (defun paredit-meta-doublequote (&optional n)
   "Move to the end of the string.
-If not in a string, act as `paredit-doublequote'; if not prefix argument
+If not in a string, act as `paredit-doublequote'; if no prefix argument
  is specified and the region is not active or `transient-mark-mode' is
  disabled, the default is to wrap one S-expression, however, not zero."
   (interactive "P")
@@ -925,7 +923,7 @@ If not in a string, act as `paredit-doublequote'; if not prefix argument
 
 (defun paredit-meta-doublequote-and-newline (&optional n)
   "Move to the end of the string, insert a newline, and indent.
-If not in a string, act as `paredit-doublequote'; if not prefix argument
+If not in a string, act as `paredit-doublequote'; if no prefix argument
  is specified and the region is not active or `transient-mark-mode' is
  disabled, the default is to wrap one S-expression, however, not zero."
   (interactive "P")
@@ -1956,7 +1954,7 @@ If there are no more S-expressions in this one before the closing
 (defun-motion paredit-backward (&optional arg)
   "Move backward an S-expression, or up an S-expression backward.
 If there are no more S-expressions in this one before the opening
-  delimiter, move past that opening delimiter backward; otherwise, move
+  delimiter, move past that opening delimiter backward; otherwise,
   move backward past the S-expression preceding the point."
   (let ((n (or arg 1)))
     (cond ((< 0 n) (dotimes (i n)       (paredit-move-backward)))

@@ -596,9 +596,8 @@ instead of in the one whose root `magit-root-section' is."
 
 (defun magit-section-lineage (section &optional raw)
   "Return the lineage of SECTION.
-If optional RAW is non-nil, return a list of section object
-beginning with SECTION, otherwise return a list of section
-types."
+If optional RAW is non-nil, return a list of section objects, beginning
+with SECTION, otherwise return a list of section types."
   (cons (if raw section (oref section type))
         (and-let* ((parent (oref section parent)))
           (magit-section-lineage parent raw))))
@@ -2407,7 +2406,7 @@ with the variables' values as arguments, which were recorded by
 
 ;;; Bitmaps
 
-(when (fboundp 'define-fringe-bitmap)
+(when (fboundp 'define-fringe-bitmap) ;for Emacs 26
   (define-fringe-bitmap 'magit-fringe-bitmap+
     [#b00000000
      #b00011000
@@ -2417,6 +2416,7 @@ with the variables' values as arguments, which were recorded by
      #b00011000
      #b00011000
      #b00000000])
+
   (define-fringe-bitmap 'magit-fringe-bitmap-
     [#b00000000
      #b00000000
@@ -2436,6 +2436,7 @@ with the variables' values as arguments, which were recorded by
      #b00110000
      #b01100000
      #b00000000])
+
   (define-fringe-bitmap 'magit-fringe-bitmapv
     [#b00000000
      #b10000010
@@ -2455,6 +2456,7 @@ with the variables' values as arguments, which were recorded by
      #b00111000
      #b01110000
      #b11100000])
+
   (define-fringe-bitmap 'magit-fringe-bitmap-boldv
     [#b10000001
      #b11000011

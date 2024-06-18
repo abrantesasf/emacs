@@ -200,9 +200,10 @@ Function magit-section-at &optional position
      then search in that section tree instead of in the one whose root
      ‘magit-root-section’ is.
 
- -- Function: magit-section-lineage section
-     Return the lineage of SECTION.  The return value has the form
-     ‘(TYPE...)’.
+ -- Function: magit-section-lineage section &optional raw
+     Return the lineage of SECTION.  If optional RAW is non-nil, return
+     a list of section objects, beginning with SECTION, otherwise return
+     a list of section types.
 
  -- Function: magit-section-content-p section
      Return non-nil if SECTION has content or an unused washer function.
@@ -299,7 +300,7 @@ Node: Top808
 Node: Introduction2116
 Node: Creating Sections2886
 Node: Core Functions7394
-Node: Matching Functions10446
+Node: Matching Functions10546
 
 End Tag Table
 
