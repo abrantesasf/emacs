@@ -1,4 +1,4 @@
-This is slime.info, produced by makeinfo version 6.7 from slime.texi.
+This is slime.info, produced by makeinfo version 6.8 from slime.texi.
 
 Written by Luke Gorrie and others.
 
@@ -15,7 +15,7 @@ SLIME
 *****
 
 SLIME is the “Superior Lisp Interaction Mode for Emacs”.  This is the
-manual for version 2.30.  (Last updated July 3, 2024)
+manual for version 2.30.  (Last updated July 9, 2024)
 
    Written by Luke Gorrie and others.
 
@@ -2287,7 +2287,7 @@ File: slime.info,  Node: Compound Completion,  Next: Fuzzy Completion,  Prev: in
 
 The package ‘slime-c-p-c’ provides a different symbol completion
 algorithm, which performs completion “in parallel” over the
-hyphen-delimited sub-words of a symbol name.  (1) Formally this means
+hyphen-delimited sub-words of a symbol name.  (1)  Formally this means
 that “‘a-b-c’” can complete to any symbol matching the regular
 expression “‘^a.*-b.*-c.*’” (where “dot” matches anything but a hyphen).
 Examples give a more intuitive feeling:
@@ -3684,32 +3684,32 @@ Node: slime-mrepl76207
 Node: inferior-slime-mode76715
 Node: Compound Completion77420
 Ref: slime-complete-symbol*77597
-Ref: Compound Completion-Footnote-180849
-Node: Fuzzy Completion80973
-Ref: slime-fuzzy-complete-symbol81226
-Node: slime-autodoc-mode84518
-Node: ASDF85936
-Node: Banner87894
-Node: Editing Commands88340
-Node: Fancy Inspector89967
-Node: Presentations90698
-Ref: Presentations-Footnote-197254
-Node: Typeout frames97495
-Node: TRAMP98619
-Node: Documentation Links98895
-Node: Xref and Class Browser99320
-Node: Highlight Edits99912
-Node: Scratch Buffer100384
-Ref: slime-scratch100546
-Node: SLIME Trace Dialog101201
-Node: slime-sprof105189
-Node: SLIME Enhanced M-.106177
-Node: slime-fancy106559
-Node: Quicklisp106915
-Node: Credits107443
-Node: Key Index113943
-Node: Command Index125733
-Node: Variable Index140975
+Ref: Compound Completion-Footnote-180850
+Node: Fuzzy Completion80974
+Ref: slime-fuzzy-complete-symbol81227
+Node: slime-autodoc-mode84519
+Node: ASDF85937
+Node: Banner87895
+Node: Editing Commands88341
+Node: Fancy Inspector89968
+Node: Presentations90699
+Ref: Presentations-Footnote-197255
+Node: Typeout frames97496
+Node: TRAMP98620
+Node: Documentation Links98896
+Node: Xref and Class Browser99321
+Node: Highlight Edits99913
+Node: Scratch Buffer100385
+Ref: slime-scratch100547
+Node: SLIME Trace Dialog101202
+Node: slime-sprof105190
+Node: SLIME Enhanced M-.106178
+Node: slime-fancy106560
+Node: Quicklisp106916
+Node: Credits107444
+Node: Key Index113944
+Node: Command Index125734
+Node: Variable Index140976
 
 End Tag Table
 
