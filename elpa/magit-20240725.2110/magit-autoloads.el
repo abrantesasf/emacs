@@ -1005,6 +1005,9 @@ Switch to a Magit buffer belonging to the current Git repository.
 Abort current operation.
 Depending on the context, this will abort a merge, a rebase, a
 patch application, a cherry-pick, a revert, or a bisect." t)
+(autoload 'magit-back-to-indentation "magit-extras" "\
+Move point to the first non-whitespace character on this line.
+In Magit diffs, also skip over - and + at the beginning of the line." t)
 (register-definition-prefixes "magit-extras" '("magit-"))
 
 
