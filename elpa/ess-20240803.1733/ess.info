@@ -1,4 +1,4 @@
-This is ess.info, produced by makeinfo version 6.7 from ess.texi.
+This is ess.info, produced by makeinfo version 6.8 from ess.texi.
 
 INFO-DIR-SECTION Emacs
 START-INFO-DIR-ENTRY
@@ -4297,7 +4297,7 @@ File: ess.info,  Node: iESS(SAS)--Common problems,  Next: ESS(SAS)--Graphics,  P
 
   1. iESS[SAS] does not work on Windows.  In order to run SAS inside an
      emacs buffer, it is necessary to start SAS with the '-stdio'
-     option. SAS does not support the '-stdio' option on Windows.
+     option.  SAS does not support the '-stdio' option on Windows.
   2. If 'M-x SAS' gives errors upon startup, check the following:
         * you are running Windows: see 1.
         * 'ess-sas-sh-command' (from the ESS 'etc' directory) needs to
@@ -4857,7 +4857,7 @@ Variable index
 * ess-function-template:                 Edit buffer.          (line 17)
 * ess-handy-commands:                    Handy commands.       (line  6)
 * ess-handy-commands <1>:                Handy commands.       (line  9)
-* ess-indent-with-fancy-comments:        Indenting.            (line 27)
+* ess-indent-with-fancy-comments:        Indenting.            (line 28)
 * ess-keep-dump-files:                   Source Files.         (line 26)
 * ess-plain-first-buffername:            Multiple ESS processes.
                                                                (line 14)
@@ -5130,21 +5130,21 @@ Node: ESS(SAS)--Batch SAS processes165105
 Node: ESS(SAS)--Function keys for batch processing170133
 Node: iESS(SAS)--Interactive SAS processes179620
 Node: iESS(SAS)--Common problems183374
-Node: ESS(SAS)--Graphics184897
-Node: ESS(SAS)--Windows185680
-Node: ESS for BUGS186258
-Node: ESS for JAGS188014
-Node: Mailing lists/bug reports191366
-Node: Bugs191630
-Node: Reporting Bugs193254
-Node: Mailing Lists194147
-Node: Help with Emacs194874
-Node: Customization195406
-Node: Indices196180
-Node: Key index196355
-Node: Function and program index201487
-Node: Variable index210907
-Node: Concept index214468
+Node: ESS(SAS)--Graphics184898
+Node: ESS(SAS)--Windows185681
+Node: ESS for BUGS186259
+Node: ESS for JAGS188015
+Node: Mailing lists/bug reports191367
+Node: Bugs191631
+Node: Reporting Bugs193255
+Node: Mailing Lists194148
+Node: Help with Emacs194875
+Node: Customization195407
+Node: Indices196181
+Node: Key index196356
+Node: Function and program index201488
+Node: Variable index210908
+Node: Concept index214469
 
 End Tag Table
 
