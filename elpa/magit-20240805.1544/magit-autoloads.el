@@ -1354,7 +1354,7 @@ is asked to pull.  START has to be reachable from that commit.
 
 ;;; Generated autoloads from magit-process.el
 
-(register-definition-prefixes "magit-process" '("magit-" "tramp-sh-handle-"))
+(register-definition-prefixes "magit-process" '("magit-"))
 
 
 ;;; Generated autoloads from magit-pull.el
@@ -2238,6 +2238,7 @@ Move WORKTREE to PATH.
 
 (fn WORKTREE PATH)" t)
 (register-definition-prefixes "magit-worktree" '("magit-"))
+
 
 ;;; End of scraped data
 
