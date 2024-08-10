@@ -141,7 +141,7 @@ Same as `byte-compile-file' but asynchronous.
 
 ;;; Generated autoloads from async-package.el
 
-(register-definition-prefixes "async-package" '("async-package-"))
+(register-definition-prefixes "async-package" '("async-p"))
 
 
 ;;; Generated autoloads from dired-async.el

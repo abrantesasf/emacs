@@ -477,7 +477,7 @@ It respects option `doom-modeline-icon'."
   :type 'boolean
   :group 'doom-modeline)
 
-(defcustom doom-modeline-vcs-max-length 12
+(defcustom doom-modeline-vcs-max-length 15
   "The maximum displayed length of the branch name of version control."
   :type 'integer
   :group 'doom-modeline)
@@ -1436,7 +1436,7 @@ ARGS is same as `nerd-icons-octicon' and others."
 
 (defun doom-modeline-vcs-name ()
   "Display the vcs name."
-  (and vc-mode (cadr (split-string vc-mode "[:-]+"))))
+  (and vc-mode (cadr (split-string (string-trim vc-mode) "^[A-Z]+[-:]+"))))
 
 (defun doom-modeline--create-bar-image (face width height)
   "Create the bar image.

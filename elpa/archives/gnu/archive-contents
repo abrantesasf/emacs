@@ -351,9 +351,9 @@
 	      ("John Wiegley" . "johnw@newartisans.com"))
 	     (:commit . "4932ed21d40f9e8ad48ad2a1f086fdf9b3847ac9"))])
  (blist .
-	[(0 3)
+	[(0 4)
 	 ((ilist
-	   (0 1))
+	   (0 4))
 	  (emacs
 	   (24)))
 	 "Display bookmarks in an ibuffer way" tar
@@ -362,7 +362,7 @@
 	  (:maintainer "Durand" . "durand@jsdurand.xyz")
 	  (:authors
 	   ("Durand" . "durand@jsdurand.xyz"))
-	  (:commit . "9e1054d3cb2b796704ebeb2575b29ad70f0bb21c"))])
+	  (:commit . "f5751add5626ad437459e484b66219952287c517"))])
  (bluetooth .
 	    [(0 3 1)
 	     ((emacs
@@ -860,7 +860,7 @@
 		 ("Theodor Thornhill" . "theo@thornhill.no"))
 		(:commit . "02c61c219b2c22491eff9b7315fed661fab423d4"))])
  (csv-mode .
-	   [(1 26)
+	   [(1 27)
 	    ((emacs
 	      (27 1))
 	     (cl-lib
@@ -871,7 +871,7 @@
 	     (:authors
 	      ("Francis J. Wright" . "F.J.Wright@qmul.ac.uk"))
 	     (:url . "https://elpa.gnu.org/packages/csv-mode.html")
-	     (:commit . "388bcb9a77118d7b7d9c42aa8b3f9fa2c892b930"))])
+	     (:commit . "a16e9d8b0952de1badf6da8e652b178a7f6c4498"))])
  (cursor-undo .
 	      [(1 1 4)
 	       nil "Undo Cursor Movement" tar
@@ -1981,13 +1981,13 @@
 	     (:url . "https://elpa.gnu.org/packages/greenbar.html")
 	     (:commit . "9526f29d073c533c3e54f0a7597eef1587ffb99e"))])
  (gtags-mode .
-	     [(1 8)
+	     [(1 8 1)
 	      ((emacs
 		(28)))
 	      "GNU Global integration with xref, project and imenu." tar
 	      ((:url . "https://github.com/Ergus/gtags-mode")
 	       (:keywords "xref" "project" "imenu" "gtags" "global")
-	       (:commit . "e29c7d7bc0081f252786a28fbe2a2eb048861c65"))])
+	       (:commit . "bdf5442efd8e8fae4610b0a73daca6ee81a5b0c4"))])
  (guess-language .
 		 [(0 0 1)
 		  ((cl-lib
@@ -2093,14 +2093,14 @@
 	    (:url . "https://elpa.gnu.org/packages/idlwave.html")
 	    (:commit . "e1fcd7244cb32df1e90b09729e53474e50a2e808"))])
  (ilist .
-	[(0 3)
+	[(0 4)
 	 nil "Display a list in an ibuffer way." tar
 	 ((:url . "https://gitlab.com/mmemmew/ilist")
 	  (:keywords "convenience")
 	  (:maintainer "Durand" . "mmemmew@gmail.com")
 	  (:authors
 	   ("Durand" . "mmemmew@gmail.com"))
-	  (:commit . "3f433899ce9ce6a3d6477ae7c9362c8c202f04fb"))])
+	  (:commit . "5a57e52122fe483fa9bd39049c13a25334e408da"))])
  (inspector .
 	    [(0 37)
 	     ((emacs
