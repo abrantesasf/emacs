@@ -644,7 +644,7 @@ It requires `circe' or `erc' package."
   :type 'boolean
   :group 'doom-modeline)
 
-(defcustom doom-modeline-irc-stylize 'identity
+(defcustom doom-modeline-irc-stylize #'doom-modeline-shorten-irc
   "Function to stylize the irc buffer names."
   :type 'function
   :group 'doom-modeline)
@@ -1025,6 +1025,7 @@ Also see the face `doom-modeline-unread-number'."
 
 (defvar mode-line-right-align-edge)
 
+(declare-function doom-modeline-shorten-irc "doom-modeline-segments")
 (declare-function face-remap-remove-relative "face-remap")
 (declare-function ffip-project-root "ext:find-file-in-project")
 (declare-function project-root "project")
