@@ -635,7 +635,7 @@ Groups' names list in `gnus-newsrc-alist'`"
 (defcustom doom-modeline-irc t
   "Whether display the irc notifications.
 
-It requires `circe' or `erc' package."
+It requires either `circe' , `erc' or `rcirc' package."
   :type 'boolean
   :group 'doom-modeline)
 
@@ -645,8 +645,21 @@ It requires `circe' or `erc' package."
   :group 'doom-modeline)
 
 (defcustom doom-modeline-irc-stylize #'doom-modeline-shorten-irc
-  "Function to stylize the irc buffer names."
-  :type 'function
+  "Which function to call to stylize IRC buffer names.
+
+Buffer names are stylized using the selected `function'.
+By default buffer names are shortened, you may want to disable or call
+your own function.
+The function must accept `buffer-name' and return `shortened-name'."
+  :type '(radio (function-item :tag "Shorten"
+                               :format "%t: %v\n %h"
+                               doom-modeline-shorten-irc)
+                (function-item
+                 :tag "Leave unchanged"
+                 :format "%t: %v\n"
+                 identity)
+                (function
+                 :tag "Other function"))
   :group 'doom-modeline)
 
 (defcustom doom-modeline-battery t
