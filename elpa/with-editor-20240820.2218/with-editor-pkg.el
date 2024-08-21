@@ -1,7 +1,7 @@
-(define-package "with-editor" "20240817.1959" "Use the Emacsclient as $EDITOR"
+(define-package "with-editor" "20240820.2218" "Use the Emacsclient as $EDITOR"
   '((emacs "26.1")
     (compat "30.0.0.0"))
-  :commit "8c550d9e799a0baedb2164471e7ed19fc15d9196" :authors
+  :commit "35cbd2b64e2bea43c1832d4a973e6032c75ae3bf" :authors
   '(("Jonas Bernoulli" . "emacs.with-editor@jonas.bernoulli.dev"))
   :maintainers
   '(("Jonas Bernoulli" . "emacs.with-editor@jonas.bernoulli.dev"))
