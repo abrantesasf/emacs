@@ -42,5 +42,5 @@
 ;;(add-to-list 'default-frame-alist 
 ;;	     '(font . "-DAMA-Ubuntu Mono-normal-normal-normal-*-31-*-*-*-m-0-iso10646-1"))
 (add-to-list 'default-frame-alist 
-	     '(font . "Courier Prime-25"))
+	     '(font . "Courier Prime-23"))
 ;;(set-frame-font "Courier Prime" nil t)
