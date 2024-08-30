@@ -41,4 +41,6 @@
 ;;      (message "%s" (font-family-list))
 ;;(add-to-list 'default-frame-alist 
 ;;	     '(font . "-DAMA-Ubuntu Mono-normal-normal-normal-*-31-*-*-*-m-0-iso10646-1"))
-(set-frame-font "Courier Prime-17" nil t)
+(add-to-list 'default-frame-alist 
+	     '(font . "-Courier Prime-normal-normal-normal-*-31-*-*-*-m-0-iso10646-1"))
+;;(set-frame-font "Courier Prime-17" nil t)
