@@ -12,10 +12,7 @@
   (write-file nome-arquivo-ps)
   (kill-buffer (buffer-name))
   (setq pdf-target-name (concat (file-name-sans-extension nome-arquivo) ".pdf"))
-  (setq cmd (concat "ps2pdf14 -dPDFSETTINGS=/prepress "
-		    "-sAUTHOR=\"teste\" "
-		    nome-arquivo-ps " \"" pdf-target-name "\""))
-  ;;(setq cmd (concat "ps2pdf14 -dPDFSETTINGS=/prepress -dAUTHOR=\"Abrantes Araújo Silva Filho\" " nome-arquivo-ps " \"" pdf-target-name "\""))
+  (setq cmd (concat "ps2pdf14 " nome-arquivo-ps " \"" pdf-target-name "\""))
   (shell-command cmd)
   (setq cmd (concat "rm " nome-arquivo-ps))
   (shell-command cmd)
