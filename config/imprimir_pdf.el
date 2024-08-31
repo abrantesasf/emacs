@@ -5,6 +5,7 @@
 
 (defun print-to-pdf ()
   (interactive)
+  (setq ps-printer-name-option '("-dAUTHOR=\"Abrantes Araújo Silva Filho\""))
   (ps-spool-buffer-with-faces)
   (setq nome-arquivo (buffer-file-name))
   (switch-to-buffer "*PostScript*")
