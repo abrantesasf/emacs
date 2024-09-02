@@ -1,10 +1,4 @@
-(define-package "git-commit" "20240830.2117" "Edit Git commit messages"
-  '((emacs "26.1")
-    (compat "30.0.0.0")
-    (seq "2.24")
-    (transient "0.7.4")
-    (with-editor "3.4.1"))
-  :commit "fbcd6d67a637f03f8b48291fa7fe2c78488ca9d3" :authors
+(define-package "git-commit" "20240831.2335" "This package has been merged into magit" 'nil :commit "9be8a4ab7a7dc6f34615f1011e8da263651c8f87" :authors
   '(("Jonas Bernoulli" . "emacs.magit@jonas.bernoulli.dev")
     ("Sebastian Wiesner" . "lunaryorn@gmail.com")
     ("Florian Ragwitz" . "rafl@debian.org")

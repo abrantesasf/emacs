@@ -289,7 +289,7 @@ package::.
      instead of ‘EDITOR’.
 
  -- Macro: with-editor* envvar &rest body
-     This macro is like ‘with-editor’ instead that the ENVVAR argument
+     This macro is like ‘with-editor’, except that the ENVVAR argument
      is required and that it is evaluated at run-time.
 
  -- Function: with-editor-set-process-filter process filter
