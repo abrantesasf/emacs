@@ -298,7 +298,12 @@ Uses `nerd-icons-mdicon' to fetch the icon."
         (when doom-modeline-buffer-state-icon
           (ignore-errors
             (concat
-             (cond (buffer-read-only
+             (cond ((not (or (and (buffer-file-name) (file-remote-p buffer-file-name))
+                             (verify-visited-file-modtime (current-buffer))))
+                    (doom-modeline-buffer-file-state-icon
+                     "nf-md-reload_alert" "⟳" "%1*"
+                     'doom-modeline-warning))
+                   (buffer-read-only
                     (doom-modeline-buffer-file-state-icon
                      "nf-md-lock" "🔒" "%1*"
                      'doom-modeline-warning))
@@ -2059,8 +2064,8 @@ mouse-1: Reload to start server")
                            (t 'doom-modeline-lsp-warning)))
                (server-info (and server (eglot--server-info server)))
                (server-name (or (plist-get server-info :name)
-                                (jsonrpc-name server) ""))
-               (major-modes (or (and server-info (eglot--major-modes server)) ""))
+                                (and server (jsonrpc-name server)) ""))
+               (major-modes (or (and server (eglot--major-modes server)) ""))
                (icon (doom-modeline-lsp-icon eglot-menu-string face)))
           (propertize icon
                       'help-echo (format "Eglot connected [%s]\n%s %s
