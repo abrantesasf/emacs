@@ -1281,27 +1281,29 @@
 	    (:url . "https://elpa.nongnu.org/nongnu/htmlize.html")
 	    (:commit . "7b63aa058c3dd0d9f8c07706cd8bb4e56aaa1fb3"))])
  (hyperdrive .
-	     [(0 3)
+	     [(0 4 1)
 	      ((emacs
 		(28 1))
 	       (map
 		(3 0))
 	       (compat
-		(29 1 4 0))
+		(30 0 0 0))
+	       (org
+		(9 7 6))
 	       (plz
-		(0 7))
+		(0 9 1))
 	       (persist
-		(0 5))
+		(0 6 1))
 	       (taxy-magit-section
-		(0 12 1))
+		(0 14))
 	       (transient
-		(0 5 0)))
+		(0 7 4)))
 	      "P2P filesystem" tar
 	      ((:url . "https://git.sr.ht/~ushin/hyperdrive.el")
 	       (:maintainer "Joseph Turner" . "~ushin/ushin@lists.sr.ht")
 	       (:authors
 		("Joseph Turner" . "joseph@ushin.org"))
-	       (:commit . "38d9b17dc0eefab1c31124d8aae3728372535e70"))])
+	       (:commit . "8e646524d282a8e4746238770e69b64adb6d409b"))])
  (idle-highlight-mode .
 		      [(1 1 4)
 		       ((emacs
@@ -1931,14 +1933,14 @@
 	       ("Andreas Politz" . "mail@andreas-politz.de"))
 	      (:commit . "a9c9a12c3ecf2005fa641059368ac8284f507620"))])
  (php-mode .
-	   [(1 25 1)
+	   [(1 26 1)
 	    ((emacs
 	      (26 1)))
 	    "Major mode for editing PHP code" tar
 	    ((:url . "https://github.com/emacs-php/php-mode")
 	     (:keywords "languages" "php")
 	     (:maintainer "USAMI Kenta" . "tadsan@zonu.me")
-	     (:commit . "6ad1715ef0aed463ab05076dc7c91657978e4ec1"))])
+	     (:commit . "9a2fe1c6c34f4f22f11efff0caf1d4e7c8ea233a"))])
  (popon .
 	[(0 13)
 	 ((emacs
@@ -1993,7 +1995,7 @@
 	       ("David Christiansen" . "david@davidchristiansen.dk"))
 	      (:commit . "1edda80e2e32b72e77f4f16ae5b83c312c68ee95"))])
  (racket-mode .
-	      [(1 0 20240907 162948)
+	      [(1 0 20240914 104237)
 	       ((emacs
 		 (25 1)))
 	       "Racket editing, REPL, and more" tar
@@ -2278,16 +2280,18 @@
 		("Arthur Evstifeev" . "lod@pisem.net"))
 	       (:commit . "e58417ec871d260fe47183ffe4b7e47ac09bc682"))])
  (symbol-overlay .
-		 [(4 1)
+		 [(4 3)
 		  ((emacs
-		    (24 3)))
+		    (24 3))
+		   (seq
+		    (2 2)))
 		  "Highlight symbols with keymap-enabled overlays" tar
 		  ((:url . "https://github.com/wolray/symbol-overlay/")
 		   (:keywords "faces" "matching")
 		   (:maintainer "wolray" . "wolray@foxmail.com")
 		   (:authors
 		    ("wolray" . "wolray@foxmail.com"))
-		   (:commit . "d1464042783e252f5cac1fcac82fee16fc3534db"))])
+		   (:commit . "6151f4279bd94b5960149596b202cdcb45cacec2"))])
  (systemd .
 	  [(1 6 1)
 	   ((emacs
