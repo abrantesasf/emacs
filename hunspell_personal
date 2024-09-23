@@ -41,3 +41,7 @@ UTF
 UVV
 indentar
 MPI
+struct
+timeval
+POSIX
+timespec
