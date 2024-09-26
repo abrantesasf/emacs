@@ -250,7 +250,7 @@
 	    (:url . "https://elpa.nongnu.org/nongnu/cdlatex.html")
 	    (:commit . "33770dec73138909714711b05a63e79da5a19ccd"))])
  (cider .
-	[(1 15 1)
+	[(1 16 0)
 	 ((emacs
 	   (26))
 	  (clojure-mode
@@ -278,7 +278,7 @@
 	   ("Artur Malabarba" . "bruce.connor.am@gmail.com")
 	   ("Hugo Duncan" . "hugo@hugoduncan.org")
 	   ("Steve Purcell" . "steve@sanityinc.com"))
-	  (:commit . "810337cee931d9f14aa16550a74516f8337a47f3"))])
+	  (:commit . "76eac5aa634adba9a5b632cfe670467ebe319126"))])
  (clojure-mode .
 	       [(5 19 0)
 		((emacs
@@ -1283,7 +1283,7 @@
 	     ("Hrvoje Niksic" . "hniksic@gmail.com"))
 	    (:commit . "5d2751c4ca101fa0884ce8662f5566736f8257fe"))])
  (hyperdrive .
-	     [(0 4 1)
+	     [(0 4 2)
 	      ((emacs
 		(28 1))
 	       (map
@@ -1305,9 +1305,9 @@
 	       (:maintainer "Joseph Turner" . "~ushin/ushin@lists.sr.ht")
 	       (:authors
 		("Joseph Turner" . "joseph@ushin.org"))
-	       (:commit . "8e646524d282a8e4746238770e69b64adb6d409b"))])
+	       (:commit . "6b70954da945664ca798bf483f1d60e9d5859409"))])
  (hyperdrive-org-transclusion .
-			      [(0 1)
+			      [(0 2)
 			       ((emacs
 				 (28 1))
 				(hyperdrive
@@ -1319,7 +1319,7 @@
 				(:maintainer "Joseph Turner" . "~ushin/ushin@lists.sr.ht")
 				(:authors
 				 ("Joseph Turner" . "joseph@ushin.org"))
-				(:commit . "96eb5b8092f21b21c24c2bb6a0a66148f1bc5e6f"))])
+				(:commit . "3cfb18514c53a9ab7d421f8720cbf23b6ba8eb90"))])
  (idle-highlight-mode .
 		      [(1 1 4)
 		       ((emacs
@@ -1839,7 +1839,7 @@
 	       (:url . "https://elpa.nongnu.org/nongnu/p4-16-mode.html")
 	       (:commit . "794dd0056b4ca736ae5ecb39072547f22a006137"))])
  (package-lint .
-	       [(0 23)
+	       [(0 24)
 		((emacs
 		  (24 4))
 		 (let-alist
@@ -1853,7 +1853,7 @@
 		 (:authors
 		  ("Steve Purcell" . "steve@sanityinc.com")
 		  ("Fanael Linithien" . "fanael4@gmail.com"))
-		 (:commit . "17e4ab20dd3e36fa540007b4f4047170c23bdb10"))])
+		 (:commit . "e3d3fb254221d053c75edfd9f0ebfa58d1eb52f9"))])
  (pacmacs .
 	  [(0 1 1)
 	   ((emacs
@@ -2011,7 +2011,7 @@
 	       ("David Christiansen" . "david@davidchristiansen.dk"))
 	      (:commit . "1edda80e2e32b72e77f4f16ae5b83c312c68ee95"))])
  (racket-mode .
-	      [(1 0 20240921 204525)
+	      [(1 0 20240924 164110)
 	       ((emacs
 		 (25 1)))
 	       "Racket editing, REPL, and more" tar
@@ -2600,14 +2600,14 @@
 	     ((:url . "https://github.com/lewang/ws-butler")
 	      (:commit . "323b651dd70ee40a25accc940b8f80c3a3185205"))])
  (xah-fly-keys .
-	       [(26 1 20240916184601)
+	       [(26 3 20240923235902)
 		((emacs
 		  (27)))
 		"ergonomic modal keybinding minor mode." tar
 		((:url . "http://xahlee.info/emacs/misc/xah-fly-keys.html")
 		 (:keywords "convenience" "vi" "vim" "ergoemacs" "keybinding")
 		 (:maintainer "Xah Lee" . "xah@xahlee.org")
-		 (:commit . "37a31116395fba9966047d7a6fc13cd501d8cc4f"))])
+		 (:commit . "47d1a3e3d7d001c51a6479df421b73312f8a7680"))])
  (xkcd .
        [(1 1)
 	((json
