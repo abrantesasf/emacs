@@ -6,7 +6,8 @@
 ;; Homepage: https://github.com/magit/transient
 ;; Keywords: extensions
 
-;; Package-Version: 0.7.5
+;; Package-Version: 20240928.1902
+;; Package-Revision: 683e5104a0dd
 ;; Package-Requires: ((emacs "26.1") (compat "30.0.0.0") (seq "2.24"))
 
 ;; SPDX-License-Identifier: GPL-3.0-or-later
@@ -1245,9 +1246,9 @@ commands are aliases for."
                      (and (listp val) (not (eq (car val) 'lambda))))
                  (setq args (plist-put args key (macroexp-quote val))))
                 ((setq args (plist-put args key val)))))))
-    (unless (plist-get args :key)
-      (when-let ((shortarg (plist-get args :shortarg)))
-        (setq args (plist-put args :key shortarg))))
+    (when-let* (((not (plist-get args :key)))
+                (shortarg (plist-get args :shortarg)))
+      (setq args (plist-put args :key shortarg)))
     (list 'list
           (or level transient--default-child-level)
           (macroexp-quote (or class 'transient-suffix))
@@ -2197,9 +2198,9 @@ value.  Otherwise return CHILDREN as is."
 (cl-defmethod transient--init-suffix-key ((obj transient-argument))
   (if (transient-switches--eieio-childp obj)
       (cl-call-next-method obj)
-    (unless (slot-boundp obj 'shortarg)
-      (when-let ((shortarg (transient--derive-shortarg (oref obj argument))))
-        (oset obj shortarg shortarg)))
+    (when-let* (((not (slot-boundp obj 'shortarg)))
+                (shortarg (transient--derive-shortarg (oref obj argument))))
+      (oset obj shortarg shortarg))
     (unless (slot-boundp obj 'key)
       (if (slot-boundp obj 'shortarg)
           (oset obj key (oref obj shortarg))
@@ -4227,14 +4228,14 @@ manpage, then try to jump to the correct location."
 
 (defun transient--describe-function (fn)
   (describe-function fn)
-  (unless (derived-mode-p 'help-mode)
-    (when-let* ((buf (get-buffer "*Help*"))
-                (win (or (and buf (get-buffer-window buf))
-                         (cl-find-if (lambda (win)
-                                       (with-current-buffer (window-buffer win)
-                                         (derived-mode-p 'help-mode)))
-                                     (window-list)))))
-      (select-window win))))
+  (when-let* (((not (derived-mode-p 'help-mode)))
+              (buf (get-buffer "*Help*"))
+              (win (or (and buf (get-buffer-window buf))
+                       (cl-find-if (lambda (win)
+                                     (with-current-buffer (window-buffer win)
+                                       (derived-mode-p 'help-mode)))
+                                   (window-list)))))
+    (select-window win)))
 
 (defun transient--show-manual (manual)
   (info manual))
