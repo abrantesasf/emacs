@@ -1,0 +1,20 @@
+# -*- mode: snippet -*-
+# name: Exam class: resposta múltipla
+# key: exrespmult
+# --
+\question
+
+Avalia as afirmações a seguir:
+\begin{itemize}
+\item[I.] 
+\item[II.] 
+\item[III.] 
+\end{itemize}
+É correto o que se afirma em:
+\begin{choices}
+\choice I, apenas
+\choice etc.
+\choice 
+\choice 
+\choice 
+\end{choices}
