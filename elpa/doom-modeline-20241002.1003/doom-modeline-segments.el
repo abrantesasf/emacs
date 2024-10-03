@@ -1608,11 +1608,10 @@ mouse-2: Show help for minor mode"
 (doom-modeline-def-segment misc-info
   "Mode line construct for miscellaneous information.
 By default, this shows the information specified by `global-mode-string'."
-  (when (and (doom-modeline--segment-visible 'misc-info)
-             (or doom-modeline-display-misc-in-all-mode-lines
-                 (doom-modeline--active)))
+  (when (or doom-modeline-display-misc-in-all-mode-lines
+            (doom-modeline--segment-visible 'misc-info))
     (doom-modeline-display-text
-     (format-mode-line mode-line-misc-info))))
+     (string-replace "%" "%%" (format-mode-line mode-line-misc-info)))))
 
 
 ;;
@@ -3147,7 +3146,9 @@ When the svg library is not available, return nil."
   (if (and doom-modeline-time
            (bound-and-true-p doom-modeline-mode))
       (setq global-mode-string (delq 'display-time-string global-mode-string))
-    (setq global-mode-string (append global-mode-string '(display-time-string)))))
+    (or (memq 'display-time-string global-mode-string)
+	    (setq global-mode-string
+		      (append global-mode-string '(display-time-string))))))
 (add-hook 'display-time-mode-hook #'doom-modeline-override-time)
 (add-hook 'doom-modeline-mode-hook #'doom-modeline-override-time)
 

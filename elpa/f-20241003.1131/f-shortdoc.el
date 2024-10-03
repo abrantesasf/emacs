@@ -2,7 +2,6 @@
 
 ;; Author: Lucien Cartier-Tilet <lucien@phundrak.com>
 ;; Maintainer: Lucien Cartier-Tilet <lucien@phundrak.com>
-;; Version: 0.1.0
 ;; Package-Requires: ((emacs "28.1"))
 ;; Homepage: https://github.com/rejeep/f.el
 

@@ -4,7 +4,8 @@
 
 ;; Author: Johan Andersson <johan.rejeep@gmail.com>
 ;; Maintainer: Lucien Cartier-Tilet <lucien@phundrak.com>
-;; Version: 0.20.0
+;; Package-Version: 20241003.1131
+;; Package-Revision: 931b6d0667fe
 ;; Package-Requires: ((emacs "24.1") (s "1.7.0") (dash "2.2.0"))
 ;; Keywords: files, directories
 ;; Homepage: http://github.com/rejeep/f.el
