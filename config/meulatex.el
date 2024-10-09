@@ -1,6 +1,5 @@
 ; Configurações para fazer AucTeX + RefTex:
 
-
 ;; Turn on RefTeX in AUCTeX
 (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
 
