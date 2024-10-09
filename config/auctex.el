@@ -1,10 +1,10 @@
 ; Configurações para fazer AucTeX + RefTex:
 
-
-
-(use-package tex
-  :ensure auctex)
-
+(use-package latex
+  :ensure auctex
+  :config
+  (setq TeX-auto-save t)
+  (setq TeX-parse-self t))
 
 ;; Turn on RefTeX in AUCTeX
 (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
