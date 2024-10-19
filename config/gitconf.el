@@ -17,3 +17,10 @@
 (setq epg-gpg-program "gpg")
 (setenv "GPG_AGENT_INFO" nil)
 (setq epa-pinentry-mode 'loopback)
+
+;; Configurações para fazer com que o Emacs NÃO SIGA os links simbólicos
+;; de diretórios ao abrir aquivos, fazendo com que ele abra os arquivos
+;; "dentro" do diretório que é um link simbólico, e não no diretório
+;; apontado pelo link:
+(setq find-file-visit-truename nil)
+(setq vc-follow-symlinks nil)
