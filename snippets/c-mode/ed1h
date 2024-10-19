@@ -1,13 +1,13 @@
 # -*- mode: snippet -*-
-# name: ed1
-# key: ed1
+# name: ed1h
+# key: ed1h
 # --
 /**
- * Arquivo: .c
+ * Arquivo: .h
  * Versão : 
  * Data   : 
  * -------------------------
- * Este programa . . .
+ * Este . . .
  *
  * Baseado em: Programming Abstractions in C, de Eric S. Roberts.
  *             Capítulo x: xxx (pg. xxx-xxx).
@@ -22,24 +22,22 @@
  *            github.com/abrantesasf
  */
 
+/*** Inicia Boilerplate da Interface ***/
+
+#ifndef _XXX_H
+#define _XXX_H
+
+/*** Includes ***/
+
 #include "genlib.h"
 #include "simpio.h"
 #include "strlib.h"
 
-/* Constantes Simbólicas: */
+/*** Constantes Simbólicas ***/
 
+/*** Tipos de Dados ***/
 
-/* Declarações de Subprogramas: */
-
-
-/* Função Main: */
-
-int main (void)
-{
-    
-}
-
-/* Definições de Subprogramas: */
+/*** Declarações de Subprogramas ***/
 
 /**
  * Subprograma: nome_do_subprograma
@@ -48,3 +46,6 @@ int main (void)
  * Implementa ...
  */
 
+/*** Finaliza Boilerplate da Interface ***/
+
+#endif

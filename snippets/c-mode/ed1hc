@@ -1,0 +1,55 @@
+# -*- mode: snippet -*-
+# name: ed1hc
+# key: ed1hc
+# --
+/**
+ * Arquivo: .c
+ * Versão : 
+ * Data   : 
+ * -------------------------
+ * Este arquivo implementa a interface ...
+ *
+ * Baseado em: Programming Abstractions in C, de Eric S. Roberts.
+ *             Capítulo x: xxx (pg. xxx-xxx).
+ *
+ * Prof.: Abrantes Araújo Silva Filho (Computação Raiz)
+ *            www.computacaoraiz.com.br
+ *            www.youtube.com.br/computacaoraiz
+ *            github.com/computacaoraiz
+ *            twitter.com/ComputacaoRaiz
+ *            www.linkedin.com/company/computacaoraiz
+ *            www.abrantes.pro.br
+ *            github.com/abrantesasf
+ */
+
+/*** Includes ***/
+
+#include "genlib.h"
+#include "simpio.h"
+#include "strlib.h"
+
+/*** Constantes Simbólicas ***/
+
+/*** Variáveis Globais ***/
+
+/*** Declarações de Suprogramas Privados ***/
+
+/*** Tipos de Dados ***/
+
+/*** Definições de Subprogramas Exportados ***/
+
+/**
+ * Subprograma: nome_do_subprograma
+ * Uso: nome_do_subprograma(x, y, z);
+ * ----------------------------------
+ * Implementa ...
+ */
+
+/*** Definições de Subprogramas Privados ***/
+
+/**
+ * Subprograma: nome_do_subprograma
+ * Uso: nome_do_subprograma(x, y, z);
+ * ----------------------------------
+ * Implementa ...
+ */
