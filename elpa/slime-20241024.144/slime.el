@@ -3,8 +3,8 @@
 ;; URL: https://github.com/slime/slime
 ;; Package-Requires: ((emacs "24.3") (macrostep "0.9"))
 ;; Keywords: languages, lisp, slime
-;; Package-Version: 20241021.1825
-;; Package-Revision: 9052de9e5c0e
+;; Package-Version: 20241024.144
+;; Package-Revision: ee57957cec00
 
 ;;;; License and Commentary
 
@@ -5960,6 +5960,12 @@ VAR should be a plist with the keys :name, :id, and :value."
   (slime-eval-async '(swank:inspect-current-condition)
     'slime-open-inspector))
 
+(defun sldb-inspect-frame-function ()
+  (interactive)
+  (let ((frame (sldb-frame-number-at-point)))
+    (slime-eval-async `(swank:inspect-frame-function ,frame)
+      'slime-open-inspector)))
+
 (defun sldb-print-condition ()
   (interactive)
   (slime-eval-describe `(swank:sdlb-print-condition)))
@@ -6034,6 +6040,12 @@ restart to invoke, otherwise use the restart at point."
         ((list 'swank:invoke-nth-restart-for-emacs sldb-level restart))
       ((:ok value) (message "Restart returned: %s" value))
       ((:abort _)))))
+
+(defun sldb-inspect-restart (&optional number)
+  (interactive)
+  (let ((restart (or number (sldb-restart-at-point))))
+    (slime-eval-async `(swank:inspect-nth-restart ,restart)
+                      'slime-open-inspector)))
 
 (defun sldb-invoke-restart-by-name (restart-name)
   (interactive (list (let ((completion-ignore-case t))
