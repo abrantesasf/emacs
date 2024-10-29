@@ -8,7 +8,8 @@
 ;; Url: https://github.com/emacsorphanage/macrostep
 ;; Keywords: lisp, languages, macro, debugging
 
-;; Package-Version: 0.9.4
+;; Package-Version: 20241025.1456
+;; Package-Revision: 419873665f3d
 ;; Package-Requires: ((cl-lib "0.5") (compat "29"))
 
 ;; SPDX-License-Identifier: GPL-3.0-or-later
@@ -274,7 +275,7 @@
   "Number of macro expansion levels that have introduced gensyms so far.")
 
 (defvar-local macrostep-gensyms-this-level nil
-  "Non-nil if gensyms have been encountered during current level of macro expansion.")
+  "Non-nil if gensyms were encountered during current level of macro expansion.")
 
 (defvar-local macrostep-saved-undo-list nil
   "Saved value of `buffer-undo-list' upon entering macrostep mode.")
