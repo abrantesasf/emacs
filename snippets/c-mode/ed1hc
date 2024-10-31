@@ -26,15 +26,18 @@
 
 #include "genlib.h"
 #include "simpio.h"
+#include <stdbool.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include "strlib.h"
 
 /*** Constantes Simbólicas ***/
 
-/*** Variáveis Globais ***/
-
-/*** Declarações de Suprogramas Privados ***/
+/*** Variáveis e Constantes Globais ***/
 
 /*** Tipos de Dados ***/
+
+/*** Declarações de Suprogramas Privados ***/
 
 /*** Definições de Subprogramas Exportados ***/
 
