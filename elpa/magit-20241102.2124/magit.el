@@ -17,15 +17,15 @@
 ;; Homepage: https://github.com/magit/magit
 ;; Keywords: git tools vc
 
-;; Package-Version: 20241023.1526
-;; Package-Revision: f2a613344302
+;; Package-Version: 20241102.2124
+;; Package-Revision: b2b07b993ec2
 ;; Package-Requires: (
 ;;     (emacs "26.1")
 ;;     (compat "30.0.0.0")
 ;;     (dash "2.19.1")
-;;     (magit-section "4.1.1")
+;;     (magit-section "4.1.2")
 ;;     (seq "2.24")
-;;     (transient "0.7.6")
+;;     (transient "0.7.8")
 ;;     (with-editor "3.4.2"))
 
 ;; SPDX-License-Identifier: GPL-3.0-or-later

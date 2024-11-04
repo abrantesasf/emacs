@@ -6,8 +6,8 @@
 ;; Homepage: https://github.com/magit/transient
 ;; Keywords: extensions
 
-;; Package-Version: 20241023.1537
-;; Package-Revision: cb11650a6072
+;; Package-Version: 20241102.1229
+;; Package-Revision: d6b52b6eb765
 ;; Package-Requires: ((emacs "26.1") (compat "30.0.0.0") (seq "2.24"))
 
 ;; SPDX-License-Identifier: GPL-3.0-or-later
@@ -1703,13 +1703,14 @@ probably use this instead:
                         this-command))))
             (or transient--suffixes
                 transient-current-suffixes))))
-      (or (and (cdr suffixes)
-               (cl-find-if
-                (lambda (obj)
-                  (equal (listify-key-sequence (transient--kbd (oref obj key)))
-                         (listify-key-sequence (this-command-keys))))
-                suffixes))
-          (car suffixes))))
+      (or (if (cdr suffixes)
+              (cl-find-if
+               (lambda (obj)
+                 (equal (listify-key-sequence (transient--kbd (oref obj key)))
+                        (listify-key-sequence (this-command-keys))))
+               suffixes)
+            (car suffixes))
+          (error "BUG: Cannot determine suffix object"))))
    ((and-let* ((obj (transient--suffix-prototype (or command this-command)))
                (obj (clone obj)))
       (progn ; work around debbugs#31840
@@ -2020,8 +2021,9 @@ of the corresponding object."
         (pcase this-command
           ('transient-update
            (setq transient--showp t)
-           (setq unread-command-events
-                 (listify-key-sequence (this-single-command-raw-keys))))
+           (let ((keys (listify-key-sequence (this-single-command-raw-keys))))
+             (setq unread-command-events (mapcar (lambda (key) (cons t key)) keys))
+             keys))
           ('transient-quit-seq
            (setq unread-command-events
                  (butlast (listify-key-sequence
@@ -2458,7 +2460,7 @@ value.  Otherwise return CHILDREN as is."
     (funcall fn) ; Already unwind protected.
     (cond ((memq this-command '(top-level abort-recursive-edit))
            (setq transient--exitp t)
-           (transient--post-exit)
+           (transient--post-exit this-command)
            (transient--delete-window))
           (transient--prefix
            (transient--resume-override)))))
@@ -2632,6 +2634,10 @@ value.  Otherwise return CHILDREN as is."
     (setq transient--all-levels-p nil)
     (setq transient--minibuffer-depth 0)
     (run-hooks 'transient-exit-hook)
+    (when command
+      (setq transient-current-prefix nil)
+      (setq transient-current-command nil)
+      (setq transient-current-suffixes nil))
     (when resume
       (transient--stack-pop))))
 
@@ -2718,7 +2724,7 @@ exit."
     (setq transient--stack nil)
     (setq transient--exitp t)
     (transient--pre-exit)
-    (transient--post-exit)))
+    (transient--post-exit this-command)))
 
 ;;; Pre-Commands
 

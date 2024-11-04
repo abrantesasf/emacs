@@ -734,7 +734,7 @@
 	    (:maintainer "Daniel Mendler" . "mail@daniel-mendler.de")
 	    (:commit . "4889458dccf842ab6223099f8a73ff8b147e9459"))])
  (consult-denote .
-		 [(0 2 1)
+		 [(0 2 2)
 		  ((emacs
 		    (28 1))
 		   (denote
@@ -746,7 +746,7 @@
 		   (:maintainer "Protesilaos Stavrou" . "info@protesilaos.com")
 		   (:authors
 		    ("Protesilaos Stavrou" . "info@protesilaos.com"))
-		   (:commit . "eb46c0b19ea2c385d4e8f21c3e953fc621626cf2"))])
+		   (:commit . "9fbe0f6a2636f46928f02ddde9c454f36aa45f39"))])
  (consult-hoogle .
 		 [(0 2 2)
 		  ((emacs
@@ -4478,7 +4478,7 @@
 	       (:url . "https://elpa.gnu.org/packages/transcribe.html")
 	       (:commit . "89832e4cdc1e6d8262a4a2c9d1ff70f398b8faf0"))])
  (transient .
-	    [(0 7 7)
+	    [(0 7 8)
 	     ((emacs
 	       (26 1))
 	      (compat
@@ -4491,7 +4491,7 @@
 	      (:maintainer "Jonas Bernoulli" . "emacs.transient@jonas.bernoulli.dev")
 	      (:authors
 	       ("Jonas Bernoulli" . "emacs.transient@jonas.bernoulli.dev"))
-	      (:commit . "fc03c0b75826aa771b682137aa3f4e24130a9e3c"))])
+	      (:commit . "d6b52b6eb7655d538b410ae60f85fbaa4d58a608"))])
  (transient-cycles .
 		   [(1 0)
 		    ((emacs
