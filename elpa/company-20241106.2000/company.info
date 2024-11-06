@@ -1,7 +1,7 @@
 This is company.info, produced by makeinfo version 6.8 from
 company.texi.
 
-This user manual is for Company version 1.0.0 (21 September 2024).
+This user manual is for Company version 1.0.2 (5 November 2024).
 
 Copyright © 2021-2024 Free Software Foundation, Inc.
 
@@ -26,7 +26,7 @@ The goal of this document is to lay out the foundational knowledge of
 the package, so that the readers of the manual could competently start
 adapting Company to their needs and preferences.
 
-This user manual is for Company version 1.0.0 (21 September 2024).
+This user manual is for Company version 1.0.2 (5 November 2024).
 
 Copyright © 2021-2024 Free Software Foundation, Inc.
 
@@ -255,11 +255,15 @@ commands of the out-of-the-box Company.
 ‘RET’
 ‘<return>’
      Insert the selected candidate (‘company-complete-selection’).
+     Restart completion if a new field is entered.
 
 ‘TAB’
 ‘<tab>’
-     Insert the _common part_ of all completion candidates
-     (‘company-complete-common’).
+     Insert the _common part_ of all completion candidates or — if no
+     _common part_ is present — select the next candidate
+     (‘company-complete-common-or-cycle’).  In the latter case,
+     wraparound is implicitly enabled (*note
+     company-selection-wrap-around::).
 
 ‘C-g’
 ‘<ESC ESC ESC>’
@@ -287,17 +291,8 @@ illustrate how to assign key bindings to such commands.
      (global-set-key (kbd "<tab>") #'company-indent-or-complete-common)
 
      (with-eval-after-load 'company
-       (define-key company-active-map (kbd "M-/") #'company-complete))
-
-     (with-eval-after-load 'company
-       (define-key company-active-map
-                   (kbd "TAB")
-                   #'company-complete-common-or-cycle)
-       (define-key company-active-map
-                   (kbd "<backtab>")
-                   (lambda ()
-                     (interactive)
-                     (company-complete-common-or-cycle -1))))
+       (define-key company-active-map (kbd "M-/") #'company-complete)
+       (define-key company-active-map (kbd "C-M-/") #'company-complete-common))
 
 In the same manner, an additional key can be assigned to a command or a
 command can be unbound from a key.  For instance:
@@ -1394,10 +1389,10 @@ Key Index
 * Menu:
 
 * C-g:                                   Usage Basics.         (line 23)
-* C-g <1>:                               Commands.             (line 30)
+* C-g <1>:                               Commands.             (line 34)
 * C-g <2>:                               Candidates Search.    (line 11)
 * C-g <3>:                               Filter Candidates.    (line 14)
-* C-h:                                   Commands.             (line 34)
+* C-h:                                   Commands.             (line 38)
 * C-M-s:                                 Filter Candidates.    (line  6)
 * C-n:                                   Usage Basics.         (line 12)
 * C-n <1>:                               Commands.             (line 11)
@@ -1405,13 +1400,13 @@ Key Index
 * C-p:                                   Usage Basics.         (line 12)
 * C-p <1>:                               Commands.             (line 16)
 * C-s:                                   Candidates Search.    (line  6)
-* C-w:                                   Commands.             (line 41)
+* C-w:                                   Commands.             (line 45)
 * M-<digit>:                             Quick Access a Candidate.
                                                                (line  6)
 * RET:                                   Usage Basics.         (line 15)
 * RET <1>:                               Commands.             (line 21)
 * TAB:                                   Usage Basics.         (line 17)
-* TAB <1>:                               Commands.             (line 25)
+* TAB <1>:                               Commands.             (line 26)
 
 
 File: company.info,  Node: Variable Index,  Next: Function Index,  Prev: Key Index,  Up: Index
@@ -1498,13 +1493,15 @@ Function Index
 * Menu:
 
 * company-abbrev:                        Template Expansion.  (line   6)
-* company-abort:                         Commands.            (line  30)
+* company-abort:                         Commands.            (line  34)
 * company-begin-backend:                 Backends Usage Basics.
                                                               (line  24)
 * company-capf:                          Code Completion.     (line   6)
 * company-clang:                         Code Completion.     (line  72)
 * company-complete:                      Usage Basics.        (line  10)
-* company-complete-common:               Commands.            (line  25)
+* company-complete <1>:                  Commands.            (line  51)
+* company-complete-common:               Commands.            (line  51)
+* company-complete-common-or-cycle:      Commands.            (line  26)
 * company-complete-selection:            Commands.            (line  21)
 * company-dabbrev:                       Text Completion.     (line   6)
 * company-dabbrev-code:                  Code Completion.     (line  33)
@@ -1519,6 +1516,7 @@ Function Index
 * company-etags:                         Code Completion.     (line  98)
 * company-files:                         File Name Completion.
                                                               (line   6)
+* company-indent-or-complete-common:     Commands.            (line  51)
 * company-ispell:                        Text Completion.     (line  75)
 * company-keywords:                      Code Completion.     (line  67)
 * company-mode:                          Initial Setup.       (line   6)
@@ -1541,8 +1539,8 @@ Function Index
 * company-select-previous:               Commands.            (line  16)
 * company-select-previous-or-abort:      Commands.            (line  16)
 * company-semantic:                      Code Completion.     (line  90)
-* company-show-doc-buffer:               Commands.            (line  34)
-* company-show-location:                 Commands.            (line  41)
+* company-show-doc-buffer:               Commands.            (line  38)
+* company-show-location:                 Commands.            (line  45)
 * company-sort-by-backend-importance:    Candidates Post-Processing.
                                                               (line  27)
 * company-sort-by-occurrence:            Candidates Post-Processing.
@@ -1569,7 +1567,7 @@ Concept Index
 
 * abbrev:                                Template Expansion.  (line   6)
 * abort:                                 Usage Basics.        (line  23)
-* abort <1>:                             Commands.            (line  30)
+* abort <1>:                             Commands.            (line  34)
 * activate:                              Initial Setup.       (line   8)
 * active backend:                        Backends Usage Basics.
                                                               (line  13)
@@ -1593,7 +1591,7 @@ Concept Index
 * bug <1>:                               Troubleshooting.     (line  25)
 * bundled backends:                      Package Backends.    (line   6)
 * cancel:                                Usage Basics.        (line  23)
-* cancel <1>:                            Commands.            (line  30)
+* cancel <1>:                            Commands.            (line  34)
 * candidate:                             Terminology.         (line  10)
 * candidate <1>:                         Usage Basics.        (line  12)
 * candidate <2>:                         Usage Basics.        (line  15)
@@ -1602,7 +1600,7 @@ Concept Index
 * color <1>:                             Quick Access a Candidate.
                                                               (line  34)
 * common part:                           Usage Basics.        (line  17)
-* common part <1>:                       Commands.            (line  25)
+* common part <1>:                       Commands.            (line  26)
 * common part <2>:                       Preview Frontends.   (line   6)
 * company-echo:                          Echo Frontends.      (line   6)
 * company-preview:                       Preview Frontends.   (line   6)
@@ -1645,9 +1643,9 @@ Concept Index
                                                               (line  25)
 * custom <9>:                            Quick Access a Candidate.
                                                               (line  34)
-* definition:                            Commands.            (line  41)
+* definition:                            Commands.            (line  45)
 * distribution:                          Installation.        (line   6)
-* doc:                                   Commands.            (line  34)
+* doc:                                   Commands.            (line  38)
 * duplicate:                             Candidates Post-Processing.
                                                               (line   6)
 * echo:                                  Echo Frontends.      (line   6)
@@ -1668,7 +1666,7 @@ Concept Index
                                                               (line  34)
 * filter:                                Filter Candidates.   (line   6)
 * finish:                                Usage Basics.        (line  23)
-* finish <1>:                            Commands.            (line  30)
+* finish <1>:                            Commands.            (line  34)
 * font:                                  Tooltip Frontends.   (line 222)
 * font <1>:                              Quick Access a Candidate.
                                                               (line  34)
@@ -1689,7 +1687,7 @@ Concept Index
 * issue:                                 Troubleshooting.     (line   6)
 * issue tracker:                         Troubleshooting.     (line  25)
 * kind:                                  Tooltip Frontends.   (line 151)
-* location:                              Commands.            (line  41)
+* location:                              Commands.            (line  45)
 * manual:                                Initial Setup.       (line   8)
 * manual <1>:                            Usage Basics.        (line  10)
 * margin:                                Tooltip Frontends.   (line 140)
@@ -1711,7 +1709,7 @@ Concept Index
 * quick-access:                          Quick Access a Candidate.
                                                               (line   6)
 * quit:                                  Usage Basics.        (line  23)
-* quit <1>:                              Commands.            (line  30)
+* quit <1>:                              Commands.            (line  34)
 * search:                                Candidates Search.   (line   6)
 * select:                                Usage Basics.        (line  12)
 * select <1>:                            Commands.            (line  11)
@@ -1720,7 +1718,7 @@ Concept Index
 * sort:                                  Candidates Post-Processing.
                                                               (line   6)
 * stop:                                  Usage Basics.        (line  23)
-* stop <1>:                              Commands.            (line  30)
+* stop <1>:                              Commands.            (line  34)
 * TAB:                                   Structure.           (line  26)
 * Tab and Go:                            Structure.           (line  26)
 * template:                              Template Expansion.  (line   6)
@@ -1733,44 +1731,45 @@ Concept Index
 
 
 Tag Table:
-Node: Top566
-Node: Overview1988
-Node: Terminology2396
-Node: Structure3703
-Node: Getting Started5194
-Node: Installation5472
-Node: Initial Setup5855
-Node: Usage Basics6703
-Node: Commands7681
-Ref: Commands-Footnote-110125
-Node: Customization10292
-Node: Customization Interface10764
-Node: Configuration File11297
-Node: Frontends16104
-Node: Tooltip Frontends17073
-Ref: Tooltip Frontends-Footnote-127787
-Node: Preview Frontends28024
-Ref: Preview Frontends-Footnote-129282
-Node: Echo Frontends29409
-Node: Candidates Search30942
-Node: Filter Candidates32276
-Node: Quick Access a Candidate33056
-Node: Backends34674
-Node: Backends Usage Basics35704
-Ref: Backends Usage Basics-Footnote-137136
-Node: Grouped Backends37220
-Node: Package Backends38731
-Node: Code Completion39660
-Node: Text Completion45187
-Node: File Name Completion49621
-Node: Template Expansion51169
-Node: Candidates Post-Processing51888
-Node: Troubleshooting53365
-Node: Index55038
-Node: Key Index55201
-Node: Variable Index56700
-Node: Function Index61553
-Node: Concept Index66034
+Node: Top564
+Node: Overview1984
+Node: Terminology2392
+Node: Structure3699
+Node: Getting Started5190
+Node: Installation5468
+Node: Initial Setup5851
+Node: Usage Basics6699
+Node: Commands7677
+Ref: Commands-Footnote-110075
+Node: Customization10242
+Node: Customization Interface10714
+Node: Configuration File11247
+Ref: company-selection-wrap-around13561
+Node: Frontends16054
+Node: Tooltip Frontends17023
+Ref: Tooltip Frontends-Footnote-127737
+Node: Preview Frontends27974
+Ref: Preview Frontends-Footnote-129232
+Node: Echo Frontends29359
+Node: Candidates Search30892
+Node: Filter Candidates32226
+Node: Quick Access a Candidate33006
+Node: Backends34624
+Node: Backends Usage Basics35654
+Ref: Backends Usage Basics-Footnote-137086
+Node: Grouped Backends37170
+Node: Package Backends38681
+Node: Code Completion39610
+Node: Text Completion45137
+Node: File Name Completion49571
+Node: Template Expansion51119
+Node: Candidates Post-Processing51838
+Node: Troubleshooting53315
+Node: Index54988
+Node: Key Index55151
+Node: Variable Index56650
+Node: Function Index61503
+Node: Concept Index66203
 
 End Tag Table
 

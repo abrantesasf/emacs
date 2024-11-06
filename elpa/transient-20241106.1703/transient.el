@@ -6,8 +6,8 @@
 ;; Homepage: https://github.com/magit/transient
 ;; Keywords: extensions
 
-;; Package-Version: 20241102.1229
-;; Package-Revision: d6b52b6eb765
+;; Package-Version: 20241106.1703
+;; Package-Revision: a541b996bd03
 ;; Package-Requires: ((emacs "26.1") (compat "30.0.0.0") (seq "2.24"))
 
 ;; SPDX-License-Identifier: GPL-3.0-or-later
@@ -1710,7 +1710,12 @@ probably use this instead:
                         (listify-key-sequence (this-command-keys))))
                suffixes)
             (car suffixes))
-          (error "BUG: Cannot determine suffix object"))))
+          ;; COMMAND is only provided if `this-command' is meaningless, in
+          ;; which case `this-command-keys' is also meaningless, making it
+          ;; impossible to disambiguate redundant bindings.
+          (if command
+              (car suffixes)
+            (error "BUG: Cannot determine suffix object")))))
    ((and-let* ((obj (transient--suffix-prototype (or command this-command)))
                (obj (clone obj)))
       (progn ; work around debbugs#31840
@@ -3732,7 +3737,7 @@ have a history of their own.")
       (run-hooks 'transient-setup-buffer-hook)
       (when transient-force-fixed-pitch
         (transient--force-fixed-pitch))
-      (setq window-size-fixed t)
+      (setq window-size-fixed (if (window-full-height-p) 'width t))
       (when (bound-and-true-p tab-line-format)
         (setq tab-line-format nil))
       (setq header-line-format nil)
@@ -4455,11 +4460,14 @@ See `forward-button' for information about N."
     (when (re-search-forward (concat "^" (regexp-quote command)) nil t)
       (goto-char (match-beginning 0))))
    (command
-    (while (and (ignore-errors (forward-button 1))
-                (not (eq (button-get (button-at (point)) 'command) command))))
-    (unless (eq (button-get (button-at (point)) 'command) command)
-      (goto-char (point-min))
-      (forward-button 1)))))
+    (cl-flet ((found () (eq (button-get (button-at (point)) 'command) command)))
+      (while (and (ignore-errors (forward-button 1))
+                  (not (found))))
+      (unless (found)
+        (goto-char (point-min))
+        (ignore-errors (forward-button 1))
+        (unless (found)
+          (goto-char (point-min))))))))
 
 (defun transient--heading-at-point ()
   (and (eq (get-text-property (point) 'face) 'transient-heading)

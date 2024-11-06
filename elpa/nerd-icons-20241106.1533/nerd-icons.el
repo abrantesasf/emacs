@@ -4,8 +4,8 @@
 
 ;; Author: Hongyu Ding <rainstormstudio@yahoo.com>, Vincent Zhang <seagle0128@gmail.com>
 ;; Keywords: lisp
-;; Package-Version: 20241014.2319
-;; Package-Revision: cc6c46830305
+;; Package-Version: 20241106.1533
+;; Package-Revision: a6ee08f1619b
 ;; Package-Requires: ((emacs "24.3"))
 ;; URL: https://github.com/rainstormstudio/nerd-icons.el
 ;; Keywords: convenient, lisp
@@ -214,6 +214,7 @@
     ("el"             nerd-icons-sucicon "nf-custom-emacs"       :face nerd-icons-purple)
     ("clj"            nerd-icons-devicon "nf-dev-clojure"        :face nerd-icons-blue)
     ("cljc"           nerd-icons-devicon "nf-dev-clojure"        :face nerd-icons-blue)
+    ("cljd"           nerd-icons-devicon "nf-dev-clojure"        :face nerd-icons-green)
     ("cljs"           nerd-icons-devicon "nf-dev-clojure"        :face nerd-icons-lyellow)
     ("coffee"         nerd-icons-devicon "nf-dev-coffeescript"   :face nerd-icons-maroon)
     ("iced"           nerd-icons-devicon "nf-dev-coffeescript"   :face nerd-icons-lmaroon)
