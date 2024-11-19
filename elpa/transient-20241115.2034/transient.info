@@ -1085,9 +1085,9 @@ constructor of that class.
 
    • Likewise ‘:level’ is equivalent to LEVEL.
 
-   • Other important keywords include the ‘:if...’ keywords.  These
-     keywords control whether the group is available in a certain
-     situation.
+   • Other important keywords include the ‘:if...’ and ‘:inapt-if...’
+     keywords.  These keywords control whether the group is available in
+     a certain situation.
 
      For example, one group of the ‘magit-rebase’ transient uses ‘:if
      magit-rebase-in-progress-p’, which contains the suffixes that are
@@ -1844,9 +1844,10 @@ File: transient.info,  Node: Suffix Classes,  Next: Suffix Methods,  Prev: Prefi
      The ‘:info’ keyword argument replaces the ‘:description’ keyword
      used for other suffix classes.  Other keyword arguments that you
      might want to set, include ‘:face’, predicate keywords (such as
-     ‘:if’), and ‘:format’.  By default the value of ‘:format’ includes
-     ‘%k’, which for this class is replaced with the empty string or
-     spaces, if keys are being padded in the containing group.
+     ‘:if’ and ‘:inapt-if’), and ‘:format’.  By default the value of
+     ‘:format’ includes ‘%k’, which for this class is replaced with the
+     empty string or spaces, if keys are being padded in the containing
+     group.
 
    Magit defines additional classes, which can serve as examples for the
 fancy things you can do without modifying Transient.  Some of these
@@ -2215,10 +2216,13 @@ File: transient.info,  Node: Predicate Slots,  Prev: Suffix Slots,  Up: Classes 
 5.8 Predicate Slots
 ===================
 
-Suffix and group objects share some predicate slots that control whether
-a group or suffix should be available depending on some state.  Only one
-of these slots can be used at the same time.  It is undefined what
-happens if you use more than one.
+Suffix and group objects share two sets of predicate slots that control
+whether a group or suffix should be available depending on some state.
+Only one slot from each set can be used at the same time.  It is
+undefined which slot is honored if you use more than one.
+
+   Predicates from the first group control whether the suffix is present
+in the menu at all.
 
    • ‘if’ Enable if predicate returns non-‘nil’.
    • ‘if-not’ Enable if predicate returns ‘nil’.
@@ -2228,6 +2232,21 @@ happens if you use more than one.
    • ‘if-not-mode’ Enable if major-mode does not match value.
    • ‘if-derived’ Enable if major-mode derives from value.
    • ‘if-not-derived’ Enable if major-mode does not derive from value.
+
+   Predicates from the second group control whether the suffix can be
+invoked.  The suffix is shown in the menu regardless, but when it is
+considered "inapt", then it is grayed out to indicated that it currently
+cannot be invoked.
+
+   • ‘inapt-if’ Inapt if predicate returns non-‘nil’.
+   • ‘inapt-if-not’ Inapt if predicate returns ‘nil’.
+   • ‘inapt-if-non-nil’ Inapt if variable’s value is non-‘nil’.
+   • ‘inapt-if-nil’ Inapt if variable’s value is ‘nil’.
+   • ‘inapt-if-mode’ Inapt if major-mode matches value.
+   • ‘inapt-if-not-mode’ Inapt if major-mode does not match value.
+   • ‘inapt-if-derived’ Inapt if major-mode derives from value.
+   • ‘inapt-if-not-derived’ Inapt if major-mode does not derive from
+     value.
 
    By default these predicates run when the prefix command is invoked,
 but this can be changes, using the ‘refresh-suffixes’ prefix slot.  See
@@ -3318,43 +3337,43 @@ Node: Technical Introduction36814
 Node: Defining Transients42515
 Node: Binding Suffix and Infix Commands44982
 Node: Group Specifications45840
-Node: Suffix Specifications52368
-Node: Defining Suffix and Infix Commands56581
-Node: Using Infix Arguments59629
-Node: Transient State63266
-Ref: Pre-commands for Infixes68081
-Ref: Pre-commands for Suffixes68601
-Ref: Pre-commands for Non-Suffixes71055
-Ref: Special Pre-Commands72191
-Node: Classes and Methods72699
-Node: Group Classes74883
-Node: Group Methods76810
-Node: Prefix Classes78063
-Node: Suffix Classes79154
-Node: Suffix Methods82241
-Node: Suffix Value Methods82562
-Node: Suffix Format Methods85320
-Node: Prefix Slots88310
-Ref: Internal Prefix Slots90447
-Node: Suffix Slots91704
-Ref: Slots of transient-suffix92072
-Ref: Slots of transient-infix93506
-Ref: Slots of transient-variable96802
-Ref: Slots of transient-switches96904
-Node: Predicate Slots97267
-Node: FAQ98702
-Ref: Can I control how the popup buffer is displayed?98831
-Ref: How can I copy text from the popup buffer?99012
-Ref: How can I autoload prefix and suffix commands?99506
-Ref: How does Transient compare to prefix keys and universal arguments?99980
-Ref: How does Transient compare to Magit-Popup and Hydra?100223
-Ref: Why did some of the key bindings change?100417
-Ref: Why does q not quit popups anymore?102770
-Node: Keystroke Index103873
-Node: Command and Function Index105738
-Node: Variable Index112741
-Node: Concept Index115014
-Node: GNU General Public License117750
+Node: Suffix Specifications52391
+Node: Defining Suffix and Infix Commands56604
+Node: Using Infix Arguments59652
+Node: Transient State63289
+Ref: Pre-commands for Infixes68104
+Ref: Pre-commands for Suffixes68624
+Ref: Pre-commands for Non-Suffixes71078
+Ref: Special Pre-Commands72214
+Node: Classes and Methods72722
+Node: Group Classes74906
+Node: Group Methods76833
+Node: Prefix Classes78086
+Node: Suffix Classes79177
+Node: Suffix Methods82289
+Node: Suffix Value Methods82610
+Node: Suffix Format Methods85368
+Node: Prefix Slots88358
+Ref: Internal Prefix Slots90495
+Node: Suffix Slots91752
+Ref: Slots of transient-suffix92120
+Ref: Slots of transient-infix93554
+Ref: Slots of transient-variable96850
+Ref: Slots of transient-switches96952
+Node: Predicate Slots97315
+Node: FAQ99660
+Ref: Can I control how the popup buffer is displayed?99789
+Ref: How can I copy text from the popup buffer?99970
+Ref: How can I autoload prefix and suffix commands?100464
+Ref: How does Transient compare to prefix keys and universal arguments?100938
+Ref: How does Transient compare to Magit-Popup and Hydra?101181
+Ref: Why did some of the key bindings change?101375
+Ref: Why does q not quit popups anymore?103728
+Node: Keystroke Index104831
+Node: Command and Function Index106696
+Node: Variable Index113699
+Node: Concept Index115972
+Node: GNU General Public License118708
 
 End Tag Table
 

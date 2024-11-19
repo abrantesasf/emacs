@@ -6,8 +6,8 @@
 ;; Homepage: https://github.com/magit/transient
 ;; Keywords: extensions
 
-;; Package-Version: 20241111.1438
-;; Package-Revision: d90d65b82200
+;; Package-Version: 20241115.2034
+;; Package-Revision: 291b86e66de3
 ;; Package-Requires: ((emacs "26.1") (compat "30.0.0.0") (seq "2.24"))
 
 ;; SPDX-License-Identifier: GPL-3.0-or-later
@@ -767,8 +767,8 @@ the prototype is stored in the clone's `prototype' slot.")
     :documentation "Inapt if major-mode does not derive from value."))
   "Abstract superclass for group and suffix classes.
 
-It is undefined what happens if more than one `if*' predicate
-slot is non-nil."
+It is undefined which predicates are used if more than one `if*'
+predicate slots or more than one `inapt-if*' slots are non-nil."
   :abstract t)
 
 (defclass transient-suffix (transient-child)
@@ -2136,7 +2136,8 @@ value.  Otherwise return CHILDREN as is."
       (setq transient--prefix (transient--init-prefix name params))
     (setq name (oref transient--prefix command)))
   (setq transient--refreshp (oref transient--prefix refresh-suffixes))
-  (setq transient--layout (or layout (transient--init-suffixes name)))
+  (setq transient--layout (or (and (not transient--refreshp) layout)
+                              (transient--init-suffixes name)))
   (setq transient--suffixes (transient--flatten-suffixes transient--layout)))
 
 (defun transient--init-prefix (name &optional params)
