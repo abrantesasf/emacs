@@ -486,7 +486,7 @@
 		 ("Arne Jørgensen" . "arne@arnested.dk"))
 		(:commit . "f632fa5f140b04260fa23b15ffccbfe5a787b2e2"))])
  (dslide .
-	 [(0 5 3)
+	 [(0 5 5)
 	  ((emacs
 	    (29 2)))
 	  "Domain Specific sLIDEs. A presentation framework" tar
@@ -495,7 +495,7 @@
 	   (:maintainer "Positron" . "contact@positron.solutions")
 	   (:authors
 	    ("Positron" . "contact@positron.solutions"))
-	   (:commit . "2d8a9ac3e37157ce8b78880ebc1defc61303a44d"))])
+	   (:commit . "0d9a1f6c27e0543e912213d0a5047999f9e5deb5"))])
  (eat .
       [(0 9 4)
        ((emacs
@@ -2015,7 +2015,7 @@
 	       ("David Christiansen" . "david@davidchristiansen.dk"))
 	      (:commit . "1edda80e2e32b72e77f4f16ae5b83c312c68ee95"))])
  (racket-mode .
-	      [(1 0 20241116 120019)
+	      [(1 0 20241121 151851)
 	       ((emacs
 		 (25 1)))
 	       "Racket editing, REPL, and more" tar
