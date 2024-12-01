@@ -6,8 +6,8 @@
 ;; Homepage: https://github.com/magit/transient
 ;; Keywords: extensions
 
-;; Package-Version: 20241125.1302
-;; Package-Revision: d64b73efbc06
+;; Package-Version: 20241201.1616
+;; Package-Revision: 37be15575a8e
 ;; Package-Requires: ((emacs "26.1") (compat "30.0.0.0") (seq "2.24"))
 
 ;; SPDX-License-Identifier: GPL-3.0-or-later
@@ -95,6 +95,10 @@ TYPE is a type descriptor as accepted by `cl-typep', which see."
       (static-if (< emacs-major-version 30)
           `(pred (pcase--flip cl-typep ',type))
         `(pred (cl-typep _ ',type))))))
+
+(make-obsolete-variable 'transient-hide-during-minibuffer-read
+                        "use `transient-show-during-minibuffer-read' instead."
+                        "0.8.0")
 
 (defmacro transient--with-emergency-exit (id &rest body)
   (declare (indent defun))
@@ -270,6 +274,51 @@ of this variable use \"C-x t\" when a transient is active."
   :group 'transient
   :type 'boolean)
 
+(defcustom transient-show-during-minibuffer-read nil
+  "Whether to show the transient menu while reading in the minibuffer.
+
+This is only relevant to commands that do not close the menu, such as
+commands that set infix arguments.  If a command exits the menu, and
+uses the minibuffer, then the menu is always closed before the
+minibuffer is entered, irrespective of the value of this option.
+
+When nil (the default), hide the menu while the minibuffer is in use.
+When t, keep showing the menu, but allow for the menu window to be
+resized to ensure that completion candidates can be displayed.
+
+When `fixed', keep showing the menu and prevent it from being resized,
+which may make it impossible to display the completion candidates.  If
+that ever happens for you, consider using t or an integer, as described
+below.
+
+If the value is `fixed' and the menu window uses the full height of its
+frame, then the former is ignored and resizing is allowed anyway.  This
+is necessary because individual menus may use unusal display actions
+different from what `transient-display-buffer-action' specifies (likely
+to display that menu in a side-window).
+
+When using a third-party mode, which automatically resizes windows
+\(e.g., by calling `balance-windows' on `post-command-hook'), then
+`fixed' (or nil) is likely a better choice than t.
+
+The value can also be an integer, in which case the behavior depends on
+whether at least that many lines are left to display windows other than
+the menu window.  If that is the case, display the menu and preserve the
+size of that window.  Otherwise, allow resizing the menu window if the
+number is positive, or hide the menu if it is negative."
+  :package-version '(transient . "0.8.0")
+  :group 'transient
+  :type '(choice
+          (const :tag "Hide menu" nil)
+          (const :tag "Show menu and preserve size" fixed)
+          (const :tag "Show menu and allow resizing" t)
+          (natnum :tag "Show menu, allow resizing if less than N lines left"
+                  :format "\n   %t: %v"
+                  :value 20)
+          (integer :tag "Show menu, except if less than N lines left"
+                   :format "\n   %t: %v"
+                   :value -20)))
+
 (defcustom transient-read-with-initial-input nil
   "Whether to use the last history element as initial minibuffer input."
   :package-version '(transient . "0.2.0")
@@ -388,17 +437,6 @@ See also `transient-align-variable-pitch'."
 This might be useful for users with low vision who use large
 text and might otherwise have to scroll in two dimensions."
   :package-version '(transient . "0.3.6")
-  :group 'transient
-  :type 'boolean)
-
-(defcustom transient-hide-during-minibuffer-read t
-  "Whether to hide the transient buffer while reading in the minibuffer.
-
-This is only relevant to commands that do not close the menu, such
-as commands that set infix arguments.  If a command exits the menu,
-and uses the minibuffer, then the menu is always closed before the
-minibuffer is entered, irrespective of the value of this option."
-  :package-version '(transient . "0.8.0")
   :group 'transient
   :type 'boolean)
 
@@ -686,6 +724,8 @@ If `transient-save-history' is nil, then do nothing."
    (environment          :initarg :environment          :initform nil)
    (incompatible         :initarg :incompatible         :initform nil)
    (suffix-description   :initarg :suffix-description)
+   (display-action       :initarg :display-action       :initform nil)
+   (mode-line-format     :initarg :mode-line-format)
    (variable-pitch       :initarg :variable-pitch       :initform nil)
    (column-widths        :initarg :column-widths        :initform nil)
    (unwind-suffix        :documentation "Internal use." :initform nil))
@@ -2443,15 +2483,27 @@ value.  Otherwise return CHILDREN as is."
 (defun transient--suspend-override (&optional nohide)
   (transient--debug 'suspend-override)
   (transient--timer-cancel)
-  (cond ((and (not nohide) transient-hide-during-minibuffer-read)
-         (transient--delete-window))
-        ((and transient--prefix transient--redisplay-key)
-         (setq transient--redisplay-key nil)
-         (when transient--showp
-           (if-let ((win (minibuffer-selected-window)))
-               (with-selected-window win
-                 (transient--show))
-             (transient--show)))))
+  (let ((show (if nohide 'fixed transient-show-during-minibuffer-read)))
+    (when (and (integerp show)
+               (< (frame-height (window-frame transient--window))
+                  (+ (abs show)
+                     (window-height transient--window))))
+      (setq show (natnump show)))
+    (cond ((not show)
+           (transient--delete-window))
+          ((and transient--prefix transient--redisplay-key)
+           (setq transient--redisplay-key nil)
+           (when transient--showp
+             (if-let ((win (minibuffer-selected-window)))
+                 (with-selected-window win
+                   (transient--show))
+               (transient--show)))))
+    (when (and (window-live-p transient--window)
+               (and show
+                    (or (not (eq show 'fixed))
+                        (window-full-height-p transient--window))))
+      (set-window-parameter transient--window 'window-preserved-size
+                            (list (window-buffer transient--window) nil nil))))
   (transient--pop-keymap 'transient--transient-map)
   (transient--pop-keymap 'transient--redisplay-map)
   (remove-hook 'pre-command-hook  #'transient--pre-command)
@@ -2459,8 +2511,10 @@ value.  Otherwise return CHILDREN as is."
 
 (defun transient--resume-override (&optional _ignore)
   (transient--debug 'resume-override)
-  (when (and transient--showp transient-hide-during-minibuffer-read)
-    (transient--show))
+  (cond ((and transient--showp (not (window-live-p transient--window)))
+         (transient--show))
+        ((window-live-p transient--window)
+         (transient--fit-window-to-buffer transient--window)))
   (transient--push-keymap 'transient--transient-map)
   (transient--push-keymap 'transient--redisplay-map)
   (add-hook 'pre-command-hook  #'transient--pre-command)
@@ -3728,26 +3782,39 @@ a default implementation, which is a noop.")
 
 ;;;; Get
 
-(defun transient-scope (&optional prefix)
+(defun transient-scope (&optional prefixes)
   "Return the scope of the active or current transient prefix command.
 
-If optional PREFIX is nil, return the scope of the active prefix; the
-prefix whose menu is active or being setup.  In suffix commands it is
-rarely, if ever, appropriate to call this function like this.
+If optional PREFIXES is nil, return the scope of the prefix currently
+being setup, making this variant useful, e.g., in `:if*' predicates.
+If no prefix is being setup, but the current command was invoked from
+some prefix, then return the scope of that.
 
-If PREFIX is a prefix command or a list of such commands, then return
-its scope, if, and only if, either the active prefix or the prefix from
-which the current suffix command was invoked, is one of these prefixes.
-Otherwise return nil.
+When this function is called from the body or `interactive' form of a
+suffix command, PREFIXES should be non-nil.
 
-Return the value of the corresponding object's `scope' slot."
-  (if prefix
-      ;; Prefer the current over the active prefix.  If the opposite is
-      ;; appropriate, one should call this function without an argument.
-      (and-let* ((obj (or transient-current-prefix transient--prefix)))
-        (and (memq (oref obj command)
-                   (ensure-list prefix))
-             (oref obj scope)))
+If PREFIXES is non-nil, it must be a prefix command or a list of such
+commands.  In this case try the following in order:
+
+- If the current suffix command was invoked from a prefix, which
+  appears in PREFIXES, then return the scope of that prefix.
+
+- If a prefix is being setup and it appears in PREFIXES, then return
+  its scope.
+
+- Finally try to return the default scope of the first prefix in
+  PREFIXES.  This only works if that slot is set in the respective
+  class definition or using its `transient-init-scope' method.
+
+If no prefix matches, return nil."
+  (if prefixes
+      (let ((prefixes (ensure-list prefixes)))
+        (if-let* ((obj (or (and-let* ((obj transient-current-prefix))
+                             (and (memq (oref obj command) prefixes) obj))
+                           (and-let* ((obj transient--prefix))
+                             (and (memq (oref obj command) prefixes) obj)))))
+            (oref obj scope)
+          (oref (transient--init-prefix (car prefixes)) scope)))
     (and-let* ((obj (transient-prefix-object)))
       (oref obj scope))))
 
@@ -3827,22 +3894,12 @@ have a history of their own.")
       (erase-buffer)
       (when transient-force-fixed-pitch
         (transient--force-fixed-pitch))
-      (setq window-size-fixed
-            ;; If necessary, make sure the height of the minibuffer
-            ;; can be increased to display completion candidates.
-            ;; See https://github.com/minad/vertico/issues/532.
-            (if (and (not transient-hide-during-minibuffer-read)
-                     (window-full-height-p))
-                'width
-              t))
       (when (bound-and-true-p tab-line-format)
         (setq tab-line-format nil))
       (setq header-line-format nil)
       (setq mode-line-format
-            (if (or (natnump transient-mode-line-format)
-                    (eq transient-mode-line-format 'line))
-                nil
-              transient-mode-line-format))
+            (let ((format (transient--mode-line-format)))
+              (if (or (natnump format) (eq format 'line)) nil format)))
       (setq mode-line-buffer-identification
             (symbol-name (oref transient--prefix command)))
       (if transient-enable-popup-navigation
@@ -3857,12 +3914,9 @@ have a history of their own.")
       (when-let ((line (transient--separator-line)))
         (insert line)))
     (unless (window-live-p transient--window)
-      (when (eq (car transient-display-buffer-action)
-                'display-buffer-full-frame)
-        (user-error "Invalid value for `transient-display-buffer-action'"))
       (setq transient--window
             (display-buffer transient--buffer
-                            transient-display-buffer-action)))
+                            (transient--display-action))))
     (when (window-live-p transient--window)
       (with-selected-window transient--window
         (set-window-parameter nil 'prev--no-other-window
@@ -3873,20 +3927,37 @@ have a history of their own.")
           (transient--goto-button focus))
         (transient--fit-window-to-buffer transient--window)))))
 
+(defun transient--display-action ()
+  (let ((action (or (oref transient--prefix display-action)
+                    transient-display-buffer-action)))
+    (when (eq (car action) 'display-buffer-full-frame)
+      (user-error "Invalid value for `transient-display-buffer-action'"))
+    action))
+
 (defun transient--fit-window-to-buffer (window)
+  (set-window-parameter window 'window-preserved-size nil)
   (let ((window-resize-pixelwise t)
         (window-size-fixed nil))
     (if (eq (car (window-parameter window 'quit-restore)) 'other)
         ;; Grow but never shrink window that previously displayed
         ;; another buffer and is going to display that again.
         (fit-window-to-buffer window nil (window-height window))
-      (fit-window-to-buffer window nil 1))))
+      (fit-window-to-buffer window nil 1)))
+  (set-window-parameter window 'window-preserved-size
+                        (list (window-buffer window)
+                              (window-body-width window t)
+                              (window-body-height window t))))
+
+(defun transient--mode-line-format ()
+  (if (slot-boundp transient--prefix 'mode-line-format)
+      (oref transient--prefix mode-line-format)
+    transient-mode-line-format))
 
 (defun transient--separator-line ()
-  (and-let* ((height (cond ((not window-system) nil)
-                           ((natnump transient-mode-line-format)
-                            transient-mode-line-format)
-                           ((eq transient-mode-line-format 'line) 1)))
+  (and-let* ((format (transient--mode-line-format))
+             (height (cond ((not window-system) nil)
+                           ((natnump format) format)
+                           ((eq format 'line) 1)))
              (face `(,@(and (>= emacs-major-version 27) '(:extend t))
                      :background
                      ,(or (face-foreground (transient--key-face nil 'non-suffix)
