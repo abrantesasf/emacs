@@ -22,9 +22,13 @@
 (add-to-list 'auto-minor-mode-alist '("\\.ino\\'" . arduino-cli-mode))
 
 ;; Autocomplete
+(use-package company
+  :ensure t
+  :hook (arduino-mode . company-mode))
+
 (add-hook 'arduino-mode-hook
   (lambda ()
-    (setq-local company-backends '((company-dabbrev-code company-keywords)))))
+    (setq-local company-backends '((company-dabbrev-code company-keywords company-arduino)))))
 
 ;; Syntax highligth
 (use-package flycheck
