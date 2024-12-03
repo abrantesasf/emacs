@@ -10,6 +10,15 @@
   :ensure t
   :mode ("\\.ino\\'" . arduino-mode))
 
+;; Minor mode
+(use-package arduino-cli-mode
+  :ensure t
+  ;; :hook arduino-mode
+  ;; :mode "\\.ino\\'"
+  :custom
+  (arduino-cli-warnings 'all)
+  (arduino-cli-verify t))
+
 ;; Autocomplete
 (add-hook 'arduino-mode-hook
   (lambda ()
