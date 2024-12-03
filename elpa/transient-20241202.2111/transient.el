@@ -6,8 +6,8 @@
 ;; Homepage: https://github.com/magit/transient
 ;; Keywords: extensions
 
-;; Package-Version: 20241201.1616
-;; Package-Revision: 37be15575a8e
+;; Package-Version: 20241202.2111
+;; Package-Revision: 645f1b2cd488
 ;; Package-Requires: ((emacs "26.1") (compat "30.0.0.0") (seq "2.24"))
 
 ;; SPDX-License-Identifier: GPL-3.0-or-later
@@ -216,7 +216,7 @@ buffer became the current buffer, then that would change what is
 at point.  To that effect `inhibit-same-window' ensures that the
 selected window is not used to show the transient buffer.
 
-The use of a horizonal split to display the menu window can lead
+The use of a horizontal split to display the menu window can lead
 to incompatibilities and is thus discouraged.  Transient tries to
 mitigate such issue but cannot proactively deal with all possible
 configurations and combinations of third-party packages.
@@ -293,7 +293,7 @@ below.
 
 If the value is `fixed' and the menu window uses the full height of its
 frame, then the former is ignored and resizing is allowed anyway.  This
-is necessary because individual menus may use unusal display actions
+is necessary because individual menus may use unusual display actions
 different from what `transient-display-buffer-action' specifies (likely
 to display that menu in a side-window).
 
@@ -2715,7 +2715,8 @@ value.  Otherwise return CHILDREN as is."
               transient--layout
               transient--editp
               :transient-suffix (oref transient--prefix transient-suffix)
-              :scope (oref transient--prefix scope))
+              :scope (oref transient--prefix scope)
+              :value (transient-get-value))
         transient--stack))
 
 (defun transient--stack-pop ()

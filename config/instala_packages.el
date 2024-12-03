@@ -12,7 +12,8 @@
     yasnippet-snippets yasnippet-classic-snippets ess org
     auto-package-update use-package markdown-toc markdown-soma
     markdown-mode sml-mode slime-repl-ansi-color
-    company-quickhelp-terminal auctex lua-mode drag-stuff))
+    company-quickhelp-terminal auctex lua-mode drag-stuff
+    arduino-mode flycheck))
 
 ; fetch the list of packages available 
 (unless package-archive-contents

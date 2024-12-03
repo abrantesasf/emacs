@@ -736,7 +736,7 @@ Auxiliary Options
 
      If the value is ‘fixed’ and the menu window uses the full height of
      its frame, then the former is ignored and resizing is allowed
-     anyway.  This is necessary because individual menus may use unusal
+     anyway.  This is necessary because individual menus may use unusual
      display actions different from what
      ‘transient-display-buffer-action’ specifies (likely to display that
      menu in a side-window).
@@ -3378,50 +3378,50 @@ Node: Configuration21384
 Ref: Essential Options21664
 Ref: Accessibility Options25876
 Ref: Auxiliary Options26199
-Ref: Developer Options33051
-Node: Modifying Existing Transients34299
-Node: Defining New Commands38491
-Node: Technical Introduction38854
-Node: Defining Transients44555
-Node: Binding Suffix and Infix Commands47022
-Node: Group Specifications47880
-Node: Suffix Specifications54431
-Node: Defining Suffix and Infix Commands58644
-Node: Using Infix Arguments61692
-Node: Transient State65329
-Ref: Pre-commands for Infixes70144
-Ref: Pre-commands for Suffixes70664
-Ref: Pre-commands for Non-Suffixes73118
-Ref: Special Pre-Commands74254
-Node: Classes and Methods74762
-Node: Group Classes76946
-Node: Group Methods78873
-Node: Prefix Classes80126
-Node: Suffix Classes81217
-Node: Suffix Methods84329
-Node: Suffix Value Methods84650
-Node: Suffix Format Methods87408
-Node: Prefix Slots90398
-Ref: Internal Prefix Slots92845
-Node: Suffix Slots94102
-Ref: Slots of transient-suffix94470
-Ref: Slots of transient-infix95904
-Ref: Slots of transient-variable99200
-Ref: Slots of transient-switches99302
-Node: Predicate Slots99665
-Node: FAQ102010
-Ref: Can I control how the popup buffer is displayed?102139
-Ref: How can I copy text from the popup buffer?102466
-Ref: How can I autoload prefix and suffix commands?102960
-Ref: How does Transient compare to prefix keys and universal arguments?103434
-Ref: How does Transient compare to Magit-Popup and Hydra?103677
-Ref: Why did some of the key bindings change?103871
-Ref: Why does q not quit popups anymore?106224
-Node: Keystroke Index107327
-Node: Command and Function Index109192
-Node: Variable Index116195
-Node: Concept Index118468
-Node: GNU General Public License121204
+Ref: Developer Options33052
+Node: Modifying Existing Transients34300
+Node: Defining New Commands38492
+Node: Technical Introduction38855
+Node: Defining Transients44556
+Node: Binding Suffix and Infix Commands47023
+Node: Group Specifications47881
+Node: Suffix Specifications54432
+Node: Defining Suffix and Infix Commands58645
+Node: Using Infix Arguments61693
+Node: Transient State65330
+Ref: Pre-commands for Infixes70145
+Ref: Pre-commands for Suffixes70665
+Ref: Pre-commands for Non-Suffixes73119
+Ref: Special Pre-Commands74255
+Node: Classes and Methods74763
+Node: Group Classes76947
+Node: Group Methods78874
+Node: Prefix Classes80127
+Node: Suffix Classes81218
+Node: Suffix Methods84330
+Node: Suffix Value Methods84651
+Node: Suffix Format Methods87409
+Node: Prefix Slots90399
+Ref: Internal Prefix Slots92846
+Node: Suffix Slots94103
+Ref: Slots of transient-suffix94471
+Ref: Slots of transient-infix95905
+Ref: Slots of transient-variable99201
+Ref: Slots of transient-switches99303
+Node: Predicate Slots99666
+Node: FAQ102011
+Ref: Can I control how the popup buffer is displayed?102140
+Ref: How can I copy text from the popup buffer?102467
+Ref: How can I autoload prefix and suffix commands?102961
+Ref: How does Transient compare to prefix keys and universal arguments?103435
+Ref: How does Transient compare to Magit-Popup and Hydra?103678
+Ref: Why did some of the key bindings change?103872
+Ref: Why does q not quit popups anymore?106225
+Node: Keystroke Index107328
+Node: Command and Function Index109193
+Node: Variable Index116196
+Node: Concept Index118469
+Node: GNU General Public License121205
 
 End Tag Table
 
