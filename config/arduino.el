@@ -19,6 +19,8 @@
   (arduino-cli-warnings 'all)
   (arduino-cli-verify t))
 
+(add-to-list 'auto-minor-mode-alist '("\\.ino\\'" . arduino-cli-mode))
+
 ;; Autocomplete
 (add-hook 'arduino-mode-hook
   (lambda ()
