@@ -13,7 +13,8 @@
     auto-package-update use-package markdown-toc markdown-soma
     markdown-mode sml-mode slime-repl-ansi-color
     company-quickhelp-terminal auctex lua-mode drag-stuff
-    arduino-mode arduino-cli-mode flycheck auto-minor-mode))
+    arduino-mode arduino-cli-mode flycheck auto-minor-mode
+    company-arduino))
 
 ; fetch the list of packages available 
 (unless package-archive-contents
