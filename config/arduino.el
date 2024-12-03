@@ -32,6 +32,20 @@
   (lambda ()
     (setq-local company-backends '((company-dabbrev-code company-keywords company-files)))))
 
+(use-package company-clang
+  :ensure t
+  :config
+  (setq company-clang-executable "/usr/bin/clang") ;; Verifique o caminho correto para o clang
+  (add-hook 'arduino-mode-hook
+            (lambda ()
+              (setq-local company-backends '(company-clang company-dabbrev-code company-keywords)))))
+
+(add-hook 'arduino-mode-hook
+          (lambda ()
+            (setq-local company-clang-arguments
+                        '("-I/home/abrantesasf/.arduino15/libraries"
+                          "-I/home/abrantesasf/.arduino15/packages/arduino/hardware/avr/1.8.6/cores/arduino"))))
+
 ;; Syntax highligth
 (use-package flycheck
   :ensure t
