@@ -28,7 +28,7 @@
 
 (add-hook 'arduino-mode-hook
   (lambda ()
-    (setq-local company-backends '((company-dabbrev-code company-keywords company-arduino)))))
+    (setq-local company-backends '((company-dabbrev-code company-keywords)))))
 
 ;; Syntax highligth
 (use-package flycheck
