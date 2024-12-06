@@ -391,6 +391,10 @@ that read the same kind of value to also use the same history key (see
 
    Both kinds of history are saved to a file when Emacs is exited.
 
+ -- User Option: transient-save-history
+     This option controls whether the history of transient commands is
+     saved when exiting Emacs.
+
  -- User Option: transient-history-file
      This option names the file that is used to persist the history of
      transients and their infixes between Emacs sessions.
@@ -557,6 +561,60 @@ Also see *note Common Suffix Commands::.
           zero, the popup is shown after that many seconds of inactivity
           (using the absolute value).
 
+ -- User Option: transient-show-common-commands
+     This option controls whether shared suffix commands are shown
+     alongside the transient-specific infix and suffix commands.  By
+     default, the shared commands are not shown to avoid overwhelming
+     the user with too many options.
+
+     While a transient is active, pressing ‘C-x’ always shows the common
+     commands.  The value of this option can be changed for the current
+     Emacs session by typing ‘C-x t’ while a transient is active.
+
+ -- User Option: transient-show-during-minibuffer-read
+     This option controls whether the transient menu continues to be
+     displayed while the minibuffer is used to read user input.
+
+     This is only relevant to commands that do not close the menu, such
+     as commands that set infix arguments.  If a command exits the menu,
+     and uses the minibuffer, then the menu is always closed before the
+     minibuffer is entered, irrespective of the value of this option.
+
+     When ‘nil’ (the default), hide the menu while the minibuffer is in
+     use.  When ‘t’, keep showing the menu, but allow for the menu
+     window to be resized to ensure that completion candidates can be
+     displayed.
+
+     When ‘fixed’, keep showing the menu and prevent it from being
+     resized, which may make it impossible to display the completion
+     candidates.  If that ever happens for you, consider using ‘t’ or an
+     integer, as described below.
+
+     If the value is ‘fixed’ and the menu window uses the full height of
+     its frame, then the former is ignored and resizing is allowed
+     anyway.  This is necessary because individual menus may use unusual
+     display actions different from what
+     ‘transient-display-buffer-action’ specifies (likely to display that
+     menu in a side-window).
+
+     When using a third-party mode, which automatically resizes windows
+     (e.g., by calling ‘balance-windows’ on ‘post-command-hook’), then
+     ‘fixed’ (or ‘nil’) is likely a better choice than ‘t’.
+
+     The value can also be an integer, in which case the behavior
+     depends on whether at least that many lines are left to display
+     windows other than the menu window.  If that is the case, display
+     the menu and preserve the size of that window.  Otherwise, allow
+     resizing the menu window if the number is positive, or hide the
+     menu if it is negative.
+
+ -- User Option: transient-read-with-initial-input
+     This option controls whether the last history element is used as
+     the initial minibuffer input when reading the value of an infix
+     argument from the user.  If ‘nil’, there is no initial input and
+     the first element has to be accessed the same way as the older
+     elements.
+
  -- User Option: transient-enable-popup-navigation
      This option controls whether navigation commands are enabled in the
      transient popup buffer.  If the value is ‘verbose’, additionally
@@ -707,50 +765,6 @@ Auxiliary Options
                     (if (string-match "\\`\\(=\\)[a-zA-Z]" key)
                         (replace-match "(" t t key 1)
                       key))))
-
- -- User Option: transient-read-with-initial-input
-     This option controls whether the last history element is used as
-     the initial minibuffer input when reading the value of an infix
-     argument from the user.  If ‘nil’, there is no initial input and
-     the first element has to be accessed the same way as the older
-     elements.
-
- -- User Option: transient-show-during-minibuffer-read
-     This option controls whether the transient menu continues to be
-     displayed while the minibuffer is used to read user input.
-
-     This is only relevant to commands that do not close the menu, such
-     as commands that set infix arguments.  If a command exits the menu,
-     and uses the minibuffer, then the menu is always closed before the
-     minibuffer is entered, irrespective of the value of this option.
-
-     When ‘nil’ (the default), hide the menu while the minibuffer is in
-     use.  When ‘t’, keep showing the menu, but allow for the menu
-     window to be resized to ensure that completion candidates can be
-     displayed.
-
-     When ‘fixed’, keep showing the menu and prevent it from being
-     resized, which may make it impossible to display the completion
-     candidates.  If that ever happens for you, consider using ‘t’ or an
-     integer, as described below.
-
-     If the value is ‘fixed’ and the menu window uses the full height of
-     its frame, then the former is ignored and resizing is allowed
-     anyway.  This is necessary because individual menus may use unusual
-     display actions different from what
-     ‘transient-display-buffer-action’ specifies (likely to display that
-     menu in a side-window).
-
-     When using a third-party mode, which automatically resizes windows
-     (e.g., by calling ‘balance-windows’ on ‘post-command-hook’), then
-     ‘fixed’ (or ‘nil’) is likely a better choice than ‘t’.
-
-     The value can also be an integer, in which case the behavior
-     depends on whether at least that many lines are left to display
-     windows other than the menu window.  If that is the case, display
-     the menu and preserve the size of that window.  Otherwise, allow
-     resizing the menu window if the number is positive, or hide the
-     menu if it is negative.
 
  -- User Option: transient-align-variable-pitch
      This option controls whether columns are aligned pixel-wise in the
@@ -2565,7 +2579,7 @@ Appendix D Variable Index
  [index ]
 * Menu:
 
-* transient-align-variable-pitch:        Configuration.       (line 231)
+* transient-align-variable-pitch:        Configuration.       (line 241)
 * transient-current-command:             Using Infix Arguments.
                                                               (line  52)
 * transient-current-prefix:              Using Infix Arguments.
@@ -2574,25 +2588,27 @@ Appendix D Variable Index
                                                               (line  44)
 * transient-default-level:               Enabling and Disabling Suffixes.
                                                               (line  33)
-* transient-detect-key-conflicts:        Configuration.       (line 256)
-* transient-display-buffer-action:       Configuration.       (line  58)
-* transient-enable-popup-navigation:     Configuration.       (line  36)
-* transient-force-fixed-pitch:           Configuration.       (line 244)
-* transient-force-single-column:         Configuration.       (line 103)
-* transient-highlight-higher-levels:     Configuration.       (line 269)
-* transient-highlight-mismatched-keys:   Configuration.       (line 148)
-* transient-history-file:                Using History.       (line  33)
-* transient-history-limit:               Using History.       (line  37)
+* transient-detect-key-conflicts:        Configuration.       (line 266)
+* transient-display-buffer-action:       Configuration.       (line 112)
+* transient-enable-popup-navigation:     Configuration.       (line  90)
+* transient-force-fixed-pitch:           Configuration.       (line 254)
+* transient-force-single-column:         Configuration.       (line 157)
+* transient-highlight-higher-levels:     Configuration.       (line 279)
+* transient-highlight-mismatched-keys:   Configuration.       (line 202)
+* transient-history-file:                Using History.       (line  37)
+* transient-history-limit:               Using History.       (line  41)
 * transient-levels-file:                 Enabling and Disabling Suffixes.
                                                               (line  38)
-* transient-mode-line-format:            Configuration.       (line 112)
-* transient-read-with-initial-input:     Configuration.       (line 187)
-* transient-semantic-coloring:           Configuration.       (line 139)
+* transient-mode-line-format:            Configuration.       (line 166)
+* transient-read-with-initial-input:     Configuration.       (line  83)
+* transient-save-history:                Using History.       (line  33)
+* transient-semantic-coloring:           Configuration.       (line 193)
 * transient-show-common-commands:        Common Suffix Commands.
                                                               (line  23)
-* transient-show-during-minibuffer-read: Configuration.       (line 194)
+* transient-show-common-commands <1>:    Configuration.       (line  36)
+* transient-show-during-minibuffer-read: Configuration.       (line  46)
 * transient-show-popup:                  Configuration.       (line  15)
-* transient-substitute-key-function:     Configuration.       (line 166)
+* transient-substitute-key-function:     Configuration.       (line 220)
 * transient-values-file:                 Saving Values.       (line  31)
 
 
@@ -3371,57 +3387,57 @@ Node: Common Suffix Commands10768
 Node: Saving Values12604
 Ref: Saving Values-Footnote-113975
 Node: Using History14168
-Node: Getting Help for Suffix Commands15742
-Node: Enabling and Disabling Suffixes17120
-Node: Other Commands20408
-Node: Configuration21384
-Ref: Essential Options21664
-Ref: Accessibility Options25876
-Ref: Auxiliary Options26199
-Ref: Developer Options33052
-Node: Modifying Existing Transients34300
-Node: Defining New Commands38492
-Node: Technical Introduction38855
-Node: Defining Transients44556
-Node: Binding Suffix and Infix Commands47023
-Node: Group Specifications47881
-Node: Suffix Specifications54432
-Node: Defining Suffix and Infix Commands58645
-Node: Using Infix Arguments61693
-Node: Transient State65330
-Ref: Pre-commands for Infixes70145
-Ref: Pre-commands for Suffixes70665
-Ref: Pre-commands for Non-Suffixes73119
-Ref: Special Pre-Commands74255
-Node: Classes and Methods74763
-Node: Group Classes76947
-Node: Group Methods78874
-Node: Prefix Classes80127
-Node: Suffix Classes81218
-Node: Suffix Methods84330
-Node: Suffix Value Methods84651
-Node: Suffix Format Methods87409
-Node: Prefix Slots90399
-Ref: Internal Prefix Slots92846
-Node: Suffix Slots94103
-Ref: Slots of transient-suffix94471
-Ref: Slots of transient-infix95905
-Ref: Slots of transient-variable99201
-Ref: Slots of transient-switches99303
-Node: Predicate Slots99666
-Node: FAQ102011
-Ref: Can I control how the popup buffer is displayed?102140
-Ref: How can I copy text from the popup buffer?102467
-Ref: How can I autoload prefix and suffix commands?102961
-Ref: How does Transient compare to prefix keys and universal arguments?103435
-Ref: How does Transient compare to Magit-Popup and Hydra?103678
-Ref: Why did some of the key bindings change?103872
-Ref: Why does q not quit popups anymore?106225
-Node: Keystroke Index107328
-Node: Command and Function Index109193
-Node: Variable Index116196
-Node: Concept Index118469
-Node: GNU General Public License121205
+Node: Getting Help for Suffix Commands15885
+Node: Enabling and Disabling Suffixes17263
+Node: Other Commands20551
+Node: Configuration21527
+Ref: Essential Options21807
+Ref: Accessibility Options28806
+Ref: Auxiliary Options29129
+Ref: Developer Options33707
+Node: Modifying Existing Transients34955
+Node: Defining New Commands39147
+Node: Technical Introduction39510
+Node: Defining Transients45211
+Node: Binding Suffix and Infix Commands47678
+Node: Group Specifications48536
+Node: Suffix Specifications55087
+Node: Defining Suffix and Infix Commands59300
+Node: Using Infix Arguments62348
+Node: Transient State65985
+Ref: Pre-commands for Infixes70800
+Ref: Pre-commands for Suffixes71320
+Ref: Pre-commands for Non-Suffixes73774
+Ref: Special Pre-Commands74910
+Node: Classes and Methods75418
+Node: Group Classes77602
+Node: Group Methods79529
+Node: Prefix Classes80782
+Node: Suffix Classes81873
+Node: Suffix Methods84985
+Node: Suffix Value Methods85306
+Node: Suffix Format Methods88064
+Node: Prefix Slots91054
+Ref: Internal Prefix Slots93501
+Node: Suffix Slots94758
+Ref: Slots of transient-suffix95126
+Ref: Slots of transient-infix96560
+Ref: Slots of transient-variable99856
+Ref: Slots of transient-switches99958
+Node: Predicate Slots100321
+Node: FAQ102666
+Ref: Can I control how the popup buffer is displayed?102795
+Ref: How can I copy text from the popup buffer?103122
+Ref: How can I autoload prefix and suffix commands?103616
+Ref: How does Transient compare to prefix keys and universal arguments?104090
+Ref: How does Transient compare to Magit-Popup and Hydra?104333
+Ref: Why did some of the key bindings change?104527
+Ref: Why does q not quit popups anymore?106880
+Node: Keystroke Index107983
+Node: Command and Function Index109848
+Node: Variable Index116851
+Node: Concept Index119270
+Node: GNU General Public License122006
 
 End Tag Table
 

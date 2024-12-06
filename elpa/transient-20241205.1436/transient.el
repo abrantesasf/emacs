@@ -6,8 +6,8 @@
 ;; Homepage: https://github.com/magit/transient
 ;; Keywords: extensions
 
-;; Package-Version: 20241202.2111
-;; Package-Revision: 645f1b2cd488
+;; Package-Version: 20241205.1436
+;; Package-Revision: eff2245b73ce
 ;; Package-Requires: ((emacs "26.1") (compat "30.0.0.0") (seq "2.24"))
 
 ;; SPDX-License-Identifier: GPL-3.0-or-later
@@ -2153,7 +2153,9 @@ EDIT may be non-nil."
   "Setup the CHILDREN of GROUP.
 If the value of the `setup-children' slot is non-nil, then call
 that function with CHILDREN as the only argument and return the
-value.  Otherwise return CHILDREN as is."
+value.  Otherwise return CHILDREN as is.")
+
+(cl-defmethod transient-setup-children ((group transient-group) children)
   (if (slot-boundp group 'setup-children)
       (funcall (oref group setup-children) children)
     children))
@@ -3327,9 +3329,8 @@ Use `transient-default-value' to determine the default value."
 
 ;;;; Default
 
-(cl-defgeneric transient-default-value (_)
-  "Return the default value."
-  nil)
+(cl-defgeneric transient-default-value (obj)
+  "Return the default value.")
 
 (cl-defmethod transient-default-value ((obj transient-prefix))
   "Return the default value as specified by the `default-value' slot.
@@ -3342,6 +3343,10 @@ that.  If the slot is unbound, return nil."
           (funcall default)
         default)
     nil))
+
+(cl-defmethod transient-default-value ((_   transient-suffix))
+  "Return nil."
+  nil)
 
 ;;;; Read
 
@@ -3815,21 +3820,26 @@ If no prefix matches, return nil."
                            (and-let* ((obj transient--prefix))
                              (and (memq (oref obj command) prefixes) obj)))))
             (oref obj scope)
-          (oref (transient--init-prefix (car prefixes)) scope)))
+          (and (get (car prefixes) 'transient--prefix)
+               (oref (transient--init-prefix (car prefixes)) scope))))
     (and-let* ((obj (transient-prefix-object)))
       (oref obj scope))))
 
 ;;; History
 
 (cl-defgeneric transient--history-key (obj)
-  "Return OBJ's history key.
-If the value of the `history-key' slot is non-nil, then return
-that.  Otherwise return the value of the `command' slot."
+  "Return OBJ's history key.")
+
+(cl-defmethod transient--history-key ((obj transient-prefix))
+  "If the value of the `history-key' slot is non-nil, return that.
+Otherwise return the value of the `command' slot."
   (or (oref obj history-key)
       (oref obj command)))
 
 (cl-defgeneric transient--history-push (obj)
-  "Push the current value of OBJ to its entry in `transient-history'."
+  "Push the current value of OBJ to its entry in `transient-history'.")
+
+(cl-defmethod transient--history-push ((obj transient-prefix))
   (let ((key (transient--history-key obj)))
     (setf (alist-get key transient-history)
           (let ((args (transient-get-value)))
