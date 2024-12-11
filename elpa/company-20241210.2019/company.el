@@ -5,8 +5,8 @@
 ;; Author: Nikolaj Schumacher
 ;; Maintainer: Dmitry Gutov <dmitry@gutov.dev>
 ;; URL: http://company-mode.github.io/
-;; Package-Version: 20241106.2000
-;; Package-Revision: 0ae7c2931122
+;; Package-Version: 20241210.2019
+;; Package-Revision: 7805174a9ffa
 ;; Keywords: abbrev, convenience, matching
 ;; Package-Requires: ((emacs "26.1"))
 
@@ -538,9 +538,10 @@ even if the backend uses the asynchronous calling convention."
 (defcustom company-transformers nil
   "Functions to change the list of candidates received from backends.
 
-Each function gets called with the return value of the previous one.
+Each function is called with the return value of the previous one.
 The first one gets passed the list of candidates, already sorted and
-without duplicates."
+without duplicates (candidates with different annotations are considered to
+be distinct)."
   :type '(choice
           (const :tag "None" nil)
           (const :tag "Sort by occurrence" (company-sort-by-occurrence))

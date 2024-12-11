@@ -1,7 +1,8 @@
 This is company.info, produced by makeinfo version 6.8 from
 company.texi.
 
-This user manual is for Company version 1.0.2 (5 November 2024).
+This user manual is for Company version 1.0.3-snapshot
+(7 December 2024).
 
 Copyright © 2021-2024 Free Software Foundation, Inc.
 
@@ -26,7 +27,8 @@ The goal of this document is to lay out the foundational knowledge of
 the package, so that the readers of the manual could competently start
 adapting Company to their needs and preferences.
 
-This user manual is for Company version 1.0.2 (5 November 2024).
+This user manual is for Company version 1.0.3-snapshot
+(7 December 2024).
 
 Copyright © 2021-2024 Free Software Foundation, Inc.
 
@@ -1294,16 +1296,42 @@ File: company.info,  Node: Candidates Post-Processing,  Prev: Package Backends, 
 5.4 Candidates Post-Processing
 ==============================
 
-A list of completion candidates, supplied by a backend, can be
-additionally manipulated (reorganized, reduced, sorted, etc) before its
-output.  This is done by adding a processing function name to the user
-option ‘company-transformers’ list, for example:
+A list of completion candidates supplied by backends can be manipulated
+before output: reorganized, reduced, sorted, etc.  To apply adjustments,
+add a processing function name to the user option ‘company-transformers’
+list.
 
+The transformer functions are called in a sequence, each with the return
+value of the previous one.  The first function receives a sorted list of
+distinct completion candidates.  Note that the default sorting behavior
+may be overridden by backends and influenced by the use of the keyword
+‘:separate’ in the grouped backends list (*note Grouped Backends::).
+
+Since Company does not treat candidates with differing annotations as
+duplicates, it may sometimes be desirable to condense completion lists
+containing such entries.  In the example below, post-processing begins
+with their removal.  Then, the weighted ordering of the candidates is
+performed.
+
+     ;; Set grouped backends.
+     (setq company-backends '((company-capf company-dabbrev-code)))
+
+     ;; Apply post-processing.
      (setq company-transformers '(delete-consecutive-dups
                                   company-sort-by-occurrence))
 
-Company is bundled with several such transformer functions.  They are
-listed below.
+If a grouped backend contains the keyword ‘:separate’, you can use the
+‘delete-dups’ function instead.
+
+     ;; Set grouped backends.
+     (setq company-backends
+           '((:separate company-capf company-dabbrev-code)))
+
+     ;; Apply post-processing.
+     (setq company-transformers '(delete-dups
+                                  company-sort-by-occurrence))
+
+Company is bundled with several transformer functions.
 
  -- Function: company-sort-by-occurrence
      Sorts candidates using ‘company-occurrence-weight-function’
@@ -1459,7 +1487,7 @@ Variable Index
 * company-minimum-prefix-length:         Configuration File.  (line   9)
 * company-mode:                          Initial Setup.       (line   6)
 * company-occurrence-weight-function:    Candidates Post-Processing.
-                                                              (line  21)
+                                                              (line  47)
 * company-require-match:                 Configuration File.  (line  55)
 * company-search-regexp-function:        Candidates Search.   (line  13)
 * company-selection-wrap-around:         Configuration File.  (line  47)
@@ -1542,11 +1570,11 @@ Function Index
 * company-show-doc-buffer:               Commands.            (line  38)
 * company-show-location:                 Commands.            (line  45)
 * company-sort-by-backend-importance:    Candidates Post-Processing.
-                                                              (line  27)
+                                                              (line  53)
 * company-sort-by-occurrence:            Candidates Post-Processing.
-                                                              (line  17)
+                                                              (line  43)
 * company-sort-prefer-same-case-prefix:  Candidates Post-Processing.
-                                                              (line  33)
+                                                              (line  59)
 * company-tempo:                         Template Expansion.  (line  11)
 * company-text-icons-margin:             Tooltip Frontends.   (line 175)
 * company-tng-frontend:                  Structure.           (line  26)
@@ -1565,6 +1593,12 @@ Concept Index
  [index ]
 * Menu:
 
+* :separate:                             Grouped Backends.    (line  14)
+* :separate <1>:                         Candidates Post-Processing.
+                                                              (line  11)
+* :separate <2>:                         Candidates Post-Processing.
+                                                              (line  30)
+* :with:                                 Grouped Backends.    (line  25)
 * abbrev:                                Template Expansion.  (line   6)
 * abort:                                 Usage Basics.        (line  23)
 * abort <1>:                             Commands.            (line  34)
@@ -1573,6 +1607,8 @@ Concept Index
                                                               (line  13)
 * active backend <1>:                    Troubleshooting.     (line  14)
 * annotation:                            Tooltip Frontends.   (line  52)
+* annotation <1>:                        Candidates Post-Processing.
+                                                              (line  17)
 * auto-start:                            Initial Setup.       (line  13)
 * backend:                               Structure.           (line   6)
 * backend <1>:                           Structure.           (line  10)
@@ -1586,6 +1622,8 @@ Concept Index
                                                               (line   6)
 * backends <2>:                          Grouped Backends.    (line   6)
 * backends <3>:                          Package Backends.    (line   6)
+* backends <4>:                          Candidates Post-Processing.
+                                                              (line  11)
 * basics:                                Usage Basics.        (line   6)
 * bug:                                   Troubleshooting.     (line   6)
 * bug <1>:                               Troubleshooting.     (line  25)
@@ -1646,8 +1684,10 @@ Concept Index
 * definition:                            Commands.            (line  45)
 * distribution:                          Installation.        (line   6)
 * doc:                                   Commands.            (line  38)
-* duplicate:                             Candidates Post-Processing.
-                                                              (line   6)
+* duplicates:                            Candidates Post-Processing.
+                                                              (line  17)
+* duplicates <1>:                        Candidates Post-Processing.
+                                                              (line  30)
 * echo:                                  Echo Frontends.      (line   6)
 * enable:                                Initial Setup.       (line   8)
 * error:                                 Troubleshooting.     (line   6)
@@ -1674,6 +1714,8 @@ Concept Index
 * frontend <1>:                          Structure.           (line  10)
 * frontends:                             Frontends.           (line   6)
 * grouped backends:                      Grouped Backends.    (line   6)
+* grouped backends <1>:                  Candidates Post-Processing.
+                                                              (line  11)
 * icon:                                  Tooltip Frontends.   (line 151)
 * install:                               Installation.        (line   6)
 * interface:                             Tooltip Frontends.   (line  48)
@@ -1703,6 +1745,8 @@ Concept Index
 * package backends:                      Package Backends.    (line   6)
 * pluggable:                             Structure.           (line   6)
 * pop-up:                                Tooltip Frontends.   (line   6)
+* post-processing:                       Candidates Post-Processing.
+                                                              (line   6)
 * prefix matches:                        Terminology.         (line  10)
 * preview:                               Preview Frontends.   (line   6)
 * quick start:                           Initial Setup.       (line   6)
@@ -1731,45 +1775,45 @@ Concept Index
 
 
 Tag Table:
-Node: Top564
-Node: Overview1984
-Node: Terminology2392
-Node: Structure3699
-Node: Getting Started5190
-Node: Installation5468
-Node: Initial Setup5851
-Node: Usage Basics6699
-Node: Commands7677
-Ref: Commands-Footnote-110075
-Node: Customization10242
-Node: Customization Interface10714
-Node: Configuration File11247
-Ref: company-selection-wrap-around13561
-Node: Frontends16054
-Node: Tooltip Frontends17023
-Ref: Tooltip Frontends-Footnote-127737
-Node: Preview Frontends27974
-Ref: Preview Frontends-Footnote-129232
-Node: Echo Frontends29359
-Node: Candidates Search30892
-Node: Filter Candidates32226
-Node: Quick Access a Candidate33006
-Node: Backends34624
-Node: Backends Usage Basics35654
-Ref: Backends Usage Basics-Footnote-137086
-Node: Grouped Backends37170
-Node: Package Backends38681
-Node: Code Completion39610
-Node: Text Completion45137
-Node: File Name Completion49571
-Node: Template Expansion51119
-Node: Candidates Post-Processing51838
-Node: Troubleshooting53315
-Node: Index54988
-Node: Key Index55151
-Node: Variable Index56650
-Node: Function Index61503
-Node: Concept Index66203
+Node: Top573
+Node: Overview2002
+Node: Terminology2410
+Node: Structure3717
+Node: Getting Started5208
+Node: Installation5486
+Node: Initial Setup5869
+Node: Usage Basics6717
+Node: Commands7695
+Ref: Commands-Footnote-110093
+Node: Customization10260
+Node: Customization Interface10732
+Node: Configuration File11265
+Ref: company-selection-wrap-around13579
+Node: Frontends16072
+Node: Tooltip Frontends17041
+Ref: Tooltip Frontends-Footnote-127755
+Node: Preview Frontends27992
+Ref: Preview Frontends-Footnote-129250
+Node: Echo Frontends29377
+Node: Candidates Search30910
+Node: Filter Candidates32244
+Node: Quick Access a Candidate33024
+Node: Backends34642
+Node: Backends Usage Basics35672
+Ref: Backends Usage Basics-Footnote-137104
+Node: Grouped Backends37188
+Node: Package Backends38699
+Node: Code Completion39628
+Node: Text Completion45155
+Node: File Name Completion49589
+Node: Template Expansion51137
+Node: Candidates Post-Processing51856
+Node: Troubleshooting54433
+Node: Index56106
+Node: Key Index56269
+Node: Variable Index57768
+Node: Function Index62621
+Node: Concept Index67321
 
 End Tag Table
 
