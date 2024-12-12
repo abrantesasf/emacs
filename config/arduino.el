@@ -13,16 +13,8 @@
 
 (load-file ".emacs.d/config/arduino_highlighting_code.el")
 
-;; sudo apt install clangd
-(use-package lsp-mode
-  :ensure t
-  :hook (c++-mode . lsp)
-  :config
-  (setq lsp-clients-clangd-executable "/usr/bin/clangd"))
+(setq-default company-clang-arguments
+  '("-I.arduino15/packages/arduino/hardware/avr/1.8.6/cores/arduino/caminho/para/arduino/libraries"
+    "-I.arduino15/packages/arduino/hardware/avr/1.8.6/variants/standard"
+    "-I.arduino15/packages/arduino/hardware/avr/1.8.6/libraries"))
 
-;; Usar compile_flags.txt para clang
-;(setq-default flycheck-clang-args
-;  (split-string
-;    (with-temp-buffer
-;      (insert-file-contents ".emacs.d/config/compile_flags.txt")
-;      (buffer-string))))

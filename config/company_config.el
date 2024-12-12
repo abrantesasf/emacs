@@ -6,7 +6,7 @@
 (require 'company)
 
 (company-quickhelp-mode 1)
-(setq company-quickhelp-delay 0.7
+(setq company-quickhelp-delay 0.5
       company-tooltip-align-annotations t)
 
 (global-company-mode)
@@ -21,7 +21,7 @@
 
 (add-hook 'c-mode-hook 'company-mode)
 (add-hook 'c++-mode-hook 'company-mode)
-(setq company-backends '((company-clang company-files company-capf)))
+(setq company-backends '((company-clang company-files company-capf company-dabbrev-code)))
 
 (setq company-clang-arguments '("-I/usr/include/gtk-3.0" "-I/usr/include/at-spi2-atk/2.0"
 				"-I/usr/include/at-spi-2.0" "-I/usr/include/dbus-1.0"
