@@ -13,10 +13,4 @@
 
 (load-file ".emacs.d/config/arduino_highlighting_code.el")
 
-(add-to-list 'company-clang-arguments
-  "-I/home/abrantesasf/.arduino15/packages/arduino/hardware/avr/1.8.6/cores/arduino/caminho/para/arduino/libraries")
-(add-to-list 'company-clang-arguments
-  "-I/home/abrantesasf/.arduino15/packages/arduino/hardware/avr/1.8.6/variants/standard")
-(add-to-list 'company-clang-arguments
-  "-I/home/abrantesasf/.arduino15/packages/arduino/hardware/avr/1.8.6/libraries")
 
