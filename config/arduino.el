@@ -11,4 +11,4 @@
     (electric-pair-mode 1)     ;; Adicionar parênteses e aspas automaticamente
     (electric-indent-mode 1))) ;; Auto-indentar
 
-(load-file "arduino_highlighting_code.el")
+(load-file "./arduino_highlighting_code.el")
