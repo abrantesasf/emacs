@@ -14,7 +14,7 @@
     markdown-mode sml-mode slime-repl-ansi-color
     company-quickhelp-terminal auctex lua-mode drag-stuff
     arduino-mode arduino-cli-mode flycheck auto-minor-mode
-    company-arduino))
+    company-arduino lsp-mode))
 
 ; fetch the list of packages available 
 (unless package-archive-contents
