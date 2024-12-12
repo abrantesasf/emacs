@@ -6,9 +6,9 @@
 (require 'company)
 
 (company-quickhelp-mode 1)
-(setq company-quickhelp-delay 0.5
+(setq company-quickhelp-delay 0.3
       company-tooltip-align-annotations t
-      ompany-minimum-prefix-length 2)
+      company-minimum-prefix-length 2)
 
 (global-company-mode)
 (push 'slime-company slime-contribs)
