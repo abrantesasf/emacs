@@ -14,7 +14,7 @@
 (load-file ".emacs.d/config/arduino_highlighting_code.el")
 
 (setq-default company-clang-arguments
-  '("-I.arduino15/packages/arduino/hardware/avr/1.8.6/cores/arduino/caminho/para/arduino/libraries"
-    "-I.arduino15/packages/arduino/hardware/avr/1.8.6/variants/standard"
-    "-I.arduino15/packages/arduino/hardware/avr/1.8.6/libraries"))
+  '("-I~/.arduino15/packages/arduino/hardware/avr/1.8.6/cores/arduino/caminho/para/arduino/libraries"
+    "-I~/.arduino15/packages/arduino/hardware/avr/1.8.6/variants/standard"
+    "-I~/.arduino15/packages/arduino/hardware/avr/1.8.6/libraries"))
 
