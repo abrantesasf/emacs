@@ -16,9 +16,9 @@
 (setq-default flycheck-clang-include-path
   '("~/.arduino15/packages/arduino/hardware/avr/1.8.6/cores/arduino/"))
 
-(add-to-list 'company-clang-arguments
-  "-I/home/abrantesasf/.arduino15/packages/arduino/hardware/avr/1.8.6/cores/arduino")
-(add-to-list 'company-clang-arguments
-  "-I/home/abrantesasf/.arduino15/packages/arduino/hardware/avr/1.8.6/variants/standard")
-(add-to-list 'company-clang-arguments
-  "-I/home/abrantesasf/.arduino15/packages/arduino/hardware/avr/1.8.6/libraries")
+(setq company-clang-arguments
+  (append company-clang-arguments
+    '("-I/home/abrantesasf/.arduino15/packages/arduino/hardware/avr/1.8.6/cores/arduino"
+      "-I/home/abrantesasf/.arduino15/packages/arduino/hardware/avr/1.8.6/variants/standard"
+      "-I/home/abrantesasf/.arduino15/packages/arduino/hardware/avr/1.8.6/libraries")))
+
