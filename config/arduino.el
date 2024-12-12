@@ -6,8 +6,8 @@
 
 (add-hook 'c++-mode-hook
   (lambda ()
-    (c-set-style "stroustrup")
-    (setq c-basic-offset 2)
+    (c-set-style "k&r")
+    (setq c-basic-offset 4)
     (electric-pair-mode 1)     ;; Adicionar parênteses e aspas automaticamente
     (electric-indent-mode 1))) ;; Auto-indentar
 
