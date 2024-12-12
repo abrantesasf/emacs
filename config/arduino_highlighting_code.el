@@ -11,7 +11,7 @@
 ;; Realce para KEYWORD3
 (font-lock-add-keywords
  'c++-mode
- '(("\\<\\(BluetoothSerial\\|ESP32httpUpdate\\|HIGH\\|INPUT\\|INPUT_PULLUP\\|LOW\\|NetworkClientSecure\\|OUTPUT\\|WiFi\\)\\>" . font-lock-constant-face)))
+ '(("\\<\\(BluetoothSerial\\|ESP32httpUpdate\\|HIGH\\|INPUT\\|INPUT_PULLUP\\|LED_BUILTIN\\|LOW\\|NetworkClientSecure\\|OUTPUT\\|WiFi\\)\\>" . font-lock-constant-face)))
 
 ;; Realce para LITERAL1
 (font-lock-add-keywords

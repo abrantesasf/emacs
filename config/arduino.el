@@ -12,3 +12,10 @@
     (electric-indent-mode 1))) ;; Auto-indentar
 
 (load-file ".emacs.d/config/arduino_highlighting_code.el")
+
+;; Usar compile_flags.txt para clang
+(setq-default flycheck-clang-args
+  (split-string
+    (with-temp-buffer
+      (insert-file-contents "compile_flags.txt")
+      (buffer-string))))
