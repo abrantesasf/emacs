@@ -1,0 +1,6 @@
+-I~/.arduino15/packages/arduino/hardware/avr/1.8.6/cores/arduino
+-I~/.arduino15/packages/arduino/hardware/avr/1.8.6/variants/standard
+-I~/.arduino15/packages/arduino/hardware/avr/1.8.6/libraries
+-DARDUINO=10805
+-D__AVR_ATmega328P__
+-DARDUINO_ARCH_AVR

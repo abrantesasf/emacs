@@ -17,5 +17,5 @@
 (setq-default flycheck-clang-args
   (split-string
     (with-temp-buffer
-      (insert-file-contents "compile_flags.txt")
+      (insert-file-contents ".emacs.d/config/compile_flags.txt")
       (buffer-string))))
