@@ -21,7 +21,7 @@
 
 (add-hook 'c-mode-hook 'company-mode)
 (add-hook 'c++-mode-hook 'company-mode)
-(setq company-backends '((company-clang company-files)))
+(setq company-backends '((company-clang company-files company-capf)))
 
 (setq company-clang-arguments '("-I/usr/include/gtk-3.0" "-I/usr/include/at-spi2-atk/2.0"
 				"-I/usr/include/at-spi-2.0" "-I/usr/include/dbus-1.0"
