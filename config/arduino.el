@@ -13,9 +13,16 @@
 
 (load-file ".emacs.d/config/arduino_highlighting_code.el")
 
+;; sudo apt install clangd
+(use-package lsp-mode
+  :ensure t
+  :hook (c++-mode . lsp)
+  :config
+  (setq lsp-clients-clangd-executable "/usr/bin/clangd"))
+
 ;; Usar compile_flags.txt para clang
-(setq-default flycheck-clang-args
-  (split-string
-    (with-temp-buffer
-      (insert-file-contents ".emacs.d/config/compile_flags.txt")
-      (buffer-string))))
+;(setq-default flycheck-clang-args
+;  (split-string
+;    (with-temp-buffer
+;      (insert-file-contents ".emacs.d/config/compile_flags.txt")
+;      (buffer-string))))
