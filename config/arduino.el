@@ -11,10 +11,10 @@
     (electric-pair-mode 1)     ;; Adicionar parênteses e aspas automaticamente
     (electric-indent-mode 1))) ;; Auto-indentar
 
-(load-file ".emacs.d/config/arduino_highlighting_code.el")
+(load-file "/home/abrantesasf/.emacs.d/config/arduino_highlighting_code.el")
 
 (setq-default flycheck-clang-include-path
-  '("~/.arduino15/packages/arduino/hardware/avr/1.8.6/cores/arduino/"))
+  '("/home/abrantesasf/.arduino15/packages/arduino/hardware/avr/1.8.6/cores/arduino/"))
 
 (setq company-clang-arguments
   (append company-clang-arguments
