@@ -18,12 +18,12 @@
 
 (setq company-clang-arguments
   (append company-clang-arguments
-    '("-I/home/abrantesasf/.arduino15/packages/arduino/hardware/avr/1.8.6/cores/arduino"
-      "-I/home/abrantesasf/.arduino15/packages/arduino/hardware/avr/1.8.6/variants/standard"
-      "-I/home/abrantesasf/.arduino15/packages/arduino/hardware/avr/1.8.6/libraries"
-      "-I/home/abrantesasf/.arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7/avr/include"
-      "-I/home/abrantesasf/.arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7/avr/include/avr"
-      "-I/home/abrantesasf/.arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7/avr/include/compat"
-      "-I/home/abrantesasf/.arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7/avr/include/sys"
-      "-I/home/abrantesasf/.arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7/avr/include/util")))
+    '("-I~/.arduino15/packages/arduino/hardware/avr/1.8.6/cores/arduino"
+      "-I~/.arduino15/packages/arduino/hardware/avr/1.8.6/variants/standard"
+      "-I~/.arduino15/packages/arduino/hardware/avr/1.8.6/libraries"
+      "-I~/.arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7/avr/include"
+      "-I~/.arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7/avr/include/avr"
+      "-I~/.arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7/avr/include/compat"
+      "-I~/.arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7/avr/include/sys"
+      "-I~/.arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7/avr/include/util")))
 
