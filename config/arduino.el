@@ -25,5 +25,8 @@
       "-I/home/abrantesasf/.arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7/avr/include/avr"
       "-I/home/abrantesasf/.arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7/avr/include/compat"
       "-I/home/abrantesasf/.arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7/avr/include/sys"
-      "-I/home/abrantesasf/.arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7/avr/include/util")))
+      "-I/home/abrantesasf/.arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7/avr/include/util"
+      "-I/home/abrantesasf/Arduino/libraries/Keypad/src"
+      "-I/home/abrantesasf/Arduino/libraries/Arduino-LiquidCrystal-I2C-library-master"
+      "-I/home/abrantesasf/Arduino/libraries/LiquidCrystal_I2C")))
 
