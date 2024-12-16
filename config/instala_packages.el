@@ -6,7 +6,7 @@
 (setq package-list
   '(dash dash-functional s ag all-the-icons async company pos-tip
     company-quickhelp f shrink-path doom-modeline doom-themes
-    elisp-refs expand-region transient with-editor git-commit
+    elisp-refs expand-region transient with-editor
     helpful loop macrostep magit memoize multiple-cursors neotree
     paredit slime slime-company smex sublime-themes yasnippet
     yasnippet-snippets yasnippet-classic-snippets ess org
