@@ -541,60 +541,58 @@ If you prefer the old behaviors, then set this to t."
 ;;; Faces
 
 (defface magit-diff-file-heading
-  `((t ,@(and (>= emacs-major-version 27) '(:extend t))
-       :weight bold))
+  '((t :extend t :weight bold))
   "Face for diff file headings."
   :group 'magit-faces)
 
 (defface magit-diff-file-heading-highlight
-  `((t ,@(and (>= emacs-major-version 27) '(:extend t))
-       :inherit magit-section-highlight))
+  '((t :extend t :inherit magit-section-highlight))
   "Face for current diff file headings."
   :group 'magit-faces)
 
 (defface magit-diff-file-heading-selection
-  `((((class color) (background light))
-     ,@(and (>= emacs-major-version 27) '(:extend t))
+  '((((class color) (background light))
+     :extend t
      :inherit magit-diff-file-heading-highlight
      :foreground "salmon4")
     (((class color) (background dark))
-     ,@(and (>= emacs-major-version 27) '(:extend t))
+     :extend t
      :inherit magit-diff-file-heading-highlight
      :foreground "LightSalmon3"))
   "Face for selected diff file headings."
   :group 'magit-faces)
 
 (defface magit-diff-hunk-heading
-  `((((class color) (background light))
-     ,@(and (>= emacs-major-version 27) '(:extend t))
+  '((((class color) (background light))
+     :extend t
      :background "grey90"
      :foreground "grey20")
     (((class color) (background dark))
-     ,@(and (>= emacs-major-version 27) '(:extend t))
+     :extend t
      :background "grey25"
      :foreground "grey95"))
   "Face for diff hunk headings."
   :group 'magit-faces)
 
 (defface magit-diff-hunk-heading-highlight
-  `((((class color) (background light))
-     ,@(and (>= emacs-major-version 27) '(:extend t))
+  '((((class color) (background light))
+     :extend t
      :background "grey80"
      :foreground "grey20")
     (((class color) (background dark))
-     ,@(and (>= emacs-major-version 27) '(:extend t))
+     :extend t
      :background "grey35"
      :foreground "grey95"))
   "Face for current diff hunk headings."
   :group 'magit-faces)
 
 (defface magit-diff-hunk-heading-selection
-  `((((class color) (background light))
-     ,@(and (>= emacs-major-version 27) '(:extend t))
+  '((((class color) (background light))
+     :extend t
      :inherit magit-diff-hunk-heading-highlight
      :foreground "salmon4")
     (((class color) (background dark))
-     ,@(and (>= emacs-major-version 27) '(:extend t))
+     :extend t
      :inherit magit-diff-hunk-heading-highlight
      :foreground "LightSalmon3"))
   "Face for selected diff hunk headings."
@@ -602,8 +600,7 @@ If you prefer the old behaviors, then set this to t."
 
 (defface magit-diff-hunk-region
   `((t :inherit bold
-       ,@(and (>= emacs-major-version 27)
-              (list :extend (ignore-errors (face-attribute 'region :extend))))))
+       :extend ,(ignore-errors (face-attribute 'region :extend))))
   "Face used by `magit-diff-highlight-hunk-region-using-face'.
 
 This face is overlaid over text that uses other hunk faces,
@@ -625,12 +622,12 @@ and `:slant'."
   :group 'magit-faces)
 
 (defface magit-diff-lines-heading
-  `((((class color) (background light))
-     ,@(and (>= emacs-major-version 27) '(:extend t))
+  '((((class color) (background light))
+     :extend t
      :inherit magit-diff-hunk-heading-highlight
      :background "LightSalmon3")
     (((class color) (background dark))
-     ,@(and (>= emacs-major-version 27) '(:extend t))
+     :extend t
      :inherit magit-diff-hunk-heading-highlight
      :foreground "grey80"
      :background "salmon4"))
@@ -638,8 +635,7 @@ and `:slant'."
   :group 'magit-faces)
 
 (defface magit-diff-lines-boundary
-  `((t ,@(and (>= emacs-major-version 27) '(:extend t)) ; !important
-       :inherit magit-diff-lines-heading))
+  '((t :extend t :inherit magit-diff-lines-heading))
   "Face for boundary of marked lines in diff hunk."
   :group 'magit-faces)
 
@@ -649,24 +645,24 @@ and `:slant'."
   :group 'magit-faces)
 
 (defface magit-diff-added
-  `((((class color) (background light))
-     ,@(and (>= emacs-major-version 27) '(:extend t))
+  '((((class color) (background light))
+     :extend t
      :background "#ddffdd"
      :foreground "#22aa22")
     (((class color) (background dark))
-     ,@(and (>= emacs-major-version 27) '(:extend t))
+     :extend t
      :background "#335533"
      :foreground "#ddffdd"))
   "Face for lines in a diff that have been added."
   :group 'magit-faces)
 
 (defface magit-diff-removed
-  `((((class color) (background light))
-     ,@(and (>= emacs-major-version 27) '(:extend t))
+  '((((class color) (background light))
+     :extend t
      :background "#ffdddd"
      :foreground "#aa2222")
     (((class color) (background dark))
-     ,@(and (>= emacs-major-version 27) '(:extend t))
+     :extend t
      :background "#553333"
      :foreground "#ffdddd"))
   "Face for lines in a diff that have been removed."
@@ -678,12 +674,12 @@ and `:slant'."
   :group 'magit-faces)
 
 (defface magit-diff-base
-  `((((class color) (background light))
-     ,@(and (>= emacs-major-version 27) '(:extend t))
+  '((((class color) (background light))
+     :extend t
      :background "#ffffcc"
      :foreground "#aaaa11")
     (((class color) (background dark))
-     ,@(and (>= emacs-major-version 27) '(:extend t))
+     :extend t
      :background "#555522"
      :foreground "#ffffcc"))
   "Face for lines in a diff for the base side in a conflict."
@@ -695,34 +691,34 @@ and `:slant'."
   :group 'magit-faces)
 
 (defface magit-diff-context
-  `((((class color) (background light))
-     ,@(and (>= emacs-major-version 27) '(:extend t))
+  '((((class color) (background light))
+     :extend t
      :foreground "grey50")
     (((class color) (background  dark))
-     ,@(and (>= emacs-major-version 27) '(:extend t))
+     :extend t
      :foreground "grey70"))
   "Face for lines in a diff that are unchanged."
   :group 'magit-faces)
 
 (defface magit-diff-added-highlight
-  `((((class color) (background light))
-     ,@(and (>= emacs-major-version 27) '(:extend t))
+  '((((class color) (background light))
+     :extend t
      :background "#cceecc"
      :foreground "#22aa22")
     (((class color) (background dark))
-     ,@(and (>= emacs-major-version 27) '(:extend t))
+     :extend t
      :background "#336633"
      :foreground "#cceecc"))
   "Face for lines in a diff that have been added."
   :group 'magit-faces)
 
 (defface magit-diff-removed-highlight
-  `((((class color) (background light))
-     ,@(and (>= emacs-major-version 27) '(:extend t))
+  '((((class color) (background light))
+     :extend t
      :background "#eecccc"
      :foreground "#aa2222")
     (((class color) (background dark))
-     ,@(and (>= emacs-major-version 27) '(:extend t))
+     :extend t
      :background "#663333"
      :foreground "#eecccc"))
   "Face for lines in a diff that have been removed."
@@ -734,12 +730,12 @@ and `:slant'."
   :group 'magit-faces)
 
 (defface magit-diff-base-highlight
-  `((((class color) (background light))
-     ,@(and (>= emacs-major-version 27) '(:extend t))
+  '((((class color) (background light))
+     :extend t
      :background "#eeeebb"
      :foreground "#aaaa11")
     (((class color) (background dark))
-     ,@(and (>= emacs-major-version 27) '(:extend t))
+     :extend t
      :background "#666622"
      :foreground "#eeeebb"))
   "Face for lines in a diff for the base side in a conflict."
@@ -751,12 +747,12 @@ and `:slant'."
   :group 'magit-faces)
 
 (defface magit-diff-context-highlight
-  `((((class color) (background light))
-     ,@(and (>= emacs-major-version 27) '(:extend t))
+  '((((class color) (background light))
+     :extend t
      :background "grey95"
      :foreground "grey50")
     (((class color) (background dark))
-     ,@(and (>= emacs-major-version 27) '(:extend t))
+     :extend t
      :background "grey20"
      :foreground "grey70"))
   "Face for lines in the current context in a diff."
@@ -864,31 +860,37 @@ and `:slant'."
 ;;; Commands
 ;;;; Prefix Commands
 
+(eval-and-compile
+  (defvar magit-diff-infix-arguments
+    [:class transient-subgroups
+     ["Limit arguments"
+       (magit:--)
+       (magit-diff:--ignore-submodules)
+       ("-b" "Ignore whitespace changes"  ("-b" "--ignore-space-change"))
+       ("-w" "Ignore all whitespace"      ("-w" "--ignore-all-space"))
+       ("-D" "Omit preimage for deletes"  ("-D" "--irreversible-delete")
+        :level 5)]
+      ["Context arguments"
+       (magit-diff:-U)
+       ("-W" "Show surrounding functions" ("-W" "--function-context"))]
+      ["Tune arguments"
+       (magit-diff:--diff-algorithm)
+       (magit-diff:--diff-merges)
+       (magit-diff:-M)
+       (magit-diff:-C)
+       (magit-diff:-R               :level 5)
+       (magit-diff:--color-moved    :level 5)
+       (magit-diff:--color-moved-ws :level 5)
+       (magit-diff:--no-ext-diff)
+       (magit-diff:--stat)
+       (magit-diff:--show-signature)]]))
+
 ;;;###autoload (autoload 'magit-diff "magit-diff" nil t)
 (transient-define-prefix magit-diff ()
   "Show changes between different versions."
   :man-page "git-diff"
   :class 'magit-diff-prefix
-  ["Limit arguments"
-   (magit:--)
-   (magit-diff:--ignore-submodules)
-   ("-b" "Ignore whitespace changes"      ("-b" "--ignore-space-change"))
-   ("-w" "Ignore all whitespace"          ("-w" "--ignore-all-space"))
-   (5 "-D" "Omit preimage for deletes"    ("-D" "--irreversible-delete"))]
-  ["Context arguments"
-   (magit-diff:-U)
-   ("-W" "Show surrounding functions"     ("-W" "--function-context"))]
-  ["Tune arguments"
-   (magit-diff:--diff-algorithm)
-   (magit-diff:--diff-merges)
-   (magit-diff:-M)
-   (magit-diff:-C)
-   (5 "-R" "Reverse sides"                "-R")
-   (5 magit-diff:--color-moved)
-   (5 magit-diff:--color-moved-ws)
-   ("-x" "Disallow external diff drivers" "--no-ext-diff")
-   ("-s" "Show stats"                     "--stat")
-   ("=g" "Show signature"                 "--show-signature")]
+  [magit-diff-infix-arguments]
   ["Actions"
    [("d" "Dwim"          magit-diff-dwim)
     ("r" "Diff range"    magit-diff-range)
@@ -904,29 +906,7 @@ and `:slant'."
   "Change the arguments used for the diff(s) in the current buffer."
   :man-page "git-diff"
   :class 'magit-diff-refresh-prefix
-  ["Limit arguments"
-   (magit:--)
-   (magit-diff:--ignore-submodules)
-   ("-b" "Ignore whitespace changes"      ("-b" "--ignore-space-change"))
-   ("-w" "Ignore all whitespace"          ("-w" "--ignore-all-space"))
-   (5 "-D" "Omit preimage for deletes"    ("-D" "--irreversible-delete"))]
-  ["Context arguments"
-   (magit-diff:-U)
-   ("-W" "Show surrounding functions"     ("-W" "--function-context"))]
-  ["Tune arguments"
-   (magit-diff:--diff-algorithm)
-   (magit-diff:--diff-merges)
-   (magit-diff:-M)
-   (magit-diff:-C)
-   (5 "-R" "Reverse sides"                "-R"
-      :if-derived magit-diff-mode)
-   (5 magit-diff:--color-moved)
-   (5 magit-diff:--color-moved-ws)
-   ("-x" "Disallow external diff drivers" "--no-ext-diff")
-   ("-s" "Show stats"                     "--stat"
-    :if-derived magit-diff-mode)
-   ("=g" "Show signature"                 "--show-signature"
-    :if-derived magit-diff-mode)]
+  [magit-diff-infix-arguments]
   [["Refresh"
     ("g" "buffer"                   magit-diff-refresh)
     ("s" "buffer and set defaults"  transient-set-and-exit)
@@ -1063,6 +1043,36 @@ and `:slant'."
     (?s "[s]pace change" "ignore-space-change")
     (?a "[a]ll space"    "ignore-all-space")
     (?n "[n]o"           "no")))
+
+(transient-define-argument magit-diff:-R ()
+  :description "Reverse sides"
+  :class 'transient-switch
+  :argument "-R"
+  :if 'magit-diff-argument-predicate)
+
+(transient-define-argument magit-diff:--no-ext-diff ()
+  :description "Disallow external diff drivers"
+  :class 'transient-switch
+  :argument "--no-ext-diff"
+  :key "-x")
+
+(transient-define-argument magit-diff:--stat ()
+  :description "Show stats"
+  :class 'transient-switch
+  :argument "--stat"
+  :key "-s"
+  :if 'magit-diff-argument-predicate)
+
+(transient-define-argument magit-diff:--show-signature ()
+  :description "Show signature"
+  :class 'transient-switch
+  :argument "--show-signature"
+  :key "=g"
+  :if 'magit-diff-argument-predicate)
+
+(defun magit-diff-argument-predicate ()
+  (or (eq transient--prefix 'magit-diff)
+      (derived-mode-p 'magit-diff-mode)))
 
 ;;;; Setup Commands
 
@@ -3248,7 +3258,7 @@ are highlighted."
       (setq highlight nil))
     (cond (highlight
            (unless (oref section hidden)
-             (add-to-list 'magit-section-highlighted-sections section)
+             (cl-pushnew section magit-section-highlighted-sections)
              (cond ((memq section magit-section-unhighlight-sections)
                     (setq magit-section-unhighlight-sections
                           (delq section magit-section-unhighlight-sections)))
@@ -3257,7 +3267,7 @@ are highlighted."
           (t
            (cond ((and (oref section hidden)
                        (memq section magit-section-unhighlight-sections))
-                  (add-to-list 'magit-section-highlighted-sections section)
+                  (cl-pushnew section magit-section-highlighted-sections)
                   (setq magit-section-unhighlight-sections
                         (delq section magit-section-unhighlight-sections)))
                  (t
@@ -3438,8 +3448,7 @@ for added and removed lines as for context lines."
                   'magit-diff-context-highlight
                 'magit-diff-context)))
     (when magit-diff-unmarked-lines-keep-foreground
-      (setq face `(,@(and (>= emacs-major-version 27) '(:extend t))
-                   :background ,(face-attribute face :background))))
+      (setq face `(:extend t :background ,(face-attribute face :background))))
     (magit-diff--make-hunk-overlay (oref section content)
                                    (magit-diff-hunk-region-beginning)
                                    'font-lock-face face

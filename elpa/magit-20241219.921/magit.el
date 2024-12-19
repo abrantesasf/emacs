@@ -17,15 +17,15 @@
 ;; Homepage: https://github.com/magit/magit
 ;; Keywords: git tools vc
 
-;; Package-Version: 20241209.933
-;; Package-Revision: 873da4a62dc6
+;; Package-Version: 20241219.921
+;; Package-Revision: 96ecf7456377
 ;; Package-Requires: (
-;;     (emacs "26.1")
+;;     (emacs "27.1")
 ;;     (compat "30.0.0.0")
 ;;     (dash "2.19.1")
 ;;     (magit-section "4.1.3")
 ;;     (seq "2.24")
-;;     (transient "0.8.0")
+;;     (transient "20241217")
 ;;     (with-editor "3.4.3"))
 
 ;; SPDX-License-Identifier: GPL-3.0-or-later
@@ -482,7 +482,7 @@ is run in the top-level directory of the current working tree."
 (defun magit--shell-command (command &optional directory)
   (let ((default-directory (or directory default-directory)))
     (with-environment-variables (("GIT_PAGER" "cat"))
-      (magit--with-connection-local-variables
+      (with-connection-local-variables
         (magit-with-editor
           (magit-start-process shell-file-name nil
                                shell-command-switch command)))))

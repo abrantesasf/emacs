@@ -792,11 +792,7 @@ Drop into `magit-status' from file switching.
 To make this command available use something like:
 
   (keymap-set ido-common-completion-map
-              \"C-x g\" \\='ido-enter-magit-status)
-
-This command does not work in Emacs 26.1.
-See https://github.com/magit/magit/issues/3634
-and https://debbugs.gnu.org/cgi/bugreport.cgi?bug=31707." t)
+              \"C-x g\" \\='ido-enter-magit-status)" t)
 (autoload 'magit-project-status "magit-extras" "\
 Run `magit-status' in the current project's root." t)
 (autoload 'magit-dired-jump "magit-extras" "\

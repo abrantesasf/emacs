@@ -8,10 +8,10 @@
 ;; Homepage: https://github.com/magit/magit
 ;; Keywords: tools
 
-;; Package-Version: 20241206.2214
-;; Package-Revision: 7adad8c8d3bd
+;; Package-Version: 20241217.845
+;; Package-Revision: c1a86066e8d2
 ;; Package-Requires: (
-;;     (emacs "26.1")
+;;     (emacs "27.1")
 ;;     (compat "30.0.0.0")
 ;;     (dash "2.19.1")
 ;;     (seq "2.24"))
@@ -330,39 +330,38 @@ no effect.  This also has no effect for Emacs >= 28, where
   :group 'faces)
 
 (defface magit-section-highlight
-  `((((class color) (background light))
-     ,@(and (>= emacs-major-version 27) '(:extend t))
+  '((((class color) (background light))
+     :extend t
      :background "grey95")
     (((class color) (background  dark))
-     ,@(and (>= emacs-major-version 27) '(:extend t))
+     :extend t
      :background "grey20"))
   "Face for highlighting the current section."
   :group 'magit-section-faces)
 
 (defface magit-section-heading
-  `((((class color) (background light))
-     ,@(and (>= emacs-major-version 27) '(:extend t))
+  '((((class color) (background light))
+     :extend t
      :foreground "DarkGoldenrod4"
      :weight bold)
     (((class color) (background  dark))
-     ,@(and (>= emacs-major-version 27) '(:extend t))
+     :extend t
      :foreground "LightGoldenrod2"
      :weight bold))
   "Face for section headings."
   :group 'magit-section-faces)
 
 (defface magit-section-secondary-heading
-  `((t ,@(and (>= emacs-major-version 27) '(:extend t))
-       :weight bold))
+  '((t :extend t :weight bold))
   "Face for section headings of some secondary headings."
   :group 'magit-section-faces)
 
 (defface magit-section-heading-selection
-  `((((class color) (background light))
-     ,@(and (>= emacs-major-version 27) '(:extend t))
+  '((((class color) (background light))
+     :extend t
      :foreground "salmon4")
     (((class color) (background  dark))
-     ,@(and (>= emacs-major-version 27) '(:extend t))
+     :extend t
      :foreground "LightSalmon3"))
   "Face for selected section headings."
   :group 'magit-section-faces)
@@ -1184,7 +1183,6 @@ section lineage.  This command is intended for debugging purposes.
 
 (cl-defmethod cl-print-object ((section magit-section) stream)
   "Print `magit-describe-section' result of SECTION."
-  ;; Used by debug and edebug as of Emacs 26.
   (princ (magit-describe-section-briefly section) stream))
 
 (defun magit-describe-section (section &optional interactive-p)
@@ -2442,67 +2440,65 @@ with the variables' values as arguments, which were recorded by
 
 ;;; Bitmaps
 
-(when (fboundp 'define-fringe-bitmap) ;for Emacs 26
-  (define-fringe-bitmap 'magit-fringe-bitmap+
-    [#b00000000
-     #b00011000
-     #b00011000
-     #b01111110
-     #b01111110
-     #b00011000
-     #b00011000
-     #b00000000])
+(define-fringe-bitmap 'magit-fringe-bitmap+
+  [#b00000000
+   #b00011000
+   #b00011000
+   #b01111110
+   #b01111110
+   #b00011000
+   #b00011000
+   #b00000000])
 
-  (define-fringe-bitmap 'magit-fringe-bitmap-
-    [#b00000000
-     #b00000000
-     #b00000000
-     #b01111110
-     #b01111110
-     #b00000000
-     #b00000000
-     #b00000000])
+(define-fringe-bitmap 'magit-fringe-bitmap-
+  [#b00000000
+   #b00000000
+   #b00000000
+   #b01111110
+   #b01111110
+   #b00000000
+   #b00000000
+   #b00000000])
 
-  (define-fringe-bitmap 'magit-fringe-bitmap>
-    [#b01100000
-     #b00110000
-     #b00011000
-     #b00001100
-     #b00011000
-     #b00110000
-     #b01100000
-     #b00000000])
+(define-fringe-bitmap 'magit-fringe-bitmap>
+  [#b01100000
+   #b00110000
+   #b00011000
+   #b00001100
+   #b00011000
+   #b00110000
+   #b01100000
+   #b00000000])
 
-  (define-fringe-bitmap 'magit-fringe-bitmapv
-    [#b00000000
-     #b10000010
-     #b11000110
-     #b01101100
-     #b00111000
-     #b00010000
-     #b00000000
-     #b00000000])
+(define-fringe-bitmap 'magit-fringe-bitmapv
+  [#b00000000
+   #b10000010
+   #b11000110
+   #b01101100
+   #b00111000
+   #b00010000
+   #b00000000
+   #b00000000])
 
-  (define-fringe-bitmap 'magit-fringe-bitmap-bold>
-    [#b11100000
-     #b01110000
-     #b00111000
-     #b00011100
-     #b00011100
-     #b00111000
-     #b01110000
-     #b11100000])
+(define-fringe-bitmap 'magit-fringe-bitmap-bold>
+  [#b11100000
+   #b01110000
+   #b00111000
+   #b00011100
+   #b00011100
+   #b00111000
+   #b01110000
+   #b11100000])
 
-  (define-fringe-bitmap 'magit-fringe-bitmap-boldv
-    [#b10000001
-     #b11000011
-     #b11100111
-     #b01111110
-     #b00111100
-     #b00011000
-     #b00000000
-     #b00000000])
-  )
+(define-fringe-bitmap 'magit-fringe-bitmap-boldv
+  [#b10000001
+   #b11000011
+   #b11100111
+   #b01111110
+   #b00111100
+   #b00011000
+   #b00000000
+   #b00000000])
 
 ;;; _
 (provide 'magit-section)

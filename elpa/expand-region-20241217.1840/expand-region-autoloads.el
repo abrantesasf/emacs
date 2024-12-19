@@ -74,21 +74,21 @@ before calling `er/expand-region' for the first time.
 
 (let ((loads (get 'expand-region 'custom-loads))) (if (member '"expand-region-custom" loads) nil (put 'expand-region 'custom-loads (cons '"expand-region-custom" loads)) (put 'tools 'custom-loads (cons 'expand-region (get 'tools 'custom-loads)))))
 (defvar expand-region-preferred-python-mode 'python "\
-The name of your preferred python mode")
+The name of your preferred python mode.")
 (custom-autoload 'expand-region-preferred-python-mode "expand-region-custom" t)
 (defvar expand-region-guess-python-mode t "\
-If expand-region should attempt to guess your preferred python mode")
+If expand-region should attempt to guess your preferred python mode.")
 (custom-autoload 'expand-region-guess-python-mode "expand-region-custom" t)
 (defvar expand-region-autocopy-register "" "\
-If set to a string of a single character (try \"e\"), then the
-contents of the most recent expand or contract command will
-always be copied to the register named after that character.")
+Register to copy most recent expand or contract to.
+
+Activated when set to a string of a single character (for example, \"e\").")
 (custom-autoload 'expand-region-autocopy-register "expand-region-custom" t)
 (defvar expand-region-skip-whitespace t "\
-If expand-region should skip past whitespace on initial expansion")
+If expand-region should skip past whitespace on initial expansion.")
 (custom-autoload 'expand-region-skip-whitespace "expand-region-custom" t)
 (defvar expand-region-fast-keys-enabled t "\
-If expand-region should bind fast keys after initial expand/contract")
+If expand-region should bind fast keys after initial expand/contract.")
 (custom-autoload 'expand-region-fast-keys-enabled "expand-region-custom" t)
 (defvar expand-region-contract-fast-key "-" "\
 Key to use after an initial expand/contract to contract once more.")
@@ -97,7 +97,7 @@ Key to use after an initial expand/contract to contract once more.")
 Key to use after an initial expand/contract to undo.")
 (custom-autoload 'expand-region-reset-fast-key "expand-region-custom" t)
 (defvar expand-region-exclude-text-mode-expansions '(html-mode nxml-mode) "\
-List of modes which derive from `text-mode' for which text mode expansions are not appropriate.")
+List of modes derived from `text-mode' to exclude from text mode expansions.")
 (custom-autoload 'expand-region-exclude-text-mode-expansions "expand-region-custom" t)
 (defvar expand-region-smart-cursor nil "\
 Defines whether the cursor should be placed intelligently after expansion.
