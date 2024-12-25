@@ -456,9 +456,10 @@ With a prefix argument use a transient command to select infix
 arguments.  This command requires git-absorb executable, which
 is available from https://github.com/tummychow/git-absorb.
 See `magit-commit-autofixup' for an alternative implementation."
+  :value '("-v")
   ["Arguments"
-   ("-f" "Skip safety checks"       ("-f" "--force"))
-   ("-v" "Display more output"      ("-v" "--verbose"))]
+   ("-f" "Skip safety checks" ("-f" "--force"))
+   ("-v" "Increase verbosity" ("-v" "--verbose"))]
   ["Actions"
    ("x"  "Absorb" magit-commit-absorb)]
   (interactive (if current-prefix-arg
@@ -481,7 +482,7 @@ See `magit-commit-autofixup' for an alternative implementation."
     (when commit
       (setq commit (magit-rebase-interactive-assert commit t)))
     (if (and commit (eq phase 'run))
-        (progn (magit-run-git-async "absorb" "-v" args "-b" commit) t)
+        (progn (magit-run-git-async "absorb" args "-b" commit) t)
       (magit-log-select
         (lambda (commit)
           (with-no-warnings ; about non-interactive use
@@ -499,9 +500,11 @@ transient command to select infix arguments.
 This command requires the git-autofixup script, which is
 available from https://github.com/torbiak/git-autofixup.
 See `magit-commit-absorb' for an alternative implementation."
+  :value '("-vv")
   ["Arguments"
    (magit-autofixup:--context)
-   (magit-autofixup:--strict)]
+   (magit-autofixup:--strict)
+   ("-v" "Increase verbosity" "-vv")]
   ["Actions"
    ("x"  "Absorb" magit-commit-autofixup)]
   (interactive (if current-prefix-arg
@@ -519,7 +522,7 @@ See `magit-commit-absorb' for an alternative implementation."
     (when commit
       (setq commit (magit-rebase-interactive-assert commit t)))
     (if (and commit (eq phase 'run))
-        (progn (magit-run-git-async "autofixup" "-vv" args commit) t)
+        (progn (magit-run-git-async "autofixup" args commit) t)
       (magit-log-select
         (lambda (commit)
           (with-no-warnings ; about non-interactive use

@@ -141,6 +141,17 @@ it is disabled.
 (register-definition-prefixes "lsp-completion" '("lsp-"))
 
 
+;;; Generated autoloads from lsp-copilot.el
+
+(autoload 'lsp-copilot-check-status "lsp-copilot" "\
+Checks the status of the Copilot Server" t)
+(autoload 'lsp-copilot-login "lsp-copilot" "\
+Log in with copilot.
+
+This function is automatically called during the client initialization if needed" t)
+(register-definition-prefixes "lsp-copilot" '("lsp-copilot-"))
+
+
 ;;; Generated autoloads from lsp-credo.el
 
 (register-definition-prefixes "lsp-credo" '("lsp-credo-"))

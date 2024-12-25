@@ -566,8 +566,8 @@ manpage.  See *note How to install the gitman info manual?::.
 the *note Debugging Tools::.
 
    And last but not least please consider making a donation, to ensure
-that I can keep working on Magit.  See <https://magit.vc/donations>.
-for various donation options.
+that I can keep working on Magit.  See <https://magit.vc/donate>.  for
+various donation options.
 
 
 File: magit.info,  Node: Getting Started,  Next: Interface Concepts,  Prev: Installation,  Up: Top
@@ -2245,9 +2245,8 @@ sections are available.  There is one additional command.
 ‘k’ (‘magit-process-kill’)
      This command kills the process represented by the section at point.
 
- -- Variable: magit-git-debug
-     This option controls whether additional reporting of git errors is
-     enabled.
+‘M-x magit-toggle-git-debug’
+     This command toggles whether additional git errors are reported.
 
      Magit basically calls git for one of these two reasons: for
      side-effects or to do something with its standard output.
@@ -2256,33 +2255,17 @@ sections are available.  There is one additional command.
      messages, go into the process buffer which is shown when using ‘$’.
 
      When git’s output is consumed in some way, then it would be too
-     expensive to also insert it into this buffer, but when this option
-     is non-nil and git returns with a non-zero exit status, then at
-     least its standard error is inserted into this buffer.
+     expensive to also insert it into this buffer, but with this command
+     that can be enabled temporarily.  In that case, if git returns with
+     a non-zero exit status, then at least its standard error is
+     inserted into this buffer.
 
-     This is only intended for debugging purposes.  Do not enable this
-     permanently, that would negatively affect performance.
-
-     This is only intended for debugging purposes.  Do not enable this
-     permanently, that would negatively affect performance.  Also note
-     that just because git exits with a non-zero exit status and prints
-     an error message that usually doesn’t mean that it is an error as
-     far as Magit is concerned, which is another reason we usually hide
-     these error messages.  Whether some error message is relevant in
-     the context of some unexpected behavior has to be judged on a case
-     by case basis.
-
-     The command ‘magit-toggle-git-debug’ changes the value of this
-     variable.
-
- -- Variable: magit-process-extreme-logging
-     This option controls whether ‘magit-process-file’ logs to the
-     ‘*Messages*’ buffer.
-
-     Only intended for temporary use when you try to figure out how
-     Magit uses Git behind the scene.  Output that normally goes to the
-     magit-process buffer continues to go there.  Not all output goes to
-     either of these two buffers.
+     Also note that just because git exits with a non-zero status and
+     prints an error message, that usually doesn’t mean that it is an
+     error as far as Magit is concerned, which is another reason we
+     usually hide these error messages.  Whether some error message is
+     relevant in the context of some unexpected behavior has to be
+     judged on a case by case basis.
 
 
 File: magit.info,  Node: Git Process Status,  Next: Running Git Manually,  Prev: Viewing Git Output,  Up: Running Git
@@ -3494,6 +3477,25 @@ Buffer Variables::).
 
 ‘d d’ (‘magit-diff-dwim’)
      Show changes for the thing at point.
+
+     For example, if point is on a commit, show the changes introduced
+     by that commit.  Likewise if point is on the section titled
+     "Unstaged changes", then show those changes in a separate buffer.
+     Generally speaking, compare the thing at point with the most
+     logical, trivial and (in *any* situation) at least potentially
+     useful other thing it could be compared to.
+
+     When the region selects commits, then compare the two commits at
+     either end.  There are different ways two commits can be compared.
+     In the buffer showing the diff, you can control how the comparison,
+     is done, using "D r" and "D f".
+
+     This function does not always show the changes that you might want
+     to view in any given situation.  You can think of the changes being
+     shown as the smallest common denominator.  There is no AI involved.
+     If this command never does what you want, then ignore it, and
+     instead use the commands that allow you to explicitly specify what
+     you need.
 
 ‘d r’ (‘magit-diff-range’)
      Show differences between two commits.
@@ -9382,7 +9384,7 @@ sense to pronounce Magit like magic, while taking into account that C
 and T do not sound the same.
 
    The German "Magie" is not pronounced the same as the English "magic",
-so if you speak German then you can use the above rationale to justify
+so if you speak German, then you can use the above rationale to justify
 using the former pronunciation; ‘Mag{ie => it}’.
 
    You can also choose to use the former pronunciation just because you
@@ -9398,15 +9400,15 @@ A.1.2 How to show git’s output?
 -------------------------------
 
 To show the output of recently run git commands, press ‘$’ (or, if that
-isn’t available, ‘M-x magit-process-buffer’).  This will show a buffer
+isn’t available, use ‘M-x magit-process-buffer’).  This shows a buffer
 containing a section per git invocation; as always press ‘TAB’ to expand
 or collapse them.
 
    By default, git’s output is only inserted into the process buffer if
 it is run for side-effects.  When the output is consumed in some way,
 also inserting it into the process buffer would be too expensive.  For
-debugging purposes, it’s possible to do so anyway by setting
-‘magit-git-debug’ to ‘t’.
+debugging purposes, it’s possible to do so anyway, using ‘M-x
+magit-toggle-git-debug’.
 
 
 File: magit.info,  Node: How to install the gitman info manual?,  Next: How to show diffs for gpg-encrypted files?,  Prev: How to show git's output?,  Up: FAQ - How to ...?
@@ -9416,16 +9418,17 @@ A.1.3 How to install the gitman info manual?
 
 Git’s manpages can be exported as an info manual called ‘gitman’.
 Magit’s own info manual links to nodes in that manual instead of the
-actual manpages because Info doesn’t support linking to manpages.
+actual manpages, simply because Info doesn’t support linking to
+manpages.
 
    Unfortunately some distributions do not install the ‘gitman’ manual
-by default and you will have to install a separate documentation package
-to get it.
+by default and you would have to install a separate documentation
+package to get it.
 
-   Magit patches Info adding the ability to visit links to the ‘gitman’
-Info manual by instead viewing the respective manpage.  If you prefer
+   Magit patches info, adding the ability to visit links to the ‘gitman’
+info manual, by instead viewing the respective manpage.  If you prefer
 that approach, then set the value of ‘magit-view-git-manual-method’ to
-one of the supported packages ‘man’ or ‘woman’, e.g.:
+one of the supported Emacs packages ‘man’ or ‘woman’, e.g.:
 
      (setq magit-view-git-manual-method 'man)
 
@@ -9449,7 +9452,7 @@ A.1.5 How does branching and pushing work?
 ------------------------------------------
 
 Please see *note Branching:: and
-<https://emacsair.me/2016/01/17/magit-2.4>
+<https://emacsair.me/2016/01/18/magit-2.4>
 
 
 File: magit.info,  Node: Should I disable VC?,  Prev: How does branching and pushing work?,  Up: FAQ - How to ...?
@@ -9520,7 +9523,7 @@ A.2.3 I am having problems committing
 -------------------------------------
 
 That likely means that Magit is having problems finding an appropriate
-emacsclient executable.  See *note (with-editor)Configuring
+‘emacsclient’ executable.  See *note (with-editor)Configuring
 With-Editor:: and *note (with-editor)Debugging::.
 
 
@@ -9570,7 +9573,7 @@ A.2.7 Point is wrong in the ‘COMMIT_EDITMSG’ buffer
 Neither Magit nor ‘git-commit.el’ fiddle with point in the buffer used
 to write commit messages, so something else must be doing it.
 
-   You have probably globally enabled a mode which restores point in
+   You have probably globally enabled a mode, which restores point in
 file-visiting buffers.  It might be a bit surprising, but when you write
 a commit message, then you are actually editing a file.
 
@@ -9765,23 +9768,35 @@ issue.  Please include all relevant output when reporting an issue.
      messages, go into the process buffer which is shown when using ‘$’.
 
      When git’s output is consumed in some way, then it would be too
-     expensive to also insert it into this buffer, but when this option
-     is non-nil and git returns with a non-zero exit status, then at
-     least its standard error is inserted into this buffer.
+     expensive to also insert it into this buffer, but with this command
+     that can be enabled temporarily.  In that case, if git returns with
+     a non-zero exit status, then at least its standard error is
+     inserted into this buffer.
 
-     This is only intended for debugging purposes.  Do not enable this
-     permanently, that would negatively affect performance.  Also note
-     that just because git exits with a non-zero exit status and prints
-     an error message that usually doesn’t mean that it is an error as
-     far as Magit is concerned, which is another reason we usually hide
-     these error messages.  Whether some error message is relevant in
-     the context of some unexpected behavior has to be judged on a case
-     by case basis.
+     Also note that just because git exits with a non-zero status and
+     prints an error message, that usually doesn’t mean that it is an
+     error as far as Magit is concerned, which is another reason we
+     usually hide these error messages.  Whether some error message is
+     relevant in the context of some unexpected behavior has to be
+     judged on a case by case basis.
 
 ‘M-x magit-toggle-verbose-refresh’
      This command toggles whether Magit refreshes buffers verbosely.
      Enabling this helps figuring out which sections are bottlenecks.
      The additional output can be found in the ‘*Messages*’ buffer.
+
+‘M-x magit-toggle-subprocess-record’
+     This command toggles whether subprocess invocations are recorded.
+
+     When enabled, all subprocesses started by ‘magit-process-file’ are
+     logged into the buffer specified by
+     ‘magit-process-record-buffer-name’ using the format
+     ‘magit-process-record-entry-format’.  This is for debugging
+     purposes.
+
+     This is in addition to and distinct from the default logging done
+     by default, and additional logging enabled with
+     ‘magit-toggle-git-debug’.
 
 ‘M-x magit-debug-git-executable’
      This command displays a buffer containing information about the
@@ -9789,6 +9804,15 @@ issue.  Please include all relevant output when reporting an issue.
      investigating ‘exec-path’ issues.
 
      Also see *note Git Executable::.
+
+‘M-x magit-profile-refresh-buffer’
+     This command profiles refreshing the current Magit buffer and then
+     displays the results.
+
+‘M-x magit-toggle-profiling’
+     This command starts profiling Magit and Forge, or if profiling is
+     already in progress, it instead stops that and displays the
+     results.
 
 ‘M-x with-editor-debug’
      This command displays a buffer containing information about the
@@ -10086,20 +10110,20 @@ Appendix C Keystroke Index
                                                               (line  77)
 * d:                                     Diffing.             (line  22)
 * D:                                     Refreshing Diffs.    (line  16)
-* d c:                                   Diffing.             (line  63)
+* d c:                                   Diffing.             (line  82)
 * d d:                                   Diffing.             (line  27)
 * D f:                                   Refreshing Diffs.    (line  45)
 * D F:                                   Refreshing Diffs.    (line  49)
 * D g:                                   Refreshing Diffs.    (line  21)
-* d p:                                   Diffing.             (line  56)
-* d r:                                   Diffing.             (line  30)
+* d p:                                   Diffing.             (line  75)
+* d r:                                   Diffing.             (line  49)
 * D r:                                   Refreshing Diffs.    (line  41)
-* d s:                                   Diffing.             (line  48)
+* d s:                                   Diffing.             (line  67)
 * D s:                                   Refreshing Diffs.    (line  25)
-* d t:                                   Diffing.             (line  67)
+* d t:                                   Diffing.             (line  86)
 * D t:                                   Refreshing Diffs.    (line  38)
-* d u:                                   Diffing.             (line  53)
-* d w:                                   Diffing.             (line  43)
+* d u:                                   Diffing.             (line  72)
+* d w:                                   Diffing.             (line  62)
 * D w:                                   Refreshing Diffs.    (line  31)
 * DEL:                                   Log Buffer.          (line  50)
 * DEL <1>:                               Commands Available in Diffs.
@@ -10597,7 +10621,7 @@ Appendix D Function and Command Index
 * magit-current-section:                 Section Selection.   (line   6)
 * magit-cycle-margin-style:              Log Margin.          (line  63)
 * magit-debug-git-executable:            Git Executable.      (line  55)
-* magit-debug-git-executable <1>:        Debugging Tools.     (line  57)
+* magit-debug-git-executable <1>:        Debugging Tools.     (line  69)
 * magit-define-section-jumper:           Creating Sections.   (line  74)
 * magit-describe-section:                Section Types and Values.
                                                               (line  14)
@@ -10620,8 +10644,8 @@ Appendix D Function and Command Index
 * magit-diff-flip-revs:                  Refreshing Diffs.    (line  45)
 * magit-diff-less-context:               Refreshing Diffs.    (line  62)
 * magit-diff-more-context:               Refreshing Diffs.    (line  65)
-* magit-diff-paths:                      Diffing.             (line  56)
-* magit-diff-range:                      Diffing.             (line  30)
+* magit-diff-paths:                      Diffing.             (line  75)
+* magit-diff-range:                      Diffing.             (line  49)
 * magit-diff-refresh:                    Refreshing Diffs.    (line  16)
 * magit-diff-refresh <1>:                Refreshing Diffs.    (line  21)
 * magit-diff-save-default-arguments:     Refreshing Diffs.    (line  31)
@@ -10631,14 +10655,14 @@ Appendix D Function and Command Index
 * magit-diff-show-or-scroll-down <1>:    Blaming.             (line 103)
 * magit-diff-show-or-scroll-up:          Log Buffer.          (line  41)
 * magit-diff-show-or-scroll-up <1>:      Blaming.             (line  94)
-* magit-diff-staged:                     Diffing.             (line  48)
+* magit-diff-staged:                     Diffing.             (line  67)
 * magit-diff-switch-range-type:          Refreshing Diffs.    (line  41)
 * magit-diff-toggle-file-filter:         Refreshing Diffs.    (line  49)
 * magit-diff-toggle-refine-hunk:         Refreshing Diffs.    (line  38)
 * magit-diff-trace-definition:           Commands Available in Diffs.
                                                               (line  15)
 * magit-diff-type:                       Matching Sections.   (line  88)
-* magit-diff-unstaged:                   Diffing.             (line  53)
+* magit-diff-unstaged:                   Diffing.             (line  72)
 * magit-diff-visit-file:                 Visiting Files and Blobs from a Diff.
                                                               (line   9)
 * magit-diff-visit-file-other-frame:     Visiting Files and Blobs from a Diff.
@@ -10654,7 +10678,7 @@ Appendix D Function and Command Index
 * magit-diff-while-committing:           Refreshing Diffs.    (line  75)
 * magit-diff-while-committing <1>:       Editing Commit Messages.
                                                               (line  54)
-* magit-diff-working-tree:               Diffing.             (line  43)
+* magit-diff-working-tree:               Diffing.             (line  62)
 * magit-disable-section-inserter:        Per-Repository Configuration.
                                                               (line  31)
 * magit-discard:                         Applying.            (line  40)
@@ -10914,6 +10938,7 @@ Appendix D Function and Command Index
 * magit-process-git:                     Getting a Value from Git.
                                                               (line  50)
 * magit-process-kill:                    Viewing Git Output.  (line  24)
+* magit-profile-refresh-buffer:          Debugging Tools.     (line  76)
 * magit-pull:                            Pulling.             (line  10)
 * magit-pull-branch:                     Pulling.             (line  28)
 * magit-pull-from-pushremote:            Pulling.             (line  14)
@@ -11057,7 +11082,7 @@ Appendix D Function and Command Index
                                                               (line  38)
 * magit-shell-command-topdir:            Running Git Manually.
                                                               (line  34)
-* magit-show-commit:                     Diffing.             (line  63)
+* magit-show-commit:                     Diffing.             (line  82)
 * magit-show-commit <1>:                 Blaming.             (line  91)
 * magit-show-refs:                       References Buffer.   (line   7)
 * magit-show-refs-current:               References Buffer.   (line  25)
@@ -11102,7 +11127,7 @@ Appendix D Function and Command Index
 * magit-stash-keep-index:                Stashing.            (line  30)
 * magit-stash-list:                      Stashing.            (line 131)
 * magit-stash-pop:                       Stashing.            (line  79)
-* magit-stash-show:                      Diffing.             (line  67)
+* magit-stash-show:                      Diffing.             (line  86)
 * magit-stash-show <1>:                  Stashing.            (line 112)
 * magit-stash-worktree:                  Stashing.            (line  24)
 * magit-stashes-maybe-update-stash-buffer: Section Movement.  (line  92)
@@ -11143,11 +11168,14 @@ Appendix D Function and Command Index
 * magit-tag-prune:                       Tagging.             (line  43)
 * magit-tag-release:                     Tagging.             (line  18)
 * magit-toggle-buffer-lock:              Modes and Buffers.   (line  18)
-* magit-toggle-git-debug:                Debugging Tools.     (line  29)
+* magit-toggle-git-debug:                Viewing Git Output.  (line  27)
+* magit-toggle-git-debug <1>:            Debugging Tools.     (line  29)
 * magit-toggle-margin:                   Refreshing Logs.     (line  34)
 * magit-toggle-margin <1>:               Log Margin.          (line  60)
 * magit-toggle-margin-details:           Log Margin.          (line  66)
-* magit-toggle-verbose-refresh:          Debugging Tools.     (line  52)
+* magit-toggle-profiling:                Debugging Tools.     (line  80)
+* magit-toggle-subprocess-record:        Debugging Tools.     (line  56)
+* magit-toggle-verbose-refresh:          Debugging Tools.     (line  51)
 * magit-unstage:                         Staging and Unstaging.
                                                               (line  42)
 * magit-unstage-all:                     Staging and Unstaging.
@@ -11182,7 +11210,7 @@ Appendix D Function and Command Index
                                                               (line  22)
 * with-editor-cancel <1>:                Editing Rebase Sequences.
                                                               (line  11)
-* with-editor-debug:                     Debugging Tools.     (line  64)
+* with-editor-debug:                     Debugging Tools.     (line  85)
 * with-editor-finish:                    Editing Commit Messages.
                                                               (line  18)
 * with-editor-finish <1>:                Editing Rebase Sequences.
@@ -11309,8 +11337,7 @@ Appendix E Variable Index
 * magit-ediff-quit-hook:                 Ediffing.            (line 124)
 * magit-ediff-show-stash-with-index:     Ediffing.            (line 118)
 * magit-generate-buffer-name-function:   Naming Buffers.      (line   6)
-* magit-git-debug:                       Viewing Git Output.  (line  26)
-* magit-git-debug <1>:                   Getting a Value from Git.
+* magit-git-debug:                       Getting a Value from Git.
                                                               (line  68)
 * magit-git-executable:                  Git Executable.      (line  26)
 * magit-git-global-arguments:            Global Git Arguments.
@@ -11345,7 +11372,6 @@ Appendix E Variable Index
                                                               (line 108)
 * magit-prefix-use-buffer-arguments:     Transient Arguments and Buffer Variables.
                                                               (line  65)
-* magit-process-extreme-logging:         Viewing Git Output.  (line  56)
 * magit-process-raise-error:             Calling Git for Effect.
                                                               (line 125)
 * magit-pull-or-fetch:                   Fetching.            (line  52)
@@ -11435,168 +11461,168 @@ Node: Installation11275
 Node: Installing from Melpa11605
 Node: Installing from the Git Repository12680
 Node: Post-Installation Tasks15494
-Node: Getting Started16779
-Node: Interface Concepts22590
-Node: Modes and Buffers22969
-Node: Switching Buffers24680
-Node: Naming Buffers29419
-Node: Quitting Windows32494
-Node: Automatic Refreshing of Magit Buffers34429
-Node: Automatic Saving of File-Visiting Buffers37310
-Node: Automatic Reverting of File-Visiting Buffers38494
-Node: Risk of Reverting Automatically43479
-Node: Sections45861
-Node: Section Movement46787
-Node: Section Visibility51661
-Node: Section Hooks58348
-Node: Section Types and Values60754
-Node: Section Options62169
-Node: Transient Commands62640
-Node: Transient Arguments and Buffer Variables64116
-Node: Completion Confirmation and the Selection71133
-Node: Action Confirmation71579
-Node: Completion and Confirmation80084
-Node: The Selection83269
-Node: The hunk-internal region86167
-Node: Support for Completion Frameworks87256
-Node: Additional Completion Options92141
-Node: Mouse Support92739
-Node: Running Git93315
-Node: Viewing Git Output93560
-Node: Git Process Status96264
-Node: Running Git Manually97229
-Node: Git Executable99919
-Node: Global Git Arguments102927
-Node: Inspecting103732
-Node: Status Buffer104889
-Node: Status Sections109900
-Node: Status Header Sections115627
-Node: Status Module Sections118246
-Node: Status Options120743
-Node: Repository List122106
-Node: Logging126884
-Node: Refreshing Logs129723
-Node: Log Buffer131144
-Node: Log Margin135967
-Node: Select from Log139120
-Node: Reflog141330
-Node: Cherries142967
-Node: Diffing144805
-Node: Refreshing Diffs147839
-Node: Commands Available in Diffs151528
-Node: Diff Options154041
-Node: Revision Buffer159504
-Node: Ediffing162824
-Node: References Buffer168874
-Node: References Sections179468
-Node: Bisecting180325
-Node: Visiting Files and Blobs182636
-Node: General-Purpose Visit Commands183164
-Node: Visiting Files and Blobs from a Diff184117
-Node: Blaming187561
-Node: Manipulating194549
-Node: Creating Repository194891
-Node: Cloning Repository195428
-Node: Staging and Unstaging201869
-Node: Staging from File-Visiting Buffers205842
-Node: Applying206948
-Node: Committing209021
-Node: Initiating a Commit209604
-Node: Editing Commit Messages214794
-Node: Using the Revision Stack217567
-Node: Commit Pseudo Headers220612
-Node: Commit Mode and Hooks221907
-Node: Commit Message Conventions224765
-Node: Branching226752
-Node: The Two Remotes226978
-Node: Branch Commands229631
-Node: Branch Git Variables242481
-Node: Auxiliary Branch Commands247851
-Node: Merging248967
-Node: Resolving Conflicts253123
-Node: Rebasing258497
-Node: Editing Rebase Sequences263286
-Node: Information About In-Progress Rebase267502
-Ref: Information About In-Progress Rebase-Footnote-1276615
-Node: Cherry Picking277211
-Node: Reverting281545
-Node: Resetting282964
-Node: Stashing284790
-Node: Transferring291567
-Node: Remotes291789
-Node: Remote Commands291941
-Node: Remote Git Variables295980
-Node: Fetching297251
-Node: Pulling299734
-Node: Pushing300760
-Node: Plain Patches305051
-Node: Maildir Patches306522
-Node: Miscellaneous308001
-Node: Tagging308347
-Node: Notes310240
-Node: Submodules312575
-Node: Listing Submodules312793
-Node: Submodule Transient314941
-Node: Subtree317386
-Node: Worktree319317
-Node: Sparse checkouts320393
-Node: Bundle323169
-Node: Common Commands323544
-Node: Wip Modes326172
-Node: Wip Graph331063
-Node: Legacy Wip Modes333376
-Node: Commands for Buffers Visiting Files336263
-Node: Minor Mode for Buffers Visiting Blobs344490
-Node: Customizing345288
-Node: Per-Repository Configuration346884
-Node: Essential Settings349138
-Node: Safety349484
-Node: Performance351245
-Ref: Log Performance354208
-Ref: Diff Performance355513
-Ref: Refs Buffer Performance356854
-Ref: Committing Performance357429
-Node: Microsoft Windows Performance358411
-Node: MacOS Performance359602
-Ref: MacOS Performance-Footnote-1360625
-Node: Global Bindings360707
-Node: Plumbing362935
-Node: Calling Git363764
-Node: Getting a Value from Git365289
-Node: Calling Git for Effect369017
-Node: Section Plumbing374911
-Node: Creating Sections375139
-Node: Section Selection379035
-Node: Matching Sections380831
-Node: Refreshing Buffers386752
-Node: Conventions389896
-Node: Theming Faces390088
-Node: FAQ398193
-Node: FAQ - How to ...?398631
-Node: How to pronounce Magit?398988
-Node: How to show git's output?399791
-Node: How to install the gitman info manual?400577
-Node: How to show diffs for gpg-encrypted files?401547
-Node: How does branching and pushing work?402143
-Node: Should I disable VC?402476
-Node: FAQ - Issues and Errors403079
-Node: Magit is slow404024
-Node: I changed several thousand files at once and now Magit is unusable404317
-Node: I am having problems committing405043
-Node: I am using MS Windows and cannot push with Magit405524
-Node: I am using macOS and SOMETHING works in shell but not in Magit406142
-Node: Expanding a file to show the diff causes it to disappear406976
-Node: Point is wrong in the COMMIT_EDITMSG buffer407564
-Node: The mode-line information isn't always up-to-date408612
-Node: A branch and tag sharing the same name breaks SOMETHING409675
-Node: My Git hooks work on the command-line but not inside Magit410562
-Node: git-commit-mode isn't used when committing from the command-line411408
-Node: Point ends up inside invisible text when jumping to a file-visiting buffer413679
-Node: I am no longer able to save popup defaults414528
-Node: Debugging Tools415509
-Node: Keystroke Index418683
-Node: Function and Command Index460297
-Node: Variable Index518498
+Node: Getting Started16777
+Node: Interface Concepts22588
+Node: Modes and Buffers22967
+Node: Switching Buffers24678
+Node: Naming Buffers29417
+Node: Quitting Windows32492
+Node: Automatic Refreshing of Magit Buffers34427
+Node: Automatic Saving of File-Visiting Buffers37308
+Node: Automatic Reverting of File-Visiting Buffers38492
+Node: Risk of Reverting Automatically43477
+Node: Sections45859
+Node: Section Movement46785
+Node: Section Visibility51659
+Node: Section Hooks58346
+Node: Section Types and Values60752
+Node: Section Options62167
+Node: Transient Commands62638
+Node: Transient Arguments and Buffer Variables64114
+Node: Completion Confirmation and the Selection71131
+Node: Action Confirmation71577
+Node: Completion and Confirmation80082
+Node: The Selection83267
+Node: The hunk-internal region86165
+Node: Support for Completion Frameworks87254
+Node: Additional Completion Options92139
+Node: Mouse Support92737
+Node: Running Git93313
+Node: Viewing Git Output93558
+Node: Git Process Status95541
+Node: Running Git Manually96506
+Node: Git Executable99196
+Node: Global Git Arguments102204
+Node: Inspecting103009
+Node: Status Buffer104166
+Node: Status Sections109177
+Node: Status Header Sections114904
+Node: Status Module Sections117523
+Node: Status Options120020
+Node: Repository List121383
+Node: Logging126161
+Node: Refreshing Logs129000
+Node: Log Buffer130421
+Node: Log Margin135244
+Node: Select from Log138397
+Node: Reflog140607
+Node: Cherries142244
+Node: Diffing144082
+Node: Refreshing Diffs148133
+Node: Commands Available in Diffs151822
+Node: Diff Options154335
+Node: Revision Buffer159798
+Node: Ediffing163118
+Node: References Buffer169168
+Node: References Sections179762
+Node: Bisecting180619
+Node: Visiting Files and Blobs182930
+Node: General-Purpose Visit Commands183458
+Node: Visiting Files and Blobs from a Diff184411
+Node: Blaming187855
+Node: Manipulating194843
+Node: Creating Repository195185
+Node: Cloning Repository195722
+Node: Staging and Unstaging202163
+Node: Staging from File-Visiting Buffers206136
+Node: Applying207242
+Node: Committing209315
+Node: Initiating a Commit209898
+Node: Editing Commit Messages215088
+Node: Using the Revision Stack217861
+Node: Commit Pseudo Headers220906
+Node: Commit Mode and Hooks222201
+Node: Commit Message Conventions225059
+Node: Branching227046
+Node: The Two Remotes227272
+Node: Branch Commands229925
+Node: Branch Git Variables242775
+Node: Auxiliary Branch Commands248145
+Node: Merging249261
+Node: Resolving Conflicts253417
+Node: Rebasing258791
+Node: Editing Rebase Sequences263580
+Node: Information About In-Progress Rebase267796
+Ref: Information About In-Progress Rebase-Footnote-1276909
+Node: Cherry Picking277505
+Node: Reverting281839
+Node: Resetting283258
+Node: Stashing285084
+Node: Transferring291861
+Node: Remotes292083
+Node: Remote Commands292235
+Node: Remote Git Variables296274
+Node: Fetching297545
+Node: Pulling300028
+Node: Pushing301054
+Node: Plain Patches305345
+Node: Maildir Patches306816
+Node: Miscellaneous308295
+Node: Tagging308641
+Node: Notes310534
+Node: Submodules312869
+Node: Listing Submodules313087
+Node: Submodule Transient315235
+Node: Subtree317680
+Node: Worktree319611
+Node: Sparse checkouts320687
+Node: Bundle323463
+Node: Common Commands323838
+Node: Wip Modes326466
+Node: Wip Graph331357
+Node: Legacy Wip Modes333670
+Node: Commands for Buffers Visiting Files336557
+Node: Minor Mode for Buffers Visiting Blobs344784
+Node: Customizing345582
+Node: Per-Repository Configuration347178
+Node: Essential Settings349432
+Node: Safety349778
+Node: Performance351539
+Ref: Log Performance354502
+Ref: Diff Performance355807
+Ref: Refs Buffer Performance357148
+Ref: Committing Performance357723
+Node: Microsoft Windows Performance358705
+Node: MacOS Performance359896
+Ref: MacOS Performance-Footnote-1360919
+Node: Global Bindings361001
+Node: Plumbing363229
+Node: Calling Git364058
+Node: Getting a Value from Git365583
+Node: Calling Git for Effect369311
+Node: Section Plumbing375205
+Node: Creating Sections375433
+Node: Section Selection379329
+Node: Matching Sections381125
+Node: Refreshing Buffers387046
+Node: Conventions390190
+Node: Theming Faces390382
+Node: FAQ398487
+Node: FAQ - How to ...?398925
+Node: How to pronounce Magit?399282
+Node: How to show git's output?400086
+Node: How to install the gitman info manual?400868
+Node: How to show diffs for gpg-encrypted files?401855
+Node: How does branching and pushing work?402451
+Node: Should I disable VC?402784
+Node: FAQ - Issues and Errors403387
+Node: Magit is slow404332
+Node: I changed several thousand files at once and now Magit is unusable404625
+Node: I am having problems committing405351
+Node: I am using MS Windows and cannot push with Magit405838
+Node: I am using macOS and SOMETHING works in shell but not in Magit406456
+Node: Expanding a file to show the diff causes it to disappear407290
+Node: Point is wrong in the COMMIT_EDITMSG buffer407878
+Node: The mode-line information isn't always up-to-date408927
+Node: A branch and tag sharing the same name breaks SOMETHING409990
+Node: My Git hooks work on the command-line but not inside Magit410877
+Node: git-commit-mode isn't used when committing from the command-line411723
+Node: Point ends up inside invisible text when jumping to a file-visiting buffer413994
+Node: I am no longer able to save popup defaults414843
+Node: Debugging Tools415824
+Node: Keystroke Index419763
+Node: Function and Command Index461377
+Node: Variable Index519870
 
 End Tag Table
 
