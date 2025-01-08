@@ -21,6 +21,8 @@
     '("-I/home/abrantesasf/.arduino15/packages/arduino/hardware/avr/1.8.6/cores/arduino"
       "-I/home/abrantesasf/.arduino15/packages/arduino/hardware/avr/1.8.6/variants/standard"
       "-I/home/abrantesasf/.arduino15/packages/arduino/hardware/avr/1.8.6/libraries"
+      "-I/home/abrantesasf/.arduino15/packages/arduino/hardware/avr/1.8.6/libraries/SPI/src"
+      "-I/home/abrantesasf/.arduino15/packages/arduino/hardware/avr/1.8.6/libraries/EEPROM/src"
       "-I/home/abrantesasf/.arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7/avr/include"
       "-I/home/abrantesasf/.arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7/avr/include/avr"
       "-I/home/abrantesasf/.arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7/avr/include/compat"
