@@ -1,12 +1,12 @@
 ;;; yasnippet.el --- Yet another snippet extension for Emacs  -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2008-2024 Free Software Foundation, Inc.
+;; Copyright (C) 2008-2025 Free Software Foundation, Inc.
 ;; Authors: pluskid <pluskid@gmail.com>,
 ;;          João Távora <joaotavora@gmail.com>,
 ;;          Noam Postavsky <npostavs@gmail.com>
 ;; Maintainer: Noam Postavsky <npostavs@gmail.com>
-;; Package-Version: 20241013.1557
-;; Package-Revision: fe1f4e0e96ce
+;; Package-Version: 20250112.1504
+;; Package-Revision: 03b1b11547ea
 ;; X-URL: http://github.com/joaotavora/yasnippet
 ;; Keywords: convenience, emulation
 ;; URL: http://github.com/joaotavora/yasnippet
@@ -1001,7 +1001,7 @@ Honour `yas-dont-activate-functions', which see."
 ;;; Major mode stuff
 
 (defvar yas--font-lock-keywords
-  (append '(("^#.*$" . font-lock-comment-face))
+  (append '(("^#.*$" (0 'font-lock-comment-face)))
           (with-temp-buffer
             (let ((prog-mode-hook nil)
                   (emacs-lisp-mode-hook nil))
@@ -1012,14 +1012,14 @@ Honour `yas-dont-activate-functions', which see."
                 (cadr font-lock-keywords)
               font-lock-keywords))
           '(("\\$\\([0-9]+\\)"
-             (0 font-lock-keyword-face)
-             (1 font-lock-string-face t))
+             (0 'font-lock-keyword-face)
+             (1 'font-lock-string-face t))
             ("\\${\\([0-9]+\\):?"
-             (0 font-lock-keyword-face)
-             (1 font-lock-warning-face t))
-            ("\\(\\$(\\)" 1 font-lock-preprocessor-face)
+             (0 'font-lock-keyword-face)
+             (1 'font-lock-warning-face t))
+            ("\\(\\$(\\)" 1 'font-lock-preprocessor-face)
             ("}"
-             (0 font-lock-keyword-face)))))
+             (0 'font-lock-keyword-face)))))
 
 (defvar snippet-mode-map
   (let ((map (make-sparse-keymap)))
@@ -2785,18 +2785,20 @@ Return the `yas--template' object created"
 
 (defun yas-maybe-load-snippet-buffer ()
   "Added to `after-save-hook' in `snippet-mode'."
-  (let* ((mode (intern (file-name-sans-extension
-                        (file-name-nondirectory
-                         (directory-file-name default-directory)))))
-         (current-snippet
-          (apply #'yas--define-snippets-2 (yas--table-get-create mode)
-                 (yas--parse-template buffer-file-name)))
-         (uuid (yas--template-uuid current-snippet)))
-    (unless (equal current-snippet
-                   (if uuid (yas--get-template-by-uuid mode uuid)
-                     (yas--lookup-snippet-1
-                      (yas--template-name current-snippet) mode)))
-      (yas-load-snippet-buffer mode t))))
+  (save-excursion ;; Issue #1146.  Here or in `yas--parse-template`?
+    (let* ((mode (intern (file-name-sans-extension
+                          (file-name-nondirectory
+                           (directory-file-name default-directory)))))
+           (current-snippet
+            (apply #'yas--define-snippets-2 (yas--table-get-create mode)
+                   ;; FIXME: `yas-load-snippet-buffer' will *re*parse!
+                   (yas--parse-template buffer-file-name)))
+           (uuid (yas--template-uuid current-snippet)))
+      (unless (equal current-snippet
+                     (if uuid (yas--get-template-by-uuid mode uuid)
+                       (yas--lookup-snippet-1
+                        (yas--template-name current-snippet) mode)))
+        (yas-load-snippet-buffer mode t)))))
 
 (defun yas-load-snippet-buffer-and-close (table &optional kill)
   "Load and save the snippet, then `quit-window' if saved.

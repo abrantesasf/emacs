@@ -4,8 +4,8 @@
 
 ;; Author: Love Lagerkvist
 ;; URL: https://github.com/motform/arduino-cli-mode
-;; Package-Version: 20240613.640
-;; Package-Revision: 3265507b5fe4
+;; Package-Version: 20250114.1011
+;; Package-Revision: f4a26fcd9f0d
 ;; Package-Requires: ((emacs "25.1"))
 ;; Created: 2019-11-16
 ;; Keywords: processes tools
@@ -98,11 +98,22 @@
   :group 'arduino-cli
   :type 'boolean)
 
+(defcustom arduino-cli-compile-color t
+  "If true (default), apply ANSI colors from compilation output."
+  :group 'arduino-cli
+  :type 'boolean)
+
 ;;; Internal functions
+(defun arduino-cli--compilation-filter ()
+  "Filter function for applying ANSI colors in compilation output."
+  (when arduino-cli-compile-color
+    (ansi-color-apply-on-region compilation-filter-start (point-max))))
+
 (define-compilation-mode arduino-cli-compilation-mode "arduino-cli-compilation"
   "Arduino-cli specific `compilation-mode' derivative."
   (setq-local compilation-scroll-output t)
-  (require 'ansi-color))
+  (require 'ansi-color)
+  (add-hook 'compilation-filter-hook #'arduino-cli--compilation-filter))
 
 (defun arduino-cli--?map-put (m v k)
   "Puts V in M under K when V, else return M."
@@ -123,6 +134,11 @@
   (when arduino-cli-warnings
     (concat " --warnings " (symbol-name arduino-cli-warnings))))
 
+(defun arduino-cli--compile-color ()
+  "Get the current compilation color setting."
+  (when (not arduino-cli-compile-color)
+    " --no-color"))
+
 (defun arduino-cli--general-flags ()
   "Add flags to CMD, if set."
   (concat (unless arduino-cli-compile-only-verbosity
@@ -132,7 +148,8 @@
   "Add flags to CMD, if set."
   (concat (arduino-cli--verify)
           (arduino-cli--warnings)
-          (arduino-cli--verbosity)))
+          (arduino-cli--verbosity)
+          (arduino-cli--compile-color)))
 
 (defun arduino-cli--add-flags (mode cmd)
   "Add general and MODE flags to CMD, if set."

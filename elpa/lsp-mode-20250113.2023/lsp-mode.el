@@ -5,8 +5,8 @@
 ;; Author: Vibhav Pant, Fangrui Song, Ivan Yonchovski
 ;; Keywords: languages
 ;; Package-Requires: ((emacs "27.1") (dash "2.18.0") (f "0.20.0") (ht "2.3") (spinner "1.7.3") (markdown-mode "2.3") (lv "0") (eldoc "1.11"))
-;; Package-Version: 20250110.841
-;; Package-Revision: 17483ec3f003
+;; Package-Version: 20250113.2023
+;; Package-Revision: 0252be2fe795
 
 ;; URL: https://github.com/emacs-lsp/lsp-mode
 ;; This program is free software; you can redistribute it and/or modify
@@ -186,7 +186,7 @@ As defined by the Language Server Protocol 3.16."
      lsp-mojo lsp-move lsp-mssql lsp-nextflow lsp-nginx lsp-nim lsp-nix lsp-nushell lsp-ocaml
      lsp-openscad lsp-pascal lsp-perl lsp-perlnavigator lsp-php lsp-pls
      lsp-purescript lsp-pwsh lsp-pyls lsp-pylsp lsp-pyright lsp-python-ms
-     lsp-qml lsp-r lsp-racket lsp-remark lsp-rf lsp-roslyn lsp-rubocop lsp-ruby-lsp
+     lsp-qml lsp-r lsp-racket lsp-remark lsp-rf lsp-roc lsp-roslyn lsp-rubocop lsp-ruby-lsp
      lsp-ruby-syntax-tree lsp-ruff lsp-rust lsp-semgrep lsp-shader
      lsp-solargraph lsp-solidity lsp-sonarlint lsp-sorbet lsp-sourcekit
      lsp-sql lsp-sqls lsp-steep lsp-svelte lsp-tailwindcss lsp-terraform
@@ -944,6 +944,7 @@ Changes take effect only when a new session is started."
     (perl-mode . "perl")
     (cperl-mode . "perl")
     (robot-mode . "robot")
+    (roc-ts-mode . "roc")
     (racket-mode . "racket")
     (nix-mode . "nix")
     (nix-ts-mode . "nix")

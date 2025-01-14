@@ -1,6 +1,6 @@
 ;;; lsp-completion.el --- LSP completion -*- lexical-binding: t; -*-
 ;;
-;; Copyright (C) 2020 emacs-lsp maintainers
+;; Copyright (C) 2020-2025 emacs-lsp maintainers
 ;;
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -266,7 +266,7 @@ The CLEANUP-FN will be called to cleanup."
   "Annotation function for completion candidate CAND.
 
 Returns unresolved completion item detail."
-  (when-let ((lsp-completion-item (get-text-property 0 'lsp-completion-unresolved-item cand)))
+  (when-let* ((lsp-completion-item (get-text-property 0 'lsp-completion-unresolved-item cand)))
     (concat
      (when lsp-completion-show-detail
        (lsp-completion--get-label-detail lsp-completion-item))
@@ -850,9 +850,10 @@ The return is nil or in range of (0, inf)."
   "Disable LSP completion support."
   (lsp-completion-mode -1))
 
-(defun lsp-completion-passthrough-try-completion (string _table _pred point)
+(defun lsp-completion-passthrough-try-completion (string table _pred point)
   "Passthrough try function, always return the passed STRING and POINT."
-  (cons string point))
+  (when table
+    (cons string point)))
 
 (defun lsp-completion-passthrough-all-completions (_string table pred _point)
   "Passthrough all completions from TABLE with PRED."
