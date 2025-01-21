@@ -3,8 +3,8 @@
 ;; URL: https://github.com/slime/slime
 ;; Package-Requires: ((emacs "24.3") (macrostep "0.9"))
 ;; Keywords: languages, lisp, slime
-;; Package-Version: 20250109.1458
-;; Package-Revision: 10403bd98064
+;; Package-Version: 20250120.1652
+;; Package-Revision: 48371a44221c
 
 ;;;; License and Commentary
 
@@ -655,8 +655,9 @@ edit s-exprs, e.g. for source buffers and the REPL.")
   (set-keymap-parent slime-mode-indirect-map slime-mode-map))
 
 (defun slime-init-keymap (keymap-name prefixp bothp bindings)
-  (set keymap-name (make-sparse-keymap))
-  (when prefixp (define-prefix-command keymap-name))
+  (unless (symbol-value keymap-name)
+    (set keymap-name (make-sparse-keymap))
+    (when prefixp (define-prefix-command keymap-name)))
   (slime-bind-keys (eval keymap-name) bothp bindings))
 
 (defun slime-bind-keys (keymap bothp bindings)
@@ -4051,6 +4052,13 @@ the display stuff that we neither need nor want."
 
 ;;;; Interactive evaluation.
 
+(defun slime-max-mini-window-lines ()
+  (if resize-mini-windows
+      (if (fboundp 'max-mini-window-lines)
+          (truncate (max-mini-window-lines))
+          5)
+      1))
+
 (defun slime-interactive-eval (string)
   "Read and evaluate STRING and print value in minibuffer.
 
@@ -4059,7 +4067,9 @@ inserted in the current buffer."
   (interactive (list (slime-read-from-minibuffer "Slime Eval: ")))
   (cl-case current-prefix-arg
     ((nil)
-     (slime-eval-with-transcript `(swank:interactive-eval ,string)))
+     (slime-eval-with-transcript `(swank:interactive-eval ,string
+                                                          ,(slime-max-mini-window-lines)
+                                                          ,(window-width))))
     ((-)
      (slime-eval-save string))
     (t
@@ -4145,7 +4155,9 @@ Use `slime-re-evaluate-defvar' if the from starts with '(defvar'"
   (interactive "r")
   (slime-eval-with-transcript
    `(swank:interactive-eval-region
-     ,(buffer-substring-no-properties start end))))
+     ,(buffer-substring-no-properties start end)
+     ,(slime-max-mini-window-lines)
+     ,(window-width))))
 
 (defun slime-pprint-eval-region (start end)
   "Evaluate region; pprint the value in a buffer."
@@ -5148,11 +5160,6 @@ argument is given, with CL:MACROEXPAND."
 (defvar sldb-hook nil
   "Hook run on entry to the debugger.")
 
-(defcustom sldb-initial-restart-limit 6
-  "Maximum number of restarts to display initially."
-  :group 'slime-debugger
-  :type 'integer)
-
 
 ;;;;; Local variables in the debugger buffer
 
@@ -5386,7 +5393,7 @@ CONTS is a list of pending Emacs continuations."
       (sldb-insert-condition condition)
       (insert "\n\n" (sldb-in-face section "Restarts:") "\n")
       (setq sldb-restart-list-start-marker (point-marker))
-      (sldb-insert-restarts restarts 0 sldb-initial-restart-limit)
+      (sldb-insert-restarts restarts)
       (insert "\n" (sldb-in-face section "Backtrace:") "\n")
       (setq sldb-backtrace-start-marker (point-marker))
       (save-excursion
@@ -5489,33 +5496,19 @@ EXTRAS is currently used for the stepper."
            ;;(error "Unhandled extra element:" extra)
            )))))
 
-(defun sldb-insert-restarts (restarts start count)
+(defun sldb-insert-restarts (restarts)
   "Insert RESTARTS and add the needed text props
 RESTARTS should be a list ((NAME DESCRIPTION) ...)."
-  (let* ((len (length restarts))
-         (end (if count (min (+ start count) len) len)))
-    (cl-loop for (name string) in (cl-subseq restarts start end)
-             for number from start
-             do (slime-insert-propertized
-                 `(,@nil restart ,number
-                         sldb-default-action sldb-invoke-restart
-                         mouse-face highlight)
-                 " " (sldb-in-face restart-number (number-to-string number))
-                 ": ["  (sldb-in-face restart-type name) "] "
-                 (sldb-in-face restart string))
-             (insert "\n"))
-    (when (< end len)
-      (let ((pos (point)))
-        (slime-insert-propertized
-         (list 'sldb-default-action
-               (slime-rcurry #'sldb-insert-more-restarts restarts pos end))
-         " --more--\n")))))
-
-(defun sldb-insert-more-restarts (restarts position start)
-  (goto-char position)
-  (let ((inhibit-read-only t))
-    (delete-region position (1+ (line-end-position)))
-    (sldb-insert-restarts restarts start nil)))
+  (cl-loop for (name string) in restarts
+           for number from 0
+           do (slime-insert-propertized
+               `(,@nil restart ,number
+                       sldb-default-action sldb-invoke-restart
+                       mouse-face highlight)
+               " " (sldb-in-face restart-number (number-to-string number))
+               ": ["  (sldb-in-face restart-type name) "] "
+               (sldb-in-face restart string))
+           (insert "\n")))
 
 (defun sldb-frame.string (frame)
   (cl-destructuring-bind (_ str &optional _) frame str))
@@ -5918,7 +5911,7 @@ VAR should be a plist with the keys :name, :id, and :value."
 (defun sldb-eval-in-frame (frame string package)
   "Prompt for an expression and evaluate it in the selected frame."
   (interactive (sldb-read-form-for-frame "Eval in frame (%s)> "))
-  (slime-eval-async `(swank:eval-string-in-frame ,string ,frame ,package)
+  (slime-eval-async `(swank:eval-string-in-frame ,string ,frame ,package )
     (if current-prefix-arg
         'slime-write-string
       'slime-display-eval-result)))
@@ -5927,7 +5920,9 @@ VAR should be a plist with the keys :name, :id, and :value."
   "Prompt for an expression, evaluate in selected frame, pretty-print result."
   (interactive (sldb-read-form-for-frame "Eval in frame (%s)> "))
   (slime-eval-async
-      `(swank:pprint-eval-string-in-frame ,string ,frame ,package)
+      `(swank:pprint-eval-string-in-frame ,string ,frame ,package
+                                          ,(slime-max-mini-window-lines)
+                                          ,(window-width))
     (lambda (result)
       (slime-show-description result nil))))
 

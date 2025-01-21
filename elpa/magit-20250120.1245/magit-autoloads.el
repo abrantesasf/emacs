@@ -517,78 +517,132 @@ Clone REPOSITORY into DIRECTORY and create a sparse checkout.
 
  (autoload 'magit-commit "magit-commit" nil t)
 (autoload 'magit-commit-create "magit-commit" "\
-Create a new commit on `HEAD'.
-With a prefix argument, amend to the commit at `HEAD' instead.
-
-(git commit [--amend] ARGS)
-
-(fn &optional ARGS)" t)
-(autoload 'magit-commit-amend "magit-commit" "\
-Amend the last commit.
-
-(git commit --amend ARGS)
+Create a new commit.
 
 (fn &optional ARGS)" t)
 (autoload 'magit-commit-extend "magit-commit" "\
-Amend the last commit, without editing the message.
+Amend staged changes to the last commit, without editing its message.
 
-With a prefix argument keep the committer date, otherwise change
-it.  The option `magit-commit-extend-override-date' can be used
-to inverse the meaning of the prefix argument.
-
-(git commit --amend --no-edit)
+With a prefix argument do not update the committer date; without an
+argument update it. The option `magit-commit-extend-override-date'
+can be used to inverse the meaning of the prefix argument.  Called
+non-interactively, the optional OVERRIDE-DATE argument controls this
+behavior, and the option is of no relevance.
 
 (fn &optional ARGS OVERRIDE-DATE)" t)
+(autoload 'magit-commit-amend "magit-commit" "\
+Amend staged changes (if any) to the last commit, and edit its message.
+
+(fn &optional ARGS)" t)
 (autoload 'magit-commit-reword "magit-commit" "\
-Reword the last commit, ignoring staged changes.
+Reword the message of the last commit, without amending its tree.
 
-With a prefix argument keep the committer date, otherwise change
-it.  The option `magit-commit-reword-override-date' can be used
-to inverse the meaning of the prefix argument.
-
-Non-interactively respect the optional OVERRIDE-DATE argument
-and ignore the option.
-
-(git commit --amend --only)
+With a prefix argument do not update the committer date; without an
+argument update it. The option `magit-commit-reword-override-date'
+can be used to inverse the meaning of the prefix argument.  Called
+non-interactively, the optional OVERRIDE-DATE argument controls this
+behavior, and the option is of no relevance.
 
 (fn &optional ARGS OVERRIDE-DATE)" t)
 (autoload 'magit-commit-fixup "magit-commit" "\
-Create a fixup commit.
+Create a fixup commit, leaving the original commit message untouched.
 
-With a prefix argument the target COMMIT has to be confirmed.
-Otherwise the commit at point may be used without confirmation
-depending on the value of option `magit-commit-squash-confirm'.
+If there is a reachable commit at point, target that.  Otherwise prompt
+for a commit.  If `magit-commit-squash-confirm' is non-nil, always make
+the user explicitly select a commit, in a buffer dedicated to that task.
+
+During a later rebase, when this commit gets squashed into its targeted
+commit, the original message of the targeted commit is used as-is.
+
+In other words, call \"git commit --fixup=COMMIT --no-edit\".
 
 (fn &optional COMMIT ARGS)" t)
 (autoload 'magit-commit-squash "magit-commit" "\
-Create a squash commit, without editing the squash message.
+Create a squash commit, without the user authoring a commit message.
 
-With a prefix argument the target COMMIT has to be confirmed.
-Otherwise the commit at point may be used without confirmation
-depending on the value of option `magit-commit-squash-confirm'.
+If there is a reachable commit at point, target that.  Otherwise prompt
+for a commit.  If `magit-commit-squash-confirm' is non-nil, always make
+the user explicitly select a commit, in a buffer dedicated to that task.
 
-If you want to immediately add a message to the squash commit,
-then use `magit-commit-augment' instead of this command.
+During a later rebase, when this commit gets squashed into its targeted
+commit, the user is given a chance to edit the original message to take
+the changes from the squash commit into account.
+
+In other words, call \"git commit --squash=COMMIT --no-edit\".
+
+(fn &optional COMMIT ARGS)" t)
+(autoload 'magit-commit-alter "magit-commit" "\
+Create a squash commit, authoring the final commit message now.
+
+If there is a reachable commit at point, target that.  Otherwise prompt
+for a commit.  If `magit-commit-squash-confirm' is non-nil, always make
+the user explicitly select a commit, in a buffer dedicated to that task.
+
+During a later rebase, when this commit gets squashed into its targeted
+commit, the original message of the targeted commit is replaced with the
+message of this commit, without the user automatically being given a
+chance to edit again.
+
+In other words, call \"git commit --fixup=amend:COMMIT --edit\".
 
 (fn &optional COMMIT ARGS)" t)
 (autoload 'magit-commit-augment "magit-commit" "\
-Create a squash commit, editing the squash message.
+Create a squash commit, authoring a new temporary commit message.
 
-With a prefix argument the target COMMIT has to be confirmed.
-Otherwise the commit at point may be used without confirmation
-depending on the value of option `magit-commit-squash-confirm'.
+If there is a reachable commit at point, target that.  Otherwise prompt
+for a commit.  If `magit-commit-squash-confirm' is non-nil, always make
+the user explicitly select a commit, in a buffer dedicated to that task.
+
+During a later rebase, when this commit gets squashed into its targeted
+commit, the user is asked to write a final commit message, in a buffer
+that starts out containing both the original commit message, as well as
+the temporary commit message of the squash commit.
+
+In other words, call \"git commit --squash=COMMIT --edit\".
+
+(fn &optional COMMIT ARGS)" t)
+(autoload 'magit-commit-revise "magit-commit" "\
+Reword the message of an existing commit, without editing its tree.
+
+If there is a reachable commit at point, target that.  Otherwise prompt
+for a commit.  If `magit-commit-squash-confirm' is non-nil, always make
+the user explicitly select a commit, in a buffer dedicated to that task.
+
+During a later rebase, when this commit gets squashed into its targeted
+commit, a combined commit is created which uses the message of the fixup
+commit and the tree of the targeted commit.
+
+In other words, call \"git commit --fixup=reword:COMMIT --edit\".
 
 (fn &optional COMMIT ARGS)" t)
 (autoload 'magit-commit-instant-fixup "magit-commit" "\
-Create a fixup commit targeting COMMIT and instantly rebase.
+Create a fixup commit, and immediately combine it with its target.
+
+If there is a reachable commit at point, target that.  Otherwise prompt
+for a commit.  If `magit-commit-squash-confirm' is non-nil, always make
+the user explicitly select a commit, in a buffer dedicated to that task.
+
+Leave the original commit message of the targeted commit untouched.
+
+Like `magit-commit-fixup' but also run a `--autofixup' rebase.
 
 (fn &optional COMMIT ARGS)" t)
 (autoload 'magit-commit-instant-squash "magit-commit" "\
-Create a squash commit targeting COMMIT and instantly rebase.
+Create a squash commit, and immediately combine it with its target.
+
+If there is a reachable commit at point, target that.  Otherwise prompt
+for a commit.  If `magit-commit-squash-confirm' is non-nil, always make
+the user explicitly select a commit, in a buffer dedicated to that task.
+
+Turing the rebase phase, when the two commits are being squashed, ask
+the user to author the final commit message, based on the original
+message of the targeted commit.
+
+Like `magit-commit-squash' but also run a `--autofixup' rebase.
 
 (fn &optional COMMIT ARGS)" t)
 (autoload 'magit-commit-reshelve "magit-commit" "\
-Change the committer date and possibly the author date of `HEAD'.
+Change committer (and possibly author) date of the last commit.
 
 The current time is used as the initial minibuffer input and the
 original author or committer date is available as the previous

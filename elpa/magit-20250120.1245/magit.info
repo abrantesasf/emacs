@@ -4606,12 +4606,14 @@ File: magit.info,  Node: Committing,  Next: Branching,  Prev: Applying,  Up: Man
 6.5 Committing
 ==============
 
-When the user initiates a commit, Magit calls ‘git commit’ without any
-arguments, so Git has to get it from the user.  It creates the file
-‘.git/COMMIT_EDITMSG’ and then opens that file in an editor.  Magit
-arranges for that editor to be the Emacsclient.  Once the user finishes
-the editing session, the Emacsclient exits and Git creates the commit
-using the file’s content as message.
+When the user initiates a commit, Magit calls ‘git commit’ without the
+‘--message’ argument, so Git has to get the message from the user.  To
+do so, it creates a file such as ‘.git/COMMIT_EDITMSG’ and then opens
+that file in the editor specified by ‘$EDITOR’ (or ‘$GIT_EDITOR’).
+
+   Magit arranges for that editor to be the Emacsclient.  Once the user
+finishes the editing session, the Emacsclient exits and Git creates the
+commit, using the file’s content as the commit message.
 
 6.5.1 Initiating a Commit
 -------------------------
@@ -4623,115 +4625,268 @@ Also see *note (gitman)git-commit::.
      along with the appropriate infix arguments and displays them in a
      temporary buffer until a suffix is invoked.
 
-‘c c’ (‘magit-commit-create’)
-     Create a new commit on ‘HEAD’.  With a prefix argument amend to the
-     commit at ‘HEAD’ instead.
+Creating a new commit
+.....................
 
-‘c a’ (‘magit-commit-amend’)
-     Amend the last commit.
+‘c c’ (‘magit-commit-create’)
+     Create a new commit.
+
+Editing the last commit
+.......................
+
+These commands modify the last (a.k.a., "HEAD") commit.  The commit is
+modified (a.k.a., replaced) immediately.  Similar commands exist for
+modifying other (non-HEAD) commits.  Those commands are described in the
+following two sections.  For each command in this section, we mention
+the respective non-HEAD commands, to make the relation explicit.
+
+   The command descriptions below mention the specific arguments they
+use when calling ‘git commit’.  The arguments specified in the menu are
+appended to those arguments.
 
 ‘c e’ (‘magit-commit-extend’)
-     Amend the last commit, without editing the message.  With a prefix
-     argument keep the committer date, otherwise change it.  The option
-     ‘magit-commit-extend-override-date’ can be used to inverse the
-     meaning of the prefix argument.
+     This command amends the staged changes to the last commit, without
+     editing its commit message.
 
-     Non-interactively respect the optional OVERRIDE-DATE argument and
-     ignore the option.
+     This command calls ‘git commit --amend --no-edit’.
+
+     With a prefix argument the committer date is not updated; without
+     an argument it is updated.
+
+     The option ‘magit-commit-extend-override-date’ can be used to
+     inverse the meaning of the prefix argument.  Non-interactively, the
+     optional OVERRIDE-DATE argument controls this behavior, and the
+     option is of no relevance.
+
+‘c a’ (‘magit-commit-amend’)
+     This command amends the staged changes to the last commit, and pops
+     up a buffer to let the user edit its commit message.
+
+     This command calls ‘git commit --amend --edit’.
 
 ‘c w’ (‘magit-commit-reword’)
-     Reword the last commit, ignoring staged changes.  With a prefix
-     argument keep the committer date, otherwise change it.  The option
-     ‘magit-commit-reword-override-date’ can be used to inverse the
-     meaning of the prefix argument.
+     This command pops up a buffer to let the user edit the message of
+     the latest commit.  The commit tree remains unchanged and staged
+     changes remain staged.
 
-     Non-interactively respect the optional OVERRIDE-DATE argument and
-     ignore the option.
+     This command calls ‘git commit --amend --only --edit’.
+
+     With a prefix argument the committer date is not updated; without
+     an argument it is updated.
+
+     The option ‘magit-commit-reword-override-date’ can be used to
+     inverse the meaning of the prefix argument.  Non-interactively, the
+     optional OVERRIDE-DATE argument controls this behavior, and the
+     option is of no relevance.
+
+Editing any reachable commit
+............................
+
+These commands create a new commit, which targets an existing commit,
+from the staged changes and/or using a new commit message.  Any commit
+that is reachable from HEAD, including HEAD itself, can be the target.
+
+   The new commit is intended to be eventually squashed into the
+targeted commit, but this is *not* done immediately.  The squashing is
+done at a later time, when you explicitly call
+‘magit-rebase-autosquash’, or use ‘--autosquash’ with another rebase
+command.
+
+   Some of these commands require that you immediately write a new
+commit message, or that you immediately edit an existing message.
+
+   The new commits are called "squash" and "fixup" commits.  The
+difference is that when a "squash" commit is squashed into its targeted
+commit, the user gets a change to modify the message to be used for the
+final commit; while for "fixup" commits the existing message of the
+targeted commit is used as-is and the message of the "fixup" commit is
+discarded.
+
+   If point is on a reachable commit, then all of these commands target
+that commit, without requiring confirmation.  If point is on some
+reachable commit, but you want to target another commit, use a prefix
+argument, to select a commit in a log buffer dedicated to that task.
+The meaning of the prefix argument can be inverted by customizing
+‘magit-commit-squash-confirm’.
+
+   The command descriptions below mention the specific arguments they
+use when calling ‘git commit’.  The arguments specified in the menu are
+appended to those arguments.
+
+   The next two commands also exist in "instant" variants, which are
+described in the next section.  Those variants behave the same as the
+variants described here, except that they immediately initiate an
+‘--autosquash’ rebase.
 
 ‘c f’ (‘magit-commit-fixup’)
-     Create a fixup commit.
+     This command creates a new fixup commit from the staged changes,
+     targeting the reachable commit at point, if any.  Otherwise the
+     user is prompted for a commit.
 
-     With a prefix argument the target commit has to be confirmed.
-     Otherwise the commit at point may be used without confirmation
-     depending on the value of option ‘magit-commit-squash-confirm’.
+     Use this variant if you want to correct some minor defect in the
+     targeted commit, which does not require changes to the existing
+     message of the targeted commit.
 
-‘c F’ (‘magit-commit-instant-fixup’)
-     Create a fixup commit and instantly rebase.
+     This command calls ‘git commit --fixup=COMMIT --no-edit’.
 
 ‘c s’ (‘magit-commit-squash’)
-     Create a squash commit, without editing the squash message.
+     This command creates a new squash commit from the staged changes,
+     targeting the reachable commit at point, if any.  Otherwise the
+     user is prompted for a commit.
 
-     With a prefix argument the target commit has to be confirmed.
-     Otherwise the commit at point may be used without confirmation
-     depending on the value of option ‘magit-commit-squash-confirm’.
+     Use this variant if you want a chance to make changes to the final
+     commit message, but not until the two commits are being squashed
+     into the final combined commit.
+
+     This command calls ‘git commit --squash=COMMIT --no-edit’.
+
+‘c A’ (‘magit-commit-alter’)
+     This command creates a new fixup commit from the staged changes,
+     targeting the reachable commit at point, if any.  Otherwise the
+     user is prompted for a commit.
+
+     Use this variant if you want to write the final commit message now,
+     but (as for all variants in this section) do not want to
+     immediately squash the fixup and targeted commits into a final
+     combined commit.
+
+     This command calls ‘git commit --fixup=amend:COMMIT --edit’.
+
+‘c n’ (‘magit-commit-augment’)
+     This command creates a new squash commit from the staged changes,
+     targeting the reachable commit at point, if any.  Otherwise the
+     user is prompted for a commit.
+
+     Use this variant if you want to describe the new changes now, but
+     want to delay writing the final message, which describes the
+     changes in the combined commit, until you actually combine the
+     squash and target commits into the final commit.  You can think of
+     the new message, which you write here, as a "note", to be
+     integrated once once you write the final commit message.
+
+     This command calls ‘git commit --squash=COMMIT --edit’.
+
+‘c W’ (‘magit-commit-revise’)
+     This command pops up a buffer containing the commit message of the
+     reachable commit at point, if any.  Otherwise the user is prompted
+     for a commit to target.
+
+     Use this variant if you want to correct the message of the targeted
+     commit, but want to delay performing the ‘--autosquash’ rebase,
+     which actually changes that commit.
+
+     This command calls ‘git commit --fixup=reword:COMMIT --edit’.
+
+Editing any reachable commit and rebasing immediately
+.....................................................
+
+These commands create a new commit, which targets an existing commit,
+from the staged changes.  Any commit that is reachable from HEAD,
+including HEAD itself, can be the target.
+
+   The new commit is immediately squashed into its target commit, using
+an ‘--autosquash’ rebase.
+
+   The command descriptions below mention the specific arguments they
+use when calling ‘git commit’.  The arguments specified in the menu are
+appended to those arguments when calling ‘git commit’.
+
+‘c F’ (‘magit-commit-instant-fixup’)
+     This command creates a fixup commit, targeting the reachable commit
+     at point, if any.  Otherwise the user is prompted for a commit.
+     Then it instantly performs a rebase, to squash the new commit into
+     the targeted commit.
+
+     The original commit message of the targeted commit is left
+     untouched.
+
+     This command calls ‘git commit --fixup=COMMIT --no-edit’ and then
+     ‘git rebase --autosquash MERGE-BASE’.
 
 ‘c S’ (‘magit-commit-instant-squash’)
-     Create a squash commit and instantly rebase.
+     This command creates a squash commit, targeting the reachable
+     commit at point, if any.  Otherwise the user is prompted for a
+     commit.  Then it instantly performs a rebase, to squash the new
+     commit into the targeted commit.
 
-‘c A’ (‘magit-commit-augment’)
-     Create a squash commit, editing the squash message.
+     During the rebase phase the user is asked to author the final
+     commit message, based on the original message of the targeted
+     commit.
 
-     With a prefix argument the target commit has to be confirmed.
-     Otherwise the commit at point may be used without confirmation
-     depending on the value of option ‘magit-commit-squash-confirm’.
+     This command calls ‘git commit --squash=COMMIT --no-edit’ and then
+     ‘git rebase --autosquash MERGE-BASE’.
 
- -- User Option: magit-commit-ask-to-stage
-     Whether to ask to stage all unstaged changes when committing and
-     nothing is staged.
+Options used by commit commands
+...............................
 
- -- User Option: magit-commit-show-diff
-     Whether the relevant diff is automatically shown when committing.
+   • Used by all or most commit commands
 
- -- User Option: magit-commit-extend-override-date
-     Whether using ‘magit-commit-extend’ changes the committer date.
+      -- User Option: magit-commit-show-diff
+          Whether the relevant diff is automatically shown when
+          committing.
 
- -- User Option: magit-commit-reword-override-date
-     Whether using ‘magit-commit-reword’ changes the committer date.
+      -- User Option: magit-commit-ask-to-stage
+          Whether to ask to stage all unstaged changes when committing
+          and nothing is staged.
 
- -- User Option: magit-commit-squash-confirm
-     Whether the commit targeted by squash and fixup has to be
-     confirmed.  When non-nil then the commit at point (if any) is used
-     as default choice.  Otherwise it has to be confirmed.  This option
-     only affects ‘magit-commit-squash’ and ‘magit-commit-fixup’.  The
-     "instant" variants always require confirmation because making an
-     error while using those is harder to recover from.
+      -- User Option: magit-post-commit-hook
+          Hook run after creating a commit without the user editing a
+          message.
 
- -- User Option: magit-post-commit-hook
-     Hook run after creating a commit without the user editing a
-     message.
+          This hook is run by ‘magit-refresh’ if ‘this-command’ is a
+          member of ‘magit-post-commit-hook-commands’.  This only
+          includes commands named ‘magit-commit-*’ that do *not* require
+          that the user edits the commit message in a buffer.
 
-     This hook is run by ‘magit-refresh’ if ‘this-command’ is a member
-     of ‘magit-post-commit-hook-commands’.  This only includes commands
-     named ‘magit-commit-*’ that do *not* require that the user edits
-     the commit message in a buffer.
+          Also see ‘git-commit-post-finish-hook’.
 
-     Also see ‘git-commit-post-finish-hook’.
+      -- User Option: magit-commit-diff-inhibit-same-window
+          Whether to inhibit use of same window when showing diff while
+          committing.
 
- -- User Option: magit-commit-diff-inhibit-same-window
-     Whether to inhibit use of same window when showing diff while
-     committing.
+          When writing a commit, then a diff of the changes to be
+          committed is automatically shown.  The idea is that the diff
+          is shown in a different window of the same frame and for most
+          users that just works.  In other words most users can
+          completely ignore this option because its value doesn’t make a
+          difference for them.
 
-     When writing a commit, then a diff of the changes to be committed
-     is automatically shown.  The idea is that the diff is shown in a
-     different window of the same frame and for most users that just
-     works.  In other words most users can completely ignore this option
-     because its value doesn’t make a difference for them.
+          However for users who configured Emacs to never create a new
+          window even when the package explicitly tries to do so, then
+          displaying two new buffers necessarily means that the first is
+          immediately replaced by the second.  In our case the message
+          buffer is immediately replaced by the diff buffer, which is of
+          course highly undesirable.
 
-     However for users who configured Emacs to never create a new window
-     even when the package explicitly tries to do so, then displaying
-     two new buffers necessarily means that the first is immediately
-     replaced by the second.  In our case the message buffer is
-     immediately replaced by the diff buffer, which is of course highly
-     undesirable.
+          A workaround is to suppress this user configuration in this
+          particular case.  Users have to explicitly opt-in by toggling
+          this option.  We cannot enable the workaround unconditionally
+          because that again causes issues for other users: if the frame
+          is too tiny or the relevant settings too aggressive, then the
+          diff buffer would end up being displayed in a new frame.
 
-     A workaround is to suppress this user configuration in this
-     particular case.  Users have to explicitly opt-in by toggling this
-     option.  We cannot enable the workaround unconditionally because
-     that again causes issues for other users: if the frame is too tiny
-     or the relevant settings too aggressive, then the diff buffer would
-     end up being displayed in a new frame.
+          Also see <https://github.com/magit/magit/issues/4132>.
 
-     Also see <https://github.com/magit/magit/issues/4132>.
+   • Used by all squash and fixup commands
+
+      -- User Option: magit-commit-squash-confirm
+          Whether the commit targeted by squash and fixup has to be
+          confirmed.  When non-nil then the commit at point (if any) is
+          used as default choice.  Otherwise it has to be confirmed.
+          This option only affects ‘magit-commit-squash’ and
+          ‘magit-commit-fixup’.  The "instant" variants always require
+          confirmation because making an error while using those is
+          harder to recover from.
+
+   • Used by specific commit commands
+
+      -- User Option: magit-commit-extend-override-date
+          Whether using ‘magit-commit-extend’ changes the committer
+          date.
+
+      -- User Option: magit-commit-reword-override-date
+          Whether using ‘magit-commit-reword’ changes the committer
+          date.
 
 6.5.2 Editing Commit Messages
 -----------------------------
@@ -9275,50 +9430,52 @@ Appendix C Keystroke Index
 * b x:                                   Branching.           (line 173)
 * c:                                     Blaming.             (line 141)
 * C:                                     Cloning Repository.  (line  20)
-* c <1>:                                 Committing.          (line  19)
+* c <1>:                                 Committing.          (line  21)
 * c <2>:                                 Rebasing.            (line 170)
 * C >:                                   Cloning Repository.  (line  38)
-* c a:                                   Committing.          (line  28)
-* c A:                                   Committing.          (line  69)
+* c a:                                   Committing.          (line  59)
+* c A:                                   Committing.          (line 141)
 * C b:                                   Cloning Repository.  (line  44)
 * C C:                                   Cloning Repository.  (line  28)
-* c c:                                   Committing.          (line  24)
+* c c:                                   Committing.          (line  29)
 * C d:                                   Cloning Repository.  (line  55)
 * C e:                                   Cloning Repository.  (line  61)
-* c e:                                   Committing.          (line  31)
-* c f:                                   Committing.          (line  49)
-* c F:                                   Committing.          (line  56)
+* c e:                                   Committing.          (line  45)
+* c f:                                   Committing.          (line 119)
+* c F:                                   Committing.          (line 192)
 * C m:                                   Cloning Repository.  (line  48)
+* c n:                                   Committing.          (line 153)
 * C s:                                   Cloning Repository.  (line  32)
-* c s:                                   Committing.          (line  59)
-* c S:                                   Committing.          (line  66)
-* c w:                                   Committing.          (line  40)
+* c s:                                   Committing.          (line 130)
+* c S:                                   Committing.          (line 204)
+* c w:                                   Committing.          (line  65)
+* c W:                                   Committing.          (line 167)
 * C-<return>:                            Visiting Files and Blobs.
                                                               (line  81)
 * C-<tab>:                               Sections.            (line 138)
-* C-c C-a:                               Committing.          (line 260)
+* C-c C-a:                               Committing.          (line 415)
 * C-c C-b:                               Logging.             (line 116)
 * C-c C-b <1>:                           Diffing.             (line 173)
 * C-c C-c:                               Logging.             (line 297)
-* C-c C-c <1>:                           Committing.          (line 148)
+* C-c C-c <1>:                           Committing.          (line 303)
 * C-c C-c <2>:                           Rebasing.            (line 118)
 * C-c C-d:                               Diffing.             (line 164)
-* C-c C-d <1>:                           Committing.          (line 184)
+* C-c C-d <1>:                           Committing.          (line 339)
 * C-c C-e:                               Diffing.             (line 199)
 * C-c C-f:                               Logging.             (line 119)
 * C-c C-f <1>:                           Diffing.             (line 176)
-* C-c C-i:                               Committing.          (line 257)
+* C-c C-i:                               Committing.          (line 412)
 * C-c C-k:                               Logging.             (line 302)
-* C-c C-k <1>:                           Committing.          (line 152)
+* C-c C-k <1>:                           Committing.          (line 307)
 * C-c C-k <2>:                           Rebasing.            (line 122)
 * C-c C-n:                               Logging.             (line 122)
-* C-c C-o:                               Committing.          (line 272)
-* C-c C-p:                               Committing.          (line 275)
-* C-c C-r:                               Committing.          (line 263)
-* C-c C-s:                               Committing.          (line 266)
+* C-c C-o:                               Committing.          (line 427)
+* C-c C-p:                               Committing.          (line 430)
+* C-c C-r:                               Committing.          (line 418)
+* C-c C-s:                               Committing.          (line 421)
 * C-c C-t:                               Diffing.             (line 190)
-* C-c C-t <1>:                           Committing.          (line 269)
-* C-c C-w:                               Committing.          (line 192)
+* C-c C-t <1>:                           Committing.          (line 424)
+* C-c C-w:                               Committing.          (line 347)
 * C-c f:                                 Commands for Buffers Visiting Files.
                                                               (line  52)
 * C-c f , c:                             Commands for Buffers Visiting Files.
@@ -9448,8 +9605,8 @@ Appendix C Keystroke Index
                                                               (line 156)
 * C-c M-g V:                             Commands for Buffers Visiting Files.
                                                               (line 160)
-* C-c M-i:                               Committing.          (line 279)
-* C-c M-s:                               Committing.          (line 163)
+* C-c M-i:                               Committing.          (line 434)
+* C-c M-s:                               Committing.          (line 318)
 * C-c TAB:                               Sections.            (line 138)
 * C-w:                                   Common Commands.     (line  22)
 * C-x g:                                 Status Buffer.       (line  23)
@@ -9562,10 +9719,10 @@ Appendix C Keystroke Index
 * M-4:                                   Sections.            (line 169)
 * M-<tab>:                               Sections.            (line 153)
 * M-n:                                   Sections.            (line  40)
-* M-n <1>:                               Committing.          (line 171)
+* M-n <1>:                               Committing.          (line 326)
 * M-n <2>:                               Rebasing.            (line 151)
 * M-p:                                   Sections.            (line  35)
-* M-p <1>:                               Committing.          (line 166)
+* M-p <1>:                               Committing.          (line 321)
 * M-p <2>:                               Rebasing.            (line 148)
 * M-w:                                   Blaming.             (line 134)
 * M-w <1>:                               Common Commands.     (line  39)
@@ -9733,25 +9890,25 @@ Appendix D Function and Command Index
  [index ]
 * Menu:
 
-* bug-reference-mode:                    Committing.          (line 326)
+* bug-reference-mode:                    Committing.          (line 481)
 * forward-line:                          Rebasing.            (line 145)
-* git-commit-ack:                        Committing.          (line 260)
-* git-commit-cc:                         Committing.          (line 272)
-* git-commit-check-style-conventions:    Committing.          (line 378)
-* git-commit-insert-pseudo-header:       Committing.          (line 257)
-* git-commit-next-message:               Committing.          (line 171)
-* git-commit-prev-message:               Committing.          (line 166)
-* git-commit-propertize-diff:            Committing.          (line 318)
-* git-commit-reported:                   Committing.          (line 275)
-* git-commit-review:                     Committing.          (line 263)
-* git-commit-save-message:               Committing.          (line 163)
-* git-commit-save-message <1>:           Committing.          (line 304)
-* git-commit-setup-changelog-support:    Committing.          (line 307)
-* git-commit-signoff:                    Committing.          (line 266)
-* git-commit-suggested:                  Committing.          (line 279)
-* git-commit-test:                       Committing.          (line 269)
-* git-commit-turn-on-auto-fill:          Committing.          (line 311)
-* git-commit-turn-on-flyspell:           Committing.          (line 314)
+* git-commit-ack:                        Committing.          (line 415)
+* git-commit-cc:                         Committing.          (line 427)
+* git-commit-check-style-conventions:    Committing.          (line 533)
+* git-commit-insert-pseudo-header:       Committing.          (line 412)
+* git-commit-next-message:               Committing.          (line 326)
+* git-commit-prev-message:               Committing.          (line 321)
+* git-commit-propertize-diff:            Committing.          (line 473)
+* git-commit-reported:                   Committing.          (line 430)
+* git-commit-review:                     Committing.          (line 418)
+* git-commit-save-message:               Committing.          (line 318)
+* git-commit-save-message <1>:           Committing.          (line 459)
+* git-commit-setup-changelog-support:    Committing.          (line 462)
+* git-commit-signoff:                    Committing.          (line 421)
+* git-commit-suggested:                  Committing.          (line 434)
+* git-commit-test:                       Committing.          (line 424)
+* git-commit-turn-on-auto-fill:          Committing.          (line 466)
+* git-commit-turn-on-flyspell:           Committing.          (line 469)
 * git-rebase-backward-line:              Rebasing.            (line 142)
 * git-rebase-break:                      Rebasing.            (line 181)
 * git-rebase-edit:                       Rebasing.            (line 157)
@@ -9877,20 +10034,22 @@ Appendix D Function and Command Index
 * magit-clone-shallow-exclude:           Cloning Repository.  (line  61)
 * magit-clone-shallow-since:             Cloning Repository.  (line  55)
 * magit-clone-sparse:                    Cloning Repository.  (line  38)
-* magit-commit:                          Committing.          (line  19)
+* magit-commit:                          Committing.          (line  21)
 * magit-commit <1>:                      Commands for Buffers Visiting Files.
                                                               (line  52)
 * magit-commit <2>:                      Commands for Buffers Visiting Files.
                                                               (line 176)
-* magit-commit-amend:                    Committing.          (line  28)
-* magit-commit-augment:                  Committing.          (line  69)
-* magit-commit-create:                   Committing.          (line  24)
-* magit-commit-extend:                   Committing.          (line  31)
-* magit-commit-fixup:                    Committing.          (line  49)
-* magit-commit-instant-fixup:            Committing.          (line  56)
-* magit-commit-instant-squash:           Committing.          (line  66)
-* magit-commit-reword:                   Committing.          (line  40)
-* magit-commit-squash:                   Committing.          (line  59)
+* magit-commit-alter:                    Committing.          (line 141)
+* magit-commit-amend:                    Committing.          (line  59)
+* magit-commit-augment:                  Committing.          (line 153)
+* magit-commit-create:                   Committing.          (line  29)
+* magit-commit-extend:                   Committing.          (line  45)
+* magit-commit-fixup:                    Committing.          (line 119)
+* magit-commit-instant-fixup:            Committing.          (line 192)
+* magit-commit-instant-squash:           Committing.          (line 204)
+* magit-commit-revise:                   Committing.          (line 167)
+* magit-commit-reword:                   Committing.          (line  65)
+* magit-commit-squash:                   Committing.          (line 130)
 * magit-completing-read:                 Completion Confirmation and the Selection.
                                                               (line 374)
 * magit-copy-buffer-revision:            Common Commands.     (line  39)
@@ -9949,7 +10108,7 @@ Appendix D Function and Command Index
 * magit-diff-visit-worktree-file-other-window: Visiting Files and Blobs.
                                                               (line 103)
 * magit-diff-while-committing:           Diffing.             (line 164)
-* magit-diff-while-committing <1>:       Committing.          (line 184)
+* magit-diff-while-committing <1>:       Committing.          (line 339)
 * magit-diff-working-tree:               Diffing.             (line  62)
 * magit-disable-section-inserter:        Per-Repository Configuration.
                                                               (line  31)
@@ -10171,7 +10330,7 @@ Appendix D Function and Command Index
 * magit-patch-apply <1>:                 Maildir Patches.     (line  23)
 * magit-patch-create:                    Plain Patches.       (line  12)
 * magit-patch-save:                      Plain Patches.       (line  26)
-* magit-pop-revision-stack:              Committing.          (line 192)
+* magit-pop-revision-stack:              Committing.          (line 347)
 * magit-process:                         Running Git.         (line  20)
 * magit-process-file:                    Calling Git.         (line  84)
 * magit-process-git:                     Calling Git.         (line  77)
@@ -10426,12 +10585,12 @@ Appendix D Function and Command Index
 * magit-worktree-status:                 Worktree.            (line  26)
 * scroll-down:                           Diffing.             (line 231)
 * scroll-up:                             Diffing.             (line 228)
-* with-editor-cancel:                    Committing.          (line 152)
+* with-editor-cancel:                    Committing.          (line 307)
 * with-editor-cancel <1>:                Rebasing.            (line 122)
 * with-editor-debug:                     Debugging Tools.     (line  85)
-* with-editor-finish:                    Committing.          (line 148)
+* with-editor-finish:                    Committing.          (line 303)
 * with-editor-finish <1>:                Rebasing.            (line 118)
-* with-editor-usage-message:             Committing.          (line 329)
+* with-editor-usage-message:             Committing.          (line 484)
 
 
 File: magit.info,  Node: Variable Index,  Prev: Function and Command Index,  Up: Top
@@ -10456,13 +10615,13 @@ Appendix E Variable Index
 * branch.NAME.rebase:                    Branching.           (line 343)
 * branch.NAME.remote:                    Branching.           (line 338)
 * core.notesRef:                         Notes.               (line  53)
-* git-commit-finish-query-functions:     Committing.          (line 363)
-* git-commit-known-pseudo-headers:       Committing.          (line 253)
-* git-commit-major-mode:                 Committing.          (line 290)
-* git-commit-post-finish-hook:           Committing.          (line 332)
-* git-commit-setup-hook:                 Committing.          (line 299)
-* git-commit-style-convention-checks:    Committing.          (line 383)
-* git-commit-summary-max-length:         Committing.          (line 358)
+* git-commit-finish-query-functions:     Committing.          (line 518)
+* git-commit-known-pseudo-headers:       Committing.          (line 408)
+* git-commit-major-mode:                 Committing.          (line 445)
+* git-commit-post-finish-hook:           Committing.          (line 487)
+* git-commit-setup-hook:                 Committing.          (line 454)
+* git-commit-style-convention-checks:    Committing.          (line 538)
+* git-commit-summary-max-length:         Committing.          (line 513)
 * git-rebase-auto-advance:               Rebasing.            (line 191)
 * git-rebase-confirm-cancel:             Rebasing.            (line 197)
 * git-rebase-show-instructions:          Rebasing.            (line 194)
@@ -10490,12 +10649,12 @@ Appendix E Variable Index
 * magit-clone-set-remote-head:           Cloning Repository.  (line  66)
 * magit-clone-set-remote.pushDefault:    Cloning Repository.  (line  75)
 * magit-clone-url-format:                Cloning Repository.  (line 114)
-* magit-commit-ask-to-stage:             Committing.          (line  75)
-* magit-commit-diff-inhibit-same-window: Committing.          (line 107)
-* magit-commit-extend-override-date:     Committing.          (line  82)
-* magit-commit-reword-override-date:     Committing.          (line  85)
-* magit-commit-show-diff:                Committing.          (line  79)
-* magit-commit-squash-confirm:           Committing.          (line  88)
+* magit-commit-ask-to-stage:             Committing.          (line 225)
+* magit-commit-diff-inhibit-same-window: Committing.          (line 240)
+* magit-commit-extend-override-date:     Committing.          (line 280)
+* magit-commit-reword-override-date:     Committing.          (line 284)
+* magit-commit-show-diff:                Committing.          (line 221)
+* magit-commit-squash-confirm:           Committing.          (line 269)
 * magit-completing-read-function:        Completion Confirmation and the Selection.
                                                               (line 344)
 * magit-define-global-key-bindings:      Essential Settings.  (line 239)
@@ -10547,9 +10706,9 @@ Appendix E Variable Index
 * magit-module-sections-nested:          Status Buffer.       (line 334)
 * magit-no-confirm:                      Completion Confirmation and the Selection.
                                                               (line  21)
-* magit-pop-revision-stack-format:       Committing.          (line 219)
+* magit-pop-revision-stack-format:       Committing.          (line 374)
 * magit-post-clone-hook:                 Cloning Repository.  (line 133)
-* magit-post-commit-hook:                Committing.          (line  96)
+* magit-post-commit-hook:                Committing.          (line 229)
 * magit-post-display-buffer-hook:        Modes and Buffers.   (line 117)
 * magit-pre-display-buffer-hook:         Modes and Buffers.   (line 108)
 * magit-prefer-remote-upstream:          Branching.           (line 431)
@@ -10696,102 +10855,110 @@ Node: Staging and Unstaging193344
 Ref: Staging from File-Visiting Buffers197268
 Node: Applying198283
 Node: Committing200356
-Ref: Initiating a Commit200877
-Ref: Editing Commit Messages205970
-Ref: Using the Revision Stack208524
-Ref: Commit Pseudo Headers211456
-Ref: Commit Mode and Hooks212608
-Ref: Commit Message Conventions215321
-Node: Branching217193
-Ref: The Two Remotes217314
-Ref: Branch Commands219883
-Ref: Branch Git Variables232620
-Ref: Auxiliary Branch Commands237867
-Node: Merging238884
-Node: Resolving Conflicts243040
-Node: Rebasing248414
-Ref: Editing Rebase Sequences253123
-Ref: Information About In-Progress Rebase257226
-Ref: Rebasing-Footnote-1266226
-Node: Cherry Picking266822
-Ref: Reverting271132
-Node: Resetting272492
-Node: Stashing274318
-Node: Transferring280861
-Node: Remotes281083
-Ref: Remote Commands281180
-Ref: Remote Git Variables285132
-Node: Fetching286316
-Node: Pulling288799
-Node: Pushing289825
-Node: Plain Patches294116
-Node: Maildir Patches295587
-Node: Miscellaneous297066
-Node: Tagging297412
-Node: Notes299305
-Node: Submodules301640
-Ref: Listing Submodules301801
-Ref: Submodule Transient303857
-Node: Subtree306210
-Node: Worktree308141
-Node: Sparse checkouts309217
-Node: Bundle311993
-Node: Common Commands312368
-Node: Wip Modes314996
-Ref: Wip Graph319842
-Ref: Legacy Wip Modes322076
-Node: Commands for Buffers Visiting Files324884
-Node: Minor Mode for Buffers Visiting Blobs333111
-Node: Customizing333909
-Node: Per-Repository Configuration335505
-Node: Essential Settings337759
-Ref: Safety338048
-Ref: Performance339729
-Ref: Log Performance342522
-Ref: Diff Performance343827
-Ref: Refs Buffer Performance345168
-Ref: Committing Performance345743
-Ref: Microsoft Windows Performance346725
-Ref: MacOS Performance347814
-Ref: Global Bindings348699
-Ref: Essential Settings-Footnote-1350874
-Node: Plumbing350956
-Node: Calling Git351785
-Ref: Getting a Value from Git353244
-Ref: Calling Git for Effect356870
-Node: Section Plumbing362662
-Ref: Creating Sections362814
-Ref: Section Selection366615
-Ref: Matching Sections368290
-Node: Refreshing Buffers374116
-Node: Conventions377260
-Ref: Theming Faces377424
-Node: FAQ385469
-Node: FAQ - How to ...?385907
-Ref: How to pronounce Magit?386040
-Ref: How to show git's output?386734
-Ref: How to install the gitman info manual?387359
-Ref: How to show diffs for gpg-encrypted files?388170
-Ref: How does branching and pushing work?388579
-Ref: Should I disable VC?388743
-Node: FAQ - Issues and Errors389228
-Ref: Magit is slow389373
-Ref: I changed several thousand files at once and now Magit is unusable389519
-Ref: I am having problems committing390058
-Ref: I am using MS Windows and cannot push with Magit390323
-Ref: I am using macOS and SOMETHING works in shell but not in Magit390723
-Ref: Expanding a file to show the diff causes it to disappear391314
-Ref: Point is wrong in the COMMIT_EDITMSG buffer391664
-Ref: The mode-line information isn't always up-to-date392488
-Ref: A branch and tag sharing the same name breaks SOMETHING393327
-Ref: My Git hooks work on the command-line but not inside Magit393975
-Ref: git-commit-mode isn't used when committing from the command-line394567
-Ref: Point ends up inside invisible text when jumping to a file-visiting buffer396565
-Ref: I am no longer able to save popup defaults397157
-Node: Debugging Tools397954
-Node: Keystroke Index401893
-Node: Function and Command Index439697
-Node: Variable Index491061
+Ref: Initiating a Commit200983
+Ref: Creating a new commit201295
+Ref: Editing the last commit201405
+Ref: Editing any reachable commit203384
+Ref: Editing any reachable commit and rebasing immediately207797
+Ref: Options used by commit commands209445
+Ref: Used by all or most commit commands209517
+Ref: Used by all squash and fixup commands211748
+Ref: Used by specific commit commands212296
+Ref: Editing Commit Messages212620
+Ref: Using the Revision Stack215174
+Ref: Commit Pseudo Headers218106
+Ref: Commit Mode and Hooks219258
+Ref: Commit Message Conventions221971
+Node: Branching223843
+Ref: The Two Remotes223964
+Ref: Branch Commands226533
+Ref: Branch Git Variables239270
+Ref: Auxiliary Branch Commands244517
+Node: Merging245534
+Node: Resolving Conflicts249690
+Node: Rebasing255064
+Ref: Editing Rebase Sequences259773
+Ref: Information About In-Progress Rebase263876
+Ref: Rebasing-Footnote-1272876
+Node: Cherry Picking273472
+Ref: Reverting277782
+Node: Resetting279142
+Node: Stashing280968
+Node: Transferring287511
+Node: Remotes287733
+Ref: Remote Commands287830
+Ref: Remote Git Variables291782
+Node: Fetching292966
+Node: Pulling295449
+Node: Pushing296475
+Node: Plain Patches300766
+Node: Maildir Patches302237
+Node: Miscellaneous303716
+Node: Tagging304062
+Node: Notes305955
+Node: Submodules308290
+Ref: Listing Submodules308451
+Ref: Submodule Transient310507
+Node: Subtree312860
+Node: Worktree314791
+Node: Sparse checkouts315867
+Node: Bundle318643
+Node: Common Commands319018
+Node: Wip Modes321646
+Ref: Wip Graph326492
+Ref: Legacy Wip Modes328726
+Node: Commands for Buffers Visiting Files331534
+Node: Minor Mode for Buffers Visiting Blobs339761
+Node: Customizing340559
+Node: Per-Repository Configuration342155
+Node: Essential Settings344409
+Ref: Safety344698
+Ref: Performance346379
+Ref: Log Performance349172
+Ref: Diff Performance350477
+Ref: Refs Buffer Performance351818
+Ref: Committing Performance352393
+Ref: Microsoft Windows Performance353375
+Ref: MacOS Performance354464
+Ref: Global Bindings355349
+Ref: Essential Settings-Footnote-1357524
+Node: Plumbing357606
+Node: Calling Git358435
+Ref: Getting a Value from Git359894
+Ref: Calling Git for Effect363520
+Node: Section Plumbing369312
+Ref: Creating Sections369464
+Ref: Section Selection373265
+Ref: Matching Sections374940
+Node: Refreshing Buffers380766
+Node: Conventions383910
+Ref: Theming Faces384074
+Node: FAQ392119
+Node: FAQ - How to ...?392557
+Ref: How to pronounce Magit?392690
+Ref: How to show git's output?393384
+Ref: How to install the gitman info manual?394009
+Ref: How to show diffs for gpg-encrypted files?394820
+Ref: How does branching and pushing work?395229
+Ref: Should I disable VC?395393
+Node: FAQ - Issues and Errors395878
+Ref: Magit is slow396023
+Ref: I changed several thousand files at once and now Magit is unusable396169
+Ref: I am having problems committing396708
+Ref: I am using MS Windows and cannot push with Magit396973
+Ref: I am using macOS and SOMETHING works in shell but not in Magit397373
+Ref: Expanding a file to show the diff causes it to disappear397964
+Ref: Point is wrong in the COMMIT_EDITMSG buffer398314
+Ref: The mode-line information isn't always up-to-date399138
+Ref: A branch and tag sharing the same name breaks SOMETHING399977
+Ref: My Git hooks work on the command-line but not inside Magit400625
+Ref: git-commit-mode isn't used when committing from the command-line401217
+Ref: Point ends up inside invisible text when jumping to a file-visiting buffer403215
+Ref: I am no longer able to save popup defaults403807
+Node: Debugging Tools404604
+Node: Keystroke Index408543
+Node: Function and Command Index446493
+Node: Variable Index498003
 
 End Tag Table
 

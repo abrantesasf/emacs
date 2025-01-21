@@ -5,8 +5,8 @@
 ;; Author: Nikolaj Schumacher
 ;; Maintainer: Dmitry Gutov <dmitry@gutov.dev>
 ;; URL: http://company-mode.github.io/
-;; Package-Version: 20250105.445
-;; Package-Revision: 6b4f28562c0f
+;; Package-Version: 20250114.2109
+;; Package-Revision: 9a81d0cca268
 ;; Keywords: abbrev, convenience, matching
 ;; Package-Requires: ((emacs "26.1"))
 
@@ -4264,7 +4264,7 @@ Returns a negative number if the tooltip should be displayed above point."
                 end (save-excursion
                       (vertical-motion (abs height))
                       (point))
-                ov (make-overlay beg end nil t)
+                ov (make-overlay beg end nil t t)
                 args (list (mapcar 'company-plainify
                                    (company-buffer-lines beg end))
                            column nl above)))

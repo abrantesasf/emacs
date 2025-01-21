@@ -6,8 +6,8 @@
 ;; Homepage: https://github.com/magit/transient
 ;; Keywords: extensions
 
-;; Package-Version: 20250108.1351
-;; Package-Revision: 69202c123205
+;; Package-Version: 20250119.1927
+;; Package-Revision: 13f3f5e0da85
 ;; Package-Requires: ((emacs "26.1") (compat "30.0.0.0") (seq "2.24"))
 
 ;; SPDX-License-Identifier: GPL-3.0-or-later
@@ -332,6 +332,20 @@ number is positive, or hide the menu if it is negative."
           (integer :tag "Show menu, except if less than N lines left"
                    :format "\n   %t: %v"
                    :value -20)))
+
+(defcustom transient-show-docstring-format "%s"
+  "How to display suffix docstrings.
+
+The command `transient-toggle-docstrings' toggles between showing suffix
+descriptions as usual, and instead or additionally displaying the suffix
+docstrings.  The format specified here controls how that is done.  %c is
+the description and %s is the docstring.  Use \"%-14c %s\" or similar to
+display both.
+
+This command is not bound by default, see its docstring for instructions."
+  :package-version '(transient . "0.8.4")
+  :group 'transient
+  :type 'string)
 
 (defcustom transient-read-with-initial-input nil
   "Whether to use the last history element as initial minibuffer input."
@@ -2488,6 +2502,8 @@ value.  Otherwise return CHILDREN as is.")
   (setq transient--redisplay-map nil)
   (setq transient--redisplay-key nil)
   (setq transient--helpp nil)
+  (unless (eq transient--docsp 'permanent)
+    (setq transient--docsp nil))
   (setq transient--editp nil)
   (setq transient--prefix nil)
   (setq transient--layout nil)
@@ -3300,12 +3316,21 @@ For example:
   (interactive)
   (setq transient-show-common-commands (not transient-show-common-commands)))
 
-(transient-define-suffix transient-toggle-docstrings ()
+(transient-define-suffix transient-toggle-docstrings (&optional permanent)
   "Toggle whether to show docstrings instead of suffix descriptions.
-To make this available in all menus, bind it in `transient-map'."
+
+By default this is only enabled temporarily for the current transient
+menu invocation.  With a prefix argument, enable this until explicitly
+disabled again.
+
+Infix arguments are not affected by this, because otherwise many menus
+would likely become unreadable.  To make this command available in all
+menus, bind it in `transient-map'.  `transient-show-docstring-format'
+controls how the docstrings are displayed and whether descriptions are
+also displayed."
   :transient t
-  (interactive)
-  (setq transient--docsp (not transient--docsp)))
+  (interactive (list current-prefix-arg))
+  (setq transient--docsp (if permanent 'permanent (not transient--docsp))))
 
 (defun transient-toggle-debug ()
   "Toggle debugging statements for transient commands."
@@ -4335,16 +4360,21 @@ face `transient-heading' to the complete string."
 If the result is nil, then use \"(BUG: no description)\" as the
 description.  If the OBJ's `key' is currently unreachable, then
 apply the face `transient-unreachable' to the complete string."
-  (let ((desc (if-let ((transient--docsp)
-                       (cmd (oref obj command))
-                       (doc (ignore-errors (documentation cmd)))
-                       ((not (equal doc (documentation
-                                         'transient--default-infix-command)))))
-                  (substring doc 0 (string-match "\\.?\n" doc))
-                (or (cl-call-next-method obj)
-                    (and (slot-boundp transient--prefix 'suffix-description)
-                         (funcall (oref transient--prefix suffix-description)
-                                  obj))))))
+  (let ((desc (or (cl-call-next-method obj)
+                  (and (slot-boundp transient--prefix 'suffix-description)
+                       (funcall (oref transient--prefix suffix-description)
+                                obj)))))
+    (when-let* ((transient--docsp)
+                (cmd (oref obj command))
+                ((not (memq 'transient--default-infix-command
+                            (function-alias-p cmd))))
+                (docstr (ignore-errors (documentation cmd)))
+                (docstr (string-trim
+                         (substring docstr 0 (string-match "\\.?\n" docstr))))
+                ((not (equal docstr ""))))
+      (setq desc (format-spec transient-show-docstring-format
+                              `((?c . ,desc)
+                                (?s . ,docstr)))))
     (if desc
         (when-let ((face (transient--get-face obj 'face)))
           (setq desc (transient--add-face desc face t)))
@@ -4656,34 +4686,44 @@ Select the help window, and make the help buffer current and return it."
     (insert "\n"))
   (when transient--helpp
     (insert
-     (format (propertize "\
+     (format
+      (propertize "\
 Type a %s to show help for that suffix command, or %s to show manual.
 Type %s to exit help.\n"
-                         'face 'transient-heading)
-             (propertize "<KEY>" 'face 'transient-key)
-             (propertize "?"     'face 'transient-key)
-             (propertize "C-g"   'face 'transient-key))))
+                  'face 'transient-heading)
+      (propertize "<KEY>" 'face 'transient-key)
+      (propertize "?"     'face 'transient-key)
+      (propertize "C-g"   'face 'transient-key))))
   (when transient--editp
     (unless transient--helpp
       (insert
-       (format (propertize "\
-Type a %s to set level for that suffix command.
-Type %s to set what levels are available for this prefix command.\n"
-                           'face 'transient-heading)
-               (propertize "<KEY>" 'face 'transient-key)
-               (propertize "C-x l" 'face 'transient-key))))
+       (format
+        (propertize "\
+Type %s and then %s to put the respective suffix command on level %s.
+Type %s and then %s to display suffixes up to level %s in this menu.
+Type %s and then %s to describe the respective suffix command.\n"
+                    'face 'transient-heading)
+        (propertize "<KEY>" 'face 'transient-key)
+        (propertize "<N>"   'face 'transient-key)
+        (propertize " N "   'face 'transient-enabled-suffix)
+        (propertize "C-x l" 'face 'transient-key)
+        (propertize "<N>"   'face 'transient-key)
+        (propertize " N "   'face 'transient-enabled-suffix)
+        (propertize "C-h"   'face 'transient-key)
+        (propertize "<KEY>" 'face 'transient-key))))
     (with-slots (level) transient--prefix
       (insert
-       (format (propertize "
-Suffixes on levels %s are available.
-Suffixes on levels %s and %s are unavailable.\n"
-                           'face 'transient-heading)
-               (propertize (format "1-%s" level)
-                           'face 'transient-enabled-suffix)
-               (propertize " 0 "
-                           'face 'transient-disabled-suffix)
-               (propertize (format ">=%s" (1+ level))
-                           'face 'transient-disabled-suffix))))))
+       (format
+        (propertize "
+The current level of this menu is %s, so
+  commands on levels %s are displayed, and
+  commands on levels %s and %s are not displayed.\n"
+                    'face 'transient-heading)
+        (propertize (format " %s " level)    'face 'transient-enabled-suffix)
+        (propertize (format " 1..%s " level) 'face 'transient-enabled-suffix)
+        (propertize (format " >= %s " (1+ level))
+                    'face 'transient-disabled-suffix)
+        (propertize " 0 " 'face 'transient-disabled-suffix))))))
 
 (cl-defgeneric transient-show-summary (obj &optional return)
   "Show brief summary about the command at point in the echo area.
