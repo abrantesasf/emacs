@@ -6,8 +6,8 @@
 ;; Homepage: https://github.com/magit/transient
 ;; Keywords: extensions
 
-;; Package-Version: 20250119.1927
-;; Package-Revision: 13f3f5e0da85
+;; Package-Version: 20250122.1219
+;; Package-Revision: 680f079b5e2b
 ;; Package-Requires: ((emacs "26.1") (compat "30.0.0.0") (seq "2.24"))
 
 ;; SPDX-License-Identifier: GPL-3.0-or-later
@@ -568,7 +568,7 @@ give you as many additional suffixes as you hoped.)"
   "Face used for suffixes unreachable from the current prefix sequence."
   :group 'transient-faces)
 
-(defface transient-inapt-suffix '((t :inherit shadow :italic t))
+(defface transient-inapt-suffix '((t :inherit shadow :slant italic))
   "Face used for suffixes that are inapt at this time."
   :group 'transient-faces)
 
@@ -845,7 +845,15 @@ the prototype is stored in the clone's `prototype' slot.")
    (inapt-if-not-derived
     :initarg :inapt-if-not-derived
     :initform nil
-    :documentation "Inapt if major-mode does not derive from value."))
+    :documentation "Inapt if major-mode does not derive from value.")
+   (advice
+    :initarg :advice
+    :initform nil
+    :documentation "Advise applied to the command body.")
+   (advice*
+    :initarg :advice*
+    :initform nil
+    :documentation "Advise applied to the command body and interactive spec."))
   "Abstract superclass for group and suffix classes.
 
 It is undefined which predicates are used if more than one `if*'
@@ -1254,7 +1262,8 @@ commands are aliases for."
         (cond ((eq key :class)
                (setq class val))
               ((or (symbolp val)
-                   (and (listp val) (not (eq (car val) 'lambda))))
+                   (and (listp val)
+                        (not (memq (car val) (list 'lambda (intern ""))))))
                (setq args (plist-put args key (macroexp-quote val))))
               ((setq args (plist-put args key val))))))
     (unless (or spec class (not (plist-get args :setup-children)))
@@ -1352,7 +1361,8 @@ commands are aliases for."
             ((guard (eq (car-safe val) '\,))
              (use key (cadr val)))
             ((guard (or (symbolp val)
-                        (and (listp val) (not (eq (car val) 'lambda)))))
+                        (and (listp val)
+                             (not (memq (car val) (list 'lambda (intern "")))))))
              (use key (macroexp-quote val)))
             (_ (use key val)))))
       (when spec
@@ -2632,7 +2642,13 @@ value.  Otherwise return CHILDREN as is.")
                  (let ((abort t))
                    (unwind-protect
                        (prog1 (let ((debugger #'transient--exit-and-debug))
-                                (advice-eval-interactive-spec spec))
+                                (if-let* ((obj (transient-suffix-object suffix))
+                                          (grp (oref obj parent))
+                                          (adv (or (oref obj advice*)
+                                                   (oref grp advice*))))
+                                    (funcall
+                                     adv #'advice-eval-interactive-spec spec)
+                                  (advice-eval-interactive-spec spec)))
                          (setq abort nil))
                      (when abort
                        (when-let ((unwind (oref prefix unwind-suffix)))
@@ -2642,7 +2658,14 @@ value.  Otherwise return CHILDREN as is.")
                        (oset prefix unwind-suffix nil))))))
               (unwind-protect
                   (let ((debugger #'transient--exit-and-debug))
-                    (apply fn args))
+                    (if-let* ((obj (transient-suffix-object suffix))
+                              (grp (oref obj parent))
+                              (adv (or (oref obj advice)
+                                       (oref grp advice)
+                                       (oref obj advice*)
+                                       (oref grp advice*))))
+                        (apply adv fn args)
+                      (apply fn args)))
                 (when-let ((unwind (oref prefix unwind-suffix)))
                   (transient--debug 'unwind-command)
                   (funcall unwind suffix))
@@ -2662,7 +2685,13 @@ value.  Otherwise return CHILDREN as is.")
               (let ((abort t))
                 (unwind-protect
                     (prog1 (let ((debugger #'transient--exit-and-debug))
-                             (advice-eval-interactive-spec spec))
+                             (if-let* ((obj (transient-suffix-object suffix))
+                                       (grp (oref obj parent))
+                                       (adv (or (oref obj advice*)
+                                                (oref grp advice*))))
+                                 (funcall
+                                  adv #'advice-eval-interactive-spec spec)
+                               (advice-eval-interactive-spec spec)))
                       (setq abort nil))
                   (when abort
                     (when-let ((unwind (oref prefix unwind-suffix)))
@@ -2674,7 +2703,14 @@ value.  Otherwise return CHILDREN as is.")
             (lambda (fn &rest args)
               (unwind-protect
                   (let ((debugger #'transient--exit-and-debug))
-                    (apply fn args))
+                    (if-let* ((obj (transient-suffix-object suffix))
+                              (grp (oref obj parent))
+                              (adv (or (oref obj advice)
+                                       (oref grp advice)
+                                       (oref obj advice*)
+                                       (oref grp advice*))))
+                        (apply adv fn args)
+                      (apply fn args)))
                 (when-let ((unwind (oref prefix unwind-suffix)))
                   (transient--debug 'unwind-command)
                   (funcall unwind suffix))
@@ -3902,37 +3938,48 @@ a default implementation, which is a noop.")
 
 ;;;; Get
 
-(defun transient-scope (&optional prefixes)
+(defun transient-scope (&optional prefixes classes)
   "Return the scope of the active or current transient prefix command.
 
-If optional PREFIXES is nil, return the scope of the prefix currently
-being setup, making this variant useful, e.g., in `:if*' predicates.
-If no prefix is being setup, but the current command was invoked from
-some prefix, then return the scope of that.
-
-When this function is called from the body or `interactive' form of a
-suffix command, PREFIXES should be non-nil.
+If optional PREFIXES and CLASSES are both nil, return the scope of
+the prefix currently being setup, making this variation useful, e.g.,
+in `:if*' predicates.  If no prefix is being setup, but the current
+command was invoked from some prefix, then return the scope of that.
 
 If PREFIXES is non-nil, it must be a prefix command or a list of such
-commands.  In this case try the following in order:
+commands.  If CLASSES is non-nil, it must be a prefix class or a list
+of such classes.  When this function is called from the body or the
+`interactive' form of a suffix command, PREFIXES and/or CLASSES should
+be non-nil.  If either is non-nil, try the following in order:
 
 - If the current suffix command was invoked from a prefix, which
-  appears in PREFIXES, then return the scope of that prefix.
+  appears in PREFIXES, return the scope of that prefix.
 
-- If a prefix is being setup and it appears in PREFIXES, then return
-  its scope.
+- If the current suffix command was invoked from a prefix, and its
+  class derives from one of the CLASSES, return the scope of that
+  prefix.
 
-- Finally try to return the default scope of the first prefix in
+- If a prefix is being setup and it appears in PREFIXES, return its
+  scope.
+
+- If a prefix is being setup and its class derives from one of the
+  CLASSES, return its scope.
+
+- Finally try to return the default scope of the first command in
   PREFIXES.  This only works if that slot is set in the respective
   class definition or using its `transient-init-scope' method.
 
 If no prefix matches, return nil."
-  (if prefixes
-      (let ((prefixes (ensure-list prefixes)))
-        (if-let* ((obj (or (and-let* ((obj transient-current-prefix))
-                             (and (memq (oref obj command) prefixes) obj))
-                           (and-let* ((obj transient--prefix))
-                             (and (memq (oref obj command) prefixes) obj)))))
+  (if (or prefixes classes)
+      (let ((prefixes (ensure-list prefixes))
+            (type (if (symbolp classes) classes (cons 'or classes))))
+        (if-let ((obj (cl-flet ((match (obj)
+                                  (and obj
+                                       (or (memq (oref obj command) prefixes)
+                                           (cl-typep obj type))
+                                       obj)))
+                        (or (match transient-current-prefix)
+                            (match transient--prefix)))))
             (oref obj scope)
           (and (get (car prefixes) 'transient--prefix)
                (oref (transient--init-prefix (car prefixes)) scope))))

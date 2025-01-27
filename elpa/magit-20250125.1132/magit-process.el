@@ -157,20 +157,27 @@ itself from the hook, to avoid further futile attempts."
   :type 'regexp)
 
 (defcustom magit-process-password-prompt-regexps
-  '("^\\(Enter \\)?[Pp]assphrase\\( for \\(RSA \\)?key '.*'\\)?: ?$"
-    ;; Match-group 99 is used to identify the "user@host" part.
-    "^\\(Enter \\|([^) ]+) \\)?\
-[Pp]assword\\( for '?\\(https?://\\)?\\(?99:[^']+\\)'?\\)?: ?$"
-    "Please enter the passphrase for the ssh key"
-    "Please enter the passphrase to unlock the OpenPGP secret key"
+  ;; See also history in test `magit-process:password-prompt-regexps'.
+  '(;; * CLI-prompt for passphrase for key:
+    "^\\(\\(Please e\\|E\\)nter \\(the \\)?p\\|P\\)assphrase"
+    ;; * Password for something other than a host:
+    "^\\(\\(Please e\\|E\\)nter \\(the \\)?p\\|P\\)assword: ?$"
+    ;; * Password for [user@]host (which we put in match group 99):
+    "^\\(\\(Please e\\|E\\)nter \\(the \\)?p\\|P\\)assword for \
+[\"']?\\(https?://\\)?\\(?99:[^\"']+\\)[\"']?: ?$"
+    "^(\\(?1:[^) ]+\\)) Password for \\(?99:\\1\\): ?$" ;#4992
     "^\\(?99:[^']+\\)\\('s\\)? password: ?$"
-    "^.+ password: ?$"
-    "^Token: $" ; For git-credential-manager-core (#4318).
+    ;; * Token for git-credential-manager-core (#4318):
+    "^Token: ?$"
+    ;; * Secret for card:
     "^Yubikey for .*: ?$"
-    "^Enter PIN for .*: ?$")
+    "^Enter PIN for .*: ?$"
+    ;; * Unanchored TUI-prompt for passphrase for key:
+    "Please enter the passphrase for the ssh key"
+    "Please enter the passphrase to unlock the OpenPGP secret key")
   "List of regexps matching password prompts of Git and its subprocesses.
 Also see `magit-process-find-password-functions'."
-  :package-version '(magit . "3.0.0")
+  :package-version '(magit . "4.2.1")
   :group 'magit-process
   :type '(repeat (regexp)))
 
@@ -990,7 +997,7 @@ from the user."
 
 (defun magit-process-match-prompt (prompts string)
   "Match STRING against PROMPTS and set match data.
-Return the matched string suffixed with \": \", if needed."
+Return the matched string, appending \": \" if needed."
   (when (--any-p (string-match it string) prompts)
     (let ((prompt (match-string 0 string)))
       (cond ((string-suffix-p ": " prompt) prompt)

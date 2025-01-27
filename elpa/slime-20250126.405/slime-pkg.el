@@ -1,9 +1,9 @@
 ;; -*- no-byte-compile: t; lexical-binding: nil -*-
-(define-package "slime" "20250120.1652"
+(define-package "slime" "20250126.405"
   "Superior Lisp Interaction Mode for Emacs."
   '((emacs     "24.3")
     (macrostep "0.9"))
   :url "https://github.com/slime/slime"
-  :commit "48371a44221c58b69faab50ee5baaa47b122cbf9"
-  :revdesc "48371a44221c"
+  :commit "04c72d0572f7c251de3013b017a947406af048ea"
+  :revdesc "04c72d0572f7"
   :keywords '("languages" "lisp" "slime"))
