@@ -261,7 +261,7 @@
 		("Kevin Ryde" . "user42_kevin@yahoo.com.au"))
 	       (:commit . "72db1f3ee04f3d1db17487d5bd98466fcbad87fd"))])
  (auth-source-xoauth2-plugin .
-			     [(0 1)
+			     [(0 1 1)
 			      ((emacs
 				(28 1))
 			       (oauth2
@@ -271,7 +271,7 @@
 			       (:authors
 				("Xiyue Deng" . "manphiz@gmail.com"))
 			       (:url . "https://elpa.gnu.org/packages/auth-source-xoauth2-plugin.html")
-			       (:commit . "93a69c392a50b73d8d93ff486090a57dd2616e89"))])
+			       (:commit . "21b361839286b174698bae4258ec893dc5f5c27d"))])
  (auto-correct .
 	       [(1 1 4)
 		nil "Remembers and automatically fixes past corrections" tar
@@ -1456,7 +1456,7 @@
 		     (:url . "https://elpa.gnu.org/packages/elisp-benchmarks.html")
 		     (:commit . "1a3d97954957a95a179806e0d49ca6d178b097af"))])
  (ellama .
-	 [(0 13 11)
+	 [(1 0 3)
 	  ((emacs
 	    (28 1))
 	   (llm
@@ -1466,14 +1466,16 @@
 	   (transient
 	    (0 7))
 	   (compat
-	    (29 1)))
+	    (29 1))
+	   (posframe
+	    (1 4 0)))
 	  "Tool for interacting with LLMs" tar
 	  ((:url . "http://github.com/s-kostyaev/ellama")
 	   (:keywords "help" "local" "tools")
 	   (:maintainer "Sergey Kostyaev" . "sskostyaev@gmail.com")
 	   (:authors
 	    ("Sergey Kostyaev" . "sskostyaev@gmail.com"))
-	   (:commit . "6fb94007b983a81f06e693569faf70513a1e2157"))])
+	   (:commit . "3368b6351a070ae4a089e0d395044c8f9f31ddd4"))])
  (emacs-gc-stats .
 		 [(1 4 2)
 		  ((emacs
@@ -3157,6 +3159,21 @@
 	     (:authors
 	      ("Ian Dunn" . "dunni@gnu.org"))
 	     (:commit . "8258a4dfa00aa522249cdf9aeea5be4de97bd7c1"))])
+ (org-gnosis .
+	     [(0 0 5)
+	      ((emacs
+		(27 2))
+	       (emacsql
+		(4 0 0))
+	       (compat
+		(29 1 4 2)))
+	      "Roam-like Knowledge Management System" tar
+	      ((:url . "https://thanosapollo.org/projects/org-gnosis/")
+	       (:keywords "extensions")
+	       (:maintainer "Thanos Apollo" . "public@thanosapollo.org")
+	       (:authors
+		("Thanos Apollo" . "public@thanosapollo.org"))
+	       (:commit . "16142440ddb3a145bf054f2b9bc793f145fad110"))])
  (org-jami-bot .
 	       [(0 0 5)
 		((emacs
@@ -3314,6 +3331,15 @@
 	  (:authors
 	   ("Ian Dunn" . "dunni@gnu.org"))
 	  (:commit . "c3683a0a8a611fbd15bb3ec78ccac121843711c9"))])
+ (package-x .
+	    [(1 0)
+	     nil "Package extras" tar
+	     ((:keywords "tools")
+	      (:maintainer "Philip Kaludercic" . "philipk@posteo.net")
+	      (:authors
+	       ("Tom Tromey" . "tromey@redhat.com"))
+	      (:url . "https://elpa.gnu.org/packages/package-x.html")
+	      (:commit . "a4aaf1a7dc31af40b33435fae3c1674d744031f7"))])
  (parsec .
 	 [(0 1 3)
 	  ((emacs

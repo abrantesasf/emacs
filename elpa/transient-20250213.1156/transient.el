@@ -6,8 +6,8 @@
 ;; Homepage: https://github.com/magit/transient
 ;; Keywords: extensions
 
-;; Package-Version: 20250205.2244
-;; Package-Revision: 32a7e256aab2
+;; Package-Version: 20250213.1156
+;; Package-Revision: 0439eb80d89e
 ;; Package-Requires: ((emacs "26.1") (compat "30.0.0.0") (seq "2.24"))
 
 ;; SPDX-License-Identifier: GPL-3.0-or-later
@@ -2342,7 +2342,7 @@ value.  Otherwise return CHILDREN as is.")
                    (unless (and cmd (symbolp cmd))
                      (error "BUG: Non-symbolic suffix command: %s" cmd))
                    (if proto
-                       (apply #'clone proto :level level args)
+                       (apply #'clone proto :parent parent :level level args)
                      (apply class :command cmd :parent parent :level level
                             args)))))
         (cond ((not cmd))

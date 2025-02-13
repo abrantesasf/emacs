@@ -17,8 +17,8 @@
 ;; Homepage: https://github.com/magit/magit
 ;; Keywords: git tools vc
 
-;; Package-Version: 20250211.22
-;; Package-Revision: 7116d0572765
+;; Package-Version: 20250211.1033
+;; Package-Revision: 4a01405bf1b6
 ;; Package-Requires: (
 ;;     (emacs "27.1")
 ;;     (compat "30.0.2.0")
@@ -571,6 +571,7 @@ is run in the top-level directory of the current working tree."
        (1 'font-lock-keyword-face)
        (2 'font-lock-function-name-face nil t))
       (,(concat "(" (regexp-opt '("magit-insert-section"
+                                  "magit-insert-heading"
                                   "magit-section-case"
                                   "magit-bind-match-strings"
                                   "magit-with-temp-index"
