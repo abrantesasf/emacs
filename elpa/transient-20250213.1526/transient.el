@@ -6,8 +6,8 @@
 ;; Homepage: https://github.com/magit/transient
 ;; Keywords: extensions
 
-;; Package-Version: 20250213.1156
-;; Package-Revision: 0439eb80d89e
+;; Package-Version: 20250213.1526
+;; Package-Revision: 58e22554ab85
 ;; Package-Requires: ((emacs "26.1") (compat "30.0.0.0") (seq "2.24"))
 
 ;; SPDX-License-Identifier: GPL-3.0-or-later
@@ -614,7 +614,7 @@ character used to separate possible values from each other."
     (((class color) (background dark))
      :inherit transient-key
      :foreground "#ddffdd"))
-  "Face used for keys of suffixes that don't exit transient state."
+  "Face used for keys of suffixes that don't exit the menu."
   :group 'transient-faces)
 
 (defface transient-key-noop
@@ -634,7 +634,27 @@ character used to separate possible values from each other."
     (((class color) (background dark))
      :inherit transient-key
      :foreground "#ffffcc"))
-  "Face used for keys of suffixes that return to the parent transient."
+  "Face used for keys of suffixes that return to the parent menu."
+  :group 'transient-faces)
+
+(defface transient-key-recurse
+  `((((class color) (background light))
+     :inherit transient-key
+     :foreground "#2266ff")
+    (((class color) (background dark))
+     :inherit transient-key
+     :foreground "#2299ff"))
+  "Face used for keys of sub-menus whose suffixes return to the parent menu."
+  :group 'transient-faces)
+
+(defface transient-key-stack
+  `((((class color) (background light))
+     :inherit transient-key
+     :foreground "#dd4488")
+    (((class color) (background dark))
+     :inherit transient-key
+     :foreground "#ff6699"))
+  "Face used for keys of sub-menus that exit the parent menu."
   :group 'transient-faces)
 
 (defface transient-key-exit
@@ -644,7 +664,7 @@ character used to separate possible values from each other."
     (((class color) (background dark))
      :inherit transient-key
      :foreground "#ffdddd"))
-  "Face used for keys of suffixes that exit transient state."
+  "Face used for keys of suffixes that exit the menu."
   :group 'transient-faces)
 
 (defface transient-unreachable-key
@@ -737,6 +757,7 @@ If `transient-save-history' is nil, then do nothing."
    (level       :initarg :level)
    (init-value  :initarg :init-value)
    (value) (default-value :initarg :value)
+   (return      :initarg :return      :initform nil)
    (scope       :initarg :scope       :initform nil)
    (history     :initarg :history     :initform nil)
    (history-pos :initarg :history-pos :initform 0)
@@ -2098,7 +2119,7 @@ of the corresponding object."
 (defun transient--make-predicate-map ()
   (let* ((default (transient--resolve-pre-command
                    (oref transient--prefix transient-suffix)))
-         (return (and transient--stack (eq default t)))
+         (return (and transient--stack (oref transient--prefix return)))
          (map (make-sparse-keymap)))
     (set-keymap-parent map transient-predicate-map)
     (when (or (and (slot-boundp transient--prefix 'transient-switch-frame)
@@ -2119,26 +2140,26 @@ of the corresponding object."
                    ((slot-boundp obj 'transient)
                     (pcase (list kind
                                  (transient--resolve-pre-command
-                                  (oref obj transient))
+                                  (oref obj transient) nil t)
                                  return)
-                      (`(prefix   t ,_) #'transient--do-recurse)
-                      (`(prefix nil ,_) #'transient--do-stack)
-                      (`(infix    t ,_) #'transient--do-stay)
-                      (`(suffix   t ,_) #'transient--do-call)
-                      ('(suffix nil  t) #'transient--do-return)
-                      (`(,_     nil ,_) #'transient--do-exit)
-                      (`(,_     ,do ,_) do)))
+                      (`(prefix   t  ,_) #'transient--do-recurse)
+                      (`(prefix nil  ,_) #'transient--do-stack)
+                      (`(infix    t  ,_) #'transient--do-stay)
+                      (`(suffix   t  ,_) #'transient--do-call)
+                      ('(suffix nil   t) #'transient--do-return)
+                      (`(,_     nil  ,_) #'transient--do-exit)
+                      (`(,_     ,do  ,_) do)))
                    ((not (lookup-key transient-predicate-map id))
                     (pcase (list kind default return)
                       (`(prefix ,(or 'transient--do-stay 'transient--do-call) ,_)
                        #'transient--do-recurse)
-                      (`(prefix   t ,_) #'transient--do-recurse)
-                      (`(prefix  ,_ ,_) #'transient--do-stack)
-                      (`(infix   ,_ ,_) #'transient--do-stay)
-                      (`(suffix   t ,_) #'transient--do-call)
-                      ('(suffix nil  t) #'transient--do-return)
-                      (`(suffix nil ,_) #'transient--do-exit)
-                      (`(suffix ,do ,_) do))))))
+                      (`(prefix   t  ,_) #'transient--do-recurse)
+                      (`(prefix  ,_  ,_) #'transient--do-stack)
+                      (`(infix   ,_  ,_) #'transient--do-stay)
+                      (`(suffix   t  ,_) #'transient--do-call)
+                      ('(suffix nil   t) #'transient--do-return)
+                      (`(suffix nil nil) #'transient--do-exit)
+                      (`(suffix ,do  ,_) do))))))
         (when pre
           (if-let ((alt (lookup-key map id)))
               (unless (eq alt pre)
@@ -2275,9 +2296,9 @@ value.  Otherwise return CHILDREN as is.")
                       :level (or (alist-get t (alist-get name transient-levels))
                                  transient-default-level)
                       params))))
-    (transient--setup-recursion obj)
-    (transient-init-scope obj)
-    (transient-init-value obj)
+    (transient-init-value  obj)
+    (transient-init-return obj)
+    (transient-init-scope  obj)
     obj))
 
 (defun transient--init-suffixes (name)
@@ -2829,9 +2850,9 @@ value.  Otherwise return CHILDREN as is.")
   (push (list (oref transient--prefix command)
               transient--layout
               transient--editp
-              :transient-suffix (oref transient--prefix transient-suffix)
-              :scope (oref transient--prefix scope)
-              :value (transient-get-value))
+              :value  (transient-get-value)
+              :return (oref transient--prefix return)
+              :scope  (oref transient--prefix scope))
         transient--stack))
 
 (defun transient--stack-pop ()
@@ -2939,14 +2960,19 @@ exit."
             (oref transient--prefix transient-non-suffix)
             t))))
 
-(defun transient--resolve-pre-command (pre &optional resolve-boolean)
-  (cond ((booleanp pre)
-         (if resolve-boolean
-             (if pre #'transient--do-stay #'transient--do-warn)
-           pre))
-        ((string-match-p "--do-" (symbol-name pre)) pre)
-        ((let ((sym (intern (format "transient--do-%s" pre))))
-           (if (functionp sym) sym pre)))))
+(defun transient--resolve-pre-command (pre &optional resolve-boolean correct)
+  (setq pre (cond ((booleanp pre)
+                   (if resolve-boolean
+                       (if pre #'transient--do-stay #'transient--do-warn)
+                     pre))
+                  ((string-match-p "--do-" (symbol-name pre)) pre)
+                  ((let ((sym (intern (format "transient--do-%s" pre))))
+                     (if (functionp sym) sym pre)))))
+  (cond ((not correct) pre)
+        ((and (eq pre 'transient--do-return)
+              (not transient--stack))
+         'transient--do-exit)
+        (pre)))
 
 (defun transient--do-stay ()
   "Call the command without exporting variables and stay transient."
@@ -3007,19 +3033,9 @@ Use that command's pre-command to determine transient behavior."
     (transient--call-pre-command)))
 
 (defun transient--do-recurse ()
-  "Call the transient prefix command, preparing for return to active transient.
+  "Call the transient prefix command, preparing for return to outer transient.
 If there is no parent prefix, then just call the command."
   (transient--do-stack))
-
-(defun transient--setup-recursion (prefix-obj)
-  (when transient--stack
-    (let ((command (oref prefix-obj command)))
-      (when-let ((suffix-obj (transient-suffix-object command)))
-        (when (memq (if (slot-boundp suffix-obj 'transient)
-                        (oref suffix-obj transient)
-                      (oref transient-current-prefix transient-suffix))
-                    (list t 'recurse #'transient--do-recurse))
-          (oset prefix-obj transient-suffix t))))))
 
 (defun transient--do-stack ()
   "Call the transient prefix command, stacking the active transient.
@@ -3088,8 +3104,8 @@ prefix argument and pivot to `transient-update'."
 (put 'transient--do-exit       'transient-face 'transient-key-exit)
 (put 'transient--do-leave      'transient-face 'transient-key-exit)
 
-(put 'transient--do-recurse    'transient-face 'transient-key-stay)
-(put 'transient--do-stack      'transient-face 'transient-key-stay)
+(put 'transient--do-recurse    'transient-face 'transient-key-recurse)
+(put 'transient--do-stack      'transient-face 'transient-key-stack)
 (put 'transient--do-replace    'transient-face 'transient-key-exit)
 (put 'transient--do-suspend    'transient-face 'transient-key-exit)
 
@@ -3932,6 +3948,18 @@ Append \"=\ to ARG to indicate that it is an option."
                                         args))))
           (or (match-string 1 match) "")))
     (and (member arg args) t)))
+
+;;; Return
+
+(defun transient-init-return (obj)
+  (when-let* ((transient--stack)
+              (command (oref obj command))
+              (suffix-obj (transient-suffix-object command))
+              ((memq (if (slot-boundp suffix-obj 'transient)
+                         (oref suffix-obj transient)
+                       (oref transient-current-prefix transient-suffix))
+                     (list t 'recurse #'transient--do-recurse))))
+    (oset obj return t)))
 
 ;;; Scope
 ;;;; Init
