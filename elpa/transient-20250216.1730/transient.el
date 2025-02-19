@@ -6,8 +6,8 @@
 ;; Homepage: https://github.com/magit/transient
 ;; Keywords: extensions
 
-;; Package-Version: 20250213.1526
-;; Package-Revision: 58e22554ab85
+;; Package-Version: 20250216.1730
+;; Package-Revision: 823f24a4901c
 ;; Package-Requires: ((emacs "26.1") (compat "30.0.0.0") (seq "2.24"))
 
 ;; SPDX-License-Identifier: GPL-3.0-or-later
@@ -213,6 +213,11 @@ The default is:
 This displays the window at the bottom of the selected frame.
 For alternatives see info node `(elisp)Display Action Functions'
 and info node `(elisp)Buffer Display Action Alists'.
+
+When you switch to a different ACTION, you should keep the ALIST
+entries for `dedicated' and `inhibit-same-window' in most cases.
+Do not drop them because you are unsure whether they are needed;
+if you are unsure, then keep them.
 
 Note that the buffer that was current before the transient buffer
 is shown should remain the current buffer.  Many suffix commands
@@ -590,7 +595,7 @@ See info node `(transient)Enabling and Disabling Suffixes'."
 
 (defface transient-higher-level
   `((t :box ( :line-width ,(if (>= emacs-major-version 28) (cons -1 -1) -1)
-              :color ,(let ((color (face-attribute 'shadow :foreground nil t)))
+              :color ,(let ((color (face-attribute 'shadow :foreground t t)))
                         (or (and (not (eq color 'unspecified)) color)
                             "grey60")))))
   "Face optionally used to highlight suffixes on higher levels.
@@ -1460,7 +1465,8 @@ Intended for use in a group's `:setup-children' function."
                suffix prefix loc
                "suffixes and groups cannot be siblings"))
      (t
-      (when-let* ((bindingp (listp suf))
+      (when-let* (((not (eq keep-other 'always)))
+                  (bindingp (listp suf))
                   (key (transient--spec-key suf))
                   (conflict (car (transient--layout-member key prefix)))
                   (conflictp
@@ -1488,7 +1494,9 @@ LOC is a command, a key vector, a key description (a string
   as returned by `key-description'), or a coordination list
   (whose last element may also be a command or key).
 Remove a conflicting binding unless optional KEEP-OTHER is
-  non-nil.
+  non-nil.  When the conflict appears to be a false-positive,
+  non-nil KEEP-OTHER may be ignored, which can be prevented
+  by using `always'.
 See info node `(transient)Modifying Existing Transients'."
   (declare (indent defun))
   (transient--insert-suffix prefix loc suffix 'insert keep-other))
@@ -1503,7 +1511,9 @@ LOC is a command, a key vector, a key description (a string
   as returned by `key-description'), or a coordination list
   (whose last element may also be a command or key).
 Remove a conflicting binding unless optional KEEP-OTHER is
-  non-nil.
+  non-nil.  When the conflict appears to be a false-positive,
+  non-nil KEEP-OTHER may be ignored, which can be prevented
+  by using `always'.
 See info node `(transient)Modifying Existing Transients'."
   (declare (indent defun))
   (transient--insert-suffix prefix loc suffix 'append keep-other))

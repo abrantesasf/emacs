@@ -6,8 +6,8 @@
 ;; Homepage: https://github.com/tarsius/llama
 ;; Keywords: extensions
 
-;; Package-Version: 20250201.1300
-;; Package-Revision: 9802c215a3ee
+;; Package-Version: 20250218.1544
+;; Package-Revision: 277516687068
 ;; Package-Requires: ((emacs "26.1") (compat "30.0.2.0"))
 
 ;; SPDX-License-Identifier: GPL-3.0-or-later
@@ -549,13 +549,14 @@ Emacs 28.1.  For an example see the end of file \"llama.el\"."
 ;; An example of the configuration that is necessary to enable this:
 ;;
 ;; Local Variables:
+;; indent-tabs-mode: nil
 ;; read-symbol-shorthands: (
 ;;   ("partial" . "llama--left-apply-partially")
 ;;   ("rpartial" . "llama--right-apply-partially"))
 ;; End:
 ;;
-;; Alternatively you can set this variable in a ".dir-locals.el" file.
-;; See this package's ".dir-locals.el" for an example.
+;; Do not set `read-symbol-shorthands' in the ".dir-locals.el"
+;; file, because that does not work for uncompiled libraries.
 
 (provide 'llama)
 

@@ -1,12 +1,12 @@
 ;;; company.el --- Modular text completion framework  -*- lexical-binding: t -*-
 
-;; Copyright (C) 2009-2024  Free Software Foundation, Inc.
+;; Copyright (C) 2009-2025  Free Software Foundation, Inc.
 
 ;; Author: Nikolaj Schumacher
 ;; Maintainer: Dmitry Gutov <dmitry@gutov.dev>
 ;; URL: http://company-mode.github.io/
-;; Package-Version: 20250114.2109
-;; Package-Revision: 9a81d0cca268
+;; Package-Version: 20250219.152
+;; Package-Revision: 9134d8a86dd8
 ;; Keywords: abbrev, convenience, matching
 ;; Package-Requires: ((emacs "26.1"))
 
@@ -2608,7 +2608,7 @@ For more details see `company-insertion-on-trigger' and
       (when (= (buffer-chars-modified-tick) tick)
         (let (company-require-match)
           (setq company-backend backend
-                company--manual-prefix 0)
+                company--manual-prefix "")
           (company--begin-new))
         (unless (and company-candidates
                      (equal (company--boundaries) '("" . "")))
