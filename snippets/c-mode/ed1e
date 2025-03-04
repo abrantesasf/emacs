@@ -1,0 +1,45 @@
+# -*- mode: snippet -*-
+# name: ed1e
+# key: ed1e
+# --
+/**
+ * Arquivo: .c
+ * Versão : 
+ * Data   : 
+ * -------------------------
+ * Este programa . . .
+ *
+ * Programming Abstractions in C, de Eric S. Roberts.
+ * Capítulo x: xxx.
+ * Exercício de programação: 
+ *
+ * Prof.: Abrantes Araújo Silva Filho (Computação Raiz)
+ */
+
+/*** Includes ***/
+
+#include <CRpaic.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+/*** Constantes Simbólicas ***/
+
+/*** Variáveis Globais ***/
+
+/*** Declarações de Subprogramas ***/
+
+/*** Função Main: ***/
+
+int main (void)
+{
+    
+}
+
+/*** Definições de Subprogramas ***/
+
+/**
+ * Subprograma: nome_do_subprograma
+ * Uso: nome_do_subprograma(x, y, z);
+ * ----------------------------------
+ * Implementa ...
+ */
