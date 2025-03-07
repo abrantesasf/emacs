@@ -108,7 +108,7 @@ Llama-Fontify mode is enabled in all buffers where
 See `llama-fontify-mode' for more information on Llama-Fontify mode.
 
 (fn &optional ARG)" t)
-(register-definition-prefixes "llama" '("\\#\\#" "completing-read" "elisp-" "intern" "lisp--el-match-keyword" "llama-"))
+(register-definition-prefixes "llama" '("\\#\\#" "all-completions" "elisp-" "intern" "lisp--el-match-keyword" "llama-"))
 
 ;;; End of scraped data
 

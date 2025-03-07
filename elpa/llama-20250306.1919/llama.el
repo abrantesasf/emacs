@@ -6,8 +6,8 @@
 ;; Homepage: https://github.com/tarsius/llama
 ;; Keywords: extensions
 
-;; Package-Version: 20250301.1633
-;; Package-Revision: c1b320d6308a
+;; Package-Version: 20250306.1919
+;; Package-Revision: 4c49e410b1c7
 ;; Package-Requires: ((emacs "26.1") (compat "30.0.2.0"))
 
 ;; SPDX-License-Identifier: GPL-3.0-or-later
@@ -291,8 +291,8 @@ explicitly specified `_%3'."
             (string-to-syntax "'")))))
      start end)))
 
-(define-advice completing-read (:around (fn &rest args) llama)
-  "Unintern the symbol with the empty name during completion.
+(define-advice all-completions (:around (fn str table &rest rest) llama)
+  "Remove empty symbol from completion results if originating from `llama'.
 
 `##' is the notation for the symbol whose name is the empty string.
   (intern \"\") => ##
@@ -304,22 +304,13 @@ it to be used akin to syntax, without actually being new syntax.
 alias for `llama', you can access the documentation under that name.)
 
 This advice prevents the empty string from being offered as a completion
-candidate when `obarray' (or a completion table that internally uses
-that) is used as COLLECTION, by `unintern'ing that symbol temporarily."
-  (let ((plist (symbol-plist '##))
-        (value nil)
-        (bound nil))
-    (with-no-warnings
-      (when (boundp '##)
-        (setq bound t)
-        (setq value ##)))
-    (unwind-protect
-        (progn (unintern "" obarray)
-               (apply fn args))
-      (defalias (intern "") 'llama)
-      (setplist (intern "") plist)
-      (when bound
-        (set (intern "") value)))))
+candidate when `obarray' or a completion table that internally uses
+that is used as TABLE."
+  (let ((result (apply fn str table rest)))
+    (if (and (obarrayp table)
+             (eq (symbol-function (intern-soft "" table)) 'llama))
+        (delete "" result)
+      result)))
 
 (defvar llama-fontify-mode)
 
