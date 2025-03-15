@@ -6,8 +6,8 @@
 ;; Author: Jason R. Blevins <jblevins@xbeta.org>
 ;; Maintainer: Jason R. Blevins <jblevins@xbeta.org>
 ;; Created: May 24, 2007
-;; Package-Version: 20250310.417
-;; Package-Revision: dd2cb2cdcd65
+;; Package-Version: 20250314.311
+;; Package-Revision: d2d960bec164
 ;; Package-Requires: ((emacs "28.1"))
 ;; Keywords: Markdown, GitHub Flavored Markdown, itex
 ;; URL: https://jblevins.org/projects/markdown-mode/
@@ -7710,8 +7710,8 @@ Return the name of the output buffer used."
                    (erase-buffer))
                  (if (stringp command)
                      (if (not (null command-args))
-                         (apply #'call-process-region begin-region end-region command nil buf nil command-args)
-                       (call-process-region begin-region end-region command nil buf))
+                         (apply #'call-process-region begin-region end-region command nil (list buf nil) nil command-args)
+                       (call-process-region begin-region end-region command nil (list buf nil)))
                    (if markdown-command-needs-filename
                        (if (not buffer-file-name)
                            (user-error "Must be visiting a file")
