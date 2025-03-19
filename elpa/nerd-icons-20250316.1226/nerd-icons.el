@@ -4,8 +4,8 @@
 
 ;; Author: Hongyu Ding <rainstormstudio@yahoo.com>, Vincent Zhang <seagle0128@gmail.com>
 ;; Keywords: lisp
-;; Package-Version: 20250308.1335
-;; Package-Revision: 43178575201e
+;; Package-Version: 20250316.1226
+;; Package-Revision: 6612cc65373b
 ;; Package-Requires: ((emacs "24.3"))
 ;; URL: https://github.com/rainstormstudio/nerd-icons.el
 ;; Keywords: convenient, lisp
@@ -287,6 +287,7 @@
     ("tf"             nerd-icons-mdicon "nf-md-terraform"        :face nerd-icons-purple-alt)
     ("tfvars"         nerd-icons-mdicon "nf-md-terraform"        :face nerd-icons-purple-alt)
     ("tfstate"        nerd-icons-mdicon "nf-md-terraform"        :face nerd-icons-purple-alt)
+    ("tfbackend"      nerd-icons-mdicon "nf-md-terraform"        :face nerd-icons-purple-alt)
 
     ("asm"            nerd-icons-sucicon "nf-seti-asm"           :face nerd-icons-blue)
     ;; Verilog(-AMS) and SystemVerilog(-AMS     ;; Verilog(-AMS) and SystemVerilog(-AMS)
