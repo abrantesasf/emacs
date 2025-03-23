@@ -1216,12 +1216,8 @@ Call \"git update-index --no-assume-unchanged -- FILE\".
 
  (autoload 'magit-log "magit-log" nil t)
  (autoload 'magit-log-refresh "magit-log" nil t)
-(autoload 'magit-log-current "magit-log" "\
-Show log for the current branch.
-When `HEAD' is detached or with a prefix argument show log for
-one or more revs read from the minibuffer.
-
-(fn REVS &optional ARGS FILES)" t)
+(transient-define-suffix magit-log-current (&optional args files) "\
+Show log for the current branch, or `HEAD' if no branch is checked out." :description (## if (magit-get-current-branch) "current" "HEAD") (interactive (magit-log-arguments)) (magit-log-setup-buffer (list (or (magit-get-current-branch) "HEAD")) args files))
 (autoload 'magit-log-head "magit-log" "\
 Show log for `HEAD'.
 

@@ -53,13 +53,13 @@
 		 ("Jordon Biondo" . "jordonbiondo@gmail.com"))
 		(:commit . "33691c93ee302690e41f631f82083bcc15d229e8"))])
  (annotate .
-	   [(2 3 0)
+	   [(2 3 1)
 	    nil "annotate files without changing them" tar
 	    ((:url . "https://github.com/bastibe/annotate.el")
 	     (:maintainer
 	      ("Bastian Bechtold" . "bastibe.dev@mailbox.org")
 	      ("cage" . "cage-dev@twistfold.it"))
-	     (:commit . "c25878b779e96bb6c7ee86da98047ce0ec8fed63"))])
+	     (:commit . "3413c205947ffeb26ba328cb68be947733070794"))])
  (anti-zenburn-theme .
 		     [(2 5 1)
 		      nil "Low-contrast Zenburn-inverted theme" tar
@@ -2142,7 +2142,7 @@
 	       ("David Christiansen" . "david@davidchristiansen.dk"))
 	      (:commit . "1edda80e2e32b72e77f4f16ae5b83c312c68ee95"))])
  (racket-mode .
-	      [(1 0 20250312 143158)
+	      [(1 0 20250321 115935)
 	       ((emacs
 		 (25 1)))
 	       "Racket editing, REPL, and more" tar
@@ -2795,14 +2795,14 @@
 	       ("Le Wang" . "l26wang@gmail.com"))
 	      (:commit . "9ee5a7657a22e836618813c2e2b64a548d27d2ff"))])
  (xah-fly-keys .
-	       [(26 10 20250308091402)
+	       [(26 11 20250321204900)
 		((emacs
 		  (27)))
 		"ergonomic modal keybinding minor mode." tar
 		((:url . "http://xahlee.info/emacs/misc/xah-fly-keys.html")
 		 (:keywords "convenience" "vi" "vim" "ergoemacs" "keybinding")
 		 (:maintainer "Xah Lee" . "xah@xahlee.org")
-		 (:commit . "1f965c7e2de8ee190fe909c50c3683842deb3afb"))])
+		 (:commit . "193b95195f3bbd93a1f91cd7c1de191b386bde80"))])
  (xkcd .
        [(1 1)
 	((json

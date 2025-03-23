@@ -31,6 +31,7 @@
 (require 'magit-core)
 (require 'magit-diff)
 
+(declare-function magit--any-wip-mode-enabled-p "magit-wip" ())
 (declare-function magit-blob-visit "magit-files" (blob-or-file))
 (declare-function magit-cherry-apply "magit-sequence" (commit &optional args))
 (declare-function magit-insert-head-branch-header "magit-status"
@@ -494,29 +495,27 @@ commits before and half after."
   :class 'magit-log-prefix
   [magit-log-infix-arguments]
   [["Log"
-    ("l" "current"             magit-log-current)
-    ("h" "HEAD"                magit-log-head)
-    ("u" "related"             magit-log-related)
-    ("o" "other"               magit-log-other)]
+    ("l"                     magit-log-current)
+    ("o" "other"             magit-log-other)
+    ("h" "HEAD"              magit-log-head :level 0)
+    ("u" "related"           magit-log-related)]
    [""
-    ("L" "local branches"      magit-log-branches)
-    ("b" "all branches"        magit-log-all-branches)
-    ("a" "all references"      magit-log-all)
-    (7 "B" "matching branches" magit-log-matching-branches)
-    (7 "T" "matching tags"     magit-log-matching-tags)
-    (7 "m" "merged"            magit-log-merged)]
+    ("L" "local branches"    magit-log-branches)
+    ("b" "all branches"      magit-log-all-branches)
+    ("a" "all references"    magit-log-all)
+    ("B" "matching branches" magit-log-matching-branches :level 7)
+    ("T" "matching tags"     magit-log-matching-tags     :level 7)
+    ("m" "merged"            magit-log-merged            :level 7)]
    ["Reflog"
-    ("r" "current"             magit-reflog-current)
-    ("H" "HEAD"                magit-reflog-head)
-    ("O" "other"               magit-reflog-other)]
-   [:if (lambda ()
-          (and (fboundp 'magit--any-wip-mode-enabled-p)
-               (magit--any-wip-mode-enabled-p)))
+    ("r" "current"           magit-reflog-current)
+    ("O" "other"             magit-reflog-other)
+    ("H" "HEAD"              magit-reflog-head)]
+   [:if magit--any-wip-mode-enabled-p
     :description "Wiplog"
-    ("i" "index"          magit-wip-log-index)
-    ("w" "worktree"       magit-wip-log-worktree)]
+    ("i" "index"             magit-wip-log-index)
+    ("w" "worktree"          magit-wip-log-worktree)]
    ["Other"
-    (5 "s" "shortlog"    magit-shortlog)]])
+    ("s" "shortlog"          magit-shortlog)]])
 
 ;;;###autoload (autoload 'magit-log-refresh "magit-log" nil t)
 (transient-define-prefix magit-log-refresh ()
@@ -653,13 +652,12 @@ commits before and half after."
   (magit-read-string (format "Type a pattern to pass to %s" option)))
 
 ;;;###autoload
-(defun magit-log-current (revs &optional args files)
-  "Show log for the current branch.
-When `HEAD' is detached or with a prefix argument show log for
-one or more revs read from the minibuffer."
-  (interactive (cons (magit-log-read-revs t)
-                     (magit-log-arguments)))
-  (magit-log-setup-buffer revs args files))
+(transient-define-suffix magit-log-current (&optional args files)
+  "Show log for the current branch, or `HEAD' if no branch is checked out."
+  :description (##if (magit-get-current-branch) "current" "HEAD")
+  (interactive (magit-log-arguments))
+  (magit-log-setup-buffer (list (or (magit-get-current-branch) "HEAD"))
+                          args files))
 
 ;;;###autoload
 (defun magit-log-head (&optional args files)
