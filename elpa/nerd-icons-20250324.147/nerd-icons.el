@@ -4,8 +4,8 @@
 
 ;; Author: Hongyu Ding <rainstormstudio@yahoo.com>, Vincent Zhang <seagle0128@gmail.com>
 ;; Keywords: lisp
-;; Package-Version: 20250316.1226
-;; Package-Revision: 6612cc65373b
+;; Package-Version: 20250324.147
+;; Package-Revision: 14f7278dd7eb
 ;; Package-Requires: ((emacs "24.3"))
 ;; URL: https://github.com/rainstormstudio/nerd-icons.el
 ;; Keywords: convenient, lisp
@@ -1127,10 +1127,10 @@ ARG-OVERRIDES should be a plist containining `:height',
 inserting functions."
   (let* ((name (file-name-nondirectory file))
          (ext (file-name-extension name))
-         (icon (or (nerd-icons-match-to-alist name nerd-icons-regexp-icon-alist)
-                   (and ext
+         (icon (or (and ext
                         (cdr (assoc (downcase ext)
                                     nerd-icons-extension-icon-alist)))
+                   (nerd-icons-match-to-alist name nerd-icons-regexp-icon-alist)                   
                    nerd-icons-default-file-icon))
          (args (cdr icon)))
     (when arg-overrides (setq args (append `(,(car args)) arg-overrides (cdr args))))
