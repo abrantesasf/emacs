@@ -1216,8 +1216,7 @@ Call \"git update-index --no-assume-unchanged -- FILE\".
 
  (autoload 'magit-log "magit-log" nil t)
  (autoload 'magit-log-refresh "magit-log" nil t)
-(transient-define-suffix magit-log-current (&optional args files) "\
-Show log for the current branch, or `HEAD' if no branch is checked out." :description (## if (magit-get-current-branch) "current" "HEAD") (interactive (magit-log-arguments)) (magit-log-setup-buffer (list (or (magit-get-current-branch) "HEAD")) args files))
+ (autoload 'magit-log-current "magit-log" nil t)
 (autoload 'magit-log-head "magit-log" "\
 Show log for `HEAD'.
 
@@ -1336,7 +1335,7 @@ inspect the merge and change the commit message.
 (git merge --no-commit --no-ff [ARGS] REV)
 
 (fn REV &optional ARGS)" t)
-(autoload 'magit-merge-into "magit-merge" "\
+(autoload 'magit-merge-dissolve "magit-merge" "\
 Merge the current branch into BRANCH and remove the former.
 
 Before merging, force push the source branch to its push-remote,
