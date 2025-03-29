@@ -27,5 +27,5 @@
 ;; Includes básicos para C/C++:
 (setq company-clang-arguments
   (append company-clang-arguments
-    '("-I/usr/include/x86_64-linux-gnu/sys")))
+    '("-I/usr/include/x86_64-linux-gnu/sysX")))
 
