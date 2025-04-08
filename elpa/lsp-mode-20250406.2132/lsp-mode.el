@@ -5,8 +5,8 @@
 ;; Author: Vibhav Pant, Fangrui Song, Ivan Yonchovski
 ;; Keywords: languages
 ;; Package-Requires: ((emacs "28.1") (dash "2.18.0") (f "0.20.0") (ht "2.3") (spinner "1.7.3") (markdown-mode "2.3") (lv "0") (eldoc "1.11"))
-;; Package-Version: 20250331.802
-;; Package-Revision: 7c0df125c195
+;; Package-Version: 20250406.2132
+;; Package-Revision: 1fb656e4e573
 
 ;; URL: https://github.com/emacs-lsp/lsp-mode
 ;; This program is free software; you can redistribute it and/or modify
@@ -574,6 +574,18 @@ language server."
   "If non-nil, `lsp-mode' will apply edits suggested by the language server
 before saving a document."
   :type 'boolean
+  :group 'lsp-mode)
+
+(defcustom lsp-format-buffer-on-save nil
+  "If non-nil format buffer on save.
+To only format specific major-mode buffers see `lsp-format-buffer-on-save-list'."
+  :type 'boolean
+  :group 'lsp-mode)
+
+(defcustom lsp-format-buffer-on-save-list '()
+  "If the list is empty format all buffer on save. Else only format buffers
+if their major-mode is in the list."
+  :type '(repeat symbol)
   :group 'lsp-mode)
 
 (defcustom lsp-after-apply-edits-hook nil
@@ -5202,6 +5214,13 @@ if it's closing the last buffer in the workspace."
                'before-save)
             (error)))))))
 
+(defun lsp--format-buffer-before-save ()
+  (when lsp-format-buffer-on-save
+    (if (not lsp-format-buffer-on-save-list)
+        (lsp-format-buffer)
+      (when (member major-mode lsp-format-buffer-on-save-list)
+        (lsp-format-buffer)))))
+
 (defun lsp--on-auto-save ()
   "Handler for auto-save."
   (when (lsp--send-will-save-p)
@@ -9398,6 +9417,7 @@ Errors if there are none."
   (lsp--text-document-did-close t)
   (lsp-managed-mode -1)
   (lsp-mode -1)
+  (remove-hook 'before-save-hook #'lsp--format-buffer-before-save t)
   (setq lsp--buffer-workspaces nil)
   (lsp--info "Disconnected"))
 
@@ -9446,6 +9466,7 @@ argument ask the user to select which language server to start."
                         (lsp--try-project-root-workspaces (equal arg '(4))
                                                           (and arg (not (equal arg 1))))))
           (lsp-mode 1)
+          (add-hook 'before-save-hook #'lsp--format-buffer-before-save nil t)
           (when lsp-auto-configure (lsp--auto-configure))
           (setq lsp-buffer-uri (lsp--buffer-uri))
           (lsp--info "Connected to %s."

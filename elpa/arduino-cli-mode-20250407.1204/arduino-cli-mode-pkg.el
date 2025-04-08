@@ -1,8 +1,8 @@
 ;; -*- no-byte-compile: t; lexical-binding: nil -*-
-(define-package "arduino-cli-mode" "20250303.1649"
+(define-package "arduino-cli-mode" "20250407.1204"
   "Arduino-CLI command wrapper."
   '((emacs "25.1"))
   :url "https://github.com/motform/arduino-cli-mode"
-  :commit "4286110c98abb4f9d8397207735736dcf05475d7"
-  :revdesc "4286110c98ab"
+  :commit "0722e4af48be69fd8a3e54c20626b4aa093ded1e"
+  :revdesc "0722e4af48be"
   :keywords '("processes" "tools"))

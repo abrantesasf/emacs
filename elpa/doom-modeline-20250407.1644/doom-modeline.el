@@ -4,8 +4,8 @@
 
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
 ;; Homepage: https://github.com/seagle0128/doom-modeline
-;; Package-Version: 20250401.1348
-;; Package-Revision: 05fec1d4866b
+;; Package-Version: 20250407.1644
+;; Package-Revision: c59909587760
 ;; Package-Requires: ((emacs "25.1") (compat "29.1.4.5") (nerd-icons "0.1.0") (shrink-path "0.3.1"))
 ;; Keywords: faces mode-line
 
@@ -233,6 +233,9 @@ If DEFAULT is non-nil, set the default mode-line for all buffers."
         ;; Automatically set mode-lines
         (add-hook 'after-change-major-mode-hook #'doom-modeline-auto-set-modeline)
 
+        ;; Setup font height cache hook
+        (add-hook 'after-setting-font-hook #'doom-modeline--reset-font-height-cache)
+        
         ;; Special handles
         (advice-add #'helm-display-mode-line :after #'doom-modeline-set-helm-modeline)
         (setq helm-ag-show-status-function #'doom-modeline-set-helm-modeline))
@@ -252,6 +255,9 @@ If DEFAULT is non-nil, set the default mode-line for all buffers."
 
       ;; For two-column editing
       (setq 2C-mode-line-format (doom-modeline--original-value '2C-mode-line-format))
+
+      ;; Remove font height cache hook
+      (remove-hook 'after-setting-font-hook #'doom-modeline--reset-font-height-cache)
 
       ;; Cleanup
       (remove-hook 'after-change-major-mode-hook #'doom-modeline-auto-set-modeline)

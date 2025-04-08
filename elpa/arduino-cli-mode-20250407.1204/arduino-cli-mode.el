@@ -4,8 +4,8 @@
 
 ;; Author: Love Lagerkvist
 ;; URL: https://github.com/motform/arduino-cli-mode
-;; Package-Version: 20250303.1649
-;; Package-Revision: 4286110c98ab
+;; Package-Version: 20250407.1204
+;; Package-Revision: 0722e4af48be
 ;; Package-Requires: ((emacs "25.1"))
 ;; Created: 2019-11-16
 ;; Keywords: processes tools
@@ -67,6 +67,11 @@
   "Arduino-cli keymap prefix."
   :group 'arduino-cli
   :type  'string)
+
+;; arduino-cli-default-fqbn and arduino-cli-default-port may be useful
+;; as file local variables but are not ":safe" because (if used) their
+;; values are passed to the shell as part of an arduino-cli command
+;; line.
 
 (defcustom arduino-cli-default-fqbn nil
   "Default fqbn to use if board selection fails."
@@ -459,7 +464,7 @@ If BOARD has multiple matching_boards, the first one is used."
     (define-key map (kbd "n") #'arduino-cli-new-sketch)
     (define-key map (kbd "l") #'arduino-cli-board-list)
     (define-key map (kbd "i") #'arduino-cli-lib-install)
-    (define-key map (kbd "u") #'arduino-cli-lib-uninstall)
+    (define-key map (kbd "U") #'arduino-cli-lib-uninstall)
     (define-key map (kbd "k") #'arduino-cli-kill-arduino-connection)
     map)
   "Keymap for arduino-cli mode commands after `arduino-cli-mode-keymap-prefix'.")
