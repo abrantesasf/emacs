@@ -5,8 +5,8 @@
 ;; Author: Vibhav Pant, Fangrui Song, Ivan Yonchovski
 ;; Keywords: languages
 ;; Package-Requires: ((emacs "28.1") (dash "2.18.0") (f "0.20.0") (ht "2.3") (spinner "1.7.3") (markdown-mode "2.3") (lv "0") (eldoc "1.11"))
-;; Package-Version: 20250406.2132
-;; Package-Revision: 1fb656e4e573
+;; Package-Version: 20250409.847
+;; Package-Revision: 3a42468703ea
 
 ;; URL: https://github.com/emacs-lsp/lsp-mode
 ;; This program is free software; you can redistribute it and/or modify
@@ -186,10 +186,10 @@ As defined by the Language Server Protocol 3.16."
      lsp-ltex-plus lsp-lua lsp-fennel lsp-magik lsp-markdown lsp-marksman
      lsp-matlab lsp-mdx lsp-meson lsp-metals lsp-mint lsp-mojo lsp-move lsp-mssql
      lsp-nextflow lsp-nginx lsp-nim lsp-nix lsp-nushell lsp-ocaml lsp-openscad
-     lsp-pascal lsp-perl lsp-perlnavigator lsp-php lsp-pls lsp-purescript
-     lsp-pwsh lsp-pyls lsp-pylsp lsp-pyright lsp-python-ms lsp-qml lsp-r
-     lsp-racket lsp-remark lsp-rf lsp-roc lsp-roslyn lsp-rubocop lsp-ruby-lsp
-     lsp-ruby-syntax-tree lsp-ruff lsp-rust lsp-semgrep lsp-shader
+     lsp-pascal lsp-perl lsp-perlnavigator lsp-php lsp-pls lsp-postgres
+     lsp-purescript lsp-pwsh lsp-pyls lsp-pylsp lsp-pyright lsp-python-ms
+     lsp-qml lsp-r lsp-racket lsp-remark lsp-rf lsp-roc lsp-roslyn lsp-rubocop
+     lsp-ruby-lsp lsp-ruby-syntax-tree lsp-ruff lsp-rust lsp-semgrep lsp-shader
      lsp-solargraph lsp-solidity lsp-sonarlint lsp-sorbet lsp-sourcekit
      lsp-sql lsp-sqls lsp-steep lsp-svelte lsp-tailwindcss lsp-terraform
      lsp-tex lsp-tilt lsp-toml lsp-trunk lsp-ts-query lsp-ttcn3 lsp-typeprof

@@ -789,6 +789,11 @@ it is disabled.
 (register-definition-prefixes "lsp-pls" '("lsp-pls-"))
 
 
+;;; Generated autoloads from lsp-postgres.el
+
+(register-definition-prefixes "lsp-postgres" '("lsp-postgres-"))
+
+
 ;;; Generated autoloads from lsp-prolog.el
 
 (register-definition-prefixes "lsp-prolog" '("lsp-prolog-server-command"))
