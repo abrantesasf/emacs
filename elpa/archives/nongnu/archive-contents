@@ -307,14 +307,14 @@
 		 (:maintainer "Bozhidar Batsov" . "bozhidar@batsov.dev")
 		 (:commit . "4afdd3539036bbd6b1c01b2e00559676c4d40085"))])
  (clojure-ts-mode .
-		  [(0 2 3)
+		  [(0 3 0)
 		   ((emacs
-		     (29 1)))
+		     (30 1)))
 		   "Major mode for Clojure code" tar
 		   ((:url . "http://github.com/clojure-emacs/clojure-ts-mode")
 		    (:keywords "languages" "clojure" "clojurescript" "lisp")
-		    (:maintainer "Danny Freeman" . "danny@dfreeman.email")
-		    (:commit . "9662b6caa86b67b51aa883b35e21645233ca6f68"))])
+		    (:maintainer "Bozhidar Batsov" . "bozhidar@batsov.dev")
+		    (:commit . "27da9a6a935b65a5a24d93cfd88c421e8867f6d0"))])
  (coffee-mode .
 	      [(0 6 3)
 	       ((emacs
@@ -1500,7 +1500,7 @@
 	       (:keywords "languages")
 	       (:commit . "0f4d74f9049df28e2f522733141bfc5b7a0f69a3"))])
  (keycast .
-	  [(1 4 2)
+	  [(1 4 3)
 	   ((emacs
 	     (28 1))
 	    (compat
@@ -1511,7 +1511,7 @@
 	    (:maintainer "Jonas Bernoulli" . "emacs.keycast@jonas.bernoulli.dev")
 	    (:authors
 	     ("Jonas Bernoulli" . "emacs.keycast@jonas.bernoulli.dev"))
-	    (:commit . "df329db48c22a3905d540c4240ac65c7b45f51dd"))])
+	    (:commit . "83216f97b3dd99dbb1d4dbc781e863f205b6d5d9"))])
  (kotlin-mode .
 	      [(2 0 0)
 	       ((emacs
@@ -2806,14 +2806,14 @@
 	       ("Le Wang" . "l26wang@gmail.com"))
 	      (:commit . "9ee5a7657a22e836618813c2e2b64a548d27d2ff"))])
  (xah-fly-keys .
-	       [(26 11 20250409222002)
+	       [(26 11 20250412183917)
 		((emacs
 		  (28 3)))
 		"ergonomic modal keybinding minor mode." tar
 		((:url . "http://xahlee.info/emacs/misc/xah-fly-keys.html")
 		 (:keywords "convenience" "vi" "vim" "ergoemacs" "keybinding")
 		 (:maintainer "Xah Lee" . "xah@xahlee.org")
-		 (:commit . "7b6b480626e03d008f50ff73dd60f592c7c7d6ed"))])
+		 (:commit . "c110ad7f02fdf8de3e96eea0bf1764afb1eeb1f0"))])
  (xkcd .
        [(1 1)
 	((json
