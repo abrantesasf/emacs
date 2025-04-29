@@ -6,8 +6,8 @@
 ;; Homepage: https://github.com/magit/transient
 ;; Keywords: extensions
 
-;; Package-Version: 20250423.1314
-;; Package-Revision: c7845bfd9f3b
+;; Package-Version: 20250429.904
+;; Package-Revision: 5a54f6d72bd7
 ;; Package-Requires: ((emacs "26.1") (compat "30.0.2.0") (seq "2.24"))
 
 ;; SPDX-License-Identifier: GPL-3.0-or-later
@@ -2323,6 +2323,7 @@ EDIT may be non-nil."
        (setq transient--minibuffer-depth (minibuffer-depth))
        (transient--redisplay))
      (get name 'transient--prefix))
+    (transient--suspend-text-conversion-style)
     (transient--setup-transient)
     (transient--suspend-which-key-mode)))
 
@@ -5110,6 +5111,16 @@ search instead."
                               "\\s-+\\(" lisp-mode-symbol-regexp "\\)")
                   2)
             lisp-imenu-generic-expression :test #'equal)
+
+(defun transient--suspend-text-conversion-style ()
+  (static-if (boundp 'overriding-text-conversion-style) ; since Emasc 30.1
+      (when text-conversion-style
+        (letrec ((suspended overriding-text-conversion-style)
+                 (fn (lambda ()
+                       (setq overriding-text-conversion-style nil)
+                       (remove-hook 'transient-exit-hook fn))))
+          (setq overriding-text-conversion-style suspended)
+          (add-hook 'transient-exit-hook fn)))))
 
 (declare-function which-key-mode "ext:which-key" (&optional arg))
 

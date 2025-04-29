@@ -8,8 +8,8 @@
 ;; Homepage: https://github.com/magit/magit
 ;; Keywords: tools
 
-;; Package-Version: 20250416.853
-;; Package-Revision: 6acb4fff5170
+;; Package-Version: 20250428.1147
+;; Package-Revision: 3c9e51919793
 ;; Package-Requires: (
 ;;     (emacs "27.1")
 ;;     (compat "30.0.2.0")
@@ -858,6 +858,12 @@ If there is no previous sibling section, then move to the parent."
             (magit-section-goto previous)
           (magit-section-backward))
       (magit-section-goto -1))))
+
+(defun magit-mouse-set-point (event &optional promote-to-region)
+  "Like `mouse-set-point' but also call `magit-section-movement-hook'."
+  (interactive "e\np")
+  (mouse-set-point event promote-to-region)
+  (run-hook-with-args 'magit-section-movement-hook (magit-current-section)))
 
 (defun magit-section-goto (arg)
   (if (integerp arg)
