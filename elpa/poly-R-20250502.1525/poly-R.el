@@ -3,9 +3,9 @@
 ;; Author: Vitalie Spinu
 ;; Maintainer: Vitalie Spinu
 ;; Copyright (C) 2013-2018 Vitalie Spinu
-;; Package-Version: 20230416.1454
-;; Package-Revision: 8024e852cfca
-;; Package-Requires: ((emacs "25") (polymode "0.2.2") (poly-markdown "0.2.2") (poly-noweb "0.2.2"))
+;; Package-Version: 20250502.1525
+;; Package-Revision: fee0b6e99943
+;; Package-Requires: ((emacs "25") (ess "25") (polymode "0.2.2") (poly-markdown "0.2.2") (poly-noweb "0.2.2"))
 ;; URL: https://github.com/polymode/poly-R
 ;; Keywords: languages, multi-modes
 ;;

@@ -270,9 +270,9 @@
 	    (:url . "https://elpa.nongnu.org/nongnu/cdlatex.html")
 	    (:commit . "fac070f0164ac9f5859cb4cccba7d29a65c337f3"))])
  (cider .
-	[(1 17 1)
+	[(1 18 0)
 	 ((emacs
-	   (26))
+	   (27))
 	  (clojure-mode
 	   (5 19))
 	  (parseedn
@@ -298,7 +298,7 @@
 	   ("Artur Malabarba" . "bruce.connor.am@gmail.com")
 	   ("Hugo Duncan" . "hugo@hugoduncan.org")
 	   ("Steve Purcell" . "steve@sanityinc.com"))
-	  (:commit . "d2f34b60e5c5e569d4b7f4f79b36893f5c4dfa20"))])
+	  (:commit . "6d2d09318423f373bdbd546e97dc3e32b21c10e4"))])
  (clojure-mode .
 	       [(5 19 0)
 		((emacs
@@ -2148,7 +2148,7 @@
 	       ("David Christiansen" . "david@davidchristiansen.dk"))
 	      (:commit . "1edda80e2e32b72e77f4f16ae5b83c312c68ee95"))])
  (racket-mode .
-	      [(1 0 20250425 134652)
+	      [(1 0 20250502 92240)
 	       ((emacs
 		 (25 1)))
 	       "Racket editing, REPL, and more" tar
