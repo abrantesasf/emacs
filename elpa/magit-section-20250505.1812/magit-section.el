@@ -8,8 +8,8 @@
 ;; Homepage: https://github.com/magit/magit
 ;; Keywords: tools
 
-;; Package-Version: 20250501.848
-;; Package-Revision: 531e7ca6190e
+;; Package-Version: 20250505.1812
+;; Package-Revision: 312c544ffc87
 ;; Package-Requires: (
 ;;     (emacs "27.1")
 ;;     (compat "30.0.2.0")
@@ -1028,6 +1028,8 @@ global map, this involves advising `tab-bar--define-keys'."
          (eq (global-key-binding [C-tab]) 'tab-next)
          (fboundp 'tab-bar-switch-to-next-tab))
     (tab-bar-switch-to-next-tab current-prefix-arg))
+   ((eq section magit-root-section)
+    (magit-section-cycle-global))
    ((oref section hidden)
     (magit-section-show section)
     (magit-section-hide-children section))
