@@ -5,8 +5,8 @@
 ;; Author: Vibhav Pant, Fangrui Song, Ivan Yonchovski
 ;; Keywords: languages
 ;; Package-Requires: ((emacs "28.1") (dash "2.18.0") (f "0.20.0") (ht "2.3") (spinner "1.7.3") (markdown-mode "2.3") (lv "0") (eldoc "1.11"))
-;; Package-Version: 20250507.1938
-;; Package-Revision: a0455e132081
+;; Package-Version: 20250513.2241
+;; Package-Revision: c77ba1410639
 
 ;; URL: https://github.com/emacs-lsp/lsp-mode
 ;; This program is free software; you can redistribute it and/or modify
@@ -6249,6 +6249,7 @@ one or more symbols, and STRUCTURE should be compatible with
     (scala-mode                 . scala-indent:step)                ; Scala
     (sgml-mode                  . sgml-basic-offset)                ; SGML
     (sh-mode                    . sh-basic-offset)                  ; Shell Script
+    (swift-mode                 . swift-mode:basic-offset)          ; Swift
     (toml-ts-mode               . toml-ts-mode-indent-offset)
     (typescript-mode            . typescript-indent-level)          ; Typescript
     (typescript-ts-mode         . typescript-ts-mode-indent-offset) ; Typescript (tree-sitter, Emacs29)

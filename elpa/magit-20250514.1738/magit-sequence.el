@@ -1003,15 +1003,17 @@ status buffer (i.e., the reverse of how they will be applied)."
             (push obj commits)))
         (forward-line)))
     (let ((abbrevs
-           (magit-git-lines
-            "log" "--no-walk" "--format=%h"
-            (mapcar (lambda (obj)
-                      (if (eq (oref obj action) 'merge)
-                          (let ((options (oref obj action-options)))
-                            (and (string-match "-[cC] \\([^ ]+\\)" options)
-                                 (match-string 1 options)))
-                        (oref obj target)))
-                    commits))))
+           (and commits
+                (magit-git-lines
+                 "log" "--no-walk=unsorted" "--format=%h"
+                 (mapcar (lambda (obj)
+                           (if (eq (oref obj action-type) 'merge)
+                               (let ((options (oref obj action-options)))
+                                 (and (string-match "-[cC] \\([^ ]+\\)" options)
+                                      (match-string 1 options)))
+                             (oref obj target)))
+                         commits)))))
+      (cl-assert (equal (length commits) (length abbrevs)))
       (while-let ((obj (pop commits))
                   (val (pop abbrevs)))
         (oset obj abbrev val)))
@@ -1024,7 +1026,7 @@ status buffer (i.e., the reverse of how they will be applied)."
         ((or 'commit (and 'merge (guard abbrev)))
          (magit-sequence-insert-commit action target 'magit-sequence-pick
                                        abbrev trailer))
-        (_ (magit-sequence-insert-step action target)))))
+        ((guard action) (magit-sequence-insert-step action target)))))
   (let ((dir (magit-gitdir)))
     (magit-sequence-insert-sequence
      (magit-file-line (expand-file-name "rebase-merge/stopped-sha" dir))
@@ -1132,7 +1134,7 @@ status buffer (i.e., the reverse of how they will be applied)."
 (defun magit-sequence-insert-step (type target)
   (magit-insert-section (rebase-step (cons type target))
     (magit-insert-heading
-      (propertize type 'font-lock-face 'magit-sequence-onto)
+      (propertize type 'font-lock-face 'magit-sequence-pick)
       (and target
            (concat "\s"
                    (propertize target 'font-lock-face 'git-rebase-label))))))
