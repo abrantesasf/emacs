@@ -151,7 +151,7 @@ it is disabled.
 (autoload 'lsp-copilot-check-status "lsp-copilot" "\
 Checks the status of the Copilot Server" t)
 (autoload 'lsp-copilot-login "lsp-copilot" "\
-Log in with copilot.
+Log in with Copilot.
 
 This function is automatically called during the client initialization if needed" t)
 (register-definition-prefixes "lsp-copilot" '("lsp-copilot-"))
@@ -822,6 +822,11 @@ it is disabled.
 ;;; Generated autoloads from lsp-pylsp.el
 
 (register-definition-prefixes "lsp-pylsp" '("lsp-"))
+
+
+;;; Generated autoloads from lsp-python-ty.el
+
+(register-definition-prefixes "lsp-python-ty" '("lsp-python-ty-clients-server-command"))
 
 
 ;;; Generated autoloads from lsp-qml.el

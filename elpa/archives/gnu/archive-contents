@@ -261,7 +261,7 @@
 		("Kevin Ryde" . "user42_kevin@yahoo.com.au"))
 	       (:commit . "72db1f3ee04f3d1db17487d5bd98466fcbad87fd"))])
  (auth-source-xoauth2-plugin .
-			     [(0 1 1)
+			     [(0 2 1)
 			      ((emacs
 				(28 1))
 			       (oauth2
@@ -271,7 +271,7 @@
 			       (:authors
 				("Xiyue Deng" . "manphiz@gmail.com"))
 			       (:url . "https://elpa.gnu.org/packages/auth-source-xoauth2-plugin.html")
-			       (:commit . "21b361839286b174698bae4258ec893dc5f5c27d"))])
+			       (:commit . "08c5cf49a9ce69cd2a39f65f91abfeb7f6ae7772"))])
  (auto-correct .
 	       [(1 1 4)
 		nil "Remembers and automatically fixes past corrections" tar
@@ -1491,7 +1491,7 @@
 	   ("João Távora" . "joaotavora@gmail.com"))
 	  (:commit . "49f449bb5bc90bc1eca6b4a1f013d4c0b5460d65"))])
  (el-job .
-	 [(2 4 6)
+	 [(2 4 7)
 	  ((emacs
 	    (29 1)))
 	  "Contrived way to call a function using all CPU cores" tar
@@ -1500,7 +1500,7 @@
 	   (:maintainer "Martin Edström" . "meedstrom@runbox.eu")
 	   (:authors
 	    ("Martin Edström" . "meedstrom@runbox.eu"))
-	   (:commit . "3b349c1ca09279016372f137cd7293387f31fdd5"))])
+	   (:commit . "9258e707ad154170a8beae3f84b25161f42aa200"))])
  (el-search .
 	    [(1 12 6 1)
 	     ((emacs
@@ -2185,13 +2185,13 @@
 	     (:url . "https://elpa.gnu.org/packages/greenbar.html")
 	     (:commit . "9526f29d073c533c3e54f0a7597eef1587ffb99e"))])
  (gtags-mode .
-	     [(1 8 5)
+	     [(1 8 6)
 	      ((emacs
 		(28)))
 	      "GNU Global integration with xref, project and imenu." tar
 	      ((:url . "https://github.com/Ergus/gtags-mode")
 	       (:keywords "xref" "project" "imenu" "gtags" "global")
-	       (:commit . "333b0ac032397d9803fc0c4cf7012f0b7c2e68fb"))])
+	       (:commit . "db8eb5d566c33ceb46650e45d85b569dc3ed5930"))])
  (guess-language .
 		 [(0 0 1)
 		  ((cl-lib
@@ -2729,7 +2729,7 @@
 		      ("Sean Whitton" . "spwhitton@spwhitton.name"))
 		     (:commit . "00b8f65effe4f2673e6450d70000644b266aa78a"))])
  (llm .
-      [(0 25 0)
+      [(0 26 0)
        ((emacs
 	 (28 1))
 	(plz
@@ -2737,13 +2737,15 @@
 	(plz-event-source
 	 (0 1 1))
 	(plz-media-type
-	 (0 2 1)))
+	 (0 2 1))
+	(compat
+	 (29 1)))
        "Interface to pluggable llm backends" tar
        ((:url . "https://github.com/ahyatt/llm")
 	(:maintainer "Andrew Hyatt" . "ahyatt@gmail.com")
 	(:authors
 	 ("Andrew Hyatt" . "ahyatt@gmail.com"))
-	(:commit . "231815d24ba7a100a7a0fb72029abb2b04faa901"))])
+	(:commit . "01d789fc9d6f18bbc7441a8d63972bf38fe47b59"))])
  (lmc .
       [(1 4)
        nil "Little Man Computer in Elisp" tar

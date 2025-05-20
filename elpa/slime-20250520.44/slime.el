@@ -3,8 +3,8 @@
 ;; URL: https://github.com/slime/slime
 ;; Package-Requires: ((emacs "24.3") (macrostep "0.9"))
 ;; Keywords: languages, lisp, slime
-;; Package-Version: 20250417.2015
-;; Package-Revision: 47c8249d56d6
+;; Package-Version: 20250520.44
+;; Package-Revision: 4ab2b36227c6
 
 ;;;; License and Commentary
 
@@ -3776,17 +3776,16 @@ function name is prompted."
   (slime-xrefs slime-edit-uses-xrefs
                symbol
                (lambda (xrefs type symbol package)
-                 (cond
-                  ((null xrefs)
-                   (message "No xref information found for %s." symbol))
-                  ((and (slime-length= xrefs 1)          ; one group
-                        (slime-length= (cdar  xrefs) 1)) ; one ref in group
-                   (cl-destructuring-bind (_ (_ loc)) (cl-first xrefs)
-                     (slime-push-definition-stack)
-                     (slime-pop-to-location loc)))
-                  (t
-                   (slime-push-definition-stack)
-                   (slime-show-xref-buffer xrefs type symbol package))))))
+                 (cond ((null xrefs)
+                        (message "No xref information found for %s." symbol))
+                       (t
+                        (slime-with-xref-buffer (type symbol package)
+                                                (cl-loop for (group . refs) in xrefs do
+                                                         (cl-fresh-line)
+                                                         (slime-insert-propertized '(face bold) group "\n")
+                                                         do
+                                                         (slime-insert-xrefs
+                                                          (cadr (slime-analyze-xrefs refs))))))))))
 
 (defun slime-analyze-xrefs (xrefs)
   "Find common filenames in XREFS.

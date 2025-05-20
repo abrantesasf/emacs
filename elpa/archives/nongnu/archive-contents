@@ -59,13 +59,15 @@
 		 ("Jordon Biondo" . "jordonbiondo@gmail.com"))
 		(:commit . "33691c93ee302690e41f631f82083bcc15d229e8"))])
  (annotate .
-	   [(2 4 1)
-	    nil "annotate files without changing them" tar
+	   [(2 4 2)
+	    ((emacs
+	      (27 1)))
+	    "annotate files without changing them" tar
 	    ((:url . "https://github.com/bastibe/annotate.el")
 	     (:maintainer
 	      ("Bastian Bechtold" . "bastibe.dev@mailbox.org")
 	      ("cage" . "cage-dev@twistfold.it"))
-	     (:commit . "09d48e5644c71a8a8780a512cbd62ba63c9d30b9"))])
+	     (:commit . "54f0b96f3f2b5636fa2dfc59b5c9d699a3149aee"))])
  (anti-zenburn-theme .
 		     [(2 5 1)
 		      nil "Low-contrast Zenburn-inverted theme" tar
@@ -1272,7 +1274,7 @@
 		     (:keywords "languages")
 		     (:commit . "59640ceec33cd4df37096289e11ff6f4b876be03"))])
  (haskell-ts-mode .
-		  [(1 1 4)
+		  [(1 2 0)
 		   ((emacs
 		     (29 3)))
 		   "A treesit based major mode for haskell" tar
@@ -1281,7 +1283,7 @@
 		    (:maintainer "Pranshu Sharma" . "pranshu@bauherren.ovh")
 		    (:authors
 		     ("Pranshu Sharma" . "pranshu@bauherren.ovh"))
-		    (:commit . "34faec17375cecfa4624fe4fbf5e8643b64df8ce"))])
+		    (:commit . "81876a51920931710408e17b45ec8ac19206b318"))])
  (helm .
        [(4 0 3)
 	((helm-core
@@ -1631,19 +1633,19 @@
 	       ("Jon Oddie" . "j.j.oddie@gmail.com"))
 	      (:commit . "8e8487712d150178be7297604d0f47fd036a6d8d"))])
  (magit .
-	[(4 3 2)
+	[(4 3 5)
 	 ((emacs
 	   (27 1))
 	  (compat
-	   (30 0 2 0))
+	   (30 1 0 0))
 	  (llama
 	   (0 6 2))
 	  (magit-section
-	   (4 3 2))
+	   (4 3 5))
 	  (seq
 	   (2 24))
 	  (transient
-	   (0 8 7))
+	   (0 8 8))
 	  (with-editor
 	   (3 4 3)))
 	 "A Git porcelain inside Emacs" tar
@@ -1655,9 +1657,9 @@
 	  (:authors
 	   ("Marius Vollmer" . "marius.vollmer@gmail.com")
 	   ("Jonas Bernoulli" . "emacs.magit@jonas.bernoulli.dev"))
-	  (:commit . "bf58615a033b8c827bf630962531c67539789215"))])
+	  (:commit . "04ee83d93fabbfbe202e9e7dc781b0dcd4d5b502"))])
  (magit-section .
-		[(4 3 2)
+		[(4 3 5)
 		 ((emacs
 		   (27 1))
 		  (compat
@@ -1672,7 +1674,7 @@
 		  (:maintainer "Jonas Bernoulli" . "emacs.magit@jonas.bernoulli.dev")
 		  (:authors
 		   ("Jonas Bernoulli" . "emacs.magit@jonas.bernoulli.dev"))
-		  (:commit . "bf58615a033b8c827bf630962531c67539789215"))])
+		  (:commit . "04ee83d93fabbfbe202e9e7dc781b0dcd4d5b502"))])
  (markdown-mode .
 		[(2 7)
 		 ((emacs
@@ -2148,7 +2150,7 @@
 	       ("David Christiansen" . "david@davidchristiansen.dk"))
 	      (:commit . "1edda80e2e32b72e77f4f16ae5b83c312c68ee95"))])
  (racket-mode .
-	      [(1 0 20250514 102731)
+	      [(1 0 20250519 91508)
 	       ((emacs
 		 (25 1))
 		(compat
@@ -2812,14 +2814,14 @@
 	       ("Le Wang" . "l26wang@gmail.com"))
 	      (:commit . "9ee5a7657a22e836618813c2e2b64a548d27d2ff"))])
  (xah-fly-keys .
-	       [(26 12 20250503115607)
+	       [(26 12 20250517213917)
 		((emacs
 		  (28 3)))
 		"ergonomic modal keybinding minor mode." tar
 		((:url . "http://xahlee.info/emacs/misc/xah-fly-keys.html")
 		 (:keywords "convenience" "vi" "vim" "ergoemacs" "keybinding")
 		 (:maintainer "Xah Lee" . "xah@xahlee.org")
-		 (:commit . "239f93ce99550be46a451df91c636b4bd5d6af8b"))])
+		 (:commit . "edde947a4f27658c4a0b958461a77512176b8904"))])
  (xkcd .
        [(1 1)
 	((json
