@@ -4,8 +4,8 @@
 
 ;; Author: Love Lagerkvist
 ;; URL: https://github.com/motform/arduino-cli-mode
-;; Package-Version: 20250412.2204
-;; Package-Revision: 15c3e0a7fa76
+;; Package-Version: 20250524.901
+;; Package-Revision: aa93d49dc90c
 ;; Package-Requires: ((emacs "25.1"))
 ;; Created: 2019-11-16
 ;; Keywords: processes tools
@@ -73,38 +73,65 @@
 ;; values are passed to the shell as part of an arduino-cli command
 ;; line.
 
+;; Simple FQBNs have the format <vendor>:<architecture>:<board-id> but
+;; the full syntax is more complicated, and arduino-cli-mode simply
+;; passes the value to arduino-cli without parsing it in any way.
+
 (defcustom arduino-cli-default-fqbn nil
   "Default fqbn to use if board selection fails."
   :group 'arduino-cli
-  :type  'string)
+  :type  '(choice 
+	   (const :tag "No default (error message if board selection fails)" 
+		  nil)
+	   (string :tag "Fully qualified board name")))
+
+;; This is a string that is an "Upload port address, e.g.: COM3 or
+;; /dev/ttyACM2" (according to arduino-cli help message).
+;; It might be possible to validate it, but for now we just treat
+;; it as a string; arduino-cli-mode does not parse it, but simply
+;; passes the value to arduino-cli.
 
 (defcustom arduino-cli-default-port nil
   "Default port to use if board selection fails."
   :group 'arduino-cli
-  :type  'string)
+  :type  '(choice 
+	   (const :tag "No default (error message if board selection fails)" 
+		  nil)
+	   (string :tag "Port address")))
 
 (defcustom arduino-cli-verify nil
-  "Verify uploaded binary after the upload."
+  "Non-nil means verify uploaded binary after the upload."
   :group 'arduino-cli
   :type  'boolean)
 
 (defcustom arduino-cli-warnings nil
-  "Set GCC warning level, can be nil (default), 'default, 'more or 'all."
+  "Set GCC warning level, can be nil (none), `default', `more' or `all'."
   :group 'arduino-cli
-  :type  'boolean)
+  :type  '(choice (const :tag "--warnings default" default)
+		  (const :tag "--warnings more" more)
+		  (const :tag "--warnings all" all)
+		  (const :tag "No warnings flag; default level is \"none\"" nil)))
 
 (defcustom arduino-cli-verbosity nil
-  "Set arduino-cli verbosity level, can be nil (default), 'quiet or 'verbose."
+  "The verbosity flags (if any) to pass to arduino-cli commands.
+
+`quiet' passes --quiet to applicable arduino-cli commands
+(otherwise ignored).
+
+`verbose' passes --verbose to arduino-cli compile commands, 
+or all commands if arduino-cli-compile-only-verbosity is set to nil."
   :group 'arduino-cli
-  :type  'boolean)
+  :type  '(choice (const :tag "Quiet" quiet)
+		  (const :tag "Verbose" verbose)
+		  (const :tag "None" nil)))
 
 (defcustom arduino-cli-compile-only-verbosity t
-  "If true (default), only apply verbosity setting to compilation."
+  "Non-nil (default) means only apply verbosity setting to compilation."
   :group 'arduino-cli
   :type 'boolean)
 
 (defcustom arduino-cli-compile-color t
-  "If true (default), apply ANSI colors from compilation output."
+  "Non-nil (default) means apply ANSI colors from compilation output."
   :group 'arduino-cli
   :type 'boolean)
 
@@ -178,7 +205,7 @@ PATH should be an absolute directory name."
          (cmd  (concat "arduino-cli " cmd))
          (cmd* (arduino-cli--add-flags 'message cmd))
          (out  (shell-command-to-string cmd*)))
-    (message (string-trim out))))
+    (message "%s" (string-trim out))))
 
 (defun arduino-cli--arduino? (usb-device)
   "Return USB-DEVICE if it is an Arduino, nil otherwise."
@@ -591,8 +618,8 @@ If provided, REASON is printed in a message in the buffer."
     ["New sketch" arduino-cli-new-sketch]
     "--"
     ["Compile Project"            arduino-cli-compile]
-    ["Upload Project"             arduino-cli-compile-and-upload]
-    ["Compile and Upload Project" arduino-cli-upload]
+    ["Upload Project"             arduino-cli-upload]
+    ["Compile and Upload Project" arduino-cli-compile-and-upload]
     "--"
     ["Board list"     arduino-cli-board-list]
     ["Core list"      arduino-cli-core-list]

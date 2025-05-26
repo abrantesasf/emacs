@@ -3,8 +3,8 @@
 ;; Author: Vitalie Spinu
 ;; Maintainer: Vitalie Spinu <spinuvit@gmail.com>
 ;; Copyright (C) 2013-2022  Free Software Foundation, Inc.
-;; Package-Version: 20230317.1218
-;; Package-Revision: ca060e081a1f
+;; Package-Version: 20250525.2122
+;; Package-Revision: 14b3abc1e246
 ;; Package-Requires: ((emacs "25"))
 ;; URL: https://github.com/polymode/polymode
 ;; Keywords: languages, multi-modes, processes
@@ -47,10 +47,17 @@
 (require 'easymenu)
 (require 'derived)
 
-(defvar polymode-prefix-key nil
-  "[Obsoleted] Prefix key for the polymode mode keymap.
-Not effective after loading the polymode library.")
-(make-obsolete-variable 'polymode-prefix-key "Unbind in `polymode-mode-map'" "v0.1.6")
+(defvar polymode-prefix-key "\M-n"
+  "Default prefix key in `polymode-minor-mode-map'.
+Not effective after loading the polymode library.
+
+Instead of setting this key you can programatically bind it directly
+in `polymode-minor-mode-map` keymap:
+
+ (define-key polymode-minor-mode-map (kbd \"M-n\") nil)  ;unbind the default M-n prefix
+ (define-key polymode-minor-mode-map (kbd \"C-c n\") polymode-map)
+")
+
 
 (defvar polymode-map
   (let ((map (define-prefix-command 'polymode-map)))
@@ -75,12 +82,13 @@ Not effective after loading the polymode library.")
     (define-key map "$" #'polymode-show-process-buffer)
     map)
   "Polymode prefix map.
-Lives on `polymode-prefix-key' in polymode buffers.")
+By default, lives on `polymode-prefix-key' in polymode buffers.")
 
 (defvaralias 'polymode-mode-map 'polymode-minor-mode-map)
 (defvar polymode-minor-mode-map
   (let ((map (make-sparse-keymap)))
-    (define-key map (or polymode-prefix-key "\M-n") 'polymode-map)
+    (when polymode-prefix-key
+      (define-key map polymode-prefix-key 'polymode-map))
     map)
   "The minor mode keymap which is inherited by all polymodes.")
 
