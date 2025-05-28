@@ -5,8 +5,8 @@
 ;; Author: Vibhav Pant, Fangrui Song, Ivan Yonchovski
 ;; Keywords: languages
 ;; Package-Requires: ((emacs "28.1") (dash "2.18.0") (f "0.20.0") (ht "2.3") (spinner "1.7.3") (markdown-mode "2.3") (lv "0") (eldoc "1.11"))
-;; Package-Version: 20250526.1125
-;; Package-Revision: e15a99696edc
+;; Package-Version: 20250527.818
+;; Package-Revision: df11f28fd391
 
 ;; URL: https://github.com/emacs-lsp/lsp-mode
 ;; This program is free software; you can redistribute it and/or modify
@@ -974,6 +974,7 @@ Changes take effect only when a new session is started."
     (zig-ts-mode . "zig")
     (text-mode . "plaintext")
     (markdown-mode . "markdown")
+    (markdown-ts-mode . "markdown")
     (gfm-mode . "markdown")
     (beancount-mode . "beancount")
     (conf-toml-mode . "toml")
