@@ -2187,14 +2187,16 @@
 	     ("Michelangelo Rodriguez" . "michelangelo.rodriguez@gmail.com"))
 	    (:commit . "a7a8d4adc4f4590669cb8cbad086db12d831ad82"))])
  (greenbar .
-	   [(1 1)
-	    nil "Mark comint output with \"greenbar\" background" tar
+	   [(1 2)
+	    ((emacs
+	      (27 1)))
+	    "Mark comint output with \"greenbar\" background" tar
 	    ((:keywords "faces" "terminals")
 	     (:maintainer "Michael R. Mauger" . "michael@mauger.com")
 	     (:authors
 	      ("Michael R. Mauger" . "michael@mauger.com"))
 	     (:url . "https://elpa.gnu.org/packages/greenbar.html")
-	     (:commit . "9526f29d073c533c3e54f0a7597eef1587ffb99e"))])
+	     (:commit . "7b651257bd0536d454f4b896212b3fe1f8c75024"))])
  (gtags-mode .
 	     [(1 8 6)
 	      ((emacs
@@ -4330,7 +4332,7 @@
 	     ("Artur Malabarba" . "emacs@endlessparentheses.com"))
 	    (:commit . "fffe8d0b42b143a2e7df0470d9049fa57b6ecac5"))])
  (spacious-padding .
-		   [(0 6 1)
+		   [(0 7 0)
 		    ((emacs
 		      (28 1)))
 		    "Increase the padding/spacing of frames and windows" tar
@@ -4339,7 +4341,7 @@
 		     (:maintainer "Protesilaos Stavrou" . "info@protesilaos.com")
 		     (:authors
 		      ("Protesilaos Stavrou" . "info@protesilaos.com"))
-		     (:commit . "cd33d70f6cd9d8f3a2f6f7831711c8230d21649d"))])
+		     (:commit . "60d1a343d2e740920750cdfc389972b363e73411"))])
  (speedrect .
 	    [(0 7)
 	     ((emacs
@@ -4776,11 +4778,11 @@
 	       (:url . "https://elpa.gnu.org/packages/transcribe.html")
 	       (:commit . "89832e4cdc1e6d8262a4a2c9d1ff70f398b8faf0"))])
  (transient .
-	    [(0 8 8)
+	    [(0 9 1)
 	     ((emacs
 	       (26 1))
 	      (compat
-	       (30 1 0 0))
+	       (30 1))
 	      (seq
 	       (2 24)))
 	     "Transient commands" tar
@@ -4789,7 +4791,7 @@
 	      (:maintainer "Jonas Bernoulli" . "emacs.transient@jonas.bernoulli.dev")
 	      (:authors
 	       ("Jonas Bernoulli" . "emacs.transient@jonas.bernoulli.dev"))
-	      (:commit . "25b994a565ce8035330b0a3071ee430c0282349e"))])
+	      (:commit . "7937e57e29b5f3ee6f871e67e69a1fb20f353c38"))])
  (transient-cycles .
 		   [(1 1)
 		    ((emacs
@@ -5385,7 +5387,7 @@
 	  ("Zachary Romero" . "zkry@posteo.org"))
 	 (:commit . "09e46d563f1f3ff948852e08360c7d3c76e2acba"))])
  (yasnippet .
-	    [(0 14 2)
+	    [(0 14 3)
 	     ((cl-lib
 	       (0 5))
 	      (emacs
@@ -5394,7 +5396,7 @@
 	     ((:url . "http://github.com/joaotavora/yasnippet")
 	      (:keywords "convenience" "emulation")
 	      (:maintainer "Noam Postavsky" . "npostavs@gmail.com")
-	      (:commit . "81a59d1a85da6104958e53f6fa180d204d4eb98d"))])
+	      (:commit . "dd570a6b22364212fff9769cbf4376bdbd7a63c5"))])
  (yasnippet-classic-snippets .
 			     [(1 0 2)
 			      ((yasnippet
