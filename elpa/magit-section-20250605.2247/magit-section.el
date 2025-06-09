@@ -8,8 +8,8 @@
 ;; Homepage: https://github.com/magit/magit
 ;; Keywords: tools
 
-;; Package-Version: 20250601.1028
-;; Package-Revision: 2f1ff91f128f
+;; Package-Version: 20250605.2247
+;; Package-Revision: fd1882b8c981
 ;; Package-Requires: (
 ;;     (emacs "27.1")
 ;;     (compat "30.1")
@@ -1789,6 +1789,7 @@ evaluated its BODY.  Admittedly that's a bit of a hack."
                        (or heading-selection-face
                            'magit-section-heading-selection))
           (overlay-put ov 'evaporate t)
+          (overlay-put ov 'priority '(nil . 9))
           (push ov magit-section-selection-overlays)
           ov)))))
 
@@ -2497,6 +2498,8 @@ necessary.  For use as `imenu-default-goto-function' in
 (cl-defgeneric magit-bookmark-get-filename ()
   (or (buffer-file-name) (buffer-name)))
 
+(cl-defgeneric magit-bookmark-get-value (bookmark mode))
+
 (cl-defgeneric magit-bookmark--get-child-value (section)
   (oref section value))
 
@@ -2518,8 +2521,7 @@ and the buffer-local values of the variables referenced in its
         (bookmark-prop-set bookmark 'mode     major-mode)
         (bookmark-prop-set bookmark 'filename (magit-bookmark-get-filename))
         (bookmark-prop-set bookmark 'defaults (list (magit-bookmark-name)))
-        (dolist (var (get major-mode 'magit-bookmark-variables))
-          (bookmark-prop-set bookmark var (symbol-value var)))
+        (magit-bookmark-get-value bookmark)
         (bookmark-prop-set
          bookmark 'magit-hidden-sections
          (seq-keep (##and (oref % hidden)

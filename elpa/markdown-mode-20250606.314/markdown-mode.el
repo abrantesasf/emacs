@@ -6,8 +6,8 @@
 ;; Author: Jason R. Blevins <jblevins@xbeta.org>
 ;; Maintainer: Jason R. Blevins <jblevins@xbeta.org>
 ;; Created: May 24, 2007
-;; Package-Version: 20250501.551
-;; Package-Revision: 90ad4af79a8b
+;; Package-Version: 20250606.314
+;; Package-Revision: 7c20685df615
 ;; Package-Requires: ((emacs "28.1"))
 ;; Keywords: Markdown, GitHub Flavored Markdown, itex
 ;; URL: https://jblevins.org/projects/markdown-mode/
@@ -10523,7 +10523,7 @@ rows and columns and the column alignment."
     (define-key map (kbd "SPC") #'scroll-up-command)
     (define-key map (kbd ">") #'end-of-buffer)
     (define-key map (kbd "<") #'beginning-of-buffer)
-    (define-key map (kbd "q") #'kill-this-buffer)
+    (define-key map (kbd "q") #'kill-current-buffer)
     (define-key map (kbd "?") #'describe-mode)
     map)
   "Keymap for `markdown-view-mode'.")

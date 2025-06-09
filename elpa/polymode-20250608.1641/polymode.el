@@ -3,8 +3,8 @@
 ;; Author: Vitalie Spinu
 ;; Maintainer: Vitalie Spinu <spinuvit@gmail.com>
 ;; Copyright (C) 2013-2022  Free Software Foundation, Inc.
-;; Package-Version: 20250603.2343
-;; Package-Revision: b394faef2704
+;; Package-Version: 20250608.1641
+;; Package-Revision: a8ad41fa00c6
 ;; Package-Requires: ((emacs "25"))
 ;; URL: https://github.com/polymode/polymode
 ;; Keywords: languages, multi-modes, processes
@@ -71,6 +71,7 @@ in `polymode-minor-mode-map` keymap:
     ;; chunk manipulation
     (define-key map "\M-k" #'polymode-kill-chunk)
     (define-key map "\M-m" #'polymode-mark-or-extend-chunk)
+    (define-key map "\M-w" #'polymode-kill-ring-save-chunk)
     (define-key map "\C-t" #'polymode-toggle-chunk-narrowing)
     ;; backends
     (define-key map "e" #'polymode-export)
@@ -244,6 +245,23 @@ Return the number of chunks of the same type moved over."
       (tail (if (= pmin (nth 1 span))
                 (pm-span-to-range span)
               (pm-chunk-range (1- (nth 1 span))))))))
+
+(defun polymode-kill-ring-save-chunk ()
+  "Copy current chunk into the kill-ring.
+When in the head of chunk, copy the chunk including the head and tail,
+otherwise only the body span.
+When called interactively, highlight the copie region for `copy-region-blink-delay'."
+  (interactive)
+  (let ((span (pm-innermost-span)))
+    (let ((range (if (memq (car span) '(nil body))
+                     (pm-span-to-range span)
+                   (pm-chunk-range))))
+      (copy-region-as-kill (car range) (cdr range))
+      (when (called-interactively-p 'interactive)
+        (let ((overlay (make-overlay (car range) (cdr range))))
+          (overlay-put overlay 'face  'highlight)
+          (run-with-timer copy-region-blink-delay nil
+                          (lambda () (delete-overlay overlay))))))))
 
 (defun polymode-mark-or-extend-chunk ()
   "DWIM command to repeatedly mark chunk or extend region.
