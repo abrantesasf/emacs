@@ -8,8 +8,8 @@
 ;; Homepage: https://github.com/magit/magit
 ;; Keywords: tools
 
-;; Package-Version: 20250605.2247
-;; Package-Revision: fd1882b8c981
+;; Package-Version: 20250610.1522
+;; Package-Revision: 0daafe08149b
 ;; Package-Requires: (
 ;;     (emacs "27.1")
 ;;     (compat "30.1")
@@ -107,7 +107,8 @@ similar defect.")
 
 (defvar magit-section-movement-hook nil
   "Hook run by `magit-section-goto'.
-That function in turn is used by all section movement commands.")
+That function in turn is used by all section movement commands.
+See also info node `(magit)Section Movement'.")
 
 (defvar magit-section-set-visibility-hook
   (list #'magit-section-cached-visibility)
@@ -875,6 +876,8 @@ If there is no previous sibling section, then move to the parent."
   (run-hook-with-args 'magit-section-movement-hook (magit-current-section)))
 
 (defun magit-section-goto (arg)
+  "Run `magit-section-movement-hook'.
+See info node `(magit)Section Movement'."
   (if (integerp arg)
       (progn (forward-line arg)
              (setq arg (magit-current-section)))
@@ -1829,6 +1832,8 @@ evaluated its BODY.  Admittedly that's a bit of a hack."
                    (oref section painted))
         (`(focus ,(or 'nil 'plain))
          (paint t)
+         (cl-pushnew section magit-section-highlighted-sections))
+        (`(focus highlight)
          (cl-pushnew section magit-section-highlighted-sections))
         (`(unfocus ,(or 'nil 'highlight))
          (paint nil)

@@ -1015,6 +1015,12 @@ To move within a section use the usual keys (‘C-p’, ‘C-n’, ‘C-b’, �
 etc), whose global bindings are not shadowed.  To move to another
 section use the following commands.
 
+   The section movement commands described here run the hook
+‘magit-section-movement-hook’.  Note that they explicitly run that hook
+and that aribrary other movement, defined in Emacs and other packages,
+do not run that hook.  That hook, and hook functions that can be added
+to it, or are part of its default value, are described below.
+
 ‘p’ (‘magit-section-backward’)
      When not at the beginning of a section, then move to the beginning
      of the current section.  At the beginning of a section, instead
@@ -1047,8 +1053,10 @@ remove function that haven’t even been added yet, for example:
                     'magit-hunk-set-window-start))
 
  -- Variable: magit-section-movement-hook
-     This hook is run by all of the above movement commands, after
-     arriving at the destination.
+     This hook is run by all of the above section movement commands,
+     after arriving at the destination.  It is *not* run by arbitrary
+     other movement commands (such as ‘next-line’), which are provided
+     by Emacs or third-party packages.
 
  -- Function: magit-hunk-set-window-start
      This hook function ensures that the beginning of the current
@@ -1105,9 +1113,11 @@ remove function that haven’t even been added yet, for example:
  -- User Option: magit-update-other-window-delay
      Delay before automatically updating the other window.
 
-     When moving around in certain buffers, then certain other buffers,
-     which are being displayed in another window, may optionally be
-     updated to display information about the section at point.
+     When moving around in certain buffers using Magit’s own section
+     movement commands (but not other movement commands), then certain
+     other buffers, which are being displayed in another window, may
+     optionally be updated to display information about the section at
+     point.
 
      When holding down a key to move by more than just one section, then
      that would update that buffer for each section on the way.  To
@@ -9450,10 +9460,10 @@ Appendix C Keystroke Index
 * -:                                     Logging.             (line 163)
 * - <1>:                                 Diffing.             (line 151)
 * 0:                                     Diffing.             (line 157)
-* 1:                                     Sections.            (line 163)
-* 2:                                     Sections.            (line 163)
-* 3:                                     Sections.            (line 163)
-* 4:                                     Sections.            (line 163)
+* 1:                                     Sections.            (line 173)
+* 2:                                     Sections.            (line 173)
+* 3:                                     Sections.            (line 173)
+* 4:                                     Sections.            (line 173)
 * 5:                                     Repository List.     (line 115)
 * ::                                     Running Git.         (line  94)
 * =:                                     Logging.             (line 155)
@@ -9463,7 +9473,7 @@ Appendix C Keystroke Index
 * > e:                                   Sparse checkouts.    (line  21)
 * > r:                                   Sparse checkouts.    (line  44)
 * > s:                                   Sparse checkouts.    (line  33)
-* ^:                                     Sections.            (line  44)
+* ^:                                     Sections.            (line  50)
 * a:                                     Applying.            (line  34)
 * A:                                     Cherry Picking.      (line   9)
 * A A:                                   Cherry Picking.      (line  17)
@@ -9520,7 +9530,7 @@ Appendix C Keystroke Index
 * c W:                                   Committing.          (line 167)
 * C-<return>:                            Visiting Files and Blobs.
                                                               (line  78)
-* C-<tab>:                               Sections.            (line 138)
+* C-<tab>:                               Sections.            (line 148)
 * C-c C-a:                               Committing.          (line 415)
 * C-c C-b:                               Logging.             (line 116)
 * C-c C-b <1>:                           Diffing.             (line 173)
@@ -9675,7 +9685,7 @@ Appendix C Keystroke Index
                                                               (line 160)
 * C-c M-i:                               Committing.          (line 434)
 * C-c M-s:                               Committing.          (line 318)
-* C-c TAB:                               Sections.            (line 138)
+* C-c TAB:                               Sections.            (line 148)
 * C-w:                                   Common Commands.     (line  22)
 * C-x g:                                 Status Buffer.       (line  23)
 * C-x M-g:                               Transient Commands.  (line  20)
@@ -9733,7 +9743,7 @@ Appendix C Keystroke Index
 * F u:                                   Pulling.             (line  21)
 * g:                                     Modes and Buffers.   (line 265)
 * G:                                     Modes and Buffers.   (line 273)
-* H:                                     Sections.            (line 331)
+* H:                                     Sections.            (line 341)
 * I:                                     Creating Repository. (line   7)
 * j:                                     Logging.             (line 127)
 * j <1>:                                 Diffing.             (line 218)
@@ -9782,22 +9792,22 @@ Appendix C Keystroke Index
 * M r:                                   Remotes.             (line  55)
 * m s:                                   Merging.             (line  67)
 * M u:                                   Remotes.             (line  59)
-* M-1:                                   Sections.            (line 169)
-* M-2:                                   Sections.            (line 169)
-* M-3:                                   Sections.            (line 169)
-* M-4:                                   Sections.            (line 169)
-* M-<tab>:                               Sections.            (line 153)
-* M-n:                                   Sections.            (line  40)
+* M-1:                                   Sections.            (line 179)
+* M-2:                                   Sections.            (line 179)
+* M-3:                                   Sections.            (line 179)
+* M-4:                                   Sections.            (line 179)
+* M-<tab>:                               Sections.            (line 163)
+* M-n:                                   Sections.            (line  46)
 * M-n <1>:                               Committing.          (line 326)
 * M-n <2>:                               Rebasing.            (line 156)
-* M-p:                                   Sections.            (line  35)
+* M-p:                                   Sections.            (line  41)
 * M-p <1>:                               Committing.          (line 321)
 * M-p <2>:                               Rebasing.            (line 153)
 * M-w:                                   Blaming.             (line 134)
 * M-w <1>:                               Common Commands.     (line  39)
 * MM:                                    Rebasing.            (line 243)
 * Mt:                                    Rebasing.            (line 249)
-* n:                                     Sections.            (line  32)
+* n:                                     Sections.            (line  38)
 * n <1>:                                 Blaming.             (line 118)
 * N:                                     Blaming.             (line 121)
 * n <2>:                                 Rebasing.            (line 150)
@@ -9821,7 +9831,7 @@ Appendix C Keystroke Index
 * o r:                                   Submodules.          (line  74)
 * o s:                                   Submodules.          (line  88)
 * o u:                                   Submodules.          (line  84)
-* p:                                     Sections.            (line  27)
+* p:                                     Sections.            (line  33)
 * p <1>:                                 Blaming.             (line 124)
 * P:                                     Blaming.             (line 127)
 * p <2>:                                 Rebasing.            (line 147)
@@ -9869,7 +9879,7 @@ Appendix C Keystroke Index
                                                               (line  36)
 * s <1>:                                 Rebasing.            (line 165)
 * S <1>:                                 Rebasing.            (line 170)
-* S-<tab>:                               Sections.            (line 157)
+* S-<tab>:                               Sections.            (line 167)
 * SPC:                                   Logging.             (line 137)
 * SPC <1>:                               Diffing.             (line 228)
 * SPC <2>:                               Blaming.             (line  94)
@@ -9887,7 +9897,7 @@ Appendix C Keystroke Index
 * T r:                                   Notes.               (line  21)
 * t t:                                   Tagging.             (line  14)
 * T T:                                   Notes.               (line  14)
-* TAB:                                   Sections.            (line 134)
+* TAB:                                   Sections.            (line 144)
 * u:                                     Repository List.     (line 108)
 * u <1>:                                 Staging and Unstaging.
                                                               (line  42)
@@ -10002,7 +10012,7 @@ Appendix D Function and Command Index
 * git-rebase-squish:                     Rebasing.            (line 170)
 * git-rebase-undo:                       Rebasing.            (line 218)
 * ido-enter-magit-status:                Status Buffer.       (line  96)
-* magit-add-section-hook:                Sections.            (line 291)
+* magit-add-section-hook:                Sections.            (line 301)
 * magit-after-save-refresh-status:       Modes and Buffers.   (line 294)
 * magit-am:                              Maildir Patches.     (line   9)
 * magit-am-abort:                        Maildir Patches.     (line  38)
@@ -10131,8 +10141,8 @@ Appendix D Function and Command Index
 * magit-debug-git-executable:            Running Git.         (line 188)
 * magit-debug-git-executable <1>:        Debugging Tools.     (line  69)
 * magit-define-section-jumper:           Section Plumbing.    (line  77)
-* magit-describe-section:                Sections.            (line 331)
-* magit-describe-section-briefly:        Sections.            (line 334)
+* magit-describe-section:                Sections.            (line 341)
+* magit-describe-section-briefly:        Sections.            (line 344)
 * magit-describe-section-briefly <1>:    Section Plumbing.    (line 123)
 * magit-diff:                            Diffing.             (line  22)
 * magit-diff <1>:                        Commands for Buffers Visiting Files.
@@ -10279,7 +10289,7 @@ Appendix D Function and Command Index
 * magit-go-backward <1>:                 Diffing.             (line 173)
 * magit-go-forward:                      Logging.             (line 119)
 * magit-go-forward <1>:                  Diffing.             (line 176)
-* magit-hunk-set-window-start:           Sections.            (line  61)
+* magit-hunk-set-window-start:           Sections.            (line  69)
 * magit-ido-completing-read:             Completion Confirmation and the Selection.
                                                               (line 363)
 * magit-init:                            Creating Repository. (line   7)
@@ -10351,9 +10361,9 @@ Appendix D Function and Command Index
 * magit-log-double-commit-limit:         Logging.             (line 160)
 * magit-log-half-commit-limit:           Logging.             (line 163)
 * magit-log-head:                        Logging.             (line  38)
-* magit-log-maybe-show-more-commits:     Sections.            (line  74)
-* magit-log-maybe-update-blob-buffer:    Sections.            (line  88)
-* magit-log-maybe-update-revision-buffer: Sections.           (line  81)
+* magit-log-maybe-show-more-commits:     Sections.            (line  82)
+* magit-log-maybe-update-blob-buffer:    Sections.            (line  96)
+* magit-log-maybe-update-revision-buffer: Sections.           (line  89)
 * magit-log-merged:                      Commands for Buffers Visiting Files.
                                                               (line  52)
 * magit-log-merged <1>:                  Commands for Buffers Visiting Files.
@@ -10502,33 +10512,33 @@ Appendix D Function and Command Index
 * magit-run-gitk-all:                    Running Git.         (line 122)
 * magit-run-gitk-branches:               Running Git.         (line 125)
 * magit-save-window-configuration:       Modes and Buffers.   (line 112)
-* magit-section-backward:                Sections.            (line  27)
-* magit-section-backward-siblings:       Sections.            (line  35)
+* magit-section-backward:                Sections.            (line  33)
+* magit-section-backward-siblings:       Sections.            (line  41)
 * magit-section-case:                    Section Plumbing.    (line 182)
-* magit-section-cycle:                   Sections.            (line 138)
-* magit-section-cycle-diffs:             Sections.            (line 153)
-* magit-section-cycle-global:            Sections.            (line 157)
-* magit-section-forward:                 Sections.            (line  32)
-* magit-section-forward-siblings:        Sections.            (line  40)
-* magit-section-hide:                    Sections.            (line 179)
-* magit-section-hide-children:           Sections.            (line 191)
+* magit-section-cycle:                   Sections.            (line 148)
+* magit-section-cycle-diffs:             Sections.            (line 163)
+* magit-section-cycle-global:            Sections.            (line 167)
+* magit-section-forward:                 Sections.            (line  38)
+* magit-section-forward-siblings:        Sections.            (line  46)
+* magit-section-hide:                    Sections.            (line 189)
+* magit-section-hide-children:           Sections.            (line 201)
 * magit-section-ident:                   Section Plumbing.    (line 126)
 * magit-section-match:                   Section Plumbing.    (line 134)
-* magit-section-set-window-start:        Sections.            (line  68)
-* magit-section-show:                    Sections.            (line 176)
-* magit-section-show-children:           Sections.            (line 186)
-* magit-section-show-headings:           Sections.            (line 182)
-* magit-section-show-level-1:            Sections.            (line 163)
-* magit-section-show-level-1-all:        Sections.            (line 169)
-* magit-section-show-level-2:            Sections.            (line 163)
-* magit-section-show-level-2-all:        Sections.            (line 169)
-* magit-section-show-level-3:            Sections.            (line 163)
-* magit-section-show-level-3-all:        Sections.            (line 169)
-* magit-section-show-level-4:            Sections.            (line 163)
-* magit-section-show-level-4-all:        Sections.            (line 169)
-* magit-section-toggle:                  Sections.            (line 134)
-* magit-section-toggle-children:         Sections.            (line 194)
-* magit-section-up:                      Sections.            (line  44)
+* magit-section-set-window-start:        Sections.            (line  76)
+* magit-section-show:                    Sections.            (line 186)
+* magit-section-show-children:           Sections.            (line 196)
+* magit-section-show-headings:           Sections.            (line 192)
+* magit-section-show-level-1:            Sections.            (line 173)
+* magit-section-show-level-1-all:        Sections.            (line 179)
+* magit-section-show-level-2:            Sections.            (line 173)
+* magit-section-show-level-2-all:        Sections.            (line 179)
+* magit-section-show-level-3:            Sections.            (line 173)
+* magit-section-show-level-3-all:        Sections.            (line 179)
+* magit-section-show-level-4:            Sections.            (line 173)
+* magit-section-show-level-4-all:        Sections.            (line 179)
+* magit-section-toggle:                  Sections.            (line 144)
+* magit-section-toggle-children:         Sections.            (line 204)
+* magit-section-up:                      Sections.            (line  50)
 * magit-section-value-if:                Section Plumbing.    (line 173)
 * magit-sequence-abort:                  Cherry Picking.      (line  91)
 * magit-sequence-abort <1>:              Cherry Picking.      (line 126)
@@ -10584,15 +10594,15 @@ Appendix D Function and Command Index
 * magit-stash-show:                      Diffing.             (line  86)
 * magit-stash-show <1>:                  Stashing.            (line  98)
 * magit-stash-worktree:                  Stashing.            (line  24)
-* magit-stashes-maybe-update-stash-buffer: Sections.          (line 108)
+* magit-stashes-maybe-update-stash-buffer: Sections.          (line 116)
 * magit-status:                          Status Buffer.       (line  23)
 * magit-status-here:                     Commands for Buffers Visiting Files.
                                                               (line  52)
 * magit-status-here <1>:                 Commands for Buffers Visiting Files.
                                                               (line 166)
-* magit-status-maybe-update-blob-buffer: Sections.            (line 103)
-* magit-status-maybe-update-revision-buffer: Sections.        (line  93)
-* magit-status-maybe-update-stash-buffer: Sections.           (line  98)
+* magit-status-maybe-update-blob-buffer: Sections.            (line 111)
+* magit-status-maybe-update-revision-buffer: Sections.        (line 101)
+* magit-status-maybe-update-stash-buffer: Sections.           (line 106)
 * magit-status-quick:                    Status Buffer.       (line  70)
 * magit-submodule:                       Submodules.          (line  55)
 * magit-submodule-add:                   Submodules.          (line  68)
@@ -10814,12 +10824,12 @@ Appendix E Variable Index
 * magit-revision-use-hash-sections:      Diffing.             (line 391)
 * magit-root-section:                    Section Plumbing.    (line 197)
 * magit-save-repository-buffers:         Modes and Buffers.   (line 314)
-* magit-section-cache-visibility:        Sections.            (line 219)
-* magit-section-initial-visibility-alist: Sections.           (line 203)
-* magit-section-movement-hook:           Sections.            (line  57)
-* magit-section-set-visibility-hook:     Sections.            (line 229)
-* magit-section-show-child-count:        Sections.            (line 356)
-* magit-section-visibility-indicator:    Sections.            (line 246)
+* magit-section-cache-visibility:        Sections.            (line 229)
+* magit-section-initial-visibility-alist: Sections.           (line 213)
+* magit-section-movement-hook:           Sections.            (line  63)
+* magit-section-set-visibility-hook:     Sections.            (line 239)
+* magit-section-show-child-count:        Sections.            (line 366)
+* magit-section-visibility-indicator:    Sections.            (line 256)
 * magit-shell-command-verbose-prompt:    Running Git.         (line 112)
 * magit-stashes-margin:                  Stashing.            (line 119)
 * magit-status-file-list-limit:          Status Buffer.       (line 230)
@@ -10832,7 +10842,7 @@ Appendix E Variable Index
 * magit-uniquify-buffer-names:           Modes and Buffers.   (line 190)
 * magit-unstage-committed:               Staging and Unstaging.
                                                               (line  52)
-* magit-update-other-window-delay:       Sections.            (line 113)
+* magit-update-other-window-delay:       Sections.            (line 121)
 * magit-visit-ref-behavior:              References Buffer.   (line 168)
 * magit-wip-after-apply-mode:            Wip Modes.           (line 172)
 * magit-wip-after-apply-mode-lighter:    Wip Modes.           (line 208)
@@ -10876,166 +10886,166 @@ Ref: Automatic Reverting of File-Visiting Buffers34827
 Ref: Risk of Reverting Automatically39619
 Node: Sections41890
 Ref: Section Movement42695
-Ref: Section Visibility47482
-Ref: Section Hooks54060
-Ref: Section Types and Values56349
-Ref: Section Options57650
-Node: Transient Commands58029
-Node: Transient Arguments and Buffer Variables59505
-Node: Completion Confirmation and the Selection66522
-Ref: Action Confirmation66783
-Ref: Completion and Confirmation75156
-Ref: The Selection78187
-Ref: The hunk-internal region80926
-Ref: Support for Completion Frameworks81850
-Ref: Additional Completion Options86554
-Node: Mouse Support87004
-Node: Running Git87580
-Ref: Viewing Git Output87700
-Ref: Git Process Status89591
-Ref: Running Git Manually90435
-Ref: Git Executable93008
-Ref: Global Git Arguments95897
-Node: Inspecting96612
-Node: Status Buffer97769
-Ref: Status Sections102677
-Ref: Status File List Sections105404
-Ref: Status Log Sections107981
-Ref: Status Header Sections109331
-Ref: Status Module Sections111824
-Ref: Status Options114196
-Node: Repository List115465
-Node: Logging120243
-Ref: Refreshing Logs122978
-Ref: Log Buffer124322
-Ref: Log Margin129049
-Ref: Select from Log132106
-Ref: Reflog134224
-Ref: Cherries135771
-Node: Diffing137543
-Ref: Refreshing Diffs141494
-Ref: Commands Available in Diffs145088
-Ref: Diff Options147485
-Ref: Revision Buffer153469
-Node: Ediffing156710
-Node: References Buffer162760
-Ref: References Sections173320
-Node: Bisecting174105
-Node: Visiting Files and Blobs176416
-Ref: General-Purpose Visit Commands176858
-Ref: Visiting Files and Blobs from a Diff177676
-Node: Blaming180908
-Node: Manipulating187896
-Node: Creating Repository188238
-Node: Cloning Repository188775
-Node: Staging and Unstaging195216
-Ref: Staging from File-Visiting Buffers199140
-Node: Applying200155
-Node: Committing202228
-Ref: Initiating a Commit202855
-Ref: Creating a new commit203167
-Ref: Editing the last commit203277
-Ref: Editing any reachable commit205256
-Ref: Editing any reachable commit and rebasing immediately209669
-Ref: Options used by commit commands211317
-Ref: Used by all or most commit commands211389
-Ref: Used by all squash and fixup commands213620
-Ref: Used by specific commit commands214168
-Ref: Editing Commit Messages214492
-Ref: Using the Revision Stack217046
-Ref: Commit Pseudo Headers219978
-Ref: Commit Mode and Hooks221130
-Ref: Commit Message Conventions223843
-Node: Branching225715
-Ref: The Two Remotes225836
-Ref: Branch Commands228405
-Ref: Branch Git Variables241142
-Ref: Auxiliary Branch Commands246389
-Node: Merging247406
-Node: Resolving Conflicts251566
-Node: Rebasing256940
-Ref: Editing Rebase Sequences261900
-Ref: Information About In-Progress Rebase267133
-Ref: Rebasing-Footnote-1276133
-Node: Cherry Picking276729
-Ref: Reverting281039
-Node: Resetting282399
-Node: Stashing284225
-Node: Transferring290466
-Node: Remotes290688
-Ref: Remote Commands290785
-Ref: Remote Git Variables294737
-Node: Fetching295921
-Node: Pulling298404
-Node: Pushing299430
-Node: Plain Patches303721
-Node: Maildir Patches305192
-Node: Miscellaneous306671
-Node: Tagging307017
-Node: Notes308910
-Node: Submodules311245
-Ref: Listing Submodules311406
-Ref: Submodule Transient313462
-Node: Subtree315815
-Node: Worktree317746
-Node: Sparse checkouts318822
-Node: Bundle321598
-Node: Common Commands321973
-Node: Wip Modes324601
-Ref: Wip Graph329447
-Ref: Legacy Wip Modes331681
-Node: Commands for Buffers Visiting Files334489
-Node: Minor Mode for Buffers Visiting Blobs342716
-Node: Customizing343514
-Node: Per-Repository Configuration345110
-Node: Essential Settings347364
-Ref: Safety347653
-Ref: Performance349334
-Ref: Log Performance352127
-Ref: Diff Performance353432
-Ref: Refs Buffer Performance354773
-Ref: Committing Performance355348
-Ref: Microsoft Windows Performance356330
-Ref: MacOS Performance357419
-Ref: Global Bindings358304
-Ref: Essential Settings-Footnote-1360479
-Node: Plumbing360561
-Node: Calling Git361390
-Ref: Getting a Value from Git362849
-Ref: Calling Git for Effect366475
-Node: Section Plumbing372267
-Ref: Creating Sections372419
-Ref: Section Selection376220
-Ref: Matching Sections377895
-Node: Refreshing Buffers383721
-Node: Conventions386865
-Ref: Theming Faces387029
-Node: FAQ395074
-Node: FAQ - How to ...?395512
-Ref: How to pronounce Magit?395645
-Ref: How to show git's output?396339
-Ref: How to install the gitman info manual?396964
-Ref: How to show diffs for gpg-encrypted files?397775
-Ref: How does branching and pushing work?398184
-Ref: Should I disable VC?398348
-Node: FAQ - Issues and Errors398833
-Ref: Magit is slow398978
-Ref: I changed several thousand files at once and now Magit is unusable399124
-Ref: I am having problems committing399663
-Ref: I am using MS Windows and cannot push with Magit399928
-Ref: I am using macOS and SOMETHING works in shell but not in Magit400328
-Ref: Expanding a file to show the diff causes it to disappear400919
-Ref: Point is wrong in the COMMIT_EDITMSG buffer401269
-Ref: The mode-line information isn't always up-to-date402093
-Ref: A branch and tag sharing the same name breaks SOMETHING402932
-Ref: My Git hooks work on the command-line but not inside Magit403580
-Ref: git-commit-mode isn't used when committing from the command-line404172
-Ref: Point ends up inside invisible text when jumping to a file-visiting buffer406170
-Ref: I am no longer able to save popup defaults406762
-Node: Debugging Tools407559
-Node: Keystroke Index411498
-Node: Function and Command Index449594
-Node: Variable Index501250
+Ref: Section Visibility48066
+Ref: Section Hooks54644
+Ref: Section Types and Values56933
+Ref: Section Options58234
+Node: Transient Commands58613
+Node: Transient Arguments and Buffer Variables60089
+Node: Completion Confirmation and the Selection67106
+Ref: Action Confirmation67367
+Ref: Completion and Confirmation75740
+Ref: The Selection78771
+Ref: The hunk-internal region81510
+Ref: Support for Completion Frameworks82434
+Ref: Additional Completion Options87138
+Node: Mouse Support87588
+Node: Running Git88164
+Ref: Viewing Git Output88284
+Ref: Git Process Status90175
+Ref: Running Git Manually91019
+Ref: Git Executable93592
+Ref: Global Git Arguments96481
+Node: Inspecting97196
+Node: Status Buffer98353
+Ref: Status Sections103261
+Ref: Status File List Sections105988
+Ref: Status Log Sections108565
+Ref: Status Header Sections109915
+Ref: Status Module Sections112408
+Ref: Status Options114780
+Node: Repository List116049
+Node: Logging120827
+Ref: Refreshing Logs123562
+Ref: Log Buffer124906
+Ref: Log Margin129633
+Ref: Select from Log132690
+Ref: Reflog134808
+Ref: Cherries136355
+Node: Diffing138127
+Ref: Refreshing Diffs142078
+Ref: Commands Available in Diffs145672
+Ref: Diff Options148069
+Ref: Revision Buffer154053
+Node: Ediffing157294
+Node: References Buffer163344
+Ref: References Sections173904
+Node: Bisecting174689
+Node: Visiting Files and Blobs177000
+Ref: General-Purpose Visit Commands177442
+Ref: Visiting Files and Blobs from a Diff178260
+Node: Blaming181492
+Node: Manipulating188480
+Node: Creating Repository188822
+Node: Cloning Repository189359
+Node: Staging and Unstaging195800
+Ref: Staging from File-Visiting Buffers199724
+Node: Applying200739
+Node: Committing202812
+Ref: Initiating a Commit203439
+Ref: Creating a new commit203751
+Ref: Editing the last commit203861
+Ref: Editing any reachable commit205840
+Ref: Editing any reachable commit and rebasing immediately210253
+Ref: Options used by commit commands211901
+Ref: Used by all or most commit commands211973
+Ref: Used by all squash and fixup commands214204
+Ref: Used by specific commit commands214752
+Ref: Editing Commit Messages215076
+Ref: Using the Revision Stack217630
+Ref: Commit Pseudo Headers220562
+Ref: Commit Mode and Hooks221714
+Ref: Commit Message Conventions224427
+Node: Branching226299
+Ref: The Two Remotes226420
+Ref: Branch Commands228989
+Ref: Branch Git Variables241726
+Ref: Auxiliary Branch Commands246973
+Node: Merging247990
+Node: Resolving Conflicts252150
+Node: Rebasing257524
+Ref: Editing Rebase Sequences262484
+Ref: Information About In-Progress Rebase267717
+Ref: Rebasing-Footnote-1276717
+Node: Cherry Picking277313
+Ref: Reverting281623
+Node: Resetting282983
+Node: Stashing284809
+Node: Transferring291050
+Node: Remotes291272
+Ref: Remote Commands291369
+Ref: Remote Git Variables295321
+Node: Fetching296505
+Node: Pulling298988
+Node: Pushing300014
+Node: Plain Patches304305
+Node: Maildir Patches305776
+Node: Miscellaneous307255
+Node: Tagging307601
+Node: Notes309494
+Node: Submodules311829
+Ref: Listing Submodules311990
+Ref: Submodule Transient314046
+Node: Subtree316399
+Node: Worktree318330
+Node: Sparse checkouts319406
+Node: Bundle322182
+Node: Common Commands322557
+Node: Wip Modes325185
+Ref: Wip Graph330031
+Ref: Legacy Wip Modes332265
+Node: Commands for Buffers Visiting Files335073
+Node: Minor Mode for Buffers Visiting Blobs343300
+Node: Customizing344098
+Node: Per-Repository Configuration345694
+Node: Essential Settings347948
+Ref: Safety348237
+Ref: Performance349918
+Ref: Log Performance352711
+Ref: Diff Performance354016
+Ref: Refs Buffer Performance355357
+Ref: Committing Performance355932
+Ref: Microsoft Windows Performance356914
+Ref: MacOS Performance358003
+Ref: Global Bindings358888
+Ref: Essential Settings-Footnote-1361063
+Node: Plumbing361145
+Node: Calling Git361974
+Ref: Getting a Value from Git363433
+Ref: Calling Git for Effect367059
+Node: Section Plumbing372851
+Ref: Creating Sections373003
+Ref: Section Selection376804
+Ref: Matching Sections378479
+Node: Refreshing Buffers384305
+Node: Conventions387449
+Ref: Theming Faces387613
+Node: FAQ395658
+Node: FAQ - How to ...?396096
+Ref: How to pronounce Magit?396229
+Ref: How to show git's output?396923
+Ref: How to install the gitman info manual?397548
+Ref: How to show diffs for gpg-encrypted files?398359
+Ref: How does branching and pushing work?398768
+Ref: Should I disable VC?398932
+Node: FAQ - Issues and Errors399417
+Ref: Magit is slow399562
+Ref: I changed several thousand files at once and now Magit is unusable399708
+Ref: I am having problems committing400247
+Ref: I am using MS Windows and cannot push with Magit400512
+Ref: I am using macOS and SOMETHING works in shell but not in Magit400912
+Ref: Expanding a file to show the diff causes it to disappear401503
+Ref: Point is wrong in the COMMIT_EDITMSG buffer401853
+Ref: The mode-line information isn't always up-to-date402677
+Ref: A branch and tag sharing the same name breaks SOMETHING403516
+Ref: My Git hooks work on the command-line but not inside Magit404164
+Ref: git-commit-mode isn't used when committing from the command-line404756
+Ref: Point ends up inside invisible text when jumping to a file-visiting buffer406754
+Ref: I am no longer able to save popup defaults407346
+Node: Debugging Tools408143
+Node: Keystroke Index412082
+Node: Function and Command Index450178
+Node: Variable Index501834
 
 End Tag Table
 

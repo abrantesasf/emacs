@@ -3,8 +3,8 @@
 ;; URL: https://github.com/slime/slime
 ;; Package-Requires: ((emacs "24.3") (macrostep "0.9"))
 ;; Keywords: languages, lisp, slime
-;; Package-Version: 20250608.1355
-;; Package-Revision: 86b68025a9dc
+;; Package-Version: 20250613.1314
+;; Package-Revision: a378958d3b1c
 
 ;;;; License and Commentary
 
@@ -4965,7 +4965,8 @@ function name is prompted."
                                                          (slime-insert-propertized '(face bold) group "\n")
                                                          do
                                                          (slime-insert-xrefs
-                                                          (cadr (slime-analyze-xrefs refs))))))))))
+                                                          (cadr (slime-analyze-xrefs refs))))
+                                                (goto-char (point-min))))))))
 
 ;;;; Macroexpansion
 

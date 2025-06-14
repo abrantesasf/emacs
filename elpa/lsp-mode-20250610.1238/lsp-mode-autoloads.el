@@ -996,6 +996,11 @@ it is disabled.
 (register-definition-prefixes "lsp-toml" '("lsp-toml-"))
 
 
+;;; Generated autoloads from lsp-toml-tombi.el
+
+(register-definition-prefixes "lsp-toml-tombi" '("lsp-tombi-toml-"))
+
+
 ;;; Generated autoloads from lsp-trunk.el
 
 (register-definition-prefixes "lsp-trunk" '("lsp-trunk-"))
