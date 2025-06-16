@@ -1,0 +1,44 @@
+# -*- mode: snippet -*-
+# name: kattis
+# key: kattis
+# --
+/***
+ * Kattis Problem Archive (https://open.kattis.com)
+ * 
+ * Problem   : 
+ * URL       : 
+ * Difficulty: 
+ * Points    : 
+ * Memory    : 
+ * Time      : 
+ *
+ * Código    : Abrantes Araújo Silva Filho
+ * Data      : 
+ * -----------------------------------------------------------------------------
+ */
+
+#include <ctype.h>
+#include <limits.h>
+#include <math.h>
+#include <stdbool.h>
+#include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <strings.h>
+#include <time.h>
+
+typedef long int li;
+typedef long long int lli;
+typedef unsigned long int uli;
+typedef unsigned long long int ulli;
+typedef long double ld;
+
+const int INF = 1e9;
+const lli LLINF = 4e18;
+const double EPS = 1e-9;
+
+int main (void)
+{
+    
+}
