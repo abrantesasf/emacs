@@ -764,6 +764,11 @@ it is disabled.
 (register-definition-prefixes "lsp-ocaml" '("lsp-"))
 
 
+;;; Generated autoloads from lsp-odin.el
+
+(register-definition-prefixes "lsp-odin" '("lsp-odin-"))
+
+
 ;;; Generated autoloads from lsp-openscad.el
 
 (register-definition-prefixes "lsp-openscad" '("lsp-openscad-"))

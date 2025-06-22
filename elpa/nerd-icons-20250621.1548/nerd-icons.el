@@ -4,8 +4,8 @@
 
 ;; Author: Hongyu Ding <rainstormstudio@yahoo.com>, Vincent Zhang <seagle0128@gmail.com>
 ;; Keywords: lisp
-;; Package-Version: 20250616.200
-;; Package-Revision: 71d162a75bf6
+;; Package-Version: 20250621.1548
+;; Package-Revision: 4476b4cabe63
 ;; Package-Requires: ((emacs "24.3"))
 ;; URL: https://github.com/rainstormstudio/nerd-icons.el
 ;; Keywords: convenient, lisp
@@ -931,6 +931,7 @@
     ("^\\(https?://\\)?\\(www\\.\\)?jsfiddle\\.net"           nerd-icons-faicon "nf-fa-jsfiddle")
     ("^\\(https?://\\)?\\(www\\.\\)?maxcdn\\.com"             nerd-icons-faicon "nf-fa-maxcdn")
     ("^\\(https?://\\)?\\(www\\.\\)?stackoverflow\\.com"      nerd-icons-faicon "nf-fa-stack_overflow")
+    ("^\\(https?://\\)?\\(www\\.\\)?codeberg\\.org"           nerd-icons-flicon "nf-linux-codeberg")
     ;; Video
     ("^\\(https?://\\)?\\(www\\.\\)?twitch\\.tv"              nerd-icons-faicon "nf-fa-twitch")
     ("^\\(https?://\\)?\\(www\\.\\)?vimeo\\.com"              nerd-icons-faicon "nf-fa-vimeo")

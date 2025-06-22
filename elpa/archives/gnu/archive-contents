@@ -743,7 +743,7 @@
 			("Ingo Lohmar" . "i.lohmar@gmail.com"))
 		       (:commit . "e62157d43b2c874d2edbd547c3bdfb05d0a7ae5c"))])
  (compat .
-	 [(30 1 0 0)
+	 [(30 1 0 1)
 	  ((emacs
 	    (24 4))
 	   (seq
@@ -755,7 +755,7 @@
 	   (:authors
 	    ("Philip Kaludercic" . "philipk@posteo.net")
 	    ("Daniel Mendler" . "mail@daniel-mendler.de"))
-	   (:commit . "7179960b7c82a7cca6bac60d79dd7fe09ae390a0"))])
+	   (:commit . "cccd41f549fa88031a32deb26253b462021d7e12"))])
  (cond-star .
 	    [(1 0)
 	     ((emacs
@@ -2198,13 +2198,13 @@
 	     (:url . "https://elpa.gnu.org/packages/greenbar.html")
 	     (:commit . "7b651257bd0536d454f4b896212b3fe1f8c75024"))])
  (gtags-mode .
-	     [(1 9 2)
+	     [(1 9 3)
 	      ((emacs
 		(28)))
 	      "GNU Global integration with xref, project and imenu." tar
 	      ((:url . "https://github.com/Ergus/gtags-mode")
 	       (:keywords "xref" "project" "imenu" "gtags" "global")
-	       (:commit . "2195fc11c3bf6134a361d898ab4787e1a311ac0f"))])
+	       (:commit . "282f000fbe2b2a9c1a60a96e0db44c21df74ebb5"))])
  (guess-language .
 		 [(0 0 1)
 		  ((cl-lib
@@ -4611,7 +4611,7 @@
 		       (:url . "https://elpa.gnu.org/packages/temp-buffer-browse.html")
 		       (:commit . "db6041b0413fdeefb1f1285e1d9c1039c10fbf04"))])
  (tempel .
-	 [(1 4)
+	 [(1 5)
 	  ((emacs
 	    (28 1))
 	   (compat
@@ -4622,7 +4622,7 @@
 	   (:maintainer "Daniel Mendler" . "mail@daniel-mendler.de")
 	   (:authors
 	    ("Daniel Mendler" . "mail@daniel-mendler.de"))
-	   (:commit . "f52a99ebf6ee52a30d435ef1583dc8df3e5f2ca5"))])
+	   (:commit . "9fa2c59660fe9473429a51872d3c00e1b95cab86"))])
  (test-simple .
 	      [(1 3 0)
 	       ((cl-lib

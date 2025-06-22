@@ -5,8 +5,8 @@
 ;; Author: Vibhav Pant, Fangrui Song, Ivan Yonchovski
 ;; Keywords: languages
 ;; Package-Requires: ((emacs "28.1") (dash "2.18.0") (f "0.20.0") (ht "2.3") (spinner "1.7.3") (markdown-mode "2.3") (lv "0") (eldoc "1.11"))
-;; Package-Version: 20250617.2256
-;; Package-Revision: 4cbe8d53b6d2
+;; Package-Version: 20250622.959
+;; Package-Revision: 45ab3a83f6b4
 
 ;; URL: https://github.com/emacs-lsp/lsp-mode
 ;; This program is free software; you can redistribute it and/or modify
@@ -185,7 +185,7 @@ As defined by the Language Server Protocol 3.16."
      lsp-json lsp-kotlin lsp-kubernetes-helm lsp-latex lsp-lisp lsp-ltex
      lsp-ltex-plus lsp-lua lsp-fennel lsp-magik lsp-markdown lsp-marksman
      lsp-matlab lsp-mdx lsp-meson lsp-metals lsp-mint lsp-mojo lsp-move lsp-mssql
-     lsp-nextflow lsp-nginx lsp-nim lsp-nix lsp-nushell lsp-ocaml lsp-openscad
+     lsp-nextflow lsp-nginx lsp-nim lsp-nix lsp-nushell lsp-ocaml lsp-odin lsp-openscad
      lsp-pascal lsp-perl lsp-perlnavigator lsp-php lsp-pls lsp-postgres
      lsp-purescript lsp-pwsh lsp-pyls lsp-pylsp lsp-pyright lsp-python-ms lsp-python-ty
      lsp-qml lsp-r lsp-racket lsp-remark lsp-rf lsp-roc lsp-roslyn lsp-rubocop
@@ -1005,7 +1005,9 @@ Changes take effect only when a new session is started."
     (yang-mode . "yang")
     (matlab-mode . "matlab")
     (message-mode . "plaintext")
-    (mu4e-compose-mode . "plaintext"))
+    (mu4e-compose-mode . "plaintext")
+    (odin-mode . "odin")
+    (odin-ts-mode . "odin"))
   "Language id configuration.")
 
 (defvar lsp--last-active-workspaces nil
