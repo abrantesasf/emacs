@@ -8,8 +8,8 @@
 ;; Homepage: https://github.com/magit/magit
 ;; Keywords: tools
 
-;; Package-Version: 20250610.1522
-;; Package-Revision: 0daafe08149b
+;; Package-Version: 20250628.1947
+;; Package-Revision: 725efbd24964
 ;; Package-Requires: (
 ;;     (emacs "27.1")
 ;;     (compat "30.1")
@@ -307,6 +307,7 @@ no effect.  This also has no effect for Emacs >= 28, where
 
 (defvar-local magit-section-pre-command-region-p nil)
 (defvar-local magit-section-pre-command-section nil)
+
 (defvar-local magit-section-highlight-force-update nil)
 (defvar-local magit-section-highlight-overlays nil)
 (defvar-local magit-section-selection-overlays nil)
