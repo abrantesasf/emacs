@@ -26,6 +26,9 @@
 ;; Tamanho padrão da fonte e Firefox-font-size-style
 (load "firefox_font_size.el")
 
+;; Fonte padrão do Emacs:
+(load "font.el")
+
 ;; Firefox-fullscreen
 (load "firefox_fullscreen.el")
 
