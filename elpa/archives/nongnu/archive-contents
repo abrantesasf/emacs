@@ -1112,7 +1112,7 @@
 	       ("Jonas Bernoulli" . "emacs.git-modes@jonas.bernoulli.dev"))
 	      (:commit . "27af84f31ed022267b7108ad10ea286631f88e88"))])
  (gnosis .
-	 [(0 5 2)
+	 [(0 5 3)
 	  ((emacs
 	    (27 2))
 	   (emacsql
@@ -1129,7 +1129,7 @@
 	   (:maintainer "Thanos Apollo" . "public@thanosapollo.org")
 	   (:authors
 	    ("Thanos Apollo" . "public@thanosapollo.org"))
-	   (:commit . "a9a0cdd941f97203a6fda22e3550e2f5238ab27e"))])
+	   (:commit . "4b87d58574d1b8cb2eb7bf7fe571efa758838c03"))])
  (gnu-apl-mode .
 	       [(1 5 1)
 		nil "Emacs mode for GNU APL" tar
@@ -1534,7 +1534,7 @@
 		(:url . "https://elpa.nongnu.org/nongnu/kotlin-mode.html")
 		(:commit . "d92c3b773473e9fe15f61f6177e4fbf097aadd05"))])
  (llama .
-	[(0 6 3)
+	[(1 0 0)
 	 ((emacs
 	   (26 1))
 	  (compat
@@ -1542,7 +1542,7 @@
 	 "Compact syntax for short lambda" tar
 	 ((:url . "https://github.com/tarsius/llama")
 	  (:keywords "extensions")
-	  (:commit . "6a67e4253cc02aa9ce85ef96290c95198b65d913"))])
+	  (:commit . "0cc2daffded18eea7f00a318cfa3e216977ffe50"))])
  (logview .
 	  [(0 19 2)
 	   ((emacs
@@ -1637,19 +1637,19 @@
 	       ("Jon Oddie" . "j.j.oddie@gmail.com"))
 	      (:commit . "8e8487712d150178be7297604d0f47fd036a6d8d"))])
  (magit .
-	[(4 3 6)
+	[(4 3 8)
 	 ((emacs
 	   (27 1))
 	  (compat
 	   (30 1))
 	  (llama
-	   (0 6 3))
+	   (1 0 0))
 	  (magit-section
-	   (4 3 6))
+	   (4 3 8))
 	  (seq
 	   (2 24))
 	  (transient
-	   (0 9 0))
+	   (0 9 3))
 	  (with-editor
 	   (3 4 4)))
 	 "A Git porcelain inside Emacs" tar
@@ -1661,15 +1661,15 @@
 	  (:authors
 	   ("Marius Vollmer" . "marius.vollmer@gmail.com")
 	   ("Jonas Bernoulli" . "emacs.magit@jonas.bernoulli.dev"))
-	  (:commit . "2f1ff91f128f28aa277e0e060ef44b4be8a989c1"))])
+	  (:commit . "5b820a1d1e94649e0f218362286d520d9f29ac2c"))])
  (magit-section .
-		[(4 3 6)
+		[(4 3 8)
 		 ((emacs
 		   (27 1))
 		  (compat
 		   (30 1))
 		  (llama
-		   (0 6 3))
+		   (1 0 0))
 		  (seq
 		   (2 24)))
 		 "Sections for read-only buffers" tar
@@ -1678,7 +1678,7 @@
 		  (:maintainer "Jonas Bernoulli" . "emacs.magit@jonas.bernoulli.dev")
 		  (:authors
 		   ("Jonas Bernoulli" . "emacs.magit@jonas.bernoulli.dev"))
-		  (:commit . "2f1ff91f128f28aa277e0e060ef44b4be8a989c1"))])
+		  (:commit . "5b820a1d1e94649e0f218362286d520d9f29ac2c"))])
  (markdown-mode .
 		[(2 7)
 		 ((emacs
