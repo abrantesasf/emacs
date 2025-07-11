@@ -1528,7 +1528,7 @@
 	      (:url . "https://elpa.gnu.org/packages/el-search.html")
 	      (:commit . "43779b910025aba2574213cf3eabee2132c0a175"))])
  (eldoc .
-	[(1 15 0)
+	[(1 16 0)
 	 ((emacs
 	   (26 3)))
 	 "Show function arglist or variable docstring in echo area" tar
@@ -1537,7 +1537,7 @@
 	  (:authors
 	   ("Noah Friedman" . "friedman@splode.com"))
 	  (:url . "https://elpa.gnu.org/packages/eldoc.html")
-	  (:commit . "dc744fe6f3cd185bd9d29f61b08cd4c524e3969e"))])
+	  (:commit . "b85d9048f4a32c7c50894e991423d021d9f95317"))])
  (electric-spacing .
 		   [(5 0)
 		    nil "Insert operators with surrounding spaces smartly" tar
@@ -2886,6 +2886,19 @@
 	    (:authors
 	     ("Augusto Stoffel" . "arstoffel@gmail.com"))
 	    (:commit . "db669451bbee7d2ea9872c28661c4679391b9644"))])
+ (mathsheet .
+	    [(1 2)
+	     ((peg
+	       (1 0))
+	      (emacs
+	       (28 1)))
+	     "Generate dynamic math worksheets" tar
+	     ((:url . "https://gitlab.com/ianxm/mathsheet")
+	      (:keywords "tools" "education" "math")
+	      (:maintainer "Ian Martins" . "ianxm@jhu.edu")
+	      (:authors
+	       ("Ian Martins" . "ianxm@jhu.edu"))
+	      (:commit . "344d10db24358c0974bdd9fffc2e3f8d960fbb07"))])
  (matlab-mode .
 	      [(6 3)
 	       ((emacs
@@ -2901,15 +2914,15 @@
 		 ("Eric M. Ludlam" . "eludlam@mathworks.com"))
 		(:commit . "935137844e16551a5369f928d2591556be7fb9c2"))])
  (mct .
-      [(1 0 0)
+      [(1 1 0)
        ((emacs
 	 (29 1)))
        "Minibuffer Confines Transcended" tar
-       ((:url . "https://git.sr.ht/~protesilaos/mct")
+       ((:url . "https://github.com/protesilaos/mct")
 	(:maintainer "Protesilaos Stavrou" . "info@protesilaos.com")
 	(:authors
 	 ("Protesilaos Stavrou" . "info@protesilaos.com"))
-	(:commit . "2cbf74edb4f4553d7075b34e06adcf59e96efda2"))])
+	(:commit . "306cb704196c643b552aceb5893693641ca747d9"))])
  (memory-usage .
 	       [(0 2)
 		nil "Analyze the memory usage of Emacs in various ways" tar
@@ -3007,16 +3020,16 @@
 	      ("Michael Abraham Shulman" . "viritrilbia@gmail.com"))
 	     (:commit . "b1f5c7dbdc405e6e10d9ddd99a43a6b2ad61b176"))])
  (modus-themes .
-	       [(4 8 0)
+	       [(4 8 1)
 		((emacs
-		  (28 1)))
+		  (27 1)))
 		"Elegant, highly legible and customizable themes" tar
 		((:url . "https://github.com/protesilaos/modus-themes")
 		 (:keywords "faces" "theme" "accessibility")
 		 (:maintainer "Protesilaos Stavrou" . "info@protesilaos.com")
 		 (:authors
 		  ("Protesilaos Stavrou" . "info@protesilaos.com"))
-		 (:commit . "b7aa3ae780975b6dda98a75197a6ff89876bb7b7"))])
+		 (:commit . "2f19a515110f7fcc407fcc32b9cdfdb26a853eb5"))])
  (mpdired .
 	  [(3)
 	   ((emacs

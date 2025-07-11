@@ -508,7 +508,7 @@ it is disabled.
 
 ;;; Generated autoloads from lsp-jsonnet.el
 
-(register-definition-prefixes "lsp-jsonnet" '("lsp-clients-jsonnet-server-executable"))
+(register-definition-prefixes "lsp-jsonnet" '("lsp-clients-jsonnet-server-"))
 
 
 ;;; Generated autoloads from lsp-kotlin.el
