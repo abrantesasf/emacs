@@ -7916,13 +7916,19 @@ minor mode.  Currently this mode only establishes a few key bindings,
 but this might be extended.
 
 ‘p’ (‘magit-blob-previous’)
-     Visit the previous blob which modified the current file.
+     This command visits the previous blob that modified the current
+     file.
 
 ‘n’ (‘magit-blob-next’)
-     Visit the next blob which modified the current file.
+     This command visit the next blob that modified the current file.
 
-‘q’ (‘magit-kill-this-buffer’)
-     Kill the current buffer.
+‘q’ (‘magit-bury-or-kill-buffer’)
+     This command buries the current buffer, if that is being displayed
+     in multiple windows and/or when a prefix argument is used.  If
+     neither is the case, it instead kills the current buffer.
+
+   You might want to bind ‘u’ to another command.  Suitable commands
+include ‘bury-buffer’, ‘magit-bury-buffer’ and ‘magit-kill-this-buffer’.
 
 
 File: magit.info,  Node: Customizing,  Next: Plumbing,  Prev: Miscellaneous,  Up: Top
@@ -9818,7 +9824,7 @@ Appendix C Keystroke Index
 * N:                                     Blaming.             (line 121)
 * n <2>:                                 Rebasing.            (line 150)
 * n <3>:                                 Minor Mode for Buffers Visiting Blobs.
-                                                              (line  16)
+                                                              (line  17)
 * o:                                     Submodules.          (line  55)
 * O:                                     Subtree.             (line   9)
 * o a:                                   Submodules.          (line  68)
@@ -9857,7 +9863,7 @@ Appendix C Keystroke Index
 * q <1>:                                 Logging.             (line 110)
 * q <2>:                                 Blaming.             (line 130)
 * q <3>:                                 Minor Mode for Buffers Visiting Blobs.
-                                                              (line  19)
+                                                              (line  20)
 * r:                                     Rebasing.            (line  10)
 * r <1>:                                 Rebasing.            (line 159)
 * r a:                                   Rebasing.            (line 116)
@@ -10074,7 +10080,7 @@ Appendix D Function and Command Index
 * magit-blob-next <1>:                   Commands for Buffers Visiting Files.
                                                               (line 153)
 * magit-blob-next <2>:                   Minor Mode for Buffers Visiting Blobs.
-                                                              (line  16)
+                                                              (line  17)
 * magit-blob-previous:                   Commands for Buffers Visiting Files.
                                                               (line  52)
 * magit-blob-previous <1>:               Commands for Buffers Visiting Files.
@@ -10102,6 +10108,8 @@ Appendix D Function and Command Index
 * magit-builtin-completing-read:         Completion Confirmation and the Selection.
                                                               (line 358)
 * magit-bundle:                          Bundle.              (line   8)
+* magit-bury-or-kill-buffer:             Minor Mode for Buffers Visiting Blobs.
+                                                              (line  20)
 * magit-call-git:                        Calling Git.         (line 138)
 * magit-call-process:                    Calling Git.         (line 141)
 * magit-cancel-section:                  Section Plumbing.    (line  72)
@@ -10345,8 +10353,6 @@ Appendix D Function and Command Index
 * magit-insert-upstream-branch-header:   Status Buffer.       (line 321)
 * magit-insert-user-header:              Status Buffer.       (line 345)
 * magit-jump-to-diffstat-or-diff:        Diffing.             (line 218)
-* magit-kill-this-buffer:                Minor Mode for Buffers Visiting Blobs.
-                                                              (line  19)
 * magit-list-repositories:               Repository List.     (line   6)
 * magit-list-submodules:                 Submodules.          (line  18)
 * magit-list-submodules <1>:             Submodules.          (line  96)
@@ -11002,56 +11008,56 @@ Ref: Wip Graph330301
 Ref: Legacy Wip Modes332535
 Node: Commands for Buffers Visiting Files335343
 Node: Minor Mode for Buffers Visiting Blobs343570
-Node: Customizing344368
-Node: Per-Repository Configuration345964
-Node: Essential Settings348218
-Ref: Safety348507
-Ref: Performance350188
-Ref: Log Performance352981
-Ref: Diff Performance354286
-Ref: Refs Buffer Performance355627
-Ref: Committing Performance356202
-Ref: Microsoft Windows Performance357184
-Ref: MacOS Performance358273
-Ref: Global Bindings359158
-Ref: Essential Settings-Footnote-1361333
-Node: Plumbing361415
-Node: Calling Git362244
-Ref: Getting a Value from Git363703
-Ref: Calling Git for Effect367329
-Node: Section Plumbing373233
-Ref: Creating Sections373385
-Ref: Section Selection377186
-Ref: Matching Sections378861
-Node: Refreshing Buffers384687
-Node: Conventions387831
-Ref: Theming Faces387995
-Node: FAQ396040
-Node: FAQ - How to ...?396478
-Ref: How to pronounce Magit?396611
-Ref: How to show git's output?397305
-Ref: How to install the gitman info manual?397930
-Ref: How to show diffs for gpg-encrypted files?398741
-Ref: How does branching and pushing work?399150
-Ref: Should I disable VC?399314
-Node: FAQ - Issues and Errors399799
-Ref: Magit is slow399944
-Ref: I changed several thousand files at once and now Magit is unusable400090
-Ref: I am having problems committing400629
-Ref: I am using MS Windows and cannot push with Magit400894
-Ref: I am using macOS and SOMETHING works in shell but not in Magit401294
-Ref: Expanding a file to show the diff causes it to disappear401885
-Ref: Point is wrong in the COMMIT_EDITMSG buffer402235
-Ref: The mode-line information isn't always up-to-date403059
-Ref: A branch and tag sharing the same name breaks SOMETHING403898
-Ref: My Git hooks work on the command-line but not inside Magit404546
-Ref: git-commit-mode isn't used when committing from the command-line405138
-Ref: Point ends up inside invisible text when jumping to a file-visiting buffer407136
-Ref: I am no longer able to save popup defaults407728
-Node: Debugging Tools408525
-Node: Keystroke Index412464
-Node: Function and Command Index450560
-Node: Variable Index502216
+Node: Customizing344733
+Node: Per-Repository Configuration346329
+Node: Essential Settings348583
+Ref: Safety348872
+Ref: Performance350553
+Ref: Log Performance353346
+Ref: Diff Performance354651
+Ref: Refs Buffer Performance355992
+Ref: Committing Performance356567
+Ref: Microsoft Windows Performance357549
+Ref: MacOS Performance358638
+Ref: Global Bindings359523
+Ref: Essential Settings-Footnote-1361698
+Node: Plumbing361780
+Node: Calling Git362609
+Ref: Getting a Value from Git364068
+Ref: Calling Git for Effect367694
+Node: Section Plumbing373598
+Ref: Creating Sections373750
+Ref: Section Selection377551
+Ref: Matching Sections379226
+Node: Refreshing Buffers385052
+Node: Conventions388196
+Ref: Theming Faces388360
+Node: FAQ396405
+Node: FAQ - How to ...?396843
+Ref: How to pronounce Magit?396976
+Ref: How to show git's output?397670
+Ref: How to install the gitman info manual?398295
+Ref: How to show diffs for gpg-encrypted files?399106
+Ref: How does branching and pushing work?399515
+Ref: Should I disable VC?399679
+Node: FAQ - Issues and Errors400164
+Ref: Magit is slow400309
+Ref: I changed several thousand files at once and now Magit is unusable400455
+Ref: I am having problems committing400994
+Ref: I am using MS Windows and cannot push with Magit401259
+Ref: I am using macOS and SOMETHING works in shell but not in Magit401659
+Ref: Expanding a file to show the diff causes it to disappear402250
+Ref: Point is wrong in the COMMIT_EDITMSG buffer402600
+Ref: The mode-line information isn't always up-to-date403424
+Ref: A branch and tag sharing the same name breaks SOMETHING404263
+Ref: My Git hooks work on the command-line but not inside Magit404911
+Ref: git-commit-mode isn't used when committing from the command-line405503
+Ref: Point ends up inside invisible text when jumping to a file-visiting buffer407501
+Ref: I am no longer able to save popup defaults408093
+Node: Debugging Tools408890
+Node: Keystroke Index412829
+Node: Function and Command Index450925
+Node: Variable Index502581
 
 End Tag Table
 

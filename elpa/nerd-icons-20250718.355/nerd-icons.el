@@ -4,8 +4,8 @@
 
 ;; Author: Hongyu Ding <rainstormstudio@yahoo.com>, Vincent Zhang <seagle0128@gmail.com>
 ;; Keywords: lisp
-;; Package-Version: 20250714.120
-;; Package-Revision: 46040d0cccb3
+;; Package-Version: 20250718.355
+;; Package-Revision: f3e7ba376424
 ;; Package-Requires: ((emacs "24.3"))
 ;; URL: https://github.com/rainstormstudio/nerd-icons.el
 ;; Keywords: convenient, lisp
@@ -116,6 +116,7 @@
     ("plist"          nerd-icons-faicon "nf-fa-file_code"        :face nerd-icons-dsilver)
     ("xml"            nerd-icons-faicon "nf-fa-file_code_o"      :face nerd-icons-lorange)
     ("json"           nerd-icons-codicon "nf-cod-settings"       :face nerd-icons-yellow)
+    ("jsonc"          nerd-icons-codicon "nf-cod-settings"       :face nerd-icons-yellow)
     ("jsonl"          nerd-icons-codicon "nf-cod-settings"       :face nerd-icons-yellow)
     ("cson"           nerd-icons-codicon "nf-cod-settings"       :face nerd-icons-yellow)
     ("yml"            nerd-icons-codicon "nf-cod-settings"       :face nerd-icons-dyellow)
@@ -570,6 +571,16 @@
     ;; ("test"             nerd-icons-devicon "test-dir")
     ("\\.git"           nerd-icons-sucicon "nf-custom-folder_git")
     ("\\.config"        nerd-icons-sucicon "nf-custom-folder_config")
+    ("hypr"             nerd-icons-flicon "nf-linux-hyprland")
+    ("kitty"            nerd-icons-devicon "nf-dev-terminal")
+    ("^gtk-.*"          nerd-icons-flicon "nf-linux-gtk")
+    ("inkscape"         nerd-icons-devicon "nf-dev-inkscape")
+    ("vlc"              nerd-icons-mdicon "nf-md-vlc")
+    ("discord"          nerd-icons-faicon "nf-fa-discord")
+    ("JetBrains"        nerd-icons-devicon "nf-dev-jetbrains")
+    ("go"               nerd-icons-devicon "nf-dev-go")
+    ("mpv"              nerd-icons-flicon "nf-linux-mpv")
+    ("electron"         nerd-icons-devicon "nf-dev-electron")
     (".?"               nerd-icons-sucicon "nf-custom-folder_oct")))
 
 (defvar nerd-icons-weather-icon-alist
@@ -706,6 +717,7 @@
     (conf-mode                         nerd-icons-codicon "nf-cod-settings"           :face nerd-icons-lyellow)
     (json-mode                         nerd-icons-codicon "nf-cod-settings"           :face nerd-icons-yellow)
     (json-ts-mode                      nerd-icons-codicon "nf-cod-settings"           :face nerd-icons-yellow)
+    (jsonc-mode                        nerd-icons-codicon "nf-cod-settings"           :face nerd-icons-yellow)
     (jsonian-mode                      nerd-icons-codicon "nf-cod-settings"           :face nerd-icons-yellow)
     (yaml-mode                         nerd-icons-codicon "nf-cod-settings"           :face nerd-icons-dyellow)
     (yaml-ts-mode                      nerd-icons-codicon "nf-cod-settings"           :face nerd-icons-dyellow)

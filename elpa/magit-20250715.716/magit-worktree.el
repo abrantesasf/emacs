@@ -33,7 +33,7 @@
 (defcustom magit-read-worktree-directory-function
   #'magit-read-worktree-directory-sibling
   "Function used to read the directory to be used as a new worktree.
-This is called with two argument, the prompt and the branch to be
+This is called with two arguments, the prompt and the branch to be
 checked out.  When not checking out a branch then use nil for the
 second argument."
   :package-version '(magit . "4.3.9")
@@ -41,7 +41,17 @@ second argument."
   :type `(radio (function-item ,#'magit-read-worktree-directory)
                 (function-item ,#'magit-read-worktree-directory-nested)
                 (function-item ,#'magit-read-worktree-directory-sibling)
+                (function-item ,#'magit-read-worktree-directory-offsite)
                 function))
+
+(defcustom magit-read-worktree-offsite-directory
+  (expand-file-name "wtrees/" (or (getenv "XDG_DATA_HOME") "~/.local/share"))
+  "Base directory used by `magit-read-worktree-directory-offsite'.
+That function is suitable as `magit-read-worktree-directory-function',
+but is not used by default."
+  :package-version '(magit . "4.3.9")
+  :group 'magit-commands
+  :type 'directory)
 
 (defvar magit-worktree-read-directory-name-function nil
   "Like `magit-read-worktree-directory-function' but takes only one argument.")
@@ -74,11 +84,36 @@ just \"PREFIX_\".  Always forward PROMPT as-is."
          (name (file-name-nondirectory path)))
     (read-directory-name
      prompt (file-name-directory path) nil nil
-     (concat (if (string-match "/" name)
+     (concat (if (string-match "_" name)
                  (substring name 0 (match-beginning 0))
                name)
              "_"
              (and branch (string-replace "/" "-" branch))))))
+
+(defun magit-read-worktree-directory-offsite (prompt branch)
+  "Call `read-directory-name' in a directory shared by all repositories.
+
+Option `magit-read-worktree-offsite-directory' specifies that shared
+base directory.
+
+For `read-directory-name's INITIAL argument use a string based on the
+name of the current worktree and BRANCH.  Use \"PREFIX_BRANCH\" where
+PREFIX is the name of the current worktree, up to the first underscore,
+and slashes in BRANCH are replaced with dashes.  If BRANCH is nil use
+just \"PREFIX_\".  Always forward PROMPT as-is."
+  (mkdir magit-read-worktree-offsite-directory t)
+  (read-directory-name
+   prompt magit-read-worktree-offsite-directory nil nil
+   (let* ((name (file-name-nondirectory (directory-file-name default-directory)))
+          (name (if (string-match "_" name)
+                    (substring name 0 (match-beginning 0))
+                  name))
+          (name (concat name "_")))
+     (if branch
+         (concat name (string-replace "/" "-" branch))
+       (file-name-nondirectory
+        (make-temp-name
+         (expand-file-name name magit-read-worktree-offsite-directory)))))))
 
 (defun magit--read-worktree-directory (rev branchp)
   (let ((default-directory (magit-toplevel))
