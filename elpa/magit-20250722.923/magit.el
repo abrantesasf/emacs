@@ -17,8 +17,8 @@
 ;; Homepage: https://github.com/magit/magit
 ;; Keywords: git tools vc
 
-;; Package-Version: 20250715.716
-;; Package-Revision: 731642756f50
+;; Package-Version: 20250722.923
+;; Package-Revision: b0fbec38f9a2
 ;; Package-Requires: (
 ;;     (emacs "27.1")
 ;;     (compat "30.1")

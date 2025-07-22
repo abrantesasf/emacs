@@ -2025,7 +2025,9 @@ Instead of invoking this alias for `magit-status' using
 and read the info node `(magit)Getting Started', which
 also contains other useful hints.")
 (autoload 'magit-status-here "magit-status" "\
-Like `magit-status' but with non-nil `magit-status-goto-file-position'." t)
+Like `magit-status' but with non-nil `magit-status-goto-file-position'.
+Before doing so, save all file-visiting buffers belonging to the current
+repository without prompting." t)
 (autoload 'magit-status-quick "magit-status" "\
 Show the status of the current Git repository, maybe without refreshing.
 
