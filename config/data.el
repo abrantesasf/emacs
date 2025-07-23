@@ -10,4 +10,4 @@ e substitui a data e hora pela data e hora atual do sistema."
         (replace-match nova-data)))))
 
 ;; Opcional: você pode adicionar um atalho, por exemplo C-c d
-(global-set-key (kbd "C-c d") #'atualizar-data-no-buffer)
+(global-set-key (kbd "C-c d") 'atualizar-data-no-buffer)
