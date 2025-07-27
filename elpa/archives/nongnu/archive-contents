@@ -1356,16 +1356,16 @@
 	       ("Akib Azmain Turja" . "akib@disroot.org"))
 	      (:commit . "2d3a3f551b52c07a11b9ea0f842ef39915911c55"))])
  (htmlize .
-	  [(1 58)
+	  [(1 59)
 	   ((emacs
-	     (25 1)))
-	   "Convert buffer text and decorations to HTML." tar
-	   ((:url . "https://github.com/hniksic/emacs-htmlize")
+	     (26 1)))
+	   "Convert buffer text and decorations to HTML" tar
+	   ((:url . "https://github.com/emacsorphanage/htmlize")
 	    (:keywords "hypermedia" "extensions")
 	    (:maintainer "Hrvoje Niksic" . "hniksic@gmail.com")
 	    (:authors
 	     ("Hrvoje Niksic" . "hniksic@gmail.com"))
-	    (:commit . "5d2751c4ca101fa0884ce8662f5566736f8257fe"))])
+	    (:commit . "a24ed5a939a32c625b034b0b6d7f46340c100394"))])
  (hyperdrive .
 	     [(0 5 2)
 	      ((emacs
@@ -2831,14 +2831,14 @@
 	       ("Le Wang" . "l26wang@gmail.com"))
 	      (:commit . "9ee5a7657a22e836618813c2e2b64a548d27d2ff"))])
  (xah-fly-keys .
-	       [(27 8 20250721075420)
+	       [(27 8 20250723162832)
 		((emacs
 		  (28 3)))
 		"ergonomic modal keybinding minor mode." tar
 		((:url . "http://xahlee.info/emacs/misc/xah-fly-keys.html")
 		 (:keywords "convenience" "vi" "vim" "ergoemacs" "keybinding")
 		 (:maintainer "Xah Lee" . "xah@xahlee.org")
-		 (:commit . "6325c560b8eaaa1d7726a52ecc2ff055c11f8edf"))])
+		 (:commit . "27bf8de0e59beaf82ff39d4e7b95484e920b6bf8"))])
  (xkcd .
        [(1 1)
 	((json
