@@ -4,8 +4,8 @@
 
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
 ;; Homepage: https://github.com/seagle0128/doom-modeline
-;; Package-Version: 20250718.1833
-;; Package-Revision: 5d9f6a8246a6
+;; Package-Version: 20250729.216
+;; Package-Revision: cb703c217e8e
 ;; Package-Requires: ((emacs "25.1") (compat "30.1.0.0") (nerd-icons "0.1.0") (shrink-path "0.3.1"))
 ;; Keywords: faces mode-line
 

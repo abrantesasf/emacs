@@ -87,7 +87,7 @@
 (declare-function magit-smerge-keep-base "magit-apply" ())
 (declare-function magit-smerge-keep-lower "magit-apply" ())
 
-(eval-when-compile
+(eval-and-compile
   (cl-pushnew 'orig-rev eieio--known-slot-names)
   (cl-pushnew 'action-type eieio--known-slot-names)
   (cl-pushnew 'target eieio--known-slot-names))
