@@ -767,7 +767,7 @@
 	       ("Carsten Dominik" . "carsten.dominik@gmail.com"))
 	      (:commit . "f07e221d4d5597c7ccf4b0003c0909a88bdfcc9e"))])
  (consult .
-	  [(2 6)
+	  [(2 7)
 	   ((emacs
 	     (28 1))
 	    (compat
@@ -776,7 +776,7 @@
 	   ((:url . "https://github.com/minad/consult")
 	    (:keywords "matching" "files" "completion")
 	    (:maintainer "Daniel Mendler" . "mail@daniel-mendler.de")
-	    (:commit . "4314c45d84d9e00d45d2b611562d8fe2e4ddcf48"))])
+	    (:commit . "770c43117aad6add1ca8532207618b7e90aec1fe"))])
  (consult-denote .
 		 [(0 3 1)
 		  ((emacs
@@ -3306,7 +3306,7 @@
 	      ("Ian Dunn" . "dunni@gnu.org"))
 	     (:commit . "8258a4dfa00aa522249cdf9aeea5be4de97bd7c1"))])
  (org-gnosis .
-	     [(0 0 9)
+	     [(0 1 1)
 	      ((emacs
 		(27 2))
 	       (emacsql
@@ -3319,7 +3319,7 @@
 	       (:maintainer "Thanos Apollo" . "public@thanosapollo.org")
 	       (:authors
 		("Thanos Apollo" . "public@thanosapollo.org"))
-	       (:commit . "2f1ed5320b8e9b31c67c0720be2693fe416f16a1"))])
+	       (:commit . "7db80112f08547ae4526f4ca645dbe6e224d27c6"))])
  (org-jami-bot .
 	       [(0 0 5)
 		((emacs

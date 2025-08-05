@@ -3,8 +3,8 @@
 ;; URL: https://github.com/slime/slime
 ;; Package-Requires: ((emacs "24.3") (macrostep "0.9"))
 ;; Keywords: languages, lisp, slime
-;; Package-Version: 20250803.2140
-;; Package-Revision: f12bec08fa43
+;; Package-Version: 20250804.1826
+;; Package-Revision: 59105711dde9
 
 ;;;; License and Commentary
 
@@ -1216,8 +1216,7 @@ Return the created process."
     (comint-mode)
     (set (make-local-variable 'slime-inferior-lisp-connected) nil)
     (add-hook 'comint-preoutput-filter-functions 'slime-insert-inferior-lisp-output 0 t)
-    (let ((process-environment (append env process-environment))
-          (process-connection-type nil))
+    (let ((process-environment (append env process-environment)))
       (comint-exec (current-buffer) "inferior-lisp" program nil program-args))
     (lisp-mode-variables t)
     (let ((proc (get-buffer-process (current-buffer))))

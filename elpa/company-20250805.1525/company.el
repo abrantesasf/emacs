@@ -5,8 +5,8 @@
 ;; Author: Nikolaj Schumacher
 ;; Maintainer: Dmitry Gutov <dmitry@gutov.dev>
 ;; URL: http://company-mode.github.io/
-;; Package-Version: 20250426.1319
-;; Package-Revision: 41f07c7d401c
+;; Package-Version: 20250805.1525
+;; Package-Revision: ca045bc54411
 ;; Keywords: abbrev, convenience, matching
 ;; Package-Requires: ((emacs "26.1"))
 
