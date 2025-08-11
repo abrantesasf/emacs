@@ -5,8 +5,8 @@
 ;; Author: Vibhav Pant, Fangrui Song, Ivan Yonchovski
 ;; Keywords: languages
 ;; Package-Requires: ((emacs "28.1") (dash "2.18.0") (f "0.20.0") (ht "2.3") (spinner "1.7.3") (markdown-mode "2.3") (lv "0") (eldoc "1.11"))
-;; Package-Version: 20250806.1331
-;; Package-Revision: 65a414ddeb84
+;; Package-Version: 20250811.806
+;; Package-Revision: 11f7b17625b6
 
 ;; URL: https://github.com/emacs-lsp/lsp-mode
 ;; This program is free software; you can redistribute it and/or modify
@@ -6112,12 +6112,24 @@ It will show up only if current point has signature help."
 
 (defun lsp--text-document-code-action-params (&optional kind)
   "Code action params."
-  (list :textDocument (lsp--text-document-identifier)
-        :range (if (use-region-p)
-                   (lsp--region-to-range (region-beginning) (region-end))
-                 (lsp--region-to-range (point) (point)))
-        :context `( :diagnostics ,(lsp-cur-possition-diagnostics)
-                    ,@(when kind (list :only (vector kind))))))
+  (let* ((diagnostics (lsp-cur-possition-diagnostics))
+         (range (cond ((use-region-p)
+                       (lsp--region-to-range (region-beginning) (region-end)))
+                      (diagnostics
+                       (let* ((start (point)) (end (point)))
+                         (mapc (-lambda
+                                 ((&Diagnostic
+                                   :range (&Range :start (&Position :line l1 :character c1)
+                                                  :end (&Position :line l2 :character c2))))
+                                 (setq start (min (lsp--line-character-to-point l1 c1) start))
+                                 (setq end (max (lsp--line-character-to-point l2 c2) end)))
+                               diagnostics)
+                         (lsp--region-to-range start end)))
+                      (t (lsp--region-to-range (point) (point))))))
+    (list :textDocument (lsp--text-document-identifier)
+          :range range
+          :context `( :diagnostics ,diagnostics
+                      ,@(when kind (list :only (vector kind)))))))
 
 (defun lsp-code-actions-at-point (&optional kind)
   "Retrieve the code actions for the active region or the current line.
