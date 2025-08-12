@@ -7,10 +7,10 @@
 ;;             Jen-Chieh Shen <jcs090218@gmail.com>
 ;; URL: http://github.com/ardumont/markdown-toc
 ;; Created: 24th May 2014
-;; Package-Version: 20241226.1737
-;; Package-Revision: d2fb4cbd95e5
+;; Package-Version: 20250812.237
+;; Package-Revision: 3835390ac44c
 ;; Keywords: markdown, toc, tools,
-;; Package-Requires: ((emacs "27.1") (markdown-mode "2.1") (dash "2.11.0") (s "1.9.0"))
+;; Package-Requires: ((emacs "28.1") (markdown-mode "2.1") (dash "2.11.0") (s "1.9.0"))
 
 ;; This file is NOT part of GNU Emacs.
 
