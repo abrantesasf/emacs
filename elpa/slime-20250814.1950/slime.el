@@ -3,8 +3,8 @@
 ;; URL: https://github.com/slime/slime
 ;; Package-Requires: ((emacs "24.3") (macrostep "0.9"))
 ;; Keywords: languages, lisp, slime
-;; Package-Version: 20250806.1846
-;; Package-Revision: 1634b952ff2b
+;; Package-Version: 20250814.1950
+;; Package-Revision: 6c7d99473bde
 
 ;;;; License and Commentary
 
@@ -4086,22 +4086,23 @@ inserted in the current buffer."
           (kill-new string)
           (message "Evaluation finished; pushed result to kill ring."))))))
 
-(defun slime-eval-describe (form)
+(cl-defun slime-eval-describe (form &optional (select slime-description-autofocus))
   "Evaluate FORM in Lisp and display the result in a new buffer."
-  (slime-eval-async form (slime-rcurry #'slime-show-description
+  (slime-eval-async form (slime-rcurry (lambda (string package)
+                                         (slime-show-description string package select))
                                        (slime-current-package))))
 
 (defvar slime-description-autofocus nil
   "If non-nil select description windows on display.")
 
-(defun slime-show-description (string package)
+(cl-defun slime-show-description (string package &optional (select slime-description-autofocus))
   ;; So we can have one description buffer open per connection. Useful
   ;; for comparing the output of DISASSEMBLE across implementations.
   ;; FIXME: could easily be achieved with M-x rename-buffer
   (let ((bufname (slime-buffer-name :description)))
     (slime-with-popup-buffer (bufname :package package
                                       :connection t
-                                      :select slime-description-autofocus)
+                                      :select select)
       (princ string)
       (goto-char (point-min)))))
 

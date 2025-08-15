@@ -8,8 +8,8 @@
 ;; Homepage: https://github.com/magit/magit
 ;; Keywords: tools
 
-;; Package-Version: 20250807.2306
-;; Package-Revision: 6c48a8053fc3
+;; Package-Version: 20250813.1330
+;; Package-Revision: 649bc9dc328b
 ;; Package-Requires: (
 ;;     (emacs "28.1")
 ;;     (compat "30.1")
@@ -433,7 +433,7 @@ Magit-Section is documented in info node `(magit-section)'."
   ;; Turn off syntactic font locking, but not by setting
   ;; `font-lock-defaults' because that would enable font locking, and
   ;; not all magit plugins may be ready for that (see #3950).
-  (setq font-lock-keywords-only t)
+  (setq-local font-lock-keywords-only t)
   (setq show-trailing-whitespace nil)
   (setq-local symbol-overlay-inhibit-map t)
   (setq list-buffers-directory (abbreviate-file-name default-directory))

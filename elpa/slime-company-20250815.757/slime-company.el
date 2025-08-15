@@ -4,8 +4,8 @@
 ;;
 ;; Author: Ole Arndt <anwyn@sugarshark.com>
 ;; Keywords: convenience, lisp, abbrev
-;; Package-Version: 20250301.21
-;; Package-Revision: e4f012bf989d
+;; Package-Version: 20250815.757
+;; Package-Revision: 38ab03e40150
 ;; Package-Requires: ((emacs "24.4") (slime "2.13") (company "0.9.0"))
 ;;
 ;; This file is free software; you can redistribute it and/or modify
@@ -245,9 +245,9 @@ be active in derived modes as well."
                 (funcall callback
                          (mapcar
                           (lambda (completion)
-                            (cl-destructuring-bind (sym score _ flags)
+                            (cl-destructuring-bind (sym flags _ _)
                                 completion
-                              (propertize sym 'score score 'flags flags)))
+                              (propertize sym 'flags flags)))
                           (car result))))
               package)))))
 
