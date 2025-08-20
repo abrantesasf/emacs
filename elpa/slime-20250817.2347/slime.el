@@ -3,8 +3,8 @@
 ;; URL: https://github.com/slime/slime
 ;; Package-Requires: ((emacs "24.3") (macrostep "0.9"))
 ;; Keywords: languages, lisp, slime
-;; Package-Version: 20250815.1506
-;; Package-Revision: 582682e86db7
+;; Package-Version: 20250817.2347
+;; Package-Revision: fe2090079cf9
 
 ;;;; License and Commentary
 
@@ -7524,10 +7524,7 @@ and skips comments."
     (slime-forward-cruft)
     (forward-sexp)))
 
-(defconst slime-reader-conditionals-regexp
-  ;; #!+, #!- are SBCL specific reader-conditional syntax.
-  ;; We need this for the source files of SBCL itself.
-  (regexp-opt '("#+" "#-" "#!+" "#!-")))
+(defconst slime-reader-conditionals-regexp (regexp-opt '("#+" "#-")))
 
 (defun slime-forward-reader-conditional ()
   "Move past any reader conditional (#+ or #-) at point."
