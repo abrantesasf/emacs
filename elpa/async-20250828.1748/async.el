@@ -6,8 +6,8 @@
 ;; Maintainer: Thierry Volpiatto <thievol@posteo.net>
 
 ;; Created: 18 Jun 2012
-;; Package-Version: 20250826.517
-;; Package-Revision: 59f6ee68eb9b
+;; Package-Version: 20250828.1748
+;; Package-Revision: e49e41150a74
 ;; Package-Requires: ((emacs "24.4"))
 
 ;; Keywords: async

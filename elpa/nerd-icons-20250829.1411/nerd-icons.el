@@ -4,8 +4,8 @@
 
 ;; Author: Hongyu Ding <rainstormstudio@yahoo.com>, Vincent Zhang <seagle0128@gmail.com>
 ;; Keywords: lisp
-;; Package-Version: 20250815.814
-;; Package-Revision: e98b14248fec
+;; Package-Version: 20250829.1411
+;; Package-Revision: 6868c05c6eb5
 ;; Package-Requires: ((emacs "24.3"))
 ;; URL: https://github.com/rainstormstudio/nerd-icons.el
 ;; Keywords: convenient, lisp
@@ -359,9 +359,16 @@
     ;; odin
     ;; ("odin"        nerd-icons-fileicon "odin") TODO: odin
     ;; File Types
+    ("avci"           nerd-icons-mdicon "nf-md-image"            :face nerd-icons-dred)
+    ("avcs"           nerd-icons-mdicon "nf-md-image_album"      :face nerd-icons-lmaroon)
+    ("avif"           nerd-icons-mdicon "nf-md-image"            :face nerd-icons-dred)
     ("ico"            nerd-icons-octicon "nf-oct-file_media"     :face nerd-icons-blue)
     ("png"            nerd-icons-mdicon "nf-md-file_png_box"     :face nerd-icons-orange)
     ("gif"            nerd-icons-mdicon "nf-md-file_gif_box"     :face nerd-icons-green)
+    ("heic"           nerd-icons-mdicon "nf-md-image"            :face nerd-icons-dred)
+    ("heics"          nerd-icons-mdicon "nf-md-image_album"      :face nerd-icons-lmaroon)
+    ("heif"           nerd-icons-mdicon "nf-md-image"            :face nerd-icons-dred)
+    ("heifs"          nerd-icons-mdicon "nf-md-image_album"      :face nerd-icons-lmaroon)
     ("jpeg"           nerd-icons-mdicon "nf-md-file_jpg_box"     :face nerd-icons-dblue)
     ("jpg"            nerd-icons-mdicon "nf-md-file_jpg_box"     :face nerd-icons-dblue)
     ("webp"           nerd-icons-octicon "nf-oct-file_media"     :face nerd-icons-dblue)
@@ -375,6 +382,7 @@
     ("mp3"            nerd-icons-faicon "nf-fa-music"                  :face nerd-icons-dred)
     ("wav"            nerd-icons-faicon "nf-fa-music"                  :face nerd-icons-dred)
     ("m4a"            nerd-icons-faicon "nf-fa-music"                  :face nerd-icons-dred)
+    ("m4b"            nerd-icons-faicon "nf-fa-music"                  :face nerd-icons-green)
     ("ogg"            nerd-icons-faicon "nf-fa-music"                  :face nerd-icons-dred)
     ("flac"           nerd-icons-faicon "nf-fa-music"                  :face nerd-icons-dred)
     ("opus"           nerd-icons-faicon "nf-fa-music"                  :face nerd-icons-dred)
@@ -915,7 +923,10 @@
     (ement-tabulated-room-list-mode    nerd-icons-faicon "nf-fa-table"                :face nerd-icons-dpurple)
     (ement-room-mode                   nerd-icons-faicon "nf-fa-comments_o"           :face nerd-icons-dpurple)
     (ement-notifications-mode          nerd-icons-faicon "nf-fa-inbox"                :face nerd-icons-dpurple)
-    (authinfo-mode                     nerd-icons-octicon "nf-oct-key"                :face nerd-icons-lblue)))
+    (authinfo-mode                     nerd-icons-octicon "nf-oct-key"                :face nerd-icons-lblue)
+    (show-font-mode                    nerd-icons-faicon "nf-fa-font"                 :face nerd-icons-dred)
+    (show-font-tabulated-mode          nerd-icons-faicon "nf-fa-font"                 :face nerd-icons-dred)
+    (journalctl-mode                   nerd-icons-octicon "nf-oct-log"                :face nerd-icons-dgreen)))
 
 (defvar nerd-icons-url-alist
   '(
