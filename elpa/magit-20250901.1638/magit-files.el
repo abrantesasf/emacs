@@ -377,27 +377,32 @@ in a single window."
   (interactive)
   (kill-buffer))
 
-(defun magit-blob-next ()
-  "Visit the next blob which modified the current file."
-  (interactive)
-  (cond
-   (magit-buffer-file-name
-    (magit-blob-visit
-     (or (magit-blob-successor magit-buffer-revision magit-buffer-file-name)
-         magit-buffer-file-name)))
-   ((buffer-file-name (buffer-base-buffer))
-    (user-error "You have reached the end of time"))
-   ((user-error "Buffer isn't visiting a file or blob"))))
-
-(defun magit-blob-previous ()
+(transient-define-suffix magit-blob-previous ()
   "Visit the previous blob which modified the current file."
+  :inapt-if-not (##and$ (magit-buffer-file-name)
+                        (magit-blob-ancestor (magit-buffer-revision) $))
   (interactive)
-  (if-let ((file (or magit-buffer-file-name
-                     (buffer-file-name (buffer-base-buffer)))))
-      (if-let ((ancestor (magit-blob-ancestor magit-buffer-revision file)))
-          (magit-blob-visit ancestor)
-        (user-error "You have reached the beginning of time"))
-    (user-error "Buffer isn't visiting a file or blob")))
+  (cond-let
+    [[rev  (or magit-buffer-revision "{worktree}")]
+     [file (magit-buffer-file-name)]]
+    ((not file)
+     (user-error "Buffer isn't visiting a file or blob"))
+    ([prev (magit-blob-ancestor rev file)]
+     (apply #'magit-blob-visit prev))
+    ((user-error "You have reached the beginning of time"))))
+
+(transient-define-suffix magit-blob-next ()
+  "Visit the next blob which modified the current file."
+  :inapt-if-nil 'magit-buffer-file-name
+  (interactive)
+  (cond-let
+    [[rev  (or magit-buffer-revision "{worktree}")]
+     [file (magit-buffer-file-name)]]
+    ((not file)
+     (user-error "Buffer isn't visiting a file or blob"))
+    ([next (magit-blob-successor rev file)]
+     (apply #'magit-blob-visit next))
+    ((user-error "You have reached the end of time"))))
 
 ;;;###autoload
 (defun magit-blob-visit-file ()
@@ -409,30 +414,40 @@ the same location in the respective file in the working tree."
       (magit-find-file--internal "{worktree}" file #'pop-to-buffer-same-window)
     (user-error "Not visiting a blob")))
 
-(defun magit-blob-visit (blob-or-file)
-  (if (stringp blob-or-file)
-      (find-file blob-or-file)
-    (pcase-let ((`(,rev ,file) blob-or-file))
-      (magit-find-file rev file)
-      (apply #'message "%s (%s %s ago)"
-             (magit-rev-format "%s" rev)
-             (magit--age (magit-rev-format "%ct" rev))))))
+(defun magit-blob-visit (rev file)
+  (magit-find-file rev file)
+  (unless (member rev '("{worktree}" "{index}"))
+    (apply #'message "%s (%s %s ago)"
+           (magit-rev-format "%s" rev)
+           (magit--age (magit-rev-format "%ct" rev)))))
 
 (defun magit-blob-ancestor (rev file)
-  (let ((lines (magit-with-toplevel
-                 (magit-git-lines "log" "-2" "--format=%H" "--name-only"
-                                  "--follow" (or rev "HEAD") "--" file))))
-    (if rev (cddr lines) (butlast lines 2))))
+  (pcase rev
+    ((and "{worktree}" (guard (magit-anything-staged-p nil file)))
+     (list "{index}" file))
+    ((or "{worktree}" "{index}")
+     (list (magit-rev-abbrev "HEAD") file))
+    (_ (nth (if rev 1 0)
+            (magit-with-toplevel
+              (seq-partition
+               (magit-git-lines "log" "-2" "--format=%h" "--name-only"
+                                "--follow" (or rev "HEAD") "--" file)
+               2))))))
 
 (defun magit-blob-successor (rev file)
-  (let ((lines (magit-with-toplevel
-                 (magit-git-lines "log" "--format=%H" "--name-only" "--follow"
-                                  "HEAD" "--" file))))
-    (catch 'found
-      (while lines
-        (if (equal (nth 2 lines) rev)
-            (throw 'found (list (nth 0 lines) (nth 1 lines)))
-          (setq lines (nthcdr 2 lines)))))))
+  (pcase rev
+    ("{worktree}" nil)
+    ("{index}" (list "{worktree}" file))
+    (_ (let ((lines (magit-with-toplevel
+                      (magit-git-lines "log" "--format=%h" "--name-only"
+                                       "--follow" "HEAD" "--" file))))
+         (catch 'found
+           (while lines
+             (if (equal (nth 2 lines) rev)
+                 (throw 'found (list (nth 0 lines) (nth 1 lines)))
+               (setq lines (nthcdr 2 lines))))
+           (list (if (magit-anything-staged-p nil file) "{index}" "{worktree}")
+                 file))))))
 
 ;;; File Commands
 

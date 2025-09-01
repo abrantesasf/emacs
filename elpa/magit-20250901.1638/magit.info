@@ -4058,51 +4058,37 @@ are bound to these commands by default, but that is likely to change.
 5.8.2 Visiting Files and Blobs from a Diff
 ------------------------------------------
 
-These commands can only be used when point is inside a diff.
+These commands can only be used when point is inside a diff.  Elsewhere
+use ‘magit-find-file’.
 
 ‘<RET>’ (‘magit-diff-visit-file’)
-     This command visits the appropriate version of the file that the
-     diff at point is about.  The location of point inside the diff
-     determines which file is being visited.  The visited version
-     depends on what changes the diff is about.
+     This command visits the appropriate version of the file at point.
 
-       1. If the diff shows uncommitted changes (i.e., staged or
-          unstaged changes), then visit the file in the working tree
-          (i.e., the same "real" file that ‘find-file’ would visit.  In
-          all other cases visit a "blob" (i.e., the version of a file as
-          stored in some commit).
+     Display the buffer in the selected window.  With a prefix argument,
+     OTHER-WINDOW, instead display the buffer in another window.
 
-       2. If point is on a removed line, then visit the blob for the
-          first parent of the commit that removed that line, i.e., the
-          last commit where that line still exists.
+     In the visited file or blob, go to the location corresponding to
+     the location in the diff.
 
-       3. If point is on an added or context line, then visit the blob
-          that adds that line, or if the diff shows from more than a
-          single commit, then visit the blob from the last of these
-          commits.
+     If point is on an added or context line, visit the blob
+     corresponding to our side (i.e., the new/right side).  If point is
+     on a removed line, visit the blob corresponding to their side
+     (i.e., the old/left side).
 
-     In the file-visiting buffer this command goes to the line that
-     corresponds to the line that point is on in the diff.
+     This applies to diffs of staged and unstaged changes as well.  For
+     staged changes the two sides are blobs from the index and the
+     ‘HEAD’ commit.  For unstaged changes the two sides are the actual
+     file in the worktree and the blob from the index.
 
-     The buffer is displayed in the selected window.  With a prefix
-     argument the buffer is displayed in another window instead.
+     To visit the file in the worktree, regardless of what the current
+     diff is about, use ‘magit-diff-visit-worktree-file’, described
+     next.
 
- -- User Option: magit-diff-visit-previous-blob
-     This option controls whether ‘magit-diff-visit-file’ may visit the
-     previous blob.  When this is ‘t’ (the default) and point is on a
-     removed line in a diff for a committed change, then
-     ‘magit-diff-visit-file’ visits the blob from the last revision
-     which still had that line.
-
-     Currently this is only supported for committed changes, for staged
-     and unstaged changes ‘magit-diff-visit-file’ always visits the file
-     in the working tree.
-
-‘C-<return>’ (‘magit-diff-visit-file-worktree’)
+‘C-<return>’ (‘magit-diff-visit-worktree-file’)
      This command visits the worktree version of the appropriate file.
      The location of point inside the diff determines which file is
      being visited.  Unlike ‘magit-diff-visit-file’ it always visits the
-     "real" file in the working tree, i.e the "current version" of the
+     "real" file in the working tree, i.e., the "current version" of the
      file.
 
      In the file-visiting buffer this command goes to the line that
@@ -4123,6 +4109,59 @@ argument.
  -- Command: magit-diff-visit-file-other-frame
  -- Command: magit-diff-visit-worktree-file-other-window
  -- Command: magit-diff-visit-worktree-file-other-frame
+     These commands behave like the respective commands described above,
+     except that they display the blob or file in another window or
+     frame.
+
+ -- User Option: magit-diff-visit-prefer-worktree
+     This option controls whether ‘magit-diff-visit-file’ always visits
+     the respective file in the worktree, when invoked anywhere from
+     within a hunk of staged or unstaged changes.
+
+     By default ‘magit-diff-visit-file’ does not do that.  Instead it
+     behaves for staged and unstaged changes as it does for committed
+     changes, by visiting a blob from the old/left or new/right side,
+     depending on whether point is on a removed line or not.
+
+     For staged changes the old side is the blob from HEAD and the right
+     side is the blog from the index.  For unstaged changes the left
+     side is the blob from the index (if there are any changes in the
+     index for that file, else the blob from HEAD), and the right side
+     is the file in the worktree.
+
+     Being able to jump to HEAD or the index from a removed line is very
+     useful, because it allows you to, e.g., use blame to investigate
+     why some line, which you have already removed, was added in the
+     first place.
+
+     But if you want to make further changes to already staged changes,
+     you of course instead need to go to the respective file in the
+     worktree.  The command ‘magit-diff-visit-worktree-file’ was created
+     for that purpose, and it is strongly recommend that you make use of
+     that command, even if you initially find it inconvenient having to
+     remember to use ‘C-<return>’ instead of ‘RET’ in this case.
+
+     While discouraged, you can alternatively set this option to ‘t’,
+     which causes ‘magit-diff-visit-file’ itself to go to the file in
+     the worktree, even when invoked from within a hunk of staged
+     changes.  If you do that, you lose the ability to instantly go to
+     lines you have already removed.
+
+ -- User Option: magit-diff-visit-previous-blob
+     This option controls whether ‘magit-diff-visit-file’ visits the
+     previous blob when invoked with point on a removed line.
+
+     When this is ‘t’ (the default) and point is on a removed line, then
+     ‘magit-diff-visit-file’ visits the blob from the old/left commit,
+     which still has that line, instead of going to the new/right blob,
+     which removes that line.
+
+     Setting this to ‘nil’, causes ‘magit-diff-visit-file’ to always go
+     to the new/right blob, even when point is on a removed line.  This
+     is very strongly discouraged.  Instead place the cursor anywhere
+     else within the hunk but on a removed line, if you want to visit
+     the new side.  That way you don’t lose the ability to visit the old
+     side.
 
 
 File: magit.info,  Node: Blaming,  Prev: Visiting Files and Blobs,  Up: Inspecting
@@ -9516,7 +9555,7 @@ Appendix C Keystroke Index
 * c w:                                   Committing.          (line  65)
 * c W:                                   Committing.          (line 167)
 * C-<return>:                            Visiting Files and Blobs.
-                                                              (line  78)
+                                                              (line  64)
 * C-<tab>:                               Sections.            (line 148)
 * C-c C-a:                               Committing.          (line 415)
 * C-c C-b:                               Logging.             (line 116)
@@ -9857,7 +9896,7 @@ Appendix C Keystroke Index
 * RET:                                   Repository List.     (line 102)
 * RET <1>:                               References Buffer.   (line 159)
 * RET <2>:                               Visiting Files and Blobs.
-                                                              (line  40)
+                                                              (line  41)
 * RET <3>:                               Blaming.             (line  91)
 * RET <4>:                               Rebasing.            (line 131)
 * s:                                     Staging and Unstaging.
@@ -10166,17 +10205,17 @@ Appendix D Function and Command Index
 * magit-diff-type:                       Section Plumbing.    (line 204)
 * magit-diff-unstaged:                   Diffing.             (line  72)
 * magit-diff-visit-file:                 Visiting Files and Blobs.
-                                                              (line  40)
+                                                              (line  41)
 * magit-diff-visit-file-other-frame:     Visiting Files and Blobs.
-                                                              (line  99)
+                                                              (line  85)
 * magit-diff-visit-file-other-window:    Visiting Files and Blobs.
-                                                              (line  98)
-* magit-diff-visit-file-worktree:        Visiting Files and Blobs.
-                                                              (line  78)
+                                                              (line  84)
+* magit-diff-visit-worktree-file:        Visiting Files and Blobs.
+                                                              (line  64)
 * magit-diff-visit-worktree-file-other-frame: Visiting Files and Blobs.
-                                                              (line 101)
+                                                              (line  87)
 * magit-diff-visit-worktree-file-other-window: Visiting Files and Blobs.
-                                                              (line 100)
+                                                              (line  86)
 * magit-diff-while-committing:           Diffing.             (line 164)
 * magit-diff-while-committing <1>:       Committing.          (line 339)
 * magit-diff-working-tree:               Diffing.             (line  62)
@@ -10737,8 +10776,10 @@ Appendix E Variable Index
 * magit-diff-refine-hunk:                Diffing.             (line 236)
 * magit-diff-refine-ignore-whitespace:   Diffing.             (line 246)
 * magit-diff-unmarked-lines-keep-foreground: Diffing.         (line 338)
+* magit-diff-visit-prefer-worktree:      Visiting Files and Blobs.
+                                                              (line  92)
 * magit-diff-visit-previous-blob:        Visiting Files and Blobs.
-                                                              (line  66)
+                                                              (line 126)
 * magit-direct-use-buffer-arguments:     Transient Arguments and Buffer Variables.
                                                               (line  73)
 * magit-display-buffer-function:         Modes and Buffers.   (line  57)
@@ -10918,118 +10959,118 @@ Node: Bisecting173691
 Node: Visiting Files and Blobs176002
 Ref: General-Purpose Visit Commands176444
 Ref: Visiting Files and Blobs from a Diff177262
-Node: Blaming180494
-Node: Manipulating187482
-Node: Creating Repository187824
-Node: Cloning Repository188361
-Node: Staging and Unstaging194802
-Ref: Staging from File-Visiting Buffers198726
-Node: Applying199741
-Node: Committing201814
-Ref: Initiating a Commit202441
-Ref: Creating a new commit202753
-Ref: Editing the last commit202863
-Ref: Editing any reachable commit204842
-Ref: Editing any reachable commit and rebasing immediately209255
-Ref: Options used by commit commands210903
-Ref: Used by all or most commit commands210975
-Ref: Used by all squash and fixup commands213206
-Ref: Used by specific commit commands213754
-Ref: Editing Commit Messages214078
-Ref: Using the Revision Stack216632
-Ref: Commit Pseudo Headers219564
-Ref: Commit Mode and Hooks220716
-Ref: Commit Message Conventions223429
-Node: Branching225301
-Ref: The Two Remotes225422
-Ref: Branch Commands227991
-Ref: Branch Git Variables240729
-Ref: Auxiliary Branch Commands245976
-Node: Merging246993
-Node: Resolving Conflicts251153
-Node: Rebasing256527
-Ref: Editing Rebase Sequences261487
-Ref: Information About In-Progress Rebase266720
-Ref: Rebasing-Footnote-1275720
-Node: Cherry Picking276316
-Ref: Reverting280626
-Node: Resetting281986
-Node: Stashing283812
-Node: Transferring290053
-Node: Remotes290275
-Ref: Remote Commands290372
-Ref: Remote Git Variables294324
-Node: Fetching295508
-Node: Pulling297991
-Node: Pushing299017
-Node: Plain Patches303308
-Node: Maildir Patches304779
-Node: Miscellaneous306258
-Node: Tagging306604
-Node: Notes308497
-Node: Submodules310832
-Ref: Listing Submodules310993
-Ref: Submodule Transient313049
-Node: Subtree315402
-Node: Worktree317333
-Node: Sparse checkouts318409
-Node: Bundle321185
-Node: Common Commands321560
-Node: Wip Modes324188
-Ref: Wip Graph329034
-Ref: Legacy Wip Modes331268
-Node: Commands for Buffers Visiting Files334076
-Node: Minor Mode for Buffers Visiting Blobs342417
-Node: Customizing343580
-Node: Per-Repository Configuration345176
-Node: Essential Settings347430
-Ref: Safety347719
-Ref: Performance349400
-Ref: Log Performance352193
-Ref: Diff Performance353498
-Ref: Refs Buffer Performance354839
-Ref: Committing Performance355414
-Ref: Microsoft Windows Performance356396
-Ref: MacOS Performance357485
-Ref: Global Bindings358370
-Ref: Essential Settings-Footnote-1360545
-Node: Plumbing360627
-Node: Calling Git361456
-Ref: Getting a Value from Git362915
-Ref: Calling Git for Effect366541
-Node: Section Plumbing372445
-Ref: Creating Sections372597
-Ref: Section Selection376398
-Ref: Matching Sections378073
-Node: Refreshing Buffers383899
-Node: Conventions387043
-Ref: Theming Faces387207
-Node: FAQ395252
-Node: FAQ - How to ...?395690
-Ref: How to pronounce Magit?395823
-Ref: How to show git's output?396517
-Ref: How to install the gitman info manual?397142
-Ref: How to show diffs for gpg-encrypted files?397953
-Ref: How does branching and pushing work?398362
-Ref: Should I disable VC?398526
-Node: FAQ - Issues and Errors399011
-Ref: Magit is slow399156
-Ref: I changed several thousand files at once and now Magit is unusable399302
-Ref: I am having problems committing399841
-Ref: I am using MS Windows and cannot push with Magit400106
-Ref: I am using macOS and SOMETHING works in shell but not in Magit400506
-Ref: Expanding a file to show the diff causes it to disappear401097
-Ref: Point is wrong in the COMMIT_EDITMSG buffer401447
-Ref: The mode-line information isn't always up-to-date402271
-Ref: A branch and tag sharing the same name breaks SOMETHING403110
-Ref: My Git hooks work on the command-line but not inside Magit403758
-Ref: git-commit-mode isn't used when committing from the command-line404350
-Ref: Point ends up inside invisible text when jumping to a file-visiting buffer406348
-Ref: I am no longer able to save popup defaults406940
-Node: Debugging Tools407737
-Node: Keystroke Index411676
-Node: Function and Command Index449772
-Node: Variable Index501198
+Node: Blaming182516
+Node: Manipulating189504
+Node: Creating Repository189846
+Node: Cloning Repository190383
+Node: Staging and Unstaging196824
+Ref: Staging from File-Visiting Buffers200748
+Node: Applying201763
+Node: Committing203836
+Ref: Initiating a Commit204463
+Ref: Creating a new commit204775
+Ref: Editing the last commit204885
+Ref: Editing any reachable commit206864
+Ref: Editing any reachable commit and rebasing immediately211277
+Ref: Options used by commit commands212925
+Ref: Used by all or most commit commands212997
+Ref: Used by all squash and fixup commands215228
+Ref: Used by specific commit commands215776
+Ref: Editing Commit Messages216100
+Ref: Using the Revision Stack218654
+Ref: Commit Pseudo Headers221586
+Ref: Commit Mode and Hooks222738
+Ref: Commit Message Conventions225451
+Node: Branching227323
+Ref: The Two Remotes227444
+Ref: Branch Commands230013
+Ref: Branch Git Variables242751
+Ref: Auxiliary Branch Commands247998
+Node: Merging249015
+Node: Resolving Conflicts253175
+Node: Rebasing258549
+Ref: Editing Rebase Sequences263509
+Ref: Information About In-Progress Rebase268742
+Ref: Rebasing-Footnote-1277742
+Node: Cherry Picking278338
+Ref: Reverting282648
+Node: Resetting284008
+Node: Stashing285834
+Node: Transferring292075
+Node: Remotes292297
+Ref: Remote Commands292394
+Ref: Remote Git Variables296346
+Node: Fetching297530
+Node: Pulling300013
+Node: Pushing301039
+Node: Plain Patches305330
+Node: Maildir Patches306801
+Node: Miscellaneous308280
+Node: Tagging308626
+Node: Notes310519
+Node: Submodules312854
+Ref: Listing Submodules313015
+Ref: Submodule Transient315071
+Node: Subtree317424
+Node: Worktree319355
+Node: Sparse checkouts320431
+Node: Bundle323207
+Node: Common Commands323582
+Node: Wip Modes326210
+Ref: Wip Graph331056
+Ref: Legacy Wip Modes333290
+Node: Commands for Buffers Visiting Files336098
+Node: Minor Mode for Buffers Visiting Blobs344439
+Node: Customizing345602
+Node: Per-Repository Configuration347198
+Node: Essential Settings349452
+Ref: Safety349741
+Ref: Performance351422
+Ref: Log Performance354215
+Ref: Diff Performance355520
+Ref: Refs Buffer Performance356861
+Ref: Committing Performance357436
+Ref: Microsoft Windows Performance358418
+Ref: MacOS Performance359507
+Ref: Global Bindings360392
+Ref: Essential Settings-Footnote-1362567
+Node: Plumbing362649
+Node: Calling Git363478
+Ref: Getting a Value from Git364937
+Ref: Calling Git for Effect368563
+Node: Section Plumbing374467
+Ref: Creating Sections374619
+Ref: Section Selection378420
+Ref: Matching Sections380095
+Node: Refreshing Buffers385921
+Node: Conventions389065
+Ref: Theming Faces389229
+Node: FAQ397274
+Node: FAQ - How to ...?397712
+Ref: How to pronounce Magit?397845
+Ref: How to show git's output?398539
+Ref: How to install the gitman info manual?399164
+Ref: How to show diffs for gpg-encrypted files?399975
+Ref: How does branching and pushing work?400384
+Ref: Should I disable VC?400548
+Node: FAQ - Issues and Errors401033
+Ref: Magit is slow401178
+Ref: I changed several thousand files at once and now Magit is unusable401324
+Ref: I am having problems committing401863
+Ref: I am using MS Windows and cannot push with Magit402128
+Ref: I am using macOS and SOMETHING works in shell but not in Magit402528
+Ref: Expanding a file to show the diff causes it to disappear403119
+Ref: Point is wrong in the COMMIT_EDITMSG buffer403469
+Ref: The mode-line information isn't always up-to-date404293
+Ref: A branch and tag sharing the same name breaks SOMETHING405132
+Ref: My Git hooks work on the command-line but not inside Magit405780
+Ref: git-commit-mode isn't used when committing from the command-line406372
+Ref: Point ends up inside invisible text when jumping to a file-visiting buffer408370
+Ref: I am no longer able to save popup defaults408962
+Node: Debugging Tools409759
+Node: Keystroke Index413698
+Node: Function and Command Index451794
+Node: Variable Index503220
 
 End Tag Table
 

@@ -544,12 +544,39 @@ log's file filter is always honored."
 
 ;;;; Visit Commands
 
+(defcustom magit-diff-visit-prefer-worktree nil
+  "Whether `magit-diff-visit-file' prefers visiting the worktree file.
+
+By default `magit-diff-visit-file' does not do that.  Instead it
+behaves for staged and unstaged changes as it does for committed
+changes, by visiting a blob from the old/left or new/right side,
+depending on whether point is on a removed line or not.
+
+Setting this to nil, causes `magit-diff-visit-file' to always go to
+the file in the worktree when invoked from anywhere within a staged
+or unstaged change.
+
+It is strongly recommended that instead of changing the value of
+this option, you use the command `magit-diff-visit-worktree-file',
+which was created for that very purpose.  See the description of
+this option in the manual for an explanation."
+  :package-version '(magit . "4.4.0")
+  :group 'magit-diff
+  :type 'boolean)
+
 (defcustom magit-diff-visit-previous-blob t
   "Whether `magit-diff-visit-file' may visit the previous blob.
 
-When this is t and point is on a removed line in a diff for a
-committed change, then `magit-diff-visit-file' visits the blob
-from the last revision which still had that line."
+When this is t (the default) and point is on a removed line, then
+`magit-diff-visit-file' visits the blob from the old/left commit,
+which still has that line, instead of going to the new/right blob,
+which removes that line.
+
+Setting this to nil, causes `magit-diff-visit-file' to always go to
+the new/right blob, even when point is on a removed line.  This is
+very strongly discouraged.  Instead place the cursor anywhere else
+within the hunk but on a removed line, if you want to visit the new
+side.  That way you don't lose the ability to visit the old side."
   :package-version '(magit . "2.9.0")
   :group 'magit-diff
   :type 'boolean)
@@ -1586,65 +1613,78 @@ Customize variable `magit-diff-refine-hunk' to change the default mode."
 ;;;;; Dwim Variants
 
 (defun magit-diff-visit-file (&optional other-window)
-  "From a diff visit a version of the file at point.
+  "From a diff, visit the appropriate version of the file at point.
 
-Display the buffer in the selected window.  With a prefix
-argument OTHER-WINDOW display the buffer in another window
-instead.
+Display the buffer in the selected window.  With a prefix argument,
+OTHER-WINDOW, instead display the buffer in another window.
 
-The location of point inside the diff determines which file is
-being visited.  The visited version depends on what changes the
-diff is about.
+In the visited file or blob, go to the location corresponding to the
+location in the diff.
 
-1. If the diff shows uncommitted changes (i.e., stage or unstaged
-   changes), then visit the file in the working tree (i.e., the
-   same \"real\" file that `find-file' would visit).  In all
-   other cases visit a \"blob\" (i.e., the version of a file as
-   stored in some commit).
+If point is on an added or context line, visit the blob corresponding
+to our side (i.e., the new/right side).  If point is on a removed line,
+visit the blob corresponding to their side (i.e., the old/left side).
 
-2. If point is on a removed line, then visit the blob for the
-   first parent of the commit that removed that line, i.e., the
-   last commit where that line still exists.
+This applies to diffs of staged and unstaged changes as well.  For
+staged changes the two sides are blobs from the index and the `HEAD'
+commit.  For unstaged changes the two sides are the actual file in
+the worktree and the blob from the index.
 
-3. If point is on an added or context line, then visit the blob
-   that adds that line, or if the diff shows from more than a
-   single commit, then visit the blob from the last of these
-   commits.
+To visit the file in the worktree, regardless of what the current diff
+is about, use \
+\\<magit-diff-section-map>\
+\\[magit-diff-visit-worktree-file] \
+(`magit-diff-visit-worktree-file').
 
-In the file-visiting buffer also go to the line that corresponds
-to the line that point is on in the diff.
+In the past \\`<return>' (this command) used to go to the file in the
+worktree, if point is on an added or context line of a diff showing
+staged changes.  Set `magit-diff-visit-prefer-worktree' to t to restore
+that behavior, but note that doing so makes the behavior inconsistent
+and you would give up on the ability to visit the index blob.  If you
+already use \\[magit-diff-visit-worktree-file] to jump to the live \
+file from committed changes,
+it might be better to retrain muscle memory to do the same from staged
+changes.
 
-Note that this command only works if point is inside a diff.
-In other cases `magit-find-file' (which see) has to be used."
+This command only works when point is inside a diff; elsewhere use
+`magit-find-file'."
   (interactive "P")
-  (magit-diff-visit-file--internal nil (and other-window t)))
+  (magit-diff-visit-file--internal
+   (and magit-diff-visit-prefer-worktree
+        (memq (magit-diff--dwim) '(staged unstaged)))
+   (and other-window t)))
 
 (defun magit-diff-visit-file-other-window ()
   "From a diff visit a version of the file at point in another window.
 Like `magit-diff-visit-file' but always display in another window."
   (interactive)
-  (magit-diff-visit-file--internal nil #'switch-to-buffer-other-window))
+  (magit-diff-visit-file--internal
+   (and magit-diff-visit-prefer-worktree
+        (memq (magit-diff--dwim) '(staged unstaged)))
+   #'switch-to-buffer-other-window))
 
 (defun magit-diff-visit-file-other-frame ()
   "From a diff visit a version of the file at point in another frame.
 Like `magit-diff-visit-file' but always display in another frame."
   (interactive)
-  (magit-diff-visit-file--internal nil #'switch-to-buffer-other-frame))
+  (magit-diff-visit-file--internal
+   (and magit-diff-visit-prefer-worktree
+        (memq (magit-diff--dwim) '(staged unstaged)))
+   #'switch-to-buffer-other-frame))
 
 ;;;;; Worktree Variants
 
 (defun magit-diff-visit-worktree-file (&optional other-window)
   "From a diff visit the worktree version of the file at point.
 
-Display the buffer in the selected window.  With a prefix
-argument OTHER-WINDOW display the buffer in another window
-instead.
+Display the buffer in the selected window.  With a prefix argument,
+OTHER-WINDOW, display the buffer in another window instead.
 
 Visit the worktree version of the appropriate file.  The location
 of point inside the diff determines which file is being visited.
 
 Unlike `magit-diff-visit-file' always visits the \"real\" file in
-the working tree, i.e the \"current version\" of the file.
+the working tree, i.e., the \"current version\" of the file.
 
 In the file-visiting buffer also go to the line that corresponds
 to the line that point is on in the diff.  Lines that were added
@@ -1726,7 +1766,11 @@ the Magit-Status buffer for DIRECTORY."
           (magit-diff-visit--position buffer rev file goto-from goto-file))))
 
 (defun magit-diff-visit--sides ()
-  (pcase-let* ((spec (magit-diff--dwim))
+  (pcase-let* (((eieio source value)
+                (magit-diff--file-section))
+               (old-file (or source value))
+               (new-file value)
+               (spec (magit-diff--dwim))
                (`(,old-rev . ,new-rev)
                 (pcase spec
                   ((pred stringp)
@@ -1735,15 +1779,14 @@ the Magit-Status buffer for DIRECTORY."
                    (cons (magit-rev-abbrev (concat rev "^"))
                          (magit--abbrev-if-hash rev)))
                   ('staged    (cons (magit-rev-abbrev "HEAD") "{index}"))
-                  ('unstaged  (cons (magit-rev-abbrev "HEAD") "{worktree}"))
+                  ('unstaged  (cons (if (magit-anything-staged-p nil old-file)
+                                        "{index}"
+                                      (magit-rev-abbrev "HEAD"))
+                                    "{worktree}"))
                   ('nil       (cons "{worktree}" "{worktree}"))
                   ('unmerged  (cons "{worktree}" "{worktree}"))
                   ('undefined (cons "{worktree}" "{worktree}")) ;--no-index
-                  (_          (error "BUG: Unexpected diff type %s" spec))))
-               ((eieio source value)
-                (magit-diff--file-section))
-               (old-file (or source value))
-               (new-file value))
+                  (_          (error "BUG: Unexpected diff type %s" spec)))))
     (when (equal magit-buffer-typearg "--no-index")
       (setq old-file (concat "/" old-file))
       (setq new-file (concat "/" new-file)))
@@ -1755,11 +1798,9 @@ the Magit-Status buffer for DIRECTORY."
     (let* ((line   (magit-diff-hunk-line   hunk goto-from))
            (column (magit-diff-hunk-column hunk goto-from)))
       (with-current-buffer buffer
-        (cond ((equal rev "{index}")
-               (setq line (magit-diff-visit--offset file nil line)))
-              ((equal rev "{worktree}"))
-              (goto-file
-               (setq line (magit-diff-visit--offset file rev line))))
+        (when (and goto-file (not (equal rev "{worktree}")))
+          (setq line (magit-diff-visit--offset
+                      file (if (equal rev "{index}") nil rev) line)))
         (save-restriction
           (widen)
           (goto-char (point-min))
@@ -2496,39 +2537,38 @@ keymap is the parent of their keymaps."
   "Show the status, filename and icon (using the `all-the-icons' package).
 You have to explicitly install the `all-the-icons' package, else this
 function errors."
-  (cl-flet ((icon (if (or (eq kind 'module) (string-suffix-p "/" file))
-                      'all-the-icons-icon-for-dir
-                    'all-the-icons-icon-for-file)))
-    (cl-letf (((symbol-function 'all-the-icons-dir-is-submodule)
-               (if (eq kind 'module)
-                   (lambda (_) t)
-                 (symbol-function 'all-the-icons-dir-is-submodule))))
-      (propertize (concat (and status (format "%-11s" status))
-                          (if orig
-                              (format "%s %s -> %s %s"
-                                      (icon orig) orig
-                                      (icon file) file)
-                            (format "%s %s" (icon file) file)))
-                  'font-lock-face face))))
+  (magit--get-file-icon kind file face status orig
+                        'all-the-icons-icon-for-file
+                        'all-the-icons-icon-for-dir
+                        'all-the-icons-dir-is-submodule))
 
 (defun magit-format-file-nerd-icons (kind file face &optional status orig)
   "Show the status, filename and icon (using the `nerd-icons' package).
 You have to explicitly install the `nerd-icons' package, else this
 function errors."
+  (magit--get-file-icon kind file face status orig
+                        'nerd-icons-icon-for-file
+                        'nerd-icons-icon-for-dir
+                        'nerd-icons-dir-is-submodule))
+
+(defun magit--get-file-icon ( kind file face status orig
+                              icon-for-file icon-for-dir dir-is-submodule)
   (cl-flet ((icon (if (or (eq kind 'module) (string-suffix-p "/" file))
-                      'nerd-icons-icon-for-dir
-                    'nerd-icons-icon-for-file)))
-    (cl-letf (((symbol-function 'nerd-icons-dir-is-submodule)
+                      icon-for-dir
+                    icon-for-file)))
+    (cl-letf (((symbol-function dir-is-submodule)
                (if (eq kind 'module)
                    (lambda (_) t)
-                 (symbol-function 'nerd-icons-dir-is-submodule))))
-      (propertize (concat (and status (format "%-11s" status))
-                          (if orig
-                              (format "%s %s -> %s %s"
-                                      (icon orig) orig
-                                      (icon file) file)
-                            (format "%s %s" (icon file) file)))
-                  'font-lock-face face))))
+                 (symbol-function dir-is-submodule))))
+      (if orig
+          (format (magit--propertize-face "%s%s %s -> %s %s" face)
+                  (if status (format "%-11s" status) "")
+                  (icon orig) orig
+                  (icon file) file)
+        (format (magit--propertize-face "%s%s %s" face)
+                (if status (format "%-11s" status) "")
+                (icon file)
+                file)))))
 
 (defun magit-diff-wash-submodule ()
   ;; See `show_submodule_summary' in submodule.c and "this" commit.
@@ -3568,9 +3608,11 @@ last (visual) lines of the region."
     (> (magit-point) content)))
 
 (defun magit-diff-on-removed-line-p ()
-  "Return t if point is on a removed line inside the body of a hunk."
+  "Return t if point is on a removed line inside the body of a hunk.
+If `magit-diff-visit-previous-blob' is nil, then always return nil."
   (let ((section (magit-current-section)))
-    (and (cl-typep section 'magit-hunk-section)
+    (and magit-diff-visit-previous-blob
+         (cl-typep section 'magit-hunk-section)
          (not (oref section combined))
          (= (char-after (pos-bol)) ?-))))
 
