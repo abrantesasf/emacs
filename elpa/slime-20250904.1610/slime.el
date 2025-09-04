@@ -3,8 +3,8 @@
 ;; URL: https://github.com/slime/slime
 ;; Package-Requires: ((emacs "24.3") (macrostep "0.9"))
 ;; Keywords: languages, lisp, slime
-;; Package-Version: 20250829.1535
-;; Package-Revision: b87e53cd5f73
+;; Package-Version: 20250904.1610
+;; Package-Revision: d92e18dada9f
 
 ;;;; License and Commentary
 
@@ -3628,9 +3628,10 @@ more than one space."
                          (cl-remove-if-not #'fboundp slime-completion-at-point-functions)))
                    (run-hook-with-args-until-success
                     'slime-completion-at-point-functions))))))
-    (if (and slime-fuzzy-default-completion-ui
-             fun
-             (symbolp fun))
+    (if (and fun
+             (symbolp fun)
+             (or slime-fuzzy-default-completion-ui
+                 (not (eq fun 'slime-fuzzy-complete-symbol))))
         (funcall fun)
         fun)))
 
