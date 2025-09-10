@@ -1031,6 +1031,11 @@ it is disabled.
 (register-definition-prefixes "lsp-typespec" '("lsp-typespec-"))
 
 
+;;; Generated autoloads from lsp-typos.el
+
+(register-definition-prefixes "lsp-typos" '("lsp-typos-"))
+
+
 ;;; Generated autoloads from lsp-v.el
 
 (register-definition-prefixes "lsp-v" '("lsp-v-"))
