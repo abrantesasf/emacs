@@ -40,7 +40,7 @@
 (require 'compat)
 (require 'cond-let)
 (require 'eieio)
-(require 'llama)
+(require 'llama) ; For (##these ...) see M-x describe-function RET # # RET.
 (require 'subr-x)
 
 ;; For older Emacs releases we depend on an updated `seq' release from
@@ -494,6 +494,7 @@ and delay of your graphical environment or operating system."
 (defclass magit-hunk-section (magit-diff-section)
   ((keymap      :initform 'magit-hunk-section-map)
    (painted     :initform nil)
+   (fontified   :initform nil) ;TODO
    (refined     :initform nil)
    (combined    :initform nil :initarg :combined)
    (from-range  :initform nil :initarg :from-range)

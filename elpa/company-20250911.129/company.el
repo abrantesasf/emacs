@@ -5,8 +5,8 @@
 ;; Author: Nikolaj Schumacher
 ;; Maintainer: Dmitry Gutov <dmitry@gutov.dev>
 ;; URL: http://company-mode.github.io/
-;; Package-Version: 20250910.230
-;; Package-Revision: c652030c382d
+;; Package-Version: 20250911.129
+;; Package-Revision: 03bedfce7623
 ;; Keywords: abbrev, convenience, matching
 ;; Package-Requires: ((emacs "26.1"))
 
@@ -1436,8 +1436,9 @@ be recomputed when this value changes."
       (let* ((entity (and
                       (not (keywordp backend))
                       (company--force-sync backend '(prefix) backend)))
-             (new-len (company--prefix-len entity)))
+             new-len)
         (when (stringp (company--prefix-str entity))
+          (setq new-len (company--prefix-len entity))
           (or (not backends-after-with)
               (unless (memq backend backends-after-with)
                 (setq backends-after-with nil)))

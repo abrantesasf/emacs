@@ -2313,6 +2313,11 @@ such hooks and how to customize them.
      by default added to another hooks, are listed in *note References
      Buffer::.
 
+ -- Function: magit-insert-status-headers
+     Insert header sections appropriate for ‘magit-status-mode’ buffers.
+     The sections are inserted by running the functions on the hook
+     ‘magit-status-headers-hook’.  See *note Status Header Sections::.
+
  -- Function: magit-insert-merge-log
      Insert section for the on-going merge.  Display the heads that are
      being merged.  If no merge is in progress, do nothing.
@@ -2357,6 +2362,14 @@ such hooks and how to customize them.
  -- Function: magit-insert-unpulled-from-pushremote
      Insert section showing commits that haven’t been pulled from the
      push-remote branch yet.
+
+ -- Function: magit-insert-unpushed-to-upstream-or-recent
+     Insert section showing unpushed or other recent commits.  If an
+     upstream is configured for the current branch and it is behind of
+     the current branch, then show the commits that have not yet been
+     pushed into the upstream branch.  If no upstream is configured or
+     if the upstream is not behind of the current branch, then show the
+     last ‘magit-log-section-commit-count’ commits.
 
  -- Function: magit-insert-unpushed-to-upstream
      Insert section showing commits that haven’t been pushed to the
@@ -2428,7 +2441,7 @@ that you don’t do that.
  -- Function: magit-insert-skip-worktree-files
      Insert a list of skip-worktree files.
 
- -- Function: magit-insert-assumed-unchanged-files
+ -- Function: magit-insert-assume-unchanged-files
      Insert a list of files that are assumed to be unchanged.
 
 5.1.3 Status Log Sections
@@ -10318,51 +10331,53 @@ Appendix D Function and Command Index
 * magit-go-forward <1>:                  Diffing.             (line 176)
 * magit-hunk-set-window-start:           Sections.            (line  69)
 * magit-init:                            Creating Repository. (line   7)
-* magit-insert-am-sequence:              Status Buffer.       (line 123)
-* magit-insert-assumed-unchanged-files:  Status Buffer.       (line 230)
-* magit-insert-bisect-log:               Status Buffer.       (line 137)
-* magit-insert-bisect-output:            Status Buffer.       (line 131)
-* magit-insert-bisect-rest:              Status Buffer.       (line 134)
-* magit-insert-diff-filter-header:       Status Buffer.       (line 296)
-* magit-insert-error-header:             Status Buffer.       (line 287)
-* magit-insert-head-branch-header:       Status Buffer.       (line 299)
+* magit-insert-am-sequence:              Status Buffer.       (line 128)
+* magit-insert-assume-unchanged-files:   Status Buffer.       (line 243)
+* magit-insert-bisect-log:               Status Buffer.       (line 142)
+* magit-insert-bisect-output:            Status Buffer.       (line 136)
+* magit-insert-bisect-rest:              Status Buffer.       (line 139)
+* magit-insert-diff-filter-header:       Status Buffer.       (line 309)
+* magit-insert-error-header:             Status Buffer.       (line 300)
+* magit-insert-head-branch-header:       Status Buffer.       (line 312)
 * magit-insert-heading:                  Section Plumbing.    (line  44)
-* magit-insert-ignored-files:            Status Buffer.       (line 224)
+* magit-insert-ignored-files:            Status Buffer.       (line 237)
 * magit-insert-local-branches:           References Buffer.   (line 244)
-* magit-insert-merge-log:                Status Buffer.       (line 115)
-* magit-insert-modules:                  Status Buffer.       (line 338)
-* magit-insert-modules-overview:         Status Buffer.       (line 356)
+* magit-insert-merge-log:                Status Buffer.       (line 120)
+* magit-insert-modules:                  Status Buffer.       (line 351)
+* magit-insert-modules-overview:         Status Buffer.       (line 369)
 * magit-insert-modules-unpulled-from-pushremote: Status Buffer.
-                                                              (line 371)
-* magit-insert-modules-unpulled-from-upstream: Status Buffer. (line 366)
-* magit-insert-modules-unpushed-to-pushremote: Status Buffer. (line 381)
-* magit-insert-modules-unpushed-to-upstream: Status Buffer.   (line 376)
-* magit-insert-push-branch-header:       Status Buffer.       (line 306)
-* magit-insert-rebase-sequence:          Status Buffer.       (line 119)
-* magit-insert-recent-commits:           Status Buffer.       (line 242)
+                                                              (line 384)
+* magit-insert-modules-unpulled-from-upstream: Status Buffer. (line 379)
+* magit-insert-modules-unpushed-to-pushremote: Status Buffer. (line 394)
+* magit-insert-modules-unpushed-to-upstream: Status Buffer.   (line 389)
+* magit-insert-push-branch-header:       Status Buffer.       (line 319)
+* magit-insert-rebase-sequence:          Status Buffer.       (line 124)
+* magit-insert-recent-commits:           Status Buffer.       (line 255)
 * magit-insert-remote-branches:          References Buffer.   (line 247)
-* magit-insert-remote-header:            Status Buffer.       (line 319)
-* magit-insert-repo-header:              Status Buffer.       (line 316)
+* magit-insert-remote-header:            Status Buffer.       (line 332)
+* magit-insert-repo-header:              Status Buffer.       (line 329)
 * magit-insert-section:                  Section Plumbing.    (line   9)
-* magit-insert-sequencer-sequence:       Status Buffer.       (line 127)
-* magit-insert-skip-worktree-files:      Status Buffer.       (line 227)
-* magit-insert-staged-changes:           Status Buffer.       (line 143)
-* magit-insert-stashes:                  Status Buffer.       (line 146)
-* magit-insert-status-headers:           Status Buffer.       (line 273)
+* magit-insert-sequencer-sequence:       Status Buffer.       (line 132)
+* magit-insert-skip-worktree-files:      Status Buffer.       (line 240)
+* magit-insert-staged-changes:           Status Buffer.       (line 148)
+* magit-insert-stashes:                  Status Buffer.       (line 151)
+* magit-insert-status-headers:           Status Buffer.       (line 115)
+* magit-insert-status-headers <1>:       Status Buffer.       (line 286)
 * magit-insert-tags:                     References Buffer.   (line 250)
-* magit-insert-tags-header:              Status Buffer.       (line 310)
-* magit-insert-tracked-files:            Status Buffer.       (line 221)
-* magit-insert-unpulled-cherries:        Status Buffer.       (line 251)
-* magit-insert-unpulled-from-pushremote: Status Buffer.       (line 156)
-* magit-insert-unpulled-from-upstream:   Status Buffer.       (line 152)
-* magit-insert-unpulled-or-recent-commits: Status Buffer.     (line 236)
-* magit-insert-unpushed-cherries:        Status Buffer.       (line 257)
-* magit-insert-unpushed-to-pushremote:   Status Buffer.       (line 164)
-* magit-insert-unpushed-to-upstream:     Status Buffer.       (line 160)
-* magit-insert-unstaged-changes:         Status Buffer.       (line 140)
-* magit-insert-untracked-files:          Status Buffer.       (line 174)
-* magit-insert-upstream-branch-header:   Status Buffer.       (line 302)
-* magit-insert-user-header:              Status Buffer.       (line 326)
+* magit-insert-tags-header:              Status Buffer.       (line 323)
+* magit-insert-tracked-files:            Status Buffer.       (line 234)
+* magit-insert-unpulled-cherries:        Status Buffer.       (line 264)
+* magit-insert-unpulled-from-pushremote: Status Buffer.       (line 161)
+* magit-insert-unpulled-from-upstream:   Status Buffer.       (line 157)
+* magit-insert-unpulled-or-recent-commits: Status Buffer.     (line 249)
+* magit-insert-unpushed-cherries:        Status Buffer.       (line 270)
+* magit-insert-unpushed-to-pushremote:   Status Buffer.       (line 177)
+* magit-insert-unpushed-to-upstream:     Status Buffer.       (line 173)
+* magit-insert-unpushed-to-upstream-or-recent: Status Buffer. (line 165)
+* magit-insert-unstaged-changes:         Status Buffer.       (line 145)
+* magit-insert-untracked-files:          Status Buffer.       (line 187)
+* magit-insert-upstream-branch-header:   Status Buffer.       (line 315)
+* magit-insert-user-header:              Status Buffer.       (line 339)
 * magit-jump-to-diffstat-or-diff:        Diffing.             (line 218)
 * magit-list-repositories:               Repository List.     (line   6)
 * magit-list-submodules:                 Submodules.          (line  18)
@@ -10804,14 +10819,14 @@ Appendix E Variable Index
                                                               (line 124)
 * magit-log-margin:                      Logging.             (line 223)
 * magit-log-margin-show-committer-date:  Logging.             (line 255)
-* magit-log-section-commit-count:        Status Buffer.       (line 246)
+* magit-log-section-commit-count:        Status Buffer.       (line 259)
 * magit-log-select-margin:               Logging.             (line 304)
 * magit-log-show-color-graph-limit:      Logging.             (line 174)
 * magit-log-show-refname-after-summary:  Logging.             (line 170)
 * magit-log-show-signatures-limit:       Logging.             (line 180)
 * magit-log-trace-definition-function:   Diffing.             (line 192)
-* magit-module-sections-hook:            Status Buffer.       (line 345)
-* magit-module-sections-nested:          Status Buffer.       (line 348)
+* magit-module-sections-hook:            Status Buffer.       (line 358)
+* magit-module-sections-nested:          Status Buffer.       (line 361)
 * magit-no-confirm:                      Completion Confirmation and the Selection.
                                                               (line  21)
 * magit-pop-revision-stack-format:       Committing.          (line 374)
@@ -10857,11 +10872,11 @@ Appendix E Variable Index
 * magit-section-visibility-indicator:    Sections.            (line 256)
 * magit-shell-command-verbose-prompt:    Running Git.         (line 115)
 * magit-stashes-margin:                  Stashing.            (line 119)
-* magit-status-file-list-limit:          Status Buffer.       (line 211)
-* magit-status-headers-hook:             Status Buffer.       (line 278)
-* magit-status-margin:                   Status Buffer.       (line 389)
+* magit-status-file-list-limit:          Status Buffer.       (line 224)
+* magit-status-headers-hook:             Status Buffer.       (line 291)
+* magit-status-margin:                   Status Buffer.       (line 402)
 * magit-status-sections-hook:            Status Buffer.       (line 103)
-* magit-status-show-untracked-files:     Status Buffer.       (line 178)
+* magit-status-show-untracked-files:     Status Buffer.       (line 191)
 * magit-submodule-list-columns:          Submodules.          (line  25)
 * magit-this-process:                    Calling Git.         (line 231)
 * magit-uniquify-buffer-names:           Modes and Buffers.   (line 190)
@@ -10934,143 +10949,143 @@ Ref: Global Git Arguments96261
 Node: Inspecting96976
 Node: Status Buffer98133
 Ref: Status Sections102265
-Ref: Status File List Sections104992
-Ref: Status Log Sections107567
-Ref: Status Header Sections108917
-Ref: Status Module Sections111410
-Ref: Status Options113782
-Node: Repository List115051
-Node: Logging119829
-Ref: Refreshing Logs122564
-Ref: Log Buffer123908
-Ref: Log Margin128635
-Ref: Select from Log131692
-Ref: Reflog133810
-Ref: Cherries135357
-Node: Diffing137129
-Ref: Refreshing Diffs141080
-Ref: Commands Available in Diffs144674
-Ref: Diff Options147071
-Ref: Revision Buffer153055
-Node: Ediffing156296
-Node: References Buffer162346
-Ref: References Sections172906
-Node: Bisecting173691
-Node: Visiting Files and Blobs176002
-Ref: General-Purpose Visit Commands176444
-Ref: Visiting Files and Blobs from a Diff177262
-Node: Blaming182516
-Node: Manipulating189504
-Node: Creating Repository189846
-Node: Cloning Repository190383
-Node: Staging and Unstaging196824
-Ref: Staging from File-Visiting Buffers200748
-Node: Applying201763
-Node: Committing203836
-Ref: Initiating a Commit204463
-Ref: Creating a new commit204775
-Ref: Editing the last commit204885
-Ref: Editing any reachable commit206864
-Ref: Editing any reachable commit and rebasing immediately211277
-Ref: Options used by commit commands212925
-Ref: Used by all or most commit commands212997
-Ref: Used by all squash and fixup commands215228
-Ref: Used by specific commit commands215776
-Ref: Editing Commit Messages216100
-Ref: Using the Revision Stack218654
-Ref: Commit Pseudo Headers221586
-Ref: Commit Mode and Hooks222738
-Ref: Commit Message Conventions225451
-Node: Branching227323
-Ref: The Two Remotes227444
-Ref: Branch Commands230013
-Ref: Branch Git Variables242751
-Ref: Auxiliary Branch Commands247998
-Node: Merging249015
-Node: Resolving Conflicts253175
-Node: Rebasing258549
-Ref: Editing Rebase Sequences263509
-Ref: Information About In-Progress Rebase268742
-Ref: Rebasing-Footnote-1277742
-Node: Cherry Picking278338
-Ref: Reverting282648
-Node: Resetting284008
-Node: Stashing285834
-Node: Transferring292075
-Node: Remotes292297
-Ref: Remote Commands292394
-Ref: Remote Git Variables296346
-Node: Fetching297530
-Node: Pulling300013
-Node: Pushing301039
-Node: Plain Patches305330
-Node: Maildir Patches306801
-Node: Miscellaneous308280
-Node: Tagging308626
-Node: Notes310519
-Node: Submodules312854
-Ref: Listing Submodules313015
-Ref: Submodule Transient315071
-Node: Subtree317424
-Node: Worktree319355
-Node: Sparse checkouts320431
-Node: Bundle323207
-Node: Common Commands323582
-Node: Wip Modes326210
-Ref: Wip Graph331056
-Ref: Legacy Wip Modes333290
-Node: Commands for Buffers Visiting Files336098
-Node: Minor Mode for Buffers Visiting Blobs344439
-Node: Customizing345602
-Node: Per-Repository Configuration347198
-Node: Essential Settings349452
-Ref: Safety349741
-Ref: Performance351422
-Ref: Log Performance354215
-Ref: Diff Performance355520
-Ref: Refs Buffer Performance356861
-Ref: Committing Performance357436
-Ref: Microsoft Windows Performance358418
-Ref: MacOS Performance359507
-Ref: Global Bindings360392
-Ref: Essential Settings-Footnote-1362567
-Node: Plumbing362649
-Node: Calling Git363478
-Ref: Getting a Value from Git364937
-Ref: Calling Git for Effect368563
-Node: Section Plumbing374467
-Ref: Creating Sections374619
-Ref: Section Selection378420
-Ref: Matching Sections380095
-Node: Refreshing Buffers385921
-Node: Conventions389065
-Ref: Theming Faces389229
-Node: FAQ397274
-Node: FAQ - How to ...?397712
-Ref: How to pronounce Magit?397845
-Ref: How to show git's output?398539
-Ref: How to install the gitman info manual?399164
-Ref: How to show diffs for gpg-encrypted files?399975
-Ref: How does branching and pushing work?400384
-Ref: Should I disable VC?400548
-Node: FAQ - Issues and Errors401033
-Ref: Magit is slow401178
-Ref: I changed several thousand files at once and now Magit is unusable401324
-Ref: I am having problems committing401863
-Ref: I am using MS Windows and cannot push with Magit402128
-Ref: I am using macOS and SOMETHING works in shell but not in Magit402528
-Ref: Expanding a file to show the diff causes it to disappear403119
-Ref: Point is wrong in the COMMIT_EDITMSG buffer403469
-Ref: The mode-line information isn't always up-to-date404293
-Ref: A branch and tag sharing the same name breaks SOMETHING405132
-Ref: My Git hooks work on the command-line but not inside Magit405780
-Ref: git-commit-mode isn't used when committing from the command-line406372
-Ref: Point ends up inside invisible text when jumping to a file-visiting buffer408370
-Ref: I am no longer able to save popup defaults408962
-Node: Debugging Tools409759
-Node: Keystroke Index413698
-Node: Function and Command Index451794
-Node: Variable Index503220
+Ref: Status File List Sections105723
+Ref: Status Log Sections108297
+Ref: Status Header Sections109647
+Ref: Status Module Sections112140
+Ref: Status Options114512
+Node: Repository List115781
+Node: Logging120559
+Ref: Refreshing Logs123294
+Ref: Log Buffer124638
+Ref: Log Margin129365
+Ref: Select from Log132422
+Ref: Reflog134540
+Ref: Cherries136087
+Node: Diffing137859
+Ref: Refreshing Diffs141810
+Ref: Commands Available in Diffs145404
+Ref: Diff Options147801
+Ref: Revision Buffer153785
+Node: Ediffing157026
+Node: References Buffer163076
+Ref: References Sections173636
+Node: Bisecting174421
+Node: Visiting Files and Blobs176732
+Ref: General-Purpose Visit Commands177174
+Ref: Visiting Files and Blobs from a Diff177992
+Node: Blaming183246
+Node: Manipulating190234
+Node: Creating Repository190576
+Node: Cloning Repository191113
+Node: Staging and Unstaging197554
+Ref: Staging from File-Visiting Buffers201478
+Node: Applying202493
+Node: Committing204566
+Ref: Initiating a Commit205193
+Ref: Creating a new commit205505
+Ref: Editing the last commit205615
+Ref: Editing any reachable commit207594
+Ref: Editing any reachable commit and rebasing immediately212007
+Ref: Options used by commit commands213655
+Ref: Used by all or most commit commands213727
+Ref: Used by all squash and fixup commands215958
+Ref: Used by specific commit commands216506
+Ref: Editing Commit Messages216830
+Ref: Using the Revision Stack219384
+Ref: Commit Pseudo Headers222316
+Ref: Commit Mode and Hooks223468
+Ref: Commit Message Conventions226181
+Node: Branching228053
+Ref: The Two Remotes228174
+Ref: Branch Commands230743
+Ref: Branch Git Variables243481
+Ref: Auxiliary Branch Commands248728
+Node: Merging249745
+Node: Resolving Conflicts253905
+Node: Rebasing259279
+Ref: Editing Rebase Sequences264239
+Ref: Information About In-Progress Rebase269472
+Ref: Rebasing-Footnote-1278472
+Node: Cherry Picking279068
+Ref: Reverting283378
+Node: Resetting284738
+Node: Stashing286564
+Node: Transferring292805
+Node: Remotes293027
+Ref: Remote Commands293124
+Ref: Remote Git Variables297076
+Node: Fetching298260
+Node: Pulling300743
+Node: Pushing301769
+Node: Plain Patches306060
+Node: Maildir Patches307531
+Node: Miscellaneous309010
+Node: Tagging309356
+Node: Notes311249
+Node: Submodules313584
+Ref: Listing Submodules313745
+Ref: Submodule Transient315801
+Node: Subtree318154
+Node: Worktree320085
+Node: Sparse checkouts321161
+Node: Bundle323937
+Node: Common Commands324312
+Node: Wip Modes326940
+Ref: Wip Graph331786
+Ref: Legacy Wip Modes334020
+Node: Commands for Buffers Visiting Files336828
+Node: Minor Mode for Buffers Visiting Blobs345169
+Node: Customizing346332
+Node: Per-Repository Configuration347928
+Node: Essential Settings350182
+Ref: Safety350471
+Ref: Performance352152
+Ref: Log Performance354945
+Ref: Diff Performance356250
+Ref: Refs Buffer Performance357591
+Ref: Committing Performance358166
+Ref: Microsoft Windows Performance359148
+Ref: MacOS Performance360237
+Ref: Global Bindings361122
+Ref: Essential Settings-Footnote-1363297
+Node: Plumbing363379
+Node: Calling Git364208
+Ref: Getting a Value from Git365667
+Ref: Calling Git for Effect369293
+Node: Section Plumbing375197
+Ref: Creating Sections375349
+Ref: Section Selection379150
+Ref: Matching Sections380825
+Node: Refreshing Buffers386651
+Node: Conventions389795
+Ref: Theming Faces389959
+Node: FAQ398004
+Node: FAQ - How to ...?398442
+Ref: How to pronounce Magit?398575
+Ref: How to show git's output?399269
+Ref: How to install the gitman info manual?399894
+Ref: How to show diffs for gpg-encrypted files?400705
+Ref: How does branching and pushing work?401114
+Ref: Should I disable VC?401278
+Node: FAQ - Issues and Errors401763
+Ref: Magit is slow401908
+Ref: I changed several thousand files at once and now Magit is unusable402054
+Ref: I am having problems committing402593
+Ref: I am using MS Windows and cannot push with Magit402858
+Ref: I am using macOS and SOMETHING works in shell but not in Magit403258
+Ref: Expanding a file to show the diff causes it to disappear403849
+Ref: Point is wrong in the COMMIT_EDITMSG buffer404199
+Ref: The mode-line information isn't always up-to-date405023
+Ref: A branch and tag sharing the same name breaks SOMETHING405862
+Ref: My Git hooks work on the command-line but not inside Magit406510
+Ref: git-commit-mode isn't used when committing from the command-line407102
+Ref: Point ends up inside invisible text when jumping to a file-visiting buffer409100
+Ref: I am no longer able to save popup defaults409692
+Node: Debugging Tools410489
+Node: Keystroke Index414428
+Node: Function and Command Index452524
+Node: Variable Index504096
 
 End Tag Table
 

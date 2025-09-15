@@ -8,8 +8,8 @@
 ;; Homepage: https://github.com/magit/magit
 ;; Keywords: tools
 
-;; Package-Version: 20250909.1018
-;; Package-Revision: dc0094bd88a5
+;; Package-Version: 20250913.1306
+;; Package-Revision: 1f895f1326ba
 ;; Package-Requires: (
 ;;     (emacs   "28.1")
 ;;     (compat  "30.1")
@@ -48,7 +48,7 @@
 (require 'compat)
 (require 'cond-let)
 (require 'eieio)
-(require 'llama)
+(require 'llama) ; For (##these ...) see M-x describe-function RET # # RET.
 (require 'subr-x)
 
 ;; For older Emacs releases we depend on an updated `seq' release from GNU
@@ -1317,7 +1317,7 @@ matches if no other CONDITION match, even if there is no section
 at point."
   (declare (indent 0)
            (debug (&rest (sexp body))))
-  `(let* ((it (magit-current-section)))
+  `(let ((it (magit-current-section)))
      (cond ,@(mapcar (lambda (clause)
                        `(,(or (eq (car clause) t)
                               `(and it
