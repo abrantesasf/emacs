@@ -207,10 +207,10 @@ See `auto-revert-mode' for more information on Auto-Revert mode.
 (autoload 'magit-emacs-Q-command "magit-base" "\
 Show a shell command that runs an uncustomized Emacs with only Magit loaded.
 See info node `(magit)Debugging Tools' for more information." t)
-(define-advice Info-follow-nearest-node (:around (fn &optional fork) gitman) (if-let* ((node (Info-get-token (point) "\\*note[ 
+(define-advice Info-follow-nearest-node (:around (fn &optional fork) gitman) (let ((node (Info-get-token (point) "\\*note[ 
 	]+" "\\*note[ 
 	]+\\([^:]*\\):\\(:\\|[ 
-	]*(\\)?")) (_ (string-match "^(gitman)\\(.+\\)" node))) (pcase magit-view-git-manual-method ('info (funcall fn fork)) ('man (require 'man) (man (match-str 1 node))) ('woman (require 'woman) (woman (match-str 1 node))) (_ (user-error "Invalid value for `magit-view-git-manual-method'"))) (funcall fn fork)))
+	]*(\\)?"))) (if (and node (string-match "^(gitman)\\(.+\\)" node)) (pcase magit-view-git-manual-method ('info (funcall fn fork)) ('man (require 'man) (man (match-str 1 node))) ('woman (require 'woman) (woman (match-str 1 node))) (_ (user-error "Invalid value for `magit-view-git-manual-method'"))) (funcall fn fork))))
 (define-advice org-man-export (:around (fn link description format) gitman) (if (and (eq format 'texinfo) (string-prefix-p "git" link)) (string-replace "%s" link "
 @ifinfo
 @ref{%s,,,gitman,}.
@@ -1304,6 +1304,11 @@ This command requires git-when-merged, which is available from
 https://github.com/mhagger/git-when-merged.
 
 (fn COMMIT BRANCH &optional ARGS FILES)" t)
+(autoload 'magit-delete-shelved-branch "magit-log" "\
+Delete the shelved BRANCH.
+Delete a ref created by `magit-branch-shelve'.
+
+(fn BRANCH)" t)
 (autoload 'magit-log-move-to-parent "magit-log" "\
 Move to the Nth parent of the current commit.
 

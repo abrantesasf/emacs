@@ -449,7 +449,7 @@ commits before and half after."
   (pcase-let* ((obj  (oref obj prototype))
                (mode (or (oref obj major-mode) major-mode))
                (key  (intern (format "magit-log:%s" mode)))
-               (`(,args ,files) (transient-args obj)))
+               (`(,args ,files) (transient-args (oref obj command))))
     (put mode 'magit-log-current-arguments args)
     (when save
       (setf (alist-get key transient-values) args)
@@ -742,18 +742,18 @@ completion candidates."
 ;;;###autoload
 (defun magit-log-matching-branches (pattern &optional args files)
   "Show log for all branches matching PATTERN and `HEAD'."
-  (interactive (cons (magit-log-read-pattern "--branches") (magit-log-arguments)))
-  (magit-log-setup-buffer
-   (list "HEAD" (format "--branches=%s" pattern))
-   args files))
+  (interactive (cons (magit-log-read-pattern "--branches")
+                     (magit-log-arguments)))
+  (magit-log-setup-buffer (list "HEAD" (format "--branches=%s" pattern))
+                          args files))
 
 ;;;###autoload
 (defun magit-log-matching-tags (pattern &optional args files)
   "Show log for all tags matching PATTERN and `HEAD'."
-  (interactive (cons (magit-log-read-pattern "--tags") (magit-log-arguments)))
-  (magit-log-setup-buffer
-   (list "HEAD" (format "--tags=%s" pattern))
-   args files))
+  (interactive (cons (magit-log-read-pattern "--tags")
+                     (magit-log-arguments)))
+  (magit-log-setup-buffer (list "HEAD" (format "--tags=%s" pattern))
+                          args files))
 
 ;;;###autoload
 (defun magit-log-all-branches (&optional args files)
@@ -884,6 +884,13 @@ https://github.com/mhagger/git-when-merged."
                                     files nil commit))
         (user-error "Could not find when %s was merged into %s: %s"
                     commit branch m)))))
+
+;;;###autoload
+(defun magit-delete-shelved-branch (branch)
+  "Delete the shelved BRANCH.
+Delete a ref created by `magit-branch-shelve'."
+  (interactive (list (magit-read-shelved-branch "Log shelved branch")))
+  (magit-run-git "update-ref" "-d" (concat "refs/shelved/" branch)))
 
 ;;;; Limit Commands
 
