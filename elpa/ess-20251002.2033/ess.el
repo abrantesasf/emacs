@@ -17,8 +17,8 @@
 ;;
 ;; Maintainer: ESS Core Team <ESS-core@r-project.org>
 ;; Created: 7 Jan 1994
-;; Package-Version: 20250725.847
-;; Package-Revision: b8341e9a4e34
+;; Package-Version: 20251002.2033
+;; Package-Revision: 9953bc00cff4
 ;; URL: https://ess.r-project.org/
 ;; Package-Requires: ((emacs "25.1"))
 ;; ESSR-Version: 1.8

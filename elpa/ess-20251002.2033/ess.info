@@ -4541,11 +4541,11 @@ File: ess.info,  Node: Reporting Bugs,  Next: Mailing Lists,  Prev: Bugs,  Up: M
 16.2 Reporting Bugs
 ===================
 
-Please send bug reports, suggestions etc.  to <ESS-bugs@r-project.org>,
-or post them on our github issue tracker
-(https://github.com/emacs-ess/ESS/issues)
+Please post bug reports, suggestions etc.  on our github issue tracker
+(https://github.com/emacs-ess/ESS/issues); if not possible, e-mail them
+to <ESS-help@r-project.org>.
 
-   The easiest way to do this is within Emacs by typing
+   The easiest way to set this up, is within Emacs by typing
 
    'M-x ess-submit-bug-report'
 
@@ -5151,14 +5151,14 @@ Node: ESS for JAGS188799
 Node: Mailing lists/bug reports192151
 Node: Bugs192415
 Node: Reporting Bugs194039
-Node: Mailing Lists194932
-Node: Help with Emacs195659
-Node: Customization196191
-Node: Indices196965
-Node: Key index197140
-Node: Function and program index202272
-Node: Variable index211692
-Node: Concept index215253
+Node: Mailing Lists194954
+Node: Help with Emacs195681
+Node: Customization196213
+Node: Indices196987
+Node: Key index197162
+Node: Function and program index202294
+Node: Variable index211714
+Node: Concept index215275
 
 End Tag Table
 
