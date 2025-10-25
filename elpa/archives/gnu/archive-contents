@@ -547,7 +547,7 @@
 	      ("Yuchen Pei" . "id@ypei.org"))
 	     (:commit . "d614eea91ca5717c2b0019dae8c85e6a24873f39"))])
  (calibre .
-	  [(1 4 1)
+	  [(1 5 0)
 	   ((emacs
 	     (27 1))
 	    (compat
@@ -557,7 +557,7 @@
 	    (:maintainer "Kjartan Oli Agustsson" . "kjartanoli@disroot.org")
 	    (:authors
 	     ("Kjartan Oli Agustsson" . "kjartanoli@disroot.org"))
-	    (:commit . "855a9cb092eecf1e5c17ea56c440a0200f95eb4c"))])
+	    (:commit . "dbbffe75c6a2492099e36dc93b6183800a7d6fcd"))])
  (cape .
        [(2 2)
 	((emacs
@@ -1149,16 +1149,18 @@
 	      ("Niklas Eklund" . "niklas.eklund@posteo.net"))
 	     (:commit . "fedb0df5b0fbba13c662107855fb07a922793096"))])
  (devdocs .
-	  [(0 6 1)
+	  [(0 7)
 	   ((emacs
-	     (27 1)))
+	     (27 1))
+	    (compat
+	     (30 1)))
 	   "Emacs viewer for DevDocs" tar
 	   ((:url . "https://github.com/astoff/devdocs.el")
 	    (:keywords "help")
 	    (:maintainer "Augusto Stoffel" . "arstoffel@gmail.com")
 	    (:authors
 	     ("Augusto Stoffel" . "arstoffel@gmail.com"))
-	    (:commit . "ebdd3b39bef1a928c069373337d0f8e4f2d8b8d2"))])
+	    (:commit . "25c746024ddf73570195bf42b841f761a2fee10c"))])
  (devicetree-ts-mode .
 		     [(0 3)
 		      ((emacs
@@ -1477,25 +1479,21 @@
 	       ("Protesilaos Stavrou" . "info@protesilaos.com"))
 	      (:commit . "4253a4b92a8264a1bca0db43301cb8bf7538b7e3"))])
  (eglot .
-	[(1 18)
+	[(1 19)
 	 ((emacs
 	   (26 3))
-	  (compat
-	   (27 1))
 	  (eldoc
 	   (1 14 0))
 	  (external-completion
 	   (0 1))
 	  (flymake
-	   (1 2 1))
+	   (1 4 2))
 	  (jsonrpc
-	   (1 0 24))
+	   (1 0 26))
 	  (project
 	   (0 9 8))
 	  (seq
 	   (2 23))
-	  (track-changes
-	   (1 2))
 	  (xref
 	   (1 6 2)))
 	 "The Emacs Client for LSP servers" tar
@@ -1504,7 +1502,7 @@
 	  (:maintainer "João Távora" . "joaotavora@gmail.com")
 	  (:authors
 	   ("João Távora" . "joaotavora@gmail.com"))
-	  (:commit . "49f449bb5bc90bc1eca6b4a1f013d4c0b5460d65"))])
+	  (:commit . "94a4bf8a39e319004a6cee0d6259adfb207e351b"))])
  (el-job .
 	 [(2 5 3)
 	  ((emacs
@@ -1708,7 +1706,7 @@
 		("Ted Zlatanov" . "tzz@lifelogs.com"))
 	       (:maintainer "Ted Zlatanov" . "tzz@lifelogs.com"))])
  (erc .
-      [(5 6)
+      [(5 6 1)
        ((emacs
 	 (27 1))
 	(compat
@@ -1721,7 +1719,7 @@
 	 ("F. Jason Park" . "jp@neverwas.me"))
 	(:authors
 	 ("Alexander L. Belikoff" . "alexander@belikoff.net"))
-	(:commit . "d1e98a8f0128747030e97ffea20a8f67aa0cd923"))])
+	(:commit . "1b5fef63b483fba9908543da39365bd522ad6e4a"))])
  (ergoemacs-mode .
 		 [(5 16 10 12)
 		  ((emacs
@@ -1874,7 +1872,7 @@
 	    (:url . "https://elpa.gnu.org/packages/flylisp.html")
 	    (:commit . "20fe3e77bb73773c8678e65ae38020b0b7f996eb"))])
  (flymake .
-	  [(1 4 1)
+	  [(1 4 2)
 	   ((emacs
 	     (26 1))
 	    (eldoc
@@ -1887,7 +1885,7 @@
 	    (:authors
 	     ("Pavel Kobyakov" . "pk_at_work@yahoo.com"))
 	    (:url . "https://elpa.gnu.org/packages/flymake.html")
-	    (:commit . "a25fc9a518dc1c4bf1ef86bb949ed2f3c995adea"))])
+	    (:commit . "15ce66523912f84bc735228d9efa004a9a463e83"))])
  (flymake-clippy .
 		 [(1 1 0)
 		  ((emacs
@@ -2552,7 +2550,7 @@
 	      (:url . "https://elpa.gnu.org/packages/json-mode.html")
 	      (:commit . "dc1e531039e381edf04787c89d17038db5dc8b77"))])
  (jsonrpc .
-	  [(1 0 25)
+	  [(1 0 26)
 	   ((emacs
 	     (25 2)))
 	   "JSON-RPC library" tar
@@ -2561,7 +2559,7 @@
 	    (:authors
 	     ("João Távora" . "joaotavora@gmail.com"))
 	    (:url . "https://elpa.gnu.org/packages/jsonrpc.html")
-	    (:commit . "7c552b22e64fa9173557e3511aa4e37ac1d5ea59"))])
+	    (:commit . "74618070ab751562c307c66cd3546d680a472d80"))])
  (jumpc .
 	[(3 1)
 	 nil "jump to previous insertion points" tar

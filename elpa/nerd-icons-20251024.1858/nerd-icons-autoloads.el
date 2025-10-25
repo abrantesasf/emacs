@@ -62,10 +62,16 @@ inserting functions.
 (autoload 'nerd-icons-icon-for-buffer "nerd-icons" "\
 Get the formatted icon for the current buffer.
 
+ARG-OVERRIDES should be a plist containing `:height',
+`:v-adjust' or `:face' properties like in the normal icon
+inserting functions.
+
 This function prioritises the use of the buffers file extension to
 discern the icon when its `major-mode' matches its auto mode,
 otherwise it will use the buffers `major-mode' to decide its
-icon.")
+icon.
+
+(fn &rest ARG-OVERRIDES)")
 (register-definition-prefixes "nerd-icons" '("nerd-icons-"))
 
 ;;; End of scraped data
