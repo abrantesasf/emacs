@@ -4,8 +4,8 @@
 
 ;; Author: Hongyu Ding <rainstormstudio@yahoo.com>, Vincent Zhang <seagle0128@gmail.com>
 ;; Keywords: lisp
-;; Package-Version: 20251024.1858
-;; Package-Revision: 2625683b9b17
+;; Package-Version: 20251028.2250
+;; Package-Revision: f262828f5f0e
 ;; Package-Requires: ((emacs "25.1"))
 ;; URL: https://github.com/rainstormstudio/nerd-icons.el
 ;; Keywords: convenient, lisp
@@ -129,6 +129,7 @@
     ("conf"           nerd-icons-codicon "nf-cod-settings"       :face nerd-icons-dorange)
     ("editorconfig"   nerd-icons-sucicon "nf-seti-editorconfig"  :face nerd-icons-silver)
     ("idekeybindings" nerd-icons-faicon "nf-fa-file_code_o"      :face nerd-icons-lblue)
+    ("cfg"            nerd-icons-codicon "nf-cod-settings"       :face nerd-icons-dorange)
     ;; ?
     ("pkg"            nerd-icons-octicon "nf-oct-package"        :face nerd-icons-dsilver)
     ("rpm"            nerd-icons-octicon "nf-oct-package"        :face nerd-icons-dsilver)
@@ -197,6 +198,7 @@
     ("gem"            nerd-icons-codicon "nf-cod-ruby"           :face nerd-icons-red)
     ;; ("raku"        nerd-icons-devicon "raku") TODO: raku
     ;; ("rakumod"     nerd-icons-devicon "raku") TODO: raku
+    ("qml"            nerd-icons-devicon "nf-dev-qt"             :face nerd-icons-yellow)
     ("rb"             nerd-icons-codicon "nf-cod-ruby"           :face nerd-icons-lred)
     ("rs"             nerd-icons-devicon "nf-dev-rust"           :face nerd-icons-maroon)
     ("rlib"           nerd-icons-devicon "nf-dev-rust"           :face nerd-icons-dmaroon)
@@ -1221,18 +1223,26 @@ inserting functions."
     (when arg-overrides (setq args (append `(,(car args)) arg-overrides (cdr args))))
     (apply (car icon) args)))
 
+(defalias 'nerd-icons--mode-parents
+  (if (< emacs-major-version 30)
+      (lambda (mode)
+        "Return all parents for the given MODE, starting with MODE."
+        (when mode
+          (cons mode (nerd-icons--mode-parents
+                      (get mode 'derived-mode-parent)))))
+    'derived-mode-all-parents))
+
 ;;;###autoload
 (defun nerd-icons-icon-for-mode (mode &rest arg-overrides)
   "Get the formatted icon for MODE.
 ARG-OVERRIDES should be a plist containining `:height',
 `:v-adjust' or `:face' properties like in the normal icon
 inserting functions."
-  (when-let* ((icon (or (cdr (or (assq mode nerd-icons-mode-icon-alist)
-                                 (assq (get mode 'derived-mode-parent) nerd-icons-mode-icon-alist)))
-                        nerd-icons-default-file-icon)))
-    (if arg-overrides
-        (apply (car icon) (cadr icon) (append arg-overrides (cddr icon)))
-      (apply (car icon) (cdr icon)))))
+  (let ((modes (nerd-icons--mode-parents mode)))
+    (when-let* ((icon (cdr (cl-some (lambda (m) (assq m nerd-icons-mode-icon-alist)) modes))))
+      (if arg-overrides
+          (apply (car icon) (cadr icon) (append arg-overrides (cddr icon)))
+        (apply (car icon) (cdr icon))))))
 
 ;;;###autoload
 (defun nerd-icons-icon-for-url (url &rest arg-overrides)
