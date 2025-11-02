@@ -3,8 +3,8 @@
 ;; Author: Vitalie Spinu
 ;; Maintainer: Vitalie Spinu
 ;; Copyright (C) 2018
-;; Package-Version: 20250531.1935
-;; Package-Revision: f4815f0327e0
+;; Package-Version: 20251101.1318
+;; Package-Revision: 2eb00d1d07a9
 ;; Package-Requires: ((emacs "25") (polymode "0.2.2") (markdown-mode "2.3"))
 ;; URL: https://github.com/polymode/poly-markdown
 ;; Keywords: emacs
@@ -50,6 +50,17 @@
 (define-obsolete-variable-alias 'pm-inner/markdown-displayed-math 'poly-markdown-displayed-math-innermode "v0.2")
 (define-obsolete-variable-alias 'pm-inner/markdown-inline-math 'poly-markdown-inline-math-innermode "v0.2")
 (define-obsolete-variable-alias 'pm-poly/markdown 'poly-markdown-polymode "v0.2")
+
+(defgroup poly-markdown nil
+  "Settings for ‘poly-markdown’."
+  :group 'polymode)
+
+(defcustom poly-markdown-enable-latex-math t
+  "When non-nil, enable LaTeX-related innermodes in poly-markdown:
+- inline/display math regions ($...$, $$...$$, \\(...\\), \\[...\\])
+- fenced code blocks with language \"latex\" or \"tex\"."
+  :type 'boolean
+  :group 'poly-markdown)
 
 (define-hostmode poly-markdown-hostmode
   :mode 'markdown-mode
@@ -143,11 +154,12 @@ character."
 ;;;###autoload  (autoload 'poly-markdown-mode "poly-markdown")
 (define-polymode poly-markdown-mode
   :hostmode 'poly-markdown-hostmode
-  :innermodes '(poly-markdown-fenced-code-innermode
-                ;; poly-markdown-inline-code-innermode
-                poly-markdown-displayed-math-innermode
-                poly-markdown-inline-math-innermode
-                poly-markdown-yaml-metadata-innermode))
+  :innermodes (append
+             '(poly-markdown-fenced-code-innermode
+               poly-markdown-yaml-metadata-innermode)
+             (when poly-markdown-enable-latex-math
+               '(poly-markdown-inline-math-innermode
+                 poly-markdown-displayed-math-innermode))))
 
 ;;;###autoload
 (add-to-list 'auto-mode-alist '("\\.md\\'" . poly-markdown-mode))
