@@ -25,10 +25,10 @@
 (setq company-backends '((company-clang company-files company-capf company-dabbrev-code)))
 
 ;; Includes básicos para C/C++:
-(setq company-clang-arguments
-  (append company-clang-arguments
-    '("-I/usr/include"
-      "-I/usr/include/linux"
-      "-I/usr/include/x86_64-linux-gnu"
-      "-I/usr/include/x86_64-linux-gnu/sys")))
+;(setq company-clang-arguments
+;  (append company-clang-arguments
+;    '("-I/usr/include"
+;      "-I/usr/include/linux"
+;      "-I/usr/include/x86_64-linux-gnu"
+;      "-I/usr/include/x86_64-linux-gnu/sys")))
 
