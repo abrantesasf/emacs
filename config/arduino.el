@@ -13,8 +13,8 @@
 
 (load-file "/home/abrantesasf/.emacs.d/config/arduino_highlighting_code.el")
 
-(setq-default flycheck-clang-include-path
-  '("/home/abrantesasf/.arduino15/packages/arduino/hardware/avr/1.8.6/cores/arduino/"))
+;(setq-default flycheck-clang-include-path
+;  '("/home/abrantesasf/.arduino15/packages/arduino/hardware/avr/1.8.6/cores/arduino/"))
 
 (setq company-clang-arguments
   (append company-clang-arguments
