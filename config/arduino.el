@@ -16,20 +16,20 @@
 ;(setq-default flycheck-clang-include-path
 ;  '("/home/abrantesasf/.arduino15/packages/arduino/hardware/avr/1.8.6/cores/arduino/"))
 
-(setq company-clang-arguments
-  (append company-clang-arguments
-    '("-I/home/abrantesasf/.arduino15/packages/arduino/hardware/avr/1.8.6/cores/arduino"
-      "-I/home/abrantesasf/.arduino15/packages/arduino/hardware/avr/1.8.6/variants/standard"
-      "-I/home/abrantesasf/.arduino15/packages/arduino/hardware/avr/1.8.6/libraries"
-      "-I/home/abrantesasf/.arduino15/packages/arduino/hardware/avr/1.8.6/libraries/SPI/src"
-      "-I/home/abrantesasf/.arduino15/packages/arduino/hardware/avr/1.8.6/libraries/EEPROM/src"
-      "-I/home/abrantesasf/.arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7/avr/include"
-      "-I/home/abrantesasf/.arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7/avr/include/avr"
-      "-I/home/abrantesasf/.arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7/avr/include/compat"
-      "-I/home/abrantesasf/.arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7/avr/include/sys"
-      "-I/home/abrantesasf/.arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7/avr/include/util"
-      "-I/home/abrantesasf/Arduino/libraries/Keypad/src"
-      "-I/home/abrantesasf/Arduino/libraries/Arduino-LiquidCrystal-I2C-library-master"
-      "-I/home/abrantesasf/Arduino/libraries/LiquidCrystal_I2C"
-      "-I/home/abrantesasf/Arduino/libraries/RTClib/src")))
+;(setq company-clang-arguments
+;  (append company-clang-arguments
+;    '("-I/home/abrantesasf/.arduino15/packages/arduino/hardware/avr/1.8.6/cores/arduino"
+;      "-I/home/abrantesasf/.arduino15/packages/arduino/hardware/avr/1.8.6/variants/standard"
+;      "-I/home/abrantesasf/.arduino15/packages/arduino/hardware/avr/1.8.6/libraries"
+;      "-I/home/abrantesasf/.arduino15/packages/arduino/hardware/avr/1.8.6/libraries/SPI/src"
+;      "-I/home/abrantesasf/.arduino15/packages/arduino/hardware/avr/1.8.6/libraries/EEPROM/src"
+;      "-I/home/abrantesasf/.arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7/avr/include"
+;      "-I/home/abrantesasf/.arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7/avr/include/avr"
+;      "-I/home/abrantesasf/.arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7/avr/include/compat"
+;      "-I/home/abrantesasf/.arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7/avr/include/sys"
+;      "-I/home/abrantesasf/.arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7/avr/include/util"
+;      "-I/home/abrantesasf/Arduino/libraries/Keypad/src"
+;      "-I/home/abrantesasf/Arduino/libraries/Arduino-LiquidCrystal-I2C-library-master"
+;      "-I/home/abrantesasf/Arduino/libraries/LiquidCrystal_I2C"
+;      "-I/home/abrantesasf/Arduino/libraries/RTClib/src")))
 
