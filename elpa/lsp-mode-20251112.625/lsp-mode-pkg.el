@@ -1,5 +1,5 @@
 ;; -*- no-byte-compile: t; lexical-binding: nil -*-
-(define-package "lsp-mode" "20251108.1225"
+(define-package "lsp-mode" "20251112.625"
   "LSP mode."
   '((emacs         "28.1")
     (dash          "2.18.0")
@@ -10,6 +10,6 @@
     (lv            "0")
     (eldoc         "1.11"))
   :url "https://github.com/emacs-lsp/lsp-mode"
-  :commit "dc44e0bb46b5720e1129f56aea22de7cdb94aed0"
-  :revdesc "dc44e0bb46b5"
+  :commit "3fb02931a876158c3766dcdf1c0750049870000b"
+  :revdesc "3fb02931a876"
   :keywords '("languages"))
