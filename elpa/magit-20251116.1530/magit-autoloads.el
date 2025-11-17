@@ -164,12 +164,14 @@ With a prefix argument also stage previously untracked (but not
 ignored) files.
 
 (fn &optional ALL)" t)
+(autoload 'magit-run-post-stage-hook "magit-apply")
 (autoload 'magit-unstage-files "magit-apply" "\
 Read one or more files and unstage all changes to those files.
 
 (fn FILES)" t)
 (autoload 'magit-unstage-all "magit-apply" "\
 Remove all changes from the staging area." t)
+(autoload 'magit-run-post-unstage-hook "magit-apply")
 (register-definition-prefixes "magit-apply" '("magit-"))
 
 
@@ -200,6 +202,7 @@ Auto-Revert mode is enabled in all buffers where
 See `auto-revert-mode' for more information on Auto-Revert mode.
 
 (fn &optional ARG)" t)
+(autoload 'magit-auto-revert-buffers "magit-autorevert")
 (register-definition-prefixes "magit-autorevert" '("auto-revert-buffer" "magit-"))
 
 
@@ -665,6 +668,7 @@ Spread modified modules across recent commits.
 (fn PHASE COMMIT)" t)
 (autoload 'magit-commit-absorb "magit-commit" nil t)
 (autoload 'magit-commit-autofixup "magit-commit" nil t)
+(autoload 'magit-run-post-commit-hook "magit-commit")
 (register-definition-prefixes "magit-commit" '("magit-"))
 
 

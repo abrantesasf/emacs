@@ -5,8 +5,8 @@
 ;; Author: Vibhav Pant, Fangrui Song, Ivan Yonchovski
 ;; Keywords: languages
 ;; Package-Requires: ((emacs "28.1") (dash "2.18.0") (f "0.20.0") (ht "2.3") (spinner "1.7.3") (markdown-mode "2.3") (lv "0") (eldoc "1.11"))
-;; Package-Version: 20251112.625
-;; Package-Revision: 3fb02931a876
+;; Package-Version: 20251115.1332
+;; Package-Revision: 9ee383254eab
 
 ;; URL: https://github.com/emacs-lsp/lsp-mode
 ;; This program is free software; you can redistribute it and/or modify
@@ -353,6 +353,7 @@ the server has requested that."
     "[/\\\\]_darcs\\'"
     "[/\\\\]\\.svn\\'"
     "[/\\\\]_FOSSIL_\\'"
+    "[/\\\\]\\.jj\\'"
     ;; IDE or build tools
     "[/\\\\]\\.idea\\'"
     "[/\\\\]\\.ensime_cache\\'"
@@ -424,7 +425,9 @@ the server has requested that."
     ;; nix-direnv
     "[/\\\\]\\result"
     "[/\\\\]\\result-bin"
-    "[/\\\\]\\.direnv\\'")
+    "[/\\\\]\\.direnv\\'"
+    ;; nix-devenv
+    "[/\\\\]\\.devenv\\'")
   "List of regexps matching directory paths which won't be monitored when
 creating file watches. Customization of this variable is only honored at
 the global level or at a root of an lsp workspace."

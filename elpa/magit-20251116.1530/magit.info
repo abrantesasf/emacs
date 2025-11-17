@@ -9332,7 +9332,7 @@ as the defaults for future popups.
    When switching to Transient menus, this functionality is now
 available via ‘C-x C-s’ instead; the ‘C-x’ prefix has other options as
 well when using Transient, which will be displayed when it is typed.
-See <https://magit.vc/manual/transient/Saving-Values.html#Saving-Values>
+See <https://docs.magit.vc/transient/Saving-Values.html#Saving-Values>
 for more details.
 
 
@@ -11028,10 +11028,10 @@ Ref: My Git hooks work on the command-line but not inside Magit404632
 Ref: git-commit-mode isn't used when committing from the command-line405224
 Ref: Point ends up inside invisible text when jumping to a file-visiting buffer407222
 Ref: I am no longer able to save popup defaults407814
-Node: Debugging Tools408611
-Node: Keystroke Index412550
-Node: Function and Command Index450646
-Node: Variable Index502218
+Node: Debugging Tools408609
+Node: Keystroke Index412548
+Node: Function and Command Index450644
+Node: Variable Index502216
 
 End Tag Table
 
