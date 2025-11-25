@@ -17,8 +17,8 @@
 ;; Homepage: https://github.com/magit/magit
 ;; Keywords: git tools vc
 
-;; Package-Version: 20251116.1530
-;; Package-Revision: 07bcac67e343
+;; Package-Version: 20251125.101
+;; Package-Revision: ced3d5afc33d
 ;; Package-Requires: (
 ;;     (emacs        "28.1")
 ;;     (compat       "30.1")
@@ -520,7 +520,7 @@ is run in the top-level directory of the current working tree."
 (defun magit-read-gpg-secret-key
     (prompt &optional initial-input history predicate default)
   (require 'epa)
-  (let* ((keys (mapcan
+  (let* ((keys (seq-keep
                 (lambda (cert)
                   (and (or (not predicate)
                            (funcall predicate cert))
@@ -534,11 +534,10 @@ is run in the top-level directory of the current working tree."
                                    (if (stringp id-str)
                                        id-str
                                      (epg-decode-dn id-obj))))))
-                         (list
-                          (propertize fpr 'display
-                                      (concat (substring fpr 0 (- (length id)))
-                                              (propertize id 'face 'highlight)
-                                              " " author))))))
+                         (propertize fpr 'display
+                                     (concat (substring fpr 0 (- (length id)))
+                                             (propertize id 'face 'highlight)
+                                             " " author)))))
                 (epg-list-keys (epg-make-context epa-protocol) nil t)))
          (choice (or (and (not current-prefix-arg)
                           (or (and (length= keys 1) (car keys))

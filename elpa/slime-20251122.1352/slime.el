@@ -3,8 +3,8 @@
 ;; URL: https://github.com/slime/slime
 ;; Package-Requires: ((emacs "24.3") (macrostep "0.9"))
 ;; Keywords: languages, lisp, slime
-;; Package-Version: 20251101.1730
-;; Package-Revision: ac4d906268e7
+;; Package-Version: 20251122.1352
+;; Package-Revision: 0f0b0835b422
 
 ;;;; License and Commentary
 
@@ -1382,6 +1382,11 @@ The default condition handler for timer functions (see
              (slime-user-first-name)))
   "Scientifically-proven optimal words of hackerish encouragement.")
 
+(defcustom slime-show-words-of-encouragement t
+  "If non-NIL, words of encouragement are shown on connection."
+  :type '(boolean)
+  :group 'slime-lisp)
+
 (defun slime-random-words-of-encouragement ()
   "Return a string of hackerish encouragement."
   (eval (nth (random (length slime-words-of-encouragement))
@@ -1899,7 +1904,9 @@ This is automatically synchronized from Lisp.")
           (setq slime-inferior-lisp-connected connection)))
       (let ((fun (plist-get args ':init-function)))
         (when fun (funcall fun))))
-    (message "Connected. %s" (slime-random-words-of-encouragement))))
+    (message "Connected. %s" (if slime-show-words-of-encouragement
+                                 (slime-random-words-of-encouragement)
+                               ""))))
 
 (defun slime-net-close (process &optional debug)
   (setq slime-net-processes (remove process slime-net-processes))

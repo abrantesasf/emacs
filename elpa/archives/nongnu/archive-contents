@@ -2171,7 +2171,7 @@
 	       ("Andreas Politz" . "mail@andreas-politz.de"))
 	      (:commit . "a9c9a12c3ecf2005fa641059368ac8284f507620"))])
  (pg .
-     [(0 60)
+     [(0 61)
       ((emacs
 	(28 1))
        (peg
@@ -2182,7 +2182,7 @@
        (:maintainer "Eric Marsden" . "eric.marsden@risk-engineering.org")
        (:authors
 	("Eric Marsden" . "eric.marsden@risk-engineering.org"))
-       (:commit . "215cec9499d9069b387a4638a00b16c08d1e0c19"))])
+       (:commit . "4746a8bd1e299157dbbafa43a127405c224d1a32"))])
  (php-mode .
 	   [(1 26 1)
 	    ((emacs
@@ -2934,14 +2934,14 @@
 	       ("Le Wang" . "l26wang@gmail.com"))
 	      (:commit . "9ee5a7657a22e836618813c2e2b64a548d27d2ff"))])
  (xah-fly-keys .
-	       [(28 10 20251107130929)
+	       [(28 11 20251123201632)
 		((emacs
 		  (28 3)))
 		"ergonomic modal keybinding minor mode." tar
 		((:url . "http://xahlee.info/emacs/misc/xah-fly-keys.html")
 		 (:keywords "convenience" "vi" "vim" "ergoemacs" "keybinding")
 		 (:maintainer "Xah Lee" . "xah@xahlee.org")
-		 (:commit . "f9491c4b1800c1012797c85bd29e98115c2c6666"))])
+		 (:commit . "09570006bd056d85ff46304e3ab88bc9be8d4b33"))])
  (xkcd .
        [(1 1)
 	((json

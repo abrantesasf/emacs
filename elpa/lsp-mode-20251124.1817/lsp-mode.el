@@ -5,8 +5,8 @@
 ;; Author: Vibhav Pant, Fangrui Song, Ivan Yonchovski
 ;; Keywords: languages
 ;; Package-Requires: ((emacs "28.1") (dash "2.18.0") (f "0.20.0") (ht "2.3") (spinner "1.7.3") (markdown-mode "2.3") (lv "0") (eldoc "1.11"))
-;; Package-Version: 20251118.1616
-;; Package-Revision: 6f9e3eed899e
+;; Package-Version: 20251124.1817
+;; Package-Revision: 2b497a75132b
 
 ;; URL: https://github.com/emacs-lsp/lsp-mode
 ;; This program is free software; you can redistribute it and/or modify
@@ -811,6 +811,7 @@ Changes take effect only when a new session is started."
     ("\\.nu$" . "nushell")
     ("\\.php$" . "php")
     ("\\.ps[dm]?1\\'" . "powershell")
+    ("\\.qml$" . "qml")
     ("\\.rs\\'" . "rust")
     ("\\.spec\\'" . "rpm-spec")
     ("\\.sql$" . "sql")
@@ -1017,7 +1018,9 @@ Changes take effect only when a new session is started."
     (message-mode . "plaintext")
     (mu4e-compose-mode . "plaintext")
     (odin-mode . "odin")
-    (odin-ts-mode . "odin"))
+    (odin-ts-mode . "odin")
+    (qml-mode . "qml")
+    (qml-ts-mode . "qml"))
   "Language id configuration.")
 
 (defvar lsp--last-active-workspaces nil

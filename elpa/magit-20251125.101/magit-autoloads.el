@@ -177,7 +177,7 @@ Remove all changes from the staging area." t)
 
 ;;; Generated autoloads from magit-autorevert.el
 
-(defun magit-custom-initialize-after-init (symbol value) (internal--define-uninitialized-variable symbol) (cond ((not after-init-time) (letrec ((f (lambda nil (ignore-errors (remove-hook 'after-init-hook f)) (custom-initialize-set symbol value)))) (add-hook 'after-init-hook f))) ((not load-file-name) (custom-initialize-set symbol value)) ((letrec ((f (apply-partially (lambda (thisfile symbol value file) (when (equal file thisfile) (ignore-errors (remove-hook 'after-load-functions f)) (custom-initialize-set symbol value))) load-file-name symbol value))) (add-hook 'after-load-functions f)))))
+(defun magit-custom-initialize-after-init (symbol value) (internal--define-uninitialized-variable symbol) (cond ((not after-init-time) (letrec ((f (apply-partially (lambda (symbol value) (ignore-errors (remove-hook 'after-init-hook f)) (custom-initialize-set symbol value)) symbol value))) (add-hook 'after-init-hook f))) ((not load-file-name) (custom-initialize-set symbol value)) ((letrec ((f (apply-partially (lambda (thisfile symbol value file) (when (equal file thisfile) (ignore-errors (remove-hook 'after-load-functions f)) (custom-initialize-set symbol value))) load-file-name symbol value))) (add-hook 'after-load-functions f)))))
 (put 'magit-auto-revert-mode 'globalized-minor-mode t)
 (defcustom magit-auto-revert-mode (not (or global-auto-revert-mode noninteractive)) "\
 Non-nil if Magit-Auto-Revert mode is enabled.
