@@ -8,8 +8,8 @@
 ;; Homepage: https://github.com/magit/magit
 ;; Keywords: tools
 
-;; Package-Version: 20251108.1923
-;; Package-Revision: 2d8f43e68125
+;; Package-Version: 20251125.1404
+;; Package-Revision: 4800ace210d5
 ;; Package-Requires: (
 ;;     (emacs   "28.1")
 ;;     (compat  "30.1")
@@ -1991,10 +1991,9 @@ When `magit-section-preserve-visibility' is nil, return nil."
 (cl-defun magit-section-cache-visibility
     (&optional (section magit-insert-section--current))
   "Cache SECTION's current visibility."
-  (setf (compat-call alist-get
-                     (magit-section-ident section)
-                     magit-section-visibility-cache
-                     nil nil #'equal)
+  (setf (alist-get (magit-section-ident section)
+                   magit-section-visibility-cache
+                   nil nil #'equal)
         (if (oref section hidden) 'hide 'show)))
 
 (cl-defun magit-section-maybe-cache-visibility

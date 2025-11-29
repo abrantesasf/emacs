@@ -6,8 +6,8 @@
 ;; Homepage: https://github.com/magit/transient
 ;; Keywords: extensions
 
-;; Package-Version: 20251120.1950
-;; Package-Revision: 453376f2f1a0
+;; Package-Version: 20251129.1551
+;; Package-Revision: f960acdf7454
 ;; Package-Requires: (
 ;;     (emacs   "28.1")
 ;;     (compat  "30.1")
@@ -4739,7 +4739,7 @@ and its value is returned to the caller."
 
 (cl-defmethod transient-format-description ((obj transient-value-preset))
   (pcase-let* (((eieio description key set) obj)
-               ((eieio value) transient--prefix)
+               (value (transient--get-extended-value))
                (active (seq-set-equal-p set value)))
     (format
      "%s %s"

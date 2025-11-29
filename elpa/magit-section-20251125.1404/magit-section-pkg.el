@@ -1,5 +1,5 @@
 ;; -*- no-byte-compile: t; lexical-binding: nil -*-
-(define-package "magit-section" "20251108.1923"
+(define-package "magit-section" "20251125.1404"
   "Sections for read-only buffers."
   '((emacs    "28.1")
     (compat   "30.1")
@@ -7,8 +7,8 @@
     (llama    "1.0")
     (seq      "2.24"))
   :url "https://github.com/magit/magit"
-  :commit "2d8f43e68125d9f7cf97ba182a5d266fe1a52c67"
-  :revdesc "2d8f43e68125"
+  :commit "4800ace210d5eb82b00428f0ff74723c986181ba"
+  :revdesc "4800ace210d5"
   :keywords '("tools")
   :authors '(("Jonas Bernoulli" . "emacs.magit@jonas.bernoulli.dev"))
   :maintainers '(("Jonas Bernoulli" . "emacs.magit@jonas.bernoulli.dev")))
