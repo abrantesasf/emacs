@@ -29,9 +29,11 @@
 
 ;;; Code:
 
-(require 'magit-process)
-
 (require 'autorevert)
+
+(declare-function magit-file-tracked-p "magit-git" (file))
+(declare-function magit-toplevel "magit-git" (&optional directory))
+(declare-function magit-git-executable "magit-git" ())
 
 ;;; Options
 
@@ -105,42 +107,49 @@ seconds of user inactivity.  That is not desirable."
 ;;; Mode
 
 ;;;###autoload
-(progn ; magit-custom-initialize-after-init
-  (defun magit-custom-initialize-after-init (symbol value)
-    ;; Use `apply-partially' instead of the wonders of lexical bindings,
-    ;; because of bugs in the autoload handling of package managers, which
-    ;; cause these variables to be treated as dynamic.  See #5476 and #5485.
+(progn ; magit-auto-revert-mode--initialize
+  (defun magit-auto-revert-mode--initialize (symbol value)
     (internal--define-uninitialized-variable symbol)
-    (cond ((not after-init-time)
-           (letrec ((f (apply-partially
-                        (lambda (symbol value)
-                          (ignore-errors
-                            (remove-hook 'after-init-hook f))
-                          (custom-initialize-set symbol value))
-                        symbol value)))
-             (add-hook 'after-init-hook f)))
-          ((not load-file-name)
-           (custom-initialize-set symbol value))
-          ((letrec ((f (apply-partially
-                        (lambda (thisfile symbol value file)
-                          (when (equal file thisfile)
-                            (ignore-errors
-                              (remove-hook 'after-load-functions f))
-                            (custom-initialize-set symbol value)))
-                        load-file-name symbol value)))
-             (add-hook 'after-load-functions f))))))
+    (if (not load-file-name)
+        (custom-initialize-set symbol value)
+      ;; Bugs in package managers prevent the use of lexical
+      ;; bindings in autoloaded code.  See #5476 and #5485.
+      (defalias 'magit-auto-revert-mode--after-load
+        (apply-partially
+         (lambda (symbol value mode-file file)
+           (when (equal file mode-file)
+             (remove-hook 'after-load-functions
+                          'magit-auto-revert-mode--after-load)
+             (fmakunbound 'magit-auto-revert-mode--after-load)
+             (if after-init-time
+                 (custom-initialize-set symbol value)
+               ;; Delay activation in case the user disables the mode
+               ;; after loading this library but still during startup.
+               (defalias 'magit-auto-revert-mode--after-init
+                 (apply-partially
+                  (lambda (symbol value)
+                    (remove-hook 'after-init-hook
+                                 'magit-auto-revert-mode--after-init)
+                    (fmakunbound 'magit-auto-revert-mode--after-init)
+                    (custom-initialize-set symbol value))
+                  symbol value))
+               (add-hook 'after-init-hook 'magit-auto-revert-mode--after-init))))
+         symbol value load-file-name))
+      (add-hook 'after-load-functions 'magit-auto-revert-mode--after-load))))
 
 (defun magit-turn-on-auto-revert-mode-if-desired (&optional file)
   (cond (file
-         (when-let ((buffer (find-buffer-visiting file)))
-           (with-current-buffer buffer
-             (magit-turn-on-auto-revert-mode-if-desired))))
+         (let ((buffer (find-buffer-visiting file)))
+           (when buffer
+             (with-current-buffer buffer
+               (magit-turn-on-auto-revert-mode-if-desired)))))
         ((and (not auto-revert-mode)        ; see #3014
               (not global-auto-revert-mode) ; see #3460
               buffer-file-name
               (or auto-revert-remote-files  ; see #5422
                   (not (file-remote-p buffer-file-name)))
               (file-readable-p buffer-file-name)
+              (require 'magit-process)
               (executable-find (magit-git-executable) t)
               (magit-toplevel)
               (or (not magit-auto-revert-tracked-only)
@@ -155,7 +164,7 @@ seconds of user inactivity.  That is not desirable."
   :group 'magit-auto-revert
   :group 'magit-essentials
   :init-value (not (or global-auto-revert-mode noninteractive))
-  :initialize #'magit-custom-initialize-after-init)
+  :initialize #'magit-auto-revert-mode--initialize)
 
 (defun magit-auto-revert-mode--disable ()
   "When enabling `global-auto-revert-mode', disable `magit-auto-revert-mode'."
@@ -236,6 +245,7 @@ defaults to nil) for any BUFFER."
   (unless (and magit-auto-revert-toplevel
                (= (cdr magit-auto-revert-toplevel)
                   magit-auto-revert-counter))
+    (require 'magit-process)
     (setq magit-auto-revert-toplevel
           (cons (or (magit-toplevel) 'no-repo)
                 magit-auto-revert-counter)))
@@ -263,15 +273,5 @@ defaults to nil) for any BUFFER."
 
 ;;; _
 (provide 'magit-autorevert)
-;; Local Variables:
-;; read-symbol-shorthands: (
-;;   ("and$"         . "cond-let--and$")
-;;   ("and>"         . "cond-let--and>")
-;;   ("and-let"      . "cond-let--and-let")
-;;   ("if-let"       . "cond-let--if-let")
-;;   ("when-let"     . "cond-let--when-let")
-;;   ("while-let"    . "cond-let--while-let")
-;;   ("match-string" . "match-string")
-;;   ("match-str"    . "match-string-no-properties"))
-;; End:
+;; `cond-let' intentionally not used.
 ;;; magit-autorevert.el ends here

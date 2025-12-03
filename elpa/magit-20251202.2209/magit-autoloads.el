@@ -177,7 +177,7 @@ Remove all changes from the staging area." t)
 
 ;;; Generated autoloads from magit-autorevert.el
 
-(defun magit-custom-initialize-after-init (symbol value) (internal--define-uninitialized-variable symbol) (cond ((not after-init-time) (letrec ((f (apply-partially (lambda (symbol value) (ignore-errors (remove-hook 'after-init-hook f)) (custom-initialize-set symbol value)) symbol value))) (add-hook 'after-init-hook f))) ((not load-file-name) (custom-initialize-set symbol value)) ((letrec ((f (apply-partially (lambda (thisfile symbol value file) (when (equal file thisfile) (ignore-errors (remove-hook 'after-load-functions f)) (custom-initialize-set symbol value))) load-file-name symbol value))) (add-hook 'after-load-functions f)))))
+(defun magit-auto-revert-mode--initialize (symbol value) (internal--define-uninitialized-variable symbol) (if (not load-file-name) (custom-initialize-set symbol value) (defalias 'magit-auto-revert-mode--after-load (apply-partially (lambda (symbol value mode-file file) (when (equal file mode-file) (remove-hook 'after-load-functions 'magit-auto-revert-mode--after-load) (fmakunbound 'magit-auto-revert-mode--after-load) (if after-init-time (custom-initialize-set symbol value) (defalias 'magit-auto-revert-mode--after-init (apply-partially (lambda (symbol value) (remove-hook 'after-init-hook 'magit-auto-revert-mode--after-init) (fmakunbound 'magit-auto-revert-mode--after-init) (custom-initialize-set symbol value)) symbol value)) (add-hook 'after-init-hook 'magit-auto-revert-mode--after-init)))) symbol value load-file-name)) (add-hook 'after-load-functions 'magit-auto-revert-mode--after-load)))
 (put 'magit-auto-revert-mode 'globalized-minor-mode t)
 (defcustom magit-auto-revert-mode (not (or global-auto-revert-mode noninteractive)) "\
 Non-nil if Magit-Auto-Revert mode is enabled.
@@ -185,7 +185,7 @@ See the `magit-auto-revert-mode' command
 for a description of this minor mode.
 Setting this variable directly does not take effect;
 either customize it (see the info node `Easy Customization')
-or call the function `magit-auto-revert-mode'." :set #'custom-set-minor-mode :initialize #'magit-custom-initialize-after-init :type 'boolean :group 'magit-auto-revert :group 'magit-essentials :package-version '(magit . "2.4.0") :link '(info-link "(magit)Automatic Reverting of File-Visiting Buffers"))
+or call the function `magit-auto-revert-mode'." :set #'custom-set-minor-mode :initialize #'magit-auto-revert-mode--initialize :type 'boolean :group 'magit-auto-revert :group 'magit-essentials :package-version '(magit . "2.4.0") :link '(info-link "(magit)Automatic Reverting of File-Visiting Buffers"))
 (custom-autoload 'magit-auto-revert-mode "magit-autorevert" nil)
 (autoload 'magit-auto-revert-mode "magit-autorevert" "\
 Toggle Auto-Revert mode in all buffers.

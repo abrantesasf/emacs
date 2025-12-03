@@ -17,8 +17,8 @@
 ;; Homepage: https://github.com/magit/magit
 ;; Keywords: git tools vc
 
-;; Package-Version: 20251125.1404
-;; Package-Revision: 4800ace210d5
+;; Package-Version: 20251202.2209
+;; Package-Revision: 3fe795e51af3
 ;; Package-Requires: (
 ;;     (emacs        "28.1")
 ;;     (compat       "30.1")
@@ -773,11 +773,12 @@ For X11 something like ~/.xinitrc should work.\n"
   (require 'magit-stash)
   (require 'magit-blame)
   (require 'magit-submodule)
-  ;; The `provide' form may be missing so we have to
-  ;; try harder to ensure this is loaded exactly once.
-  (unless (or (featurep 'magit-autoloads)
+  (unless (or noninteractive
+              ;; The `provide' form may be missing, so we have to
+              ;; try harder to ensure this is loaded exactly once.
+              (featurep 'magit-autoloads)
               (autoloadp (symbol-function 'magit-patch))
-              (load "magit-autoloads" t))
+              (load "magit-autoloads" t t))
     (require 'magit-patch)
     (require 'magit-subtree)
     (require 'magit-ediff)
