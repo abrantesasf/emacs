@@ -1,0 +1,36 @@
+# -*- mode: snippet -*-
+# name: ltfigure3
+# key: ltfigure3
+# --
+\begin{figure}[H]
+\centering
+\caption{}
+\label{fig:}
+\vspace{-0.2cm}
+\begin{subfigure}[t]{0.30\textwidth}
+  \centering
+  %\raisebox{0\baselineskip}{%
+    \includegraphics[width=0.75\linewidth]{imagens/xxx.jpg}
+  %}
+  \caption{}
+  \label{fig:}
+\end{subfigure}
+\hfill
+\begin{subfigure}[t]{0.30\textwidth}
+  \centering
+  %\raisebox{0\baselineskip}{%
+    \includegraphics[width=0.65\linewidth]{imagens/xxx.jpg}
+  %}
+  \caption{}
+  \label{fig:}
+\end{subfigure}
+\hfill
+\begin{subfigure}[t]{0.30\textwidth}
+  \centering
+  %\raisebox{0\baselineskip}{%
+    \includegraphics[width=0.65\linewidth]{imagens/xxx.jpg}
+  %}
+  \caption{}
+  \label{fig:}
+\end{subfigure}
+\end{figure}
