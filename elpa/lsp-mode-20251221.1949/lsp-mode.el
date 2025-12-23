@@ -4,9 +4,9 @@
 
 ;; Author: Vibhav Pant, Fangrui Song, Ivan Yonchovski
 ;; Keywords: languages
-;; Package-Requires: ((emacs "28.1") (dash "2.18.0") (f "0.20.0") (ht "2.3") (spinner "1.7.3") (markdown-mode "2.3") (lv "0") (eldoc "1.11"))
-;; Package-Version: 20251214.2032
-;; Package-Revision: 1f383d8147d1
+;; Package-Requires: ((emacs "28.1") (dash "2.18.0") (f "0.21.0") (ht "2.3") (spinner "1.7.3") (markdown-mode "2.3") (lv "0") (eldoc "1.11"))
+;; Package-Version: 20251221.1949
+;; Package-Revision: c6e3660d3281
 
 ;; URL: https://github.com/emacs-lsp/lsp-mode
 ;; This program is free software; you can redistribute it and/or modify
@@ -181,14 +181,14 @@ As defined by the Language Server Protocol 3.16."
      lsp-dockerfile lsp-earthly lsp-elixir lsp-elm lsp-emmet lsp-erlang
      lsp-eslint lsp-fortran lsp-futhark lsp-fsharp lsp-gdscript lsp-gleam
      lsp-glsl lsp-go lsp-golangci-lint lsp-grammarly lsp-graphql lsp-groovy
-     lsp-hack lsp-haskell lsp-haxe lsp-idris lsp-java lsp-javascript lsp-jq
+     lsp-hack lsp-haskell lsp-haxe lsp-idris lsp-java lsp-javascript lsp-just lsp-jq
      lsp-json lsp-kotlin lsp-kubernetes-helm lsp-latex lsp-lisp lsp-ltex
      lsp-ltex-plus lsp-lua lsp-fennel lsp-magik lsp-markdown lsp-marksman
      lsp-matlab lsp-mdx lsp-meson lsp-metals lsp-mint lsp-mojo lsp-move lsp-mssql
      lsp-nextflow lsp-nginx lsp-nim lsp-nix lsp-nushell lsp-ocaml lsp-odin lsp-openscad
      lsp-pascal lsp-perl lsp-perlnavigator lsp-php lsp-pls lsp-postgres
      lsp-purescript lsp-pwsh lsp-pyls lsp-pylsp lsp-pyright lsp-python-ms lsp-python-ty
-     lsp-qml lsp-r lsp-racket lsp-remark lsp-rf lsp-roc lsp-roslyn lsp-rubocop
+     lsp-qml lsp-r lsp-racket lsp-remark lsp-rf lsp-roc lsp-ron lsp-roslyn lsp-rubocop
      lsp-ruby-lsp lsp-ruby-syntax-tree lsp-ruff lsp-rust lsp-semgrep lsp-shader
      lsp-solargraph lsp-solidity lsp-sonarlint lsp-sorbet lsp-sourcekit
      lsp-sql lsp-sqls lsp-steep lsp-svelte lsp-tailwindcss lsp-terraform
@@ -848,6 +848,8 @@ Changes take effect only when a new session is started."
     (scala-ts-mode . "scala")
     (julia-mode . "julia")
     (julia-ts-mode . "julia")
+    (just-mode . "just")
+    (just-ts-mode . "just")
     (clojure-mode . "clojure")
     (clojurec-mode . "clojure")
     (clojurescript-mode . "clojurescript")
@@ -970,6 +972,7 @@ Changes take effect only when a new session is started."
     (perl-ts-mode . "perl")
     (robot-mode . "robot")
     (roc-ts-mode . "roc")
+    (ron-mode . "ron")
     (racket-mode . "racket")
     (nix-mode . "nix")
     (nix-ts-mode . "nix")
@@ -5115,7 +5118,7 @@ Applies on type formatting."
       ("file"
        (xref-push-marker-stack)
        (find-file (lsp--uri-to-path url))
-       (-when-let ((_ line column) (s-match (rx "#" (group (1+ num)) (or "," "#") (group (1+ num))) url))
+       (-when-let ((_ line column) (s-match (rx "#" (optional "L") (group (1+ num)) (or "," "#") (group (1+ num))) url))
          (goto-char (lsp--position-to-point
                      (lsp-make-position :character (1- (string-to-number column))
                                         :line (1- (string-to-number line)))))))

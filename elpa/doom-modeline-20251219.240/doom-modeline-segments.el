@@ -53,6 +53,7 @@
 (defvar battery-load-critical)
 (defvar battery-mode-line-format)
 (defvar battery-mode-line-limit)
+(defvar battery-update-functions)
 (defvar battery-status-function)
 (defvar boon-command-state)
 (defvar boon-insert-state)
@@ -2571,8 +2572,8 @@ mouse-1: Toggle Debug on Quit"
                 (or (eval `(reader-current-doc-pagenumber)) 0)
                 (or reader-current-doc-pagecount 0))))
 
-(advice-add 'reader-dyn--next-page :after #'doom-modeline-update-reader-pages)
-(advice-add 'reader-dyn--prev-page :after #'doom-modeline-update-reader-pages)
+(add-hook 'reader-mode-hook
+          (lambda () (add-hook 'post-command-hook #'doom-modeline-update-reader-pages nil t)))
 
 (doom-modeline-def-segment reader-pages
   "Display Emacs Reader document pages."
@@ -2934,7 +2935,6 @@ Uses `nerd-icons-mdicon' to fetch the icon."
         (when (and doom-modeline-battery
                    (bound-and-true-p display-battery-mode))
           (let* ((data (and battery-status-function
-                            (functionp battery-status-function)
                             (funcall battery-status-function)))
                  (status (cdr (assoc ?L data)))
                  (charging? (or (string-equal "AC" status)
@@ -3011,8 +3011,10 @@ Uses `nerd-icons-mdicon' to fetch the icon."
                  (help-echo (if (and battery-echo-area-format data valid-percentage?)
                                 (battery-format battery-echo-area-format data)
                               "Battery status not available")))
+            (run-hook-with-args 'battery-update-functions data)
             (cons (propertize icon 'help-echo help-echo)
-                  (propertize text 'face face 'help-echo help-echo))))))
+                  (propertize text 'face face 'help-echo help-echo)))))
+  (force-mode-line-update t))
 
 (doom-modeline-add-variable-watcher
  'doom-modeline-icon

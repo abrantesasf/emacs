@@ -8,8 +8,8 @@
 ;; Homepage: https://github.com/magit/magit
 ;; Keywords: tools
 
-;; Package-Version: 20251215.1842
-;; Package-Revision: 0749e8b6fc35
+;; Package-Version: 20251220.917
+;; Package-Revision: 649b4c972151
 ;; Package-Requires: (
 ;;     (emacs   "28.1")
 ;;     (compat  "30.1")
@@ -105,7 +105,7 @@ similar defect.")
 (define-obsolete-variable-alias 'magit-keep-region-overlay
   'magit-section-keep-region-overlay "Magit-Section 4.0.0")
 
-(define-obsolete-variable-alias 'magit-section-visibility-indicator
+(make-obsolete-variable 'magit-section-visibility-indicator
   'magit-section-visibility-indicators "Magit-Section 4.5.0")
 
 ;;; Hooks
@@ -392,7 +392,7 @@ but that ship has sailed, thus this option."
   "Face used for the left margin.
 
 Currently this is only used for section visibility indicators, and only
-when `magit-section-visibility-indicator' is configured to show them in
+when `magit-section-visibility-indicators' is configured to show them in
 the margin.
 
 Due to limitations of how the margin works in Emacs, this is only used

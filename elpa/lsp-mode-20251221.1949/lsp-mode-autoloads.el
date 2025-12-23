@@ -511,6 +511,11 @@ it is disabled.
 (register-definition-prefixes "lsp-jsonnet" '("lsp-clients-jsonnet-server-"))
 
 
+;;; Generated autoloads from lsp-just.el
+
+(register-definition-prefixes "lsp-just" '("lsp-just-executable"))
+
+
 ;;; Generated autoloads from lsp-kotlin.el
 
 (register-definition-prefixes "lsp-kotlin" '("lsp-"))
@@ -857,6 +862,11 @@ it is disabled.
 ;;; Generated autoloads from lsp-rf.el
 
 (register-definition-prefixes "lsp-rf" '("expand-start-command" "lsp-rf-language-server-" "parse-rf-language-server-"))
+
+
+;;; Generated autoloads from lsp-ron.el
+
+(register-definition-prefixes "lsp-ron" '("lsp-ron-executable"))
 
 
 ;;; Generated autoloads from lsp-roslyn.el

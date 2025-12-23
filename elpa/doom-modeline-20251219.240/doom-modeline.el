@@ -4,8 +4,8 @@
 
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
 ;; Homepage: https://github.com/seagle0128/doom-modeline
-;; Package-Version: 20251215.1558
-;; Package-Revision: 33edc978783a
+;; Package-Version: 20251219.240
+;; Package-Revision: 2d40bdb8f317
 ;; Package-Requires: ((emacs "25.1") (compat "30.1.0.0") (nerd-icons "0.1.0") (shrink-path "0.3.1"))
 ;; Keywords: faces mode-line
 
@@ -186,9 +186,8 @@ If DEFAULT is non-nil, set the default mode-line for all buffers."
     (Info-mode            . info)
     (image-mode           . media)
     (pdf-view-mode        . pdf)
-    (org-src-mode         . org-src)
-    (pdf-view-mode        . pdf)
     (reader-mode          . pdf)
+    (org-src-mode         . org-src)
     (paradox-menu-mode    . package)
     (xwidget-webkit-mode  . minimal)
     (git-timemachine-mode . timemachine)
