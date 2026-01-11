@@ -5,8 +5,8 @@
 ;; Author: Vibhav Pant, Fangrui Song, Ivan Yonchovski
 ;; Keywords: languages
 ;; Package-Requires: ((emacs "28.1") (dash "2.18.0") (f "0.21.0") (ht "2.3") (spinner "1.7.3") (markdown-mode "2.3") (lv "0") (eldoc "1.11"))
-;; Package-Version: 20260106.1708
-;; Package-Revision: 9be4d96024b0
+;; Package-Version: 20260108.849
+;; Package-Revision: 69144f29ea7f
 
 ;; URL: https://github.com/emacs-lsp/lsp-mode
 ;; This program is free software; you can redistribute it and/or modify
@@ -592,6 +592,21 @@ To only format specific major-mode buffers see `lsp-format-buffer-on-save-list'.
 (defcustom lsp-format-buffer-on-save-list '()
   "If the list is empty format all buffer on save. Else only format buffers
 if their major-mode is in the list."
+  :type '(repeat symbol)
+  :group 'lsp-mode)
+
+(defcustom lsp-fix-all-on-save nil
+  "If non-nil run `source.fixAll' code action on save.
+This applies all auto-fixable issues before saving.
+To only apply to specific modes see `lsp-fix-all-on-save-list'."
+  :type 'boolean
+  :safe #'booleanp
+  :local t
+  :group 'lsp-mode)
+
+(defcustom lsp-fix-all-on-save-list '()
+  "If the list is empty apply fixAll to all buffers on save.
+Else only apply fixAll if their major-mode is in the list."
   :type '(repeat symbol)
   :group 'lsp-mode)
 
@@ -5249,6 +5264,18 @@ if it's closing the last buffer in the workspace."
       (when (member major-mode lsp-format-buffer-on-save-list)
         (lsp-format-buffer)))))
 
+(defun lsp--fix-all-before-save ()
+  "Run `source.fixAll' code action before save if configured.
+This is controlled by `lsp-fix-all-on-save' and `lsp-fix-all-on-save-list'."
+  (with-demoted-errors "Error in 'lsp--fix-all-before-save': %S"
+    (when (and lsp-fix-all-on-save
+               (lsp-workspaces)
+               (or (not lsp-fix-all-on-save-list)
+                   (member major-mode lsp-fix-all-on-save-list)))
+      (condition-case nil
+          (lsp-execute-code-action-by-kind-buffer-wide "source.fixAll")
+        (lsp-no-code-actions nil)))))
+
 (defun lsp--on-auto-save ()
   "Handler for auto-save."
   (when (lsp--send-will-save-p)
@@ -6130,10 +6157,17 @@ It will show up only if current point has signature help."
            (lsp-workspaces))
    (gethash command lsp--default-action-handlers)))
 
-(defun lsp--text-document-code-action-params (&optional kind)
-  "Code action params."
-  (let* ((diagnostics (lsp-cur-possition-diagnostics))
-         (range (cond ((use-region-p)
+(defun lsp--text-document-code-action-params (&optional kind buffer-wide)
+  "Code action params.
+When BUFFER-WIDE is non-nil, use entire buffer range and all diagnostics.
+This is useful for source actions like `source.fixAll' that operate on the
+whole buffer rather than the current position."
+  (let* ((diagnostics (if buffer-wide
+                          (apply #'vector (lsp--get-buffer-diagnostics))
+                        (lsp-cur-possition-diagnostics)))
+         (range (cond (buffer-wide
+                       (lsp--region-to-range (point-min) (point-max)))
+                      ((use-region-p)
                        (lsp--region-to-range (region-beginning) (region-end)))
                       (diagnostics
                        (let* ((start (point)) (end (point)))
@@ -6368,6 +6402,35 @@ execute a CODE-ACTION-KIND action."
             (lsp--info ,(format "%s action not available" code-action-kind))))))))
 
 (lsp-make-interactive-code-action organize-imports "source.organizeImports")
+
+(defun lsp-code-actions-buffer-wide (&optional kind)
+  "Retrieve the code actions for the entire buffer.
+This is useful for source actions like `source.fixAll' that operate on the
+whole buffer rather than the current position.
+It will filter by KIND if non nil."
+  (lsp-request "textDocument/codeAction" (lsp--text-document-code-action-params kind t)))
+
+(defun lsp-execute-code-action-by-kind-buffer-wide (command-kind)
+  "Execute code action by COMMAND-KIND for the entire buffer.
+Unlike `lsp-execute-code-action-by-kind', this function passes the entire
+buffer range and all diagnostics to the language server."
+  (if-let* ((action (->> (lsp-code-actions-buffer-wide command-kind)
+                        (-filter (-lambda ((&CodeAction :kind?))
+                                   (and kind? (s-prefix? command-kind kind?))))
+                        lsp--select-action)))
+      (lsp-execute-code-action action)
+    (signal 'lsp-no-code-actions '(command-kind))))
+
+(defun lsp-fix-all ()
+  "Perform the source.fixAll code action for the entire buffer, if available.
+This action fixes all auto-fixable issues in the buffer."
+  (interactive)
+  (let ((lsp-auto-execute-action t))
+    (condition-case nil
+        (lsp-execute-code-action-by-kind-buffer-wide "source.fixAll")
+      (lsp-no-code-actions
+       (when (called-interactively-p 'any)
+         (lsp--info "source.fixAll action not available"))))))
 
 (defun lsp--make-document-range-formatting-params (start end)
   "Make DocumentRangeFormattingParams for selected region."
@@ -9471,6 +9534,7 @@ Errors if there are none."
   (lsp-managed-mode -1)
   (lsp-mode -1)
   (remove-hook 'before-save-hook #'lsp--format-buffer-before-save t)
+  (remove-hook 'before-save-hook #'lsp--fix-all-before-save t)
   (setq lsp--buffer-workspaces nil)
   (lsp--info "Disconnected"))
 
@@ -9519,7 +9583,10 @@ argument ask the user to select which language server to start."
                         (lsp--try-project-root-workspaces (equal arg '(4))
                                                           (and arg (not (equal arg 1))))))
           (lsp-mode 1)
+          ;; Register before-save hooks. Emacs runs hooks in reverse order,
+          ;; so fix-all runs before format (fix issues first, then format).
           (add-hook 'before-save-hook #'lsp--format-buffer-before-save nil t)
+          (add-hook 'before-save-hook #'lsp--fix-all-before-save nil t)
           (when lsp-auto-configure (lsp--auto-configure))
           (setq lsp-buffer-uri (lsp--buffer-uri))
           (lsp--info "Connected to %s."
