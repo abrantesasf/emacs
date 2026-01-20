@@ -111,3 +111,4 @@ vôo
 const
 constexpr
 typedef
+alignof
