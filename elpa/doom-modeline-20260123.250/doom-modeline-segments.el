@@ -365,14 +365,11 @@ mouse-1: Previous buffer\nmouse-3: Next buffer"
             `(global menu-item ,(format-mode-line string) ignore))
           doom-modeline-tab-bar-string))
 
-(with-no-warnings
-  (if (boundp 'after-focus-change-function)
-      (progn
-        (advice-add #'handle-switch-frame :after #'doom-modeline-update-buffer-file-name)
-        (add-function :after after-focus-change-function #'doom-modeline-update-buffer-file-name))
-    (progn
-      (add-hook 'focus-in-hook #'doom-modeline-update-buffer-file-name)
-      (add-hook 'focus-out-hook #'doom-modeline-update-buffer-file-name))))
+(if (boundp 'after-focus-change-function)
+    (add-function :after after-focus-change-function
+      #'doom-modeline-update-buffer-file-name)
+  (with-no-warnings
+    (add-hook 'focus-in-hook #'doom-modeline-update-buffer-file-name)))
 
 (doom-modeline-add-variable-watcher
  'doom-modeline-buffer-file-name-style
@@ -1599,33 +1596,40 @@ Keymap for what is displayed by `mode-line-window-dedicated'."))
 ;; Window number
 ;;
 
-;; HACK: `ace-window-display-mode' should respect the ignore buffers.
-(defun doom-modeline-aw-update ()
-  "Update ace-window-path window parameter for all windows.
-Ensure all windows are labeled so the user can select a specific
-one. The ignored buffers are excluded unless `aw-ignore-on' is nil."
-  (let ((ignore-window-parameters t))
-    (avy-traverse
-     (avy-tree (aw-window-list) aw-keys)
-     (lambda (path leaf)
-       (set-window-parameter
-        leaf 'ace-window-path
-        (propertize
-         (apply #'string (reverse path))
-         'face 'aw-mode-line-face))))))
-(advice-add #'aw-update :override #'doom-modeline-aw-update)
+(defun doom-modeline-override-window-number ()
+  "Override window number in original mode-line."
+  (if (bound-and-true-p doom-modeline-mode)
+      (progn
+        (setq-default mode-line-format
+                      (assq-delete-all 'ace-window-display-mode
+                                       (default-value 'mode-line-format)))
+        (advice-add #'window-numbering-install-mode-line :override #'ignore)
+        (advice-add #'window-numbering-clear-mode-line :override #'ignore)
+        (advice-add #'winum--install-mode-line :override #'ignore)
+        (advice-add #'winum--clear-mode-line :override #'ignore))
+    (progn
+      (advice-remove #'window-numbering-install-mode-line #'ignore)
+      (advice-remove #'window-numbering-clear-mode-line #'ignore)
+      (advice-remove #'winum--install-mode-line #'ignore)
+      (advice-remove #'winum--clear-mode-line #'ignore))))
+(add-hook 'ace-window-display-mode-hook #'doom-modeline-override-window-number)
+(add-hook 'doom-modeline-mode-hook #'doom-modeline-override-window-number)
 
-;; Remove original window number of `ace-window-display-mode'.
-(add-hook 'ace-window-display-mode-hook
-          (lambda ()
-            (setq-default mode-line-format
-                          (assq-delete-all 'ace-window-display-mode
-                                           (default-value 'mode-line-format)))))
-
-(advice-add #'window-numbering-install-mode-line :override #'ignore)
-(advice-add #'window-numbering-clear-mode-line :override #'ignore)
-(advice-add #'winum--install-mode-line :override #'ignore)
-(advice-add #'winum--clear-mode-line :override #'ignore)
+(defun doom-modeline--unicode-number (num)
+  "Return a nice unicode representation of NUM."
+  (cond
+   ((not num) "")
+   ((string= "1" num) "➊")
+   ((string= "2" num) "➋")
+   ((string= "3" num) "➌")
+   ((string= "4" num) "➍")
+   ((string= "5" num) "➎")
+   ((string= "6" num) "➏")
+   ((string= "7" num) "➐")
+   ((string= "8" num) "➑")
+   ((string= "9" num) "➒")
+   ((string= "10" num) "➓")
+   (t num)))
 
 (doom-modeline-def-segment window-number
   "The current window number."
@@ -1649,7 +1653,9 @@ one. The ignored buffers are excluded unless `aw-ignore-on' is nil."
                              (window-list frame 'never)))
                          (visible-frame-list))
                         1))
-      (propertize (format " %s " num)
+      (propertize (format " %s " (if doom-modeline-unicode-number
+                                     (doom-modeline--unicode-number num)
+                                   num))
                   'face (doom-modeline-face 'doom-modeline-buffer-major-mode)))))
 
 ;;
@@ -1758,7 +1764,7 @@ Requires `eyebrowse-mode' to be enabled or `tab-bar-mode' tabs to be created."
                  (icon (doom-modeline-icon 'octicon "nf-oct-repo" "🖿" "#"
                                            :face `(:inherit ,face :slant normal))))
             (when (or doom-modeline-display-default-persp-name
-                      (not (string-equal persp-nil-name name)))
+                      (not (string= persp-nil-name name)))
               (concat " "
                       (propertize (concat (and doom-modeline-persp-icon
                                                (concat icon (doom-modeline-vspc)))
@@ -2571,7 +2577,7 @@ mouse-1: Toggle Debug on Quit"
         (format "  P%d/%d "
                 (or (eval `(pdf-view-current-page)) 0)
                 (pdf-cache-number-of-pages))))
-(add-hook 'pdf-view-change-page-hook #'doom-modeline-update-pdf-pages)
+(add-hook 'pdf-view-after-change-page-hook #'doom-modeline-update-pdf-pages)
 
 (doom-modeline-def-segment pdf-pages
   "Display PDF pages."
@@ -2955,8 +2961,8 @@ Uses `nerd-icons-mdicon' to fetch the icon."
           (let* ((data (and battery-status-function
                             (funcall battery-status-function)))
                  (status (cdr (assoc ?L data)))
-                 (charging? (or (string-equal "AC" status)
-                                (string-equal "on-line" status)))
+                 (charging? (or (string= "AC" status)
+                                (string= "on-line" status)))
                  (percentage (car (read-from-string (or (cdr (assq ?p data)) "ERR"))))
                  (valid-percentage? (and (numberp percentage)
                                          (>= percentage 0)
@@ -3099,7 +3105,7 @@ Uses `nerd-icons-mdicon' to fetch the icon."
 ;;
 
 (doom-modeline-def-segment package
-  "Show package information via `paradox'."
+  "Show package information."
   (concat
    (doom-modeline-display-text
     (format-mode-line 'mode-line-front-space))
@@ -3111,7 +3117,8 @@ Uses `nerd-icons-mdicon' to fetch the icon."
                           :face (doom-modeline-face
                                  (if doom-modeline-major-mode-color-icon
                                      'nerd-icons-silver
-                                   'mode-line)))))
+                                   'mode-line)))
+      (doom-modeline-vspc)))
    (doom-modeline-display-text
     (format-mode-line 'mode-line-buffer-identification))))
 

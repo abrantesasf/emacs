@@ -351,12 +351,12 @@
 		("Stephane Marks" . "shipmints@gmail.com"))
       (:commit . "8fc587ba341b2ec8189b4d948accc90140469147"))])
  (buframe
-  . [(0 2) ((emacs (27 1)) (timeout (2 1))) "Buffer-local frames" tar
+  . [(0 3) ((emacs (27 1)) (timeout (2 1))) "Buffer-local frames" tar
      ((:url . "https://github.com/haji-ali/buframe")
       (:keywords "buffer" "frames" "convenience")
       (:maintainer "Al Haji-Ali" . "abdo.haji.ali@gmail.com")
       (:authors ("Al Haji-Ali" . "abdo.haji.ali@gmail.com"))
-      (:commit . "d2f1fcdb5f320a5ac583e1f4edc22397106e830a"))])
+      (:commit . "b6a92c96ea5c71247c94610b873bae47dfc898bb"))])
  (bug-hunter
   . [(1 3 1) ((seq (1 3)) (cl-lib (0 5)))
      "Hunt down errors by bisecting elisp files" tar
@@ -735,6 +735,14 @@
       (:maintainer "Protesilaos Stavrou" . "info@protesilaos.com")
       (:authors ("Protesilaos Stavrou" . "info@protesilaos.com"))
       (:commit . "36f24f0f0f472e4cb50025ed62a1b32351d7d294"))])
+ (denote-review
+  . [(1 0 1) ((emacs (28 1)) (denote (4 1 3)))
+     "implements review process for denote notes" tar
+     ((:url . "https://codeberg.org/mattof/denote-review")
+      (:keywords "files")
+      (:maintainer "Matto Fransen" . "matto@matto.nl")
+      (:authors ("Matto Fransen" . "matto@matto.nl"))
+      (:commit . "035dfbf4e13c3dce401d4cfd850df0ab96d31098"))])
  (denote-search
   . [(1 0 3) ((emacs (29 1)) (denote (3 0)))
      "Search the contents of your notes" tar
@@ -1006,13 +1014,13 @@
       (:authors ("João Távora" . "joaotavora@gmail.com"))
       (:commit . "12730179acddc224f0c43a2b8e8a028182d1e40f"))])
  (el-job
-  . [(2 6 1) ((emacs (29 1)))
+  . [(2 7 1) ((emacs (29 1)))
      "Contrived way to call a function using all CPU cores" tar
      ((:url . "https://github.com/meedstrom/el-job")
       (:keywords "processes")
       (:maintainer "Martin Edström" . "meedstrom@runbox.eu")
       (:authors ("Martin Edström" . "meedstrom@runbox.eu"))
-      (:commit . "274f999ceee3db6c48e3550964c547161a3ee1bb"))])
+      (:commit . "f4ea8f705026546b401fb0912ffe2105ff084562"))])
  (el-search
   . [(1 12 6 1) ((emacs (25)) (stream (2 2 4)) (cl-print (1 0)))
      "Expression based interactive search for Emacs Lisp" tar
@@ -1053,7 +1061,7 @@
       (:url . "https://elpa.gnu.org/packages/elisp-benchmarks.html")
       (:commit . "1a3d97954957a95a179806e0d49ca6d178b097af"))])
  (ellama
-  . [(1 10 10)
+  . [(1 10 11)
      ((emacs (28 1)) (llm (0 24 0)) (plz (0 8)) (transient (0 7))
       (compat (29 1)))
      "Tool for interacting with LLMs" tar
@@ -1061,7 +1069,7 @@
       (:keywords "help" "local" "tools")
       (:maintainer "Sergey Kostyaev" . "sskostyaev@gmail.com")
       (:authors ("Sergey Kostyaev" . "sskostyaev@gmail.com"))
-      (:commit . "f4b4ccf42597e6bda4beeecd99114a64fa56ba43"))])
+      (:commit . "109607e12c23b099e1b2c30c28a1221af335db4d"))])
  (emacs-gc-stats
   . [(1 4 2) ((emacs (25 1))) "Collect Emacs GC statistics" tar
      ((:url . "https://git.sr.ht/~yantar92/emacs-gc-stats")
@@ -3075,13 +3083,13 @@
       (:url . "https://elpa.gnu.org/packages/temp-buffer-browse.html")
       (:commit . "db6041b0413fdeefb1f1285e1d9c1039c10fbf04"))])
  (tempel
-  . [(1 9) ((emacs (29 1)) (compat (30)))
+  . [(1 10) ((emacs (29 1)) (compat (30)))
      "Tempo templates/snippets with in-buffer field editing" tar
      ((:url . "https://github.com/minad/tempel")
       (:keywords "abbrev" "languages" "tools" "text")
       (:maintainer "Daniel Mendler" . "mail@daniel-mendler.de")
       (:authors ("Daniel Mendler" . "mail@daniel-mendler.de"))
-      (:commit . "506a8d570c145f4df63a18921e34bac6bef3ebe0"))])
+      (:commit . "f69c18d89de44072e983c8ca8378b276603a1012"))])
  (termint
   . [(0 2) ((emacs (29 1))) "Run REPLs in a terminal backend" tar
      ((:url . "https://github.com/milanglacier/termint.el")

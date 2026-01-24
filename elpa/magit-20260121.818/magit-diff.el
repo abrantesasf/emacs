@@ -1437,8 +1437,8 @@ for a revision."
       (when module
         (setq default-directory
               (expand-file-name (file-name-as-directory module))))
-      (unless (magit-commit-p rev)
-        (user-error "%s is not a commit" rev))
+      (unless (magit-commit-oid rev t)
+        (user-error "%s cannot be dereferenced as a commit" rev))
       (when file
         (save-buffer))
       (let ((buf (magit-revision-setup-buffer rev args files)))
@@ -1931,7 +1931,7 @@ commit or stash at point, then prompt for a commit."
           (setq cmd #'magit-show-commit)
           (setq buf (magit-get-mode-buffer 'magit-revision-mode)))
          (tag
-          (setq rev (magit-rev-hash (oref it value)))
+          (setq rev (magit-commit-oid (oref it value)))
           (setq cmd #'magit-show-commit)
           (setq buf (magit-get-mode-buffer 'magit-revision-mode)))
          (stash
@@ -2760,7 +2760,7 @@ Staging and applying changes is documented in info node
     (magit-buffer-diff-files-suspended nil)))
 
 (defun magit-revision-refresh-buffer ()
-  (setq magit-buffer-revision-oid (magit-rev-hash magit-buffer-revision))
+  (setq magit-buffer-revision-oid (magit-commit-oid magit-buffer-revision))
   (magit-set-header-line-format
    (concat (magit-object-type magit-buffer-revision)
            " "  magit-buffer-revision
@@ -3254,21 +3254,19 @@ Do not confuse this with `magit-diff-scope' (which see)."
   (when-let ((section (or section (magit-current-section))))
     (cond ((derived-mode-p 'magit-revision-mode 'magit-stash-mode) 'committed)
           ((derived-mode-p 'magit-diff-mode)
-           (let ((range magit-buffer-diff-range)
-                 (const magit-buffer-diff-typearg))
-             (cond (magit-buffer-diff-type)
-                   ((equal const "--no-index") 'undefined)
-                   ((or (not range)
-                        (equal range "HEAD")
-                        (magit-rev-eq range "HEAD"))
-                    (if (equal const "--cached")
-                        'staged
-                      'unstaged))
-                   ((equal const "--cached")
-                    (if (magit-rev-head-p range)
-                        'staged
-                      'undefined)) ; i.e., committed and staged
-                   ('committed))))
+           (cond
+             (magit-buffer-diff-type)
+             ((equal magit-buffer-diff-typearg "--no-index")
+              'undefined)
+             ((not magit-buffer-diff-range)
+              'undefined)
+             ((string-search "." magit-buffer-diff-range)
+              'committed)
+             ((magit-rev-head-p magit-buffer-diff-range)
+              (if (equal magit-buffer-diff-typearg "--cached")
+                  'staged
+                'unstaged))
+             ('committed)))
           ((derived-mode-p 'magit-status-mode)
            (pcase (oref section type)
              ((and type (or 'staged 'unstaged 'tracked 'untracked))
