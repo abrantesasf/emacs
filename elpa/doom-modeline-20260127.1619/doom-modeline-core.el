@@ -261,7 +261,7 @@ See `doom-modeline-time-analogue-clock'."
 (defcustom doom-modeline-time-clock-size 0.7
   "Size of the analogue clock drawn, either in pixels or as a proportional height.
 An integer value is used as the diameter of clock in pixels.
-A floating point value sets the diameter of the clock realtive to
+A floating point value sets the diameter of the clock relative to
 `doom-modeline-height'.
 
 Only relevant when `doom-modeline-time-analogue-clock' is non-nil, which see."

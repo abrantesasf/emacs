@@ -157,6 +157,11 @@ This function is automatically called during the client initialization if needed
 (register-definition-prefixes "lsp-copilot" '("lsp-copilot-"))
 
 
+;;; Generated autoloads from lsp-crates.el
+
+(register-definition-prefixes "lsp-crates" '("lsp-crates-"))
+
+
 ;;; Generated autoloads from lsp-credo.el
 
 (register-definition-prefixes "lsp-credo" '("lsp-credo-"))
