@@ -1,4 +1,18 @@
 Para usar o "--with-json", instalar:
 apt install libjansson4 libjansson-dev
 
+Emacs 29.1:
+-----------
 ./configure --prefix=/opt/emacs-29.1 --enable-checking --enable-autodepend --enable-gcc-warnings=warn-only --enable-check-lisp-object-type --with-mailutils --with-kerberos5 --with-hesiod --with-sound=yes --with-x-toolkit=gtk3 --with-imagemagick --with-json --with-xwidgets --with-x --with-gpm
+
+Emacs 29.4:
+-----------
+./configure --prefix=/opt/emacs-29.4 --enable-checking --enable-autodepend --enable-gcc-warnings=warn-only --enable-check-lisp-object-type --with-mailutils --with-kerberos5 --with-hesiod --with-sound=yes --with-x-toolkit=gtk3 --with-imagemagick --with-json --with-tree-sitter --with-xwidgets --with-x
+
+make
+
+src/emacs -Q
+
+sudo make install
+
+sudo ln -s /opt/emacs-29.4 /opt/emacs
