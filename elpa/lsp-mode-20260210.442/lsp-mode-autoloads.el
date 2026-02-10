@@ -299,6 +299,11 @@ it is disabled.
 (register-definition-prefixes "lsp-fennel" '("lsp-fennel--ls-command"))
 
 
+;;; Generated autoloads from lsp-fortitude.el
+
+(register-definition-prefixes "lsp-fortitude" '("lsp-fortitude-"))
+
+
 ;;; Generated autoloads from lsp-fortran.el
 
 (register-definition-prefixes "lsp-fortran" '("lsp-clients-"))

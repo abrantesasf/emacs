@@ -5,8 +5,8 @@
 ;; Author: Vibhav Pant, Fangrui Song, Ivan Yonchovski
 ;; Keywords: languages
 ;; Package-Requires: ((emacs "28.1") (dash "2.18.0") (f "0.21.0") (ht "2.3") (spinner "1.7.3") (markdown-mode "2.3") (lv "0") (eldoc "1.11"))
-;; Package-Version: 20260201.1827
-;; Package-Revision: 966bdd01f2a8
+;; Package-Version: 20260210.442
+;; Package-Revision: c258b9dfaf83
 
 ;; URL: https://github.com/emacs-lsp/lsp-mode
 ;; This program is free software; you can redistribute it and/or modify
@@ -180,7 +180,7 @@ As defined by the Language Server Protocol 3.16."
      lsp-clojure lsp-cmake lsp-cobol lsp-credo lsp-crystal lsp-csharp lsp-c3
      lsp-css lsp-copilot lsp-crates lsp-cucumber lsp-cypher lsp-d lsp-dart
      lsp-dhall lsp-docker lsp-dockerfile lsp-earthly lsp-elixir lsp-elm lsp-emmet
-     lsp-erlang lsp-eslint lsp-fortran lsp-futhark lsp-fsharp lsp-gdscript
+     lsp-erlang lsp-eslint lsp-fortitude lsp-fortran lsp-futhark lsp-fsharp lsp-gdscript
      lsp-gleam lsp-glsl lsp-go lsp-golangci-lint lsp-grammarly lsp-graphql
      lsp-groovy lsp-hack lsp-haskell lsp-haxe lsp-idris lsp-java lsp-javascript
      lsp-just lsp-jq lsp-json lsp-kotlin lsp-kubernetes-helm lsp-latex lsp-lisp
@@ -1959,19 +1959,11 @@ On other systems, returns path without change."
 
 (defun lsp--uri-to-path-1 (uri)
   "Convert URI to a file path."
-  (let* ((url (url-generic-parse-url (url-unhex-string uri)))
+  (let* ((url (url-generic-parse-url uri))
          (type (url-type url))
-         (target (url-target url))
          (file
-          (concat (decode-coding-string (url-filename url)
-                                        (or locale-coding-system 'utf-8))
-                  (when (and target
-                             (not (s-match
-                                   (rx "#" (group (1+ num)) (or "," "#")
-                                       (group (1+ num))
-                                       string-end)
-                                   uri)))
-                    (concat "#" target))))
+          (decode-coding-string (url-unhex-string (url-filename url))
+                                        (or locale-coding-system 'utf-8)))
          (file-name (if (and type (not (string= type "file")))
                         (if-let* ((handler (lsp--get-uri-handler type)))
                             (funcall handler uri)
@@ -8528,15 +8520,15 @@ nil."
 ;; https://docs.npmjs.com/files/folders#executables
 (cl-defun lsp--npm-dependency-path (&key package path &allow-other-keys)
   "Return npm dependency PATH for PACKAGE."
-  (let ((path (executable-find
-               (f-join lsp-server-install-dir "npm" package
-                       (cond ((eq system-type 'windows-nt) "")
-                             (t "bin"))
-                       path)
-               t)))
-    (unless (and path (f-exists? path))
+  (let ((path* (executable-find
+                (f-join lsp-server-install-dir "npm" package
+                        (cond ((eq system-type 'windows-nt) "")
+                              (t "bin"))
+                        path)
+                t)))
+    (unless path*
       (error "The package %s is not installed.  Unable to find %s" package path))
-    path))
+    path*))
 
 (cl-defun lsp--npm-dependency-install (callback error-callback &key package version &allow-other-keys)
   (if-let* ((npm-binary (executable-find "npm")))
