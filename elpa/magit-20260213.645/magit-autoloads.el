@@ -789,89 +789,17 @@ Interactively, open the file at point.
 
 ;;; Generated autoloads from magit-ediff.el
 
-(autoload 'magit-ediff "magit-ediff" nil)
-(autoload 'magit-ediff-resolve-all "magit-ediff" "\
-Resolve all conflicts in the FILE at point using Ediff.
-
-If there is no file at point or if it doesn't have any unmerged
-changes, then prompt for a file.
-
-See info node `(magit) Ediffing' for more information about this
-and alternative commands.
-
-(fn FILE)" t)
-(autoload 'magit-ediff-resolve-rest "magit-ediff" "\
-Resolve outstanding conflicts in the FILE at point using Ediff.
-
-If there is no file at point or if it doesn't have any unmerged
-changes, then prompt for a file.
-
-See info node `(magit) Ediffing' for more information about this
-and alternative commands.
-
-(fn FILE)" t)
-(autoload 'magit-ediff-stage "magit-ediff" "\
-Stage and unstage changes to FILE using Ediff.
-FILE has to be relative to the top directory of the repository.
-
-(fn FILE)" t)
-(autoload 'magit-ediff-compare "magit-ediff" "\
-Compare REVA:FILEA with REVB:FILEB using Ediff.
-
-FILEA and FILEB have to be relative to the top directory of the
-repository.  If REVA or REVB is nil, then this stands for the
-working tree state.
-
-If the region is active, use the revisions on the first and last
-line of the region.  With a prefix argument, instead of diffing
-the revisions, choose a revision to view changes along, starting
-at the common ancestor of both revisions (i.e., use a \"...\"
-range).
-
-(fn REVA REVB FILEA FILEB)" t)
-(autoload 'magit-ediff-dwim "magit-ediff" "\
-Compare, stage, or resolve using Ediff.
-This command tries to guess what file, and what commit or range
-the user wants to compare, stage, or resolve using Ediff.  It
-might only be able to guess either the file, or range or commit,
-in which case the user is asked about the other.  It might not
-always guess right, in which case the appropriate `magit-ediff-*'
-command has to be used explicitly.  If it cannot read the user's
-mind at all, then it asks the user for a command to run." t)
-(autoload 'magit-ediff-show-staged "magit-ediff" "\
-Show staged changes using Ediff.
-
-This only allows looking at the changes; to stage, unstage,
-and discard changes using Ediff, use `magit-ediff-stage'.
-
-FILE must be relative to the top directory of the repository.
-
-(fn FILE)" t)
-(autoload 'magit-ediff-show-unstaged "magit-ediff" "\
-Show unstaged changes using Ediff.
-
-This only allows looking at the changes; to stage, unstage,
-and discard changes using Ediff, use `magit-ediff-stage'.
-
-FILE must be relative to the top directory of the repository.
-
-(fn FILE)" t)
-(autoload 'magit-ediff-show-working-tree "magit-ediff" "\
-Show changes between `HEAD' and working tree using Ediff.
-FILE must be relative to the top directory of the repository.
-
-(fn FILE)" t)
-(autoload 'magit-ediff-show-commit "magit-ediff" "\
-Show changes introduced by COMMIT using Ediff.
-
-(fn COMMIT)" t)
-(autoload 'magit-ediff-show-stash "magit-ediff" "\
-Show changes introduced by STASH using Ediff.
-`magit-ediff-show-stash-with-index' controls whether a
-three-buffer Ediff is used in order to distinguish changes in the
-stash that were staged.
-
-(fn STASH)" t)
+(autoload 'magit-ediff "magit-ediff" nil t)
+(autoload 'magit-ediff-resolve-all "magit-ediff" nil t)
+(autoload 'magit-ediff-resolve-rest "magit-ediff" nil t)
+(autoload 'magit-ediff-stage "magit-ediff" nil t)
+(autoload 'magit-ediff-compare "magit-ediff" nil t)
+(autoload 'magit-ediff-dwim "magit-ediff" nil t)
+(autoload 'magit-ediff-show-staged "magit-ediff" nil t)
+(autoload 'magit-ediff-show-unstaged "magit-ediff" nil t)
+(autoload 'magit-ediff-show-working-tree "magit-ediff" nil t)
+(autoload 'magit-ediff-show-commit "magit-ediff" nil t)
+(autoload 'magit-ediff-show-stash "magit-ediff" nil t)
 (register-definition-prefixes "magit-ediff" '("magit-ediff-"))
 
 
