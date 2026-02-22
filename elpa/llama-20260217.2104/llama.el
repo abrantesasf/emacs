@@ -6,8 +6,8 @@
 ;; Homepage: https://github.com/tarsius/llama
 ;; Keywords: extensions
 
-;; Package-Version: 20260101.1830
-;; Package-Revision: 2a89ba755b04
+;; Package-Version: 20260217.2104
+;; Package-Revision: de61773fc378
 ;; Package-Requires: (
 ;;     (emacs  "26.1")
 ;;     (compat "30.1"))
@@ -355,9 +355,10 @@ expansion, and the looks of this face should hint at that.")
            (prog1 t
              (save-excursion
                (goto-char (match-beginning 0))
-               (when-let ((_(save-match-data (not (nth 8 (syntax-ppss)))))
-                          (expr (ignore-errors
-                                  (read-positioning-symbols (current-buffer)))))
+               (when-let*
+                   ((_(save-match-data (not (nth 8 (syntax-ppss)))))
+                    (expr (ignore-errors
+                            (read-positioning-symbols (current-buffer)))))
                  (put-text-property (match-beginning 0) (point)
                                     'font-lock-multiline t)
                  (llama--fontify (cdr expr) nil nil t)))))

@@ -1279,21 +1279,29 @@ the user inspect the result.  With a prefix argument pretend the
 merge failed to give the user the opportunity to inspect the
 merge.
 
+To create an octopus-merge, separate branches with commas.
+
 (git merge --no-edit|--no-commit [ARGS] REV)
 
 (fn REV &optional ARGS NOCOMMIT)" t)
 (autoload 'magit-merge-editmsg "magit-merge" "\
 Merge commit REV into the current branch; and edit message.
+
 Perform the merge and prepare a commit message but let the user
 edit it.
+
+To create an octopus-merge, separate branches with commas.
 
 (git merge --edit --no-ff [ARGS] REV)
 
 (fn REV &optional ARGS)" t)
 (autoload 'magit-merge-nocommit "magit-merge" "\
 Merge commit REV into the current branch; pretending it failed.
+
 Pretend the merge failed to give the user the opportunity to
 inspect the merge and change the commit message.
+
+To create an octopus-merge, separate branches with commas.
 
 (git merge --no-commit --no-ff [ARGS] REV)
 

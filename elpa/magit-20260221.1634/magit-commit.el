@@ -677,7 +677,8 @@ an alternative implementation."
     (message "Diffing changes to be committed (C-g to abort diffing)")
     (let ((inhibit-quit nil))
       (condition-case nil
-          (magit-commit-diff-1)
+          (with-demoted-errors "Error showing commit diff: %S"
+            (magit-commit-diff-1))
         (quit)))))
 
 (defun magit-commit-diff-1 ()
@@ -695,6 +696,9 @@ an alternative implementation."
                   (and (file-exists-p f) (length (magit-file-lines f)))))
         (noalt nil))
     (pcase (list staged unstaged command)
+      ((guard (not (magit-commit-p "HEAD^")))
+       (setq rev "HEAD")
+       (setq arg nil))
       ((and `(,_ ,_ magit-commit--rebase)
             (guard (integerp squash)))
        (setq rev (format "HEAD~%s" squash)))

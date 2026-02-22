@@ -353,11 +353,11 @@ core settings that influence its overall behavior.
 
  -- User Option: company-minimum-prefix-length
      This is one of the values (together with ‘company-idle-delay’),
-     based on which Company auto-stars looking up completion candidates.
-     This option configures how many characters have to be typed in by a
-     user before candidates start to be collected and displayed.  An
-     often choice nowadays is to configure this option to a lower number
-     than the default value of ‘3’.
+     based on which Company auto-starts looking up completion
+     candidates.  This option configures how many characters have to be
+     typed in by a user before candidates start to be collected and
+     displayed.  An often choice nowadays is to configure this option to
+     a lower number than the default value of ‘3’.
 
  -- User Option: company-idle-delay
      This is the second of the options that configure Company’s
@@ -1788,32 +1788,32 @@ Ref: Commands-Footnote-110093
 Node: Customization10260
 Node: Customization Interface10732
 Node: Configuration File11265
-Ref: company-selection-wrap-around13579
-Node: Frontends16072
-Node: Tooltip Frontends17041
-Ref: Tooltip Frontends-Footnote-127755
-Node: Preview Frontends27992
-Ref: Preview Frontends-Footnote-129250
-Node: Echo Frontends29377
-Node: Candidates Search30910
-Node: Filter Candidates32244
-Node: Quick Access a Candidate33024
-Node: Backends34642
-Node: Backends Usage Basics35672
-Ref: Backends Usage Basics-Footnote-137104
-Node: Grouped Backends37188
-Node: Package Backends38699
-Node: Code Completion39628
-Node: Text Completion45155
-Node: File Name Completion49589
-Node: Template Expansion51137
-Node: Candidates Post-Processing51856
-Node: Troubleshooting54433
-Node: Index56106
-Node: Key Index56269
-Node: Variable Index57768
-Node: Function Index62621
-Node: Concept Index67321
+Ref: company-selection-wrap-around13581
+Node: Frontends16074
+Node: Tooltip Frontends17043
+Ref: Tooltip Frontends-Footnote-127757
+Node: Preview Frontends27994
+Ref: Preview Frontends-Footnote-129252
+Node: Echo Frontends29379
+Node: Candidates Search30912
+Node: Filter Candidates32246
+Node: Quick Access a Candidate33026
+Node: Backends34644
+Node: Backends Usage Basics35674
+Ref: Backends Usage Basics-Footnote-137106
+Node: Grouped Backends37190
+Node: Package Backends38701
+Node: Code Completion39630
+Node: Text Completion45157
+Node: File Name Completion49591
+Node: Template Expansion51139
+Node: Candidates Post-Processing51858
+Node: Troubleshooting54435
+Node: Index56108
+Node: Key Index56271
+Node: Variable Index57770
+Node: Function Index62623
+Node: Concept Index67323
 
 End Tag Table
 

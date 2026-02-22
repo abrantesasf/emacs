@@ -5730,11 +5730,15 @@ following suffix commands.
      merge commit, which makes it possible to inspect how conflicts were
      resolved and to adjust the commit message.
 
+     To create an octopus-merge, separate branches with commas.
+
 ‘m e’ (‘magit-merge-editmsg’)
      This command merges another branch or an arbitrary revision into
      the current branch and opens a commit message buffer, so that the
      user can make adjustments.  The commit is not actually created
      until the user finishes with ‘C-c C-c’.
+
+     To create an octopus-merge, separate branches with commas.
 
 ‘m n’ (‘magit-merge-nocommit’)
      This command merges another branch or an arbitrary revision into
@@ -5753,6 +5757,8 @@ following suffix commands.
      merged.  Finally, if ‘magit-branch-pull-request’ was used to create
      the merged branch, then the respective remote branch is also
      removed.
+
+     To create an octopus-merge, separate branches with commas.
 
 ‘m d’ (‘magit-merge-dissolve’)
      This command merges the current branch into another local branch
@@ -9775,21 +9781,21 @@ Appendix C Keystroke Index
 * m:                                     Repository List.     (line 106)
 * m <1>:                                 Merging.             (line  10)
 * M:                                     Remotes.             (line  17)
-* m a:                                   Merging.             (line  42)
-* m a <1>:                               Merging.             (line  91)
+* m a:                                   Merging.             (line  46)
+* m a <1>:                               Merging.             (line  97)
 * M a:                                   Remotes.             (line  51)
 * M C:                                   Remotes.             (line  35)
-* m d:                                   Merging.             (line  54)
-* m e:                                   Merging.             (line  30)
+* m d:                                   Merging.             (line  60)
+* m e:                                   Merging.             (line  32)
 * M k:                                   Remotes.             (line  63)
 * m m:                                   Merging.             (line  18)
-* m m <1>:                               Merging.             (line  86)
-* m n:                                   Merging.             (line  36)
-* m p:                                   Merging.             (line  75)
+* m m <1>:                               Merging.             (line  92)
+* m n:                                   Merging.             (line  40)
+* m p:                                   Merging.             (line  81)
 * M p:                                   Remotes.             (line  66)
 * M P:                                   Remotes.             (line  70)
 * M r:                                   Remotes.             (line  55)
-* m s:                                   Merging.             (line  67)
+* m s:                                   Merging.             (line  73)
 * M u:                                   Remotes.             (line  59)
 * M-1:                                   Sections.            (line 179)
 * M-2:                                   Sections.            (line 179)
@@ -10385,15 +10391,15 @@ Appendix D Function and Command Index
 * magit-margin-settings:                 Logging.             (line 263)
 * magit-maybe-set-dedicated:             Modes and Buffers.   (line 121)
 * magit-merge:                           Merging.             (line  10)
-* magit-merge <1>:                       Merging.             (line  86)
-* magit-merge-abort:                     Merging.             (line  91)
-* magit-merge-absorb:                    Merging.             (line  42)
-* magit-merge-dissolve:                  Merging.             (line  54)
-* magit-merge-editmsg:                   Merging.             (line  30)
-* magit-merge-nocommit:                  Merging.             (line  36)
+* magit-merge <1>:                       Merging.             (line  92)
+* magit-merge-abort:                     Merging.             (line  97)
+* magit-merge-absorb:                    Merging.             (line  46)
+* magit-merge-dissolve:                  Merging.             (line  60)
+* magit-merge-editmsg:                   Merging.             (line  32)
+* magit-merge-nocommit:                  Merging.             (line  40)
 * magit-merge-plain:                     Merging.             (line  18)
-* magit-merge-preview:                   Merging.             (line  75)
-* magit-merge-squash:                    Merging.             (line  67)
+* magit-merge-preview:                   Merging.             (line  81)
+* magit-merge-squash:                    Merging.             (line  73)
 * magit-mode-bury-buffer:                Modes and Buffers.   (line 206)
 * magit-mode-display-buffer:             Refreshing Buffers.  (line  32)
 * magit-mode-quit-window:                Modes and Buffers.   (line 233)
@@ -10954,89 +10960,89 @@ Ref: Branch Commands231525
 Ref: Branch Git Variables244275
 Ref: Auxiliary Branch Commands249522
 Node: Merging250539
-Node: Resolving Conflicts254699
-Node: Rebasing260073
-Ref: Editing Rebase Sequences265033
-Ref: Information About In-Progress Rebase270266
-Ref: Rebasing-Footnote-1279266
-Node: Cherry Picking279862
-Ref: Reverting284172
-Node: Resetting285532
-Node: Stashing287358
-Node: Transferring293605
-Node: Remotes293827
-Ref: Remote Commands293924
-Ref: Remote Git Variables297876
-Node: Fetching299060
-Node: Pulling301543
-Node: Pushing302569
-Node: Plain Patches306860
-Node: Maildir Patches308331
-Node: Miscellaneous309810
-Node: Tagging310156
-Node: Notes312049
-Node: Submodules314384
-Ref: Listing Submodules314545
-Ref: Submodule Transient316612
-Node: Subtree318971
-Node: Worktree320902
-Node: Sparse checkouts322217
-Node: Bundle324993
-Node: Common Commands325368
-Node: Wip Modes327996
-Ref: Wip Graph332574
-Node: Commands for Buffers Visiting Files335013
-Node: Minor Mode for Buffers Visiting Blobs343354
-Node: Customizing344517
-Node: Per-Repository Configuration346113
-Node: Essential Settings348367
-Ref: Safety348656
-Ref: Performance350337
-Ref: Log Performance353130
-Ref: Diff Performance354435
-Ref: Refs Buffer Performance355776
-Ref: Committing Performance356351
-Ref: Microsoft Windows Performance357333
-Ref: MacOS Performance358422
-Ref: Global Bindings359307
-Ref: Essential Settings-Footnote-1361482
-Node: Plumbing361564
-Node: Calling Git362393
-Ref: Getting a Value from Git363852
-Ref: Calling Git for Effect367484
-Node: Section Plumbing373429
-Ref: Creating Sections373581
-Ref: Section Selection377399
-Ref: Matching Sections379098
-Node: Refreshing Buffers385012
-Node: Conventions388156
-Ref: Theming Faces388320
-Node: FAQ396365
-Node: FAQ - How to ...?396803
-Ref: How to pronounce Magit?396936
-Ref: How to show git's output?397630
-Ref: How to install the gitman info manual?398255
-Ref: How to show diffs for gpg-encrypted files?399066
-Ref: How does branching and pushing work?399475
-Ref: Should I disable VC?399639
-Node: FAQ - Issues and Errors400124
-Ref: Magit is slow400269
-Ref: I changed several thousand files at once and now Magit is unusable400415
-Ref: I am having problems committing400954
-Ref: I am using MS Windows and cannot push with Magit401219
-Ref: I am using macOS and SOMETHING works in shell but not in Magit401619
-Ref: Expanding a file to show the diff causes it to disappear402210
-Ref: Point is wrong in the COMMIT_EDITMSG buffer402560
-Ref: The mode-line information isn't always up-to-date403384
-Ref: A branch and tag sharing the same name breaks SOMETHING404223
-Ref: My Git hooks work on the command-line but not inside Magit404871
-Ref: git-commit-mode isn't used when committing from the command-line405463
-Ref: Point ends up inside invisible text when jumping to a file-visiting buffer407461
-Ref: I am no longer able to save popup defaults408053
-Node: Debugging Tools408848
-Node: Keystroke Index412787
-Node: Function and Command Index450883
-Node: Variable Index502455
+Node: Resolving Conflicts254894
+Node: Rebasing260268
+Ref: Editing Rebase Sequences265228
+Ref: Information About In-Progress Rebase270461
+Ref: Rebasing-Footnote-1279461
+Node: Cherry Picking280057
+Ref: Reverting284367
+Node: Resetting285727
+Node: Stashing287553
+Node: Transferring293800
+Node: Remotes294022
+Ref: Remote Commands294119
+Ref: Remote Git Variables298071
+Node: Fetching299255
+Node: Pulling301738
+Node: Pushing302764
+Node: Plain Patches307055
+Node: Maildir Patches308526
+Node: Miscellaneous310005
+Node: Tagging310351
+Node: Notes312244
+Node: Submodules314579
+Ref: Listing Submodules314740
+Ref: Submodule Transient316807
+Node: Subtree319166
+Node: Worktree321097
+Node: Sparse checkouts322412
+Node: Bundle325188
+Node: Common Commands325563
+Node: Wip Modes328191
+Ref: Wip Graph332769
+Node: Commands for Buffers Visiting Files335208
+Node: Minor Mode for Buffers Visiting Blobs343549
+Node: Customizing344712
+Node: Per-Repository Configuration346308
+Node: Essential Settings348562
+Ref: Safety348851
+Ref: Performance350532
+Ref: Log Performance353325
+Ref: Diff Performance354630
+Ref: Refs Buffer Performance355971
+Ref: Committing Performance356546
+Ref: Microsoft Windows Performance357528
+Ref: MacOS Performance358617
+Ref: Global Bindings359502
+Ref: Essential Settings-Footnote-1361677
+Node: Plumbing361759
+Node: Calling Git362588
+Ref: Getting a Value from Git364047
+Ref: Calling Git for Effect367679
+Node: Section Plumbing373624
+Ref: Creating Sections373776
+Ref: Section Selection377594
+Ref: Matching Sections379293
+Node: Refreshing Buffers385207
+Node: Conventions388351
+Ref: Theming Faces388515
+Node: FAQ396560
+Node: FAQ - How to ...?396998
+Ref: How to pronounce Magit?397131
+Ref: How to show git's output?397825
+Ref: How to install the gitman info manual?398450
+Ref: How to show diffs for gpg-encrypted files?399261
+Ref: How does branching and pushing work?399670
+Ref: Should I disable VC?399834
+Node: FAQ - Issues and Errors400319
+Ref: Magit is slow400464
+Ref: I changed several thousand files at once and now Magit is unusable400610
+Ref: I am having problems committing401149
+Ref: I am using MS Windows and cannot push with Magit401414
+Ref: I am using macOS and SOMETHING works in shell but not in Magit401814
+Ref: Expanding a file to show the diff causes it to disappear402405
+Ref: Point is wrong in the COMMIT_EDITMSG buffer402755
+Ref: The mode-line information isn't always up-to-date403579
+Ref: A branch and tag sharing the same name breaks SOMETHING404418
+Ref: My Git hooks work on the command-line but not inside Magit405066
+Ref: git-commit-mode isn't used when committing from the command-line405658
+Ref: Point ends up inside invisible text when jumping to a file-visiting buffer407656
+Ref: I am no longer able to save popup defaults408248
+Node: Debugging Tools409043
+Node: Keystroke Index412982
+Node: Function and Command Index451078
+Node: Variable Index502650
 
 End Tag Table
 
