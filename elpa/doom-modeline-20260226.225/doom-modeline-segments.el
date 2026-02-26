@@ -687,6 +687,7 @@ Uses `nerd-icons-octicon' to fetch the icon."
 (defun doom-modeline--in-git-worktree-p ()
   "Return non-nil if the current buffer's file is in a git worktree."
   (when-let* ((git-dir (and buffer-file-name
+                            (not (file-remote-p buffer-file-name)) ; avoid tramp hangs
                             (locate-dominating-file buffer-file-name ".git"))))
     ;; In a worktree, .git is a file (not a directory)
     (file-regular-p (expand-file-name ".git" git-dir))))
@@ -3042,7 +3043,12 @@ Uses `nerd-icons-mdicon' to fetch the icon."
   (when doom-modeline--battery-status
     (setq battery-mode-line-string (substring
                                     (concat
-                                     (substring-no-properties (car doom-modeline--battery-status))
+                                     (let* ((status (car doom-modeline--battery-status))
+                                            (substr (substring-no-properties status))
+                                            (char   (string-to-char substr)))
+                                       (unless (or (eq (char-displayable-p char) 'unicode)
+                                                   (null (char-displayable-p char)))
+                                         substr))
                                      (substring-no-properties (cdr doom-modeline--battery-status)))
                                     0 -1)))
   (force-mode-line-update t))

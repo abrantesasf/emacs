@@ -3,8 +3,8 @@
 ;; URL: https://github.com/slime/slime
 ;; Package-Requires: ((emacs "24.3") (macrostep "0.9"))
 ;; Keywords: languages, lisp, slime
-;; Package-Version: 20260217.222
-;; Package-Revision: 888967f5098d
+;; Package-Version: 20260226.1423
+;; Package-Revision: 7d873ed05b18
 
 ;;;; License and Commentary
 
@@ -434,7 +434,7 @@ PROPERTIES specifies any default face properties."
                   '(:inherit font-lock-variable-name-face))
   (local-value    "local variable values")
   (catch-tag      "catch tags"
-                  '(:inherit highlight)))
+                  '(:inherit font-lock-variable-name-face)))
 
 
 ;;;; Minor modes
@@ -1495,9 +1495,11 @@ EVAL'd by Lisp."
                    (concat (slime-prin1-to-string sexp) "\n")
                    'utf-8-unix))
          (string (concat (slime-net-encode-length (length payload))
-                         payload)))
+                         payload))
+         (sender (or (process-get proc 'slime-net-send-function)
+                     #'process-send-string)))
     (slime-log-event sexp)
-    (process-send-string proc string)))
+    (funcall sender proc string)))
 
 (defun slime-safe-encoding-p (coding-system string)
   "Return true iff CODING-SYSTEM can safely encode STRING."
@@ -5891,15 +5893,18 @@ The details include local variable bindings and CATCH-tags."
                                    'sldb-detailed-frame-line-face))
         (let ((indent1 "      ")
               (indent2 "        "))
-          (insert indent1 (sldb-in-face section
-                            (if locals "Locals:" "[No Locals]")) "\n")
-          (sldb-insert-locals locals indent2 frame)
+          (when locals
+            (sldb-insert-locals locals indent2 frame))
           (when catches
-            (insert indent1 (sldb-in-face section "Catch-tags:") "\n")
+            (insert indent1 (sldb-in-face section "Catch tags") "\n")
             (dolist (tag catches)
               (slime-propertize-region `(catch-tag ,tag)
                 (insert indent2 (sldb-in-face catch-tag (format "%s" tag))
                         "\n"))))
+          (when (and (not catches)
+                     (not locals))
+            (insert indent1 (sldb-in-face detailed-frame-line
+                                          "[Nothing here]") "\n"))
           (setq end (point)))))
     (slime--display-region (point) end)))
 

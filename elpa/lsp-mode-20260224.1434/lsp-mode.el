@@ -5,8 +5,8 @@
 ;; Author: Vibhav Pant, Fangrui Song, Ivan Yonchovski
 ;; Keywords: languages
 ;; Package-Requires: ((emacs "28.1") (dash "2.18.0") (f "0.21.0") (ht "2.3") (spinner "1.7.3") (markdown-mode "2.3") (lv "0") (eldoc "1.11"))
-;; Package-Version: 20260213.1842
-;; Package-Revision: 0e53347d767b
+;; Package-Version: 20260224.1434
+;; Package-Revision: 3e55ca80712d
 
 ;; URL: https://github.com/emacs-lsp/lsp-mode
 ;; This program is free software; you can redistribute it and/or modify
@@ -878,6 +878,7 @@ Changes take effect only when a new session is started."
     (clojure-ts-mode . "clojure")
     (clojure-ts-clojurec-mode . "clojure")
     (clojure-ts-clojurescript-mode . "clojurescript")
+    (edn-mode . "clojure")
     (java-mode . "java")
     (java-ts-mode . "java")
     (jdee-mode . "java")
