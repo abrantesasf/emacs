@@ -4,8 +4,8 @@
 
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
 ;; Homepage: https://github.com/seagle0128/doom-modeline
-;; Package-Version: 20260226.225
-;; Package-Revision: b6ce0ba5390e
+;; Package-Version: 20260302.305
+;; Package-Revision: 8806358185f7
 ;; Package-Requires: ((emacs "25.1") (compat "30.1.0.0") (nerd-icons "0.1.0") (shrink-path "0.3.1"))
 ;; Keywords: faces mode-line
 
@@ -140,7 +140,7 @@
   '(bar helm-buffer-id helm-number helm-follow helm-prefix-argument)
   '(helm-help time))
 
-(doom-modeline-def-modeline 'timemachine
+(doom-modeline-def-modeline 'git-timemachine
   '(eldoc bar window-number modals matches git-timemachine buffer-position word-count parrot selection-info)
   '(misc-info minor-modes indent-info buffer-encoding major-mode time))
 
@@ -191,7 +191,6 @@ If DEFAULT is non-nil, set the default mode-line for all buffers."
     (package-menu-mode    . package)
     (paradox-menu-mode    . package)
     (xwidget-webkit-mode  . minimal)
-    (git-timemachine-mode . timemachine)
     (calc-mode            . calculator)
     (calc-trail-mode      . calculator)
     (circe-mode           . special)
@@ -215,8 +214,12 @@ If DEFAULT is non-nil, set the default mode-line for all buffers."
     (with-current-buffer speedbar-buffer
       (doom-modeline-set-modeline 'speedbar))))
 
+(defun doom-modeline-set-git-timemachine-modeline (&rest _)
+  "Set `git-timmachie' mode-line."
+  (doom-modeline-set-modeline 'git-timemachine))
+
 (defun doom-modeline-set-helm-modeline (&rest _)
-  "Set helm mode-line."
+  "Set `helm' mode-line."
   (doom-modeline-set-modeline 'helm))
 
 ;;;###autoload
@@ -264,6 +267,8 @@ If DEFAULT is non-nil, set the default mode-line for all buffers."
         ;; Special handles
         (advice-add #'speedbar-set-mode-line-format :override #'doom-modeline-set-speebar-modeline)
 
+        (add-hook 'git-timemachine-mode-hook #'doom-modeline-set-git-timemachine-modeline)
+
         (advice-add #'helm-display-mode-line :after #'doom-modeline-set-helm-modeline)
         (setq helm-ag-show-status-function #'doom-modeline-set-helm-modeline))
     (progn
@@ -302,6 +307,8 @@ If DEFAULT is non-nil, set the default mode-line for all buffers."
       ;; For special handles
       (advice-remove #'speedbar-set-mode-line-format #'doom-modeline-set-speebar-modeline)
       (and (fboundp 'speedbar-set-mode-line-format) (speedbar-set-mode-line-format)) ; reset speedbar
+
+      (remove-hook 'git-timemachine-mode-hook #'doom-modeline-set-git-timemachine-modeline)
 
       (advice-remove #'helm-display-mode-line #'doom-modeline-set-helm-modeline)
       (setq helm-ag-show-status-function (default-value 'helm-ag-show-status-function)))))

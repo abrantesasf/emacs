@@ -6,8 +6,8 @@
 ;; Homepage: https://github.com/magit/transient
 ;; Keywords: extensions
 
-;; Package-Version: 20260226.1256
-;; Package-Revision: ef7714b2528b
+;; Package-Version: 20260228.1928
+;; Package-Revision: 7637fd025d2f
 ;; Package-Requires: (
 ;;     (emacs   "28.1")
 ;;     (compat  "30.1")
@@ -4773,27 +4773,18 @@ as a button."
 %k is formatted using `transient-format-key'.
 %d is formatted using `transient-format-description'.
 %v is formatted using `transient-format-value'."
-  (static-if (>= emacs-major-version 29)
-      (format-spec (oref obj format)
-                   `((?k . ,(lambda () (transient-format-key obj)))
-                     (?d . ,(lambda () (transient-format-description obj)))
-                     (?v . ,(lambda () (transient-format-value obj)))))
-    (format-spec (oref obj format)
-                 `((?k . ,(transient-format-key obj))
-                   (?d . ,(transient-format-description obj))
-                   (?v . ,(transient-format-value obj))))))
+  (format-spec (oref obj format)
+               `((?k . ,(transient-format-key obj))
+                 (?d . ,(transient-format-description obj))
+                 (?v . ,(transient-format-value obj)))))
 
 (cl-defmethod transient-format ((obj transient-suffix))
   "Return a string generated using OBJ's `format'.
 %k is formatted using `transient-format-key'.
 %d is formatted using `transient-format-description'."
-  (static-if (>= emacs-major-version 29)
-      (format-spec (oref obj format)
-                   `((?k . ,(lambda () (transient-format-key obj)))
-                     (?d . ,(lambda () (transient-format-description obj)))))
-    (format-spec (oref obj format)
-                 `((?k . ,(transient-format-key obj))
-                   (?d . ,(transient-format-description obj))))))
+  (format-spec (oref obj format)
+               `((?k . ,(transient-format-key obj))
+                 (?d . ,(transient-format-description obj)))))
 
 (cl-defgeneric transient-format-key (obj)
   "Format OBJ's `key' for display and return the result.")
