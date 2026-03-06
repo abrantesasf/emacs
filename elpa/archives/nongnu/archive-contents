@@ -192,13 +192,13 @@
 		("Damien Doligez" . "damien.doligez@inria.fr"))
       (:commit . "2905a436e956c5bba16c4633a6e4c4fceefa6535"))])
  (casual
-  . [(2 14 2) ((emacs (29 1)) (transient (0 9 0)) (csv-mode (1 27)))
+  . [(2 14 3) ((emacs (29 1)) (transient (0 9 0)) (csv-mode (1 27)))
      "Transient user interfaces for various modes" tar
      ((:url . "https://github.com/kickingvegas/casual")
       (:keywords "tools" "wp")
       (:maintainer "Charles Choi" . "kickingvegas@gmail.com")
       (:authors ("Charles Choi" . "kickingvegas@gmail.com"))
-      (:commit . "a68d05609cc40905618b72b8cadbbdde833e428e"))])
+      (:commit . "0b04ad703efad2a53a3c756c02784e819d0f8b4e"))])
  (cdlatex
   . [(4 18 5) nil "Fast input methods for LaTeX environments and math"
      tar
@@ -224,11 +224,11 @@
 		("Steve Purcell" . "steve@sanityinc.com"))
       (:commit . "c71bc65af7709667b0cc77306f4e3d5befe86d27"))])
  (clojure-mode
-  . [(5 21 0) ((emacs (27 1))) "Major mode for Clojure code" tar
+  . [(5 22 0) ((emacs (27 1))) "Major mode for Clojure code" tar
      ((:url . "https://github.com/clojure-emacs/clojure-mode")
       (:keywords "languages" "clojure" "clojurescript" "lisp")
       (:maintainer "Bozhidar Batsov" . "bozhidar@batsov.dev")
-      (:commit . "f1cd680918d6e3c28247b54fb199e186ef9cfd9d"))])
+      (:commit . "6314697ed8042db9341a11d1a330c305a3c36f37"))])
  (clojure-ts-mode
   . [(0 6 0) ((emacs (30 1))) "Major mode for Clojure code" tar
      ((:url . "http://github.com/clojure-emacs/clojure-ts-mode")
@@ -431,13 +431,13 @@
       (:authors ("Johann Klähn" . "johann@jklaehn.de"))
       (:commit . "33aa6d7ee5d0e712b112c74ec6e076463b540e9e"))])
  (eldoc-mouse
-  . [(3 0 3) ((emacs (27 1)) (posframe (1 4 0)) (eglot (1 8)))
+  . [(3 0 4) ((emacs (27 1)) (posframe (1 4 0)) (eglot (1 8)))
      "Display documentation for mouse hover" tar
      ((:url . "https://github.com/huangfeiyu/eldoc-mouse")
       (:keywords "tools" "languages" "convenience" "mouse" "hover")
       (:maintainer "Huang Feiyu" . "sibadake1@163.com")
       (:authors ("Huang Feiyu" . "sibadake1@163.com"))
-      (:commit . "e66dba299ed381bfafeb0f430418fdd737ef6922"))])
+      (:commit . "50bc7e0ddf3787851ee9695b671395ee8ccc943d"))])
  (elixir-mode
   . [(2 5 0) ((emacs (25))) "Major mode for editing Elixir files" tar
      ((:url . "https://github.com/elixir-editors/emacs-elixir")
@@ -804,16 +804,6 @@
 		("Jonas Bernoulli"
 		 . "emacs.git-modes@jonas.bernoulli.dev"))
       (:commit . "c3faeeea1982786f78d8c38397dec0f078eaec84"))])
- (gnosis
-  . [(0 7 0)
-     ((emacs (27 2)) (emacsql (4 1 0)) (compat (29 1 4 2))
-      (transient (0 7 2)) (org-gnosis (0 0 9)))
-     "Spaced Repetition System" tar
-     ((:url . "https://thanosapollo.org/projects/gnosis")
-      (:keywords "extensions")
-      (:maintainer "Thanos Apollo" . "public@thanosapollo.org")
-      (:authors ("Thanos Apollo" . "public@thanosapollo.org"))
-      (:commit . "54660aabfa3200663053dd0063f2c215ef674ddb"))])
  (gnu-apl-mode
   . [(1 5 1) nil "Emacs mode for GNU APL" tar
      ((:url . "http://www.gnu.org/software/apl/")
@@ -1210,13 +1200,13 @@
       (:authors ("Jason R. Blevins" . "jblevins@xbeta.org"))
       (:commit . "1c7aecba67cc478ca3f6bd7899dc06956e4762f4"))])
  (mastodon
-  . [(2 0 11) ((emacs (29 1)) (persist (0 8)) (tp (0 8)))
+  . [(2 0 12) ((emacs (29 1)) (persist (0 8)) (tp (0 8)))
      "Client for fediverse services using the Mastodon API" tar
      ((:url . "https://codeberg.org/martianh/mastodon.el")
       (:maintainer "Marty Hiatt" . "mousebot@disroot.org")
       (:authors ("Johnson Denen" . "johnson.denen@gmail.com")
 		("Marty Hiatt" . "mousebot@disroot.org"))
-      (:commit . "f75f9f2d6411c28d1fe9e0a19b1219aa3591d34a"))])
+      (:commit . "4b8002cbc7e825c594dac34923adaaf496ede1bc"))])
  (material-theme
   . [(2015) ((emacs (24 1)))
      "A Theme based on the colors of the Google Material Design" tar
@@ -1526,7 +1516,7 @@
       (:authors ("David Christiansen" . "david@davidchristiansen.dk"))
       (:commit . "1edda80e2e32b72e77f4f16ae5b83c312c68ee95"))])
  (racket-mode
-  . [(1 0 20260117 121353) ((emacs (25 1)) (compat (30 0 2 0)))
+  . [(1 0 20260303 123213) ((emacs (25 1)) (compat (30 0 2 0)))
      "Racket editing, REPL, and more" tar
      ((:url . "https://www.racket-mode.com/")
       (:authors

@@ -3,8 +3,8 @@
 ;; Author: Vitalie Spinu
 ;; Maintainer: Vitalie Spinu <spinuvit@gmail.com>
 ;; Copyright (C) 2013-2022  Free Software Foundation, Inc.
-;; Package-Version: 20251217.1327
-;; Package-Revision: a48648fe2b2e
+;; Package-Version: 20260302.1043
+;; Package-Revision: 4604f55cc020
 ;; Package-Requires: ((emacs "25"))
 ;; URL: https://github.com/polymode/polymode
 ;; Keywords: languages, multi-modes, processes
@@ -620,7 +620,7 @@ most frequently used slots are:
                                      (eieio-oref parent-conf '-minor-mode))))
                                   ;; 3. nil
                                   (t polymode-minor-mode-map)))))
-               (easy-mmode-define-keymap keymap nil nil (list :inherit parent-map))))
+               (apply #'define-keymap :parent parent-map keymap)))
            ,(format "Keymap for %s." mode-name))
 
 
