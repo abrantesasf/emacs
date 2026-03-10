@@ -14,7 +14,7 @@ File: ess.info,  Node: Top,  Next: Introduction,  Up: (dir)
 ESS: Emacs Speaks Statistics
 ****************************
 
-ESS version 25.01.0
+ESS version 26.01.0
 
      by  A.J. Rossini,
          R.M. Heiberger,
@@ -3690,48 +3690,6 @@ polymode <https://github.com/polymode/poly-R/>,
 <https://polymode.github.io/>, or markdown-mode with edit-indirect
 <https://jblevins.org/projects/markdown-mode>.
 
-   ESS provides support for writing and processing Sweave
-(<https://leisch.userweb.mwn.de/Sweave/>), building up on Emacs'
-ess-noweb-mode for literate programming.  When working on an Sweave
-document, the following key bindings are available:
-
- -- Command: ess-swv-weave CHOOSE
-     'M-n s' Run Sweave on the current .Rnw file.  If CHOOSE is
-     non-'nil', offer a menu of available weavers.
-
- -- Command: ess-swv-latex
-     'M-n l' Run LaTeX after Sweave'ing.
-
- -- Command: ess-swv-PS
-     'M-n p' Generate and display a postscript file after LaTeX'ing.
-
- -- Command: ess-swv-PDF PDFLATEX-CMD
-     'M-n P' Generate and display a PDF file after LaTeX'ing.  Optional
-     argument PDFLATEX-CMD is the command to use, which by default, is
-     the command used to generate the PDF file is the first element of
-     'ess-swv-pdflatex-commands'.
-
- -- User Option: ess-swv-pdflatex-commands
-     Commands used by 'ess-swv-PDF' to run a version of pdflatex; the
-     first entry is the default command.
-
-   Sweave'ing with 'ess-swv-weave' starts an inferior-ESS process, if
-one is not available.  Other commands are available from the 'Sweaving,
-Tangling, ...' submenu of the Noweb menu.
-
-   AUCTeX (<https://www.gnu.org/software/auctex>) users may prefer to
-set the variable 'ess-swv-plug-into-AUCTeX-p' (available from the "ESS
-Sweave" customization group) to t.  Alternatively, the same can be
-achieved by activating the entry "AUCTeX Interface" from the 'Sweaving,
-Tangling, ...' submenu, which toggles this variable on or off.  When the
-interface is activated, new entries for Sweave'ing and LaTeX'ing
-thereafter are available from AUCTeX's "Command" menu.  Sweave'ing can,
-thus, be done by 'C-c C-c Sweave RET' without an inferior-ESS process.
-Similarly, LaTeX'ing can be done by 'C-c C-c LaTeXSweave RET'.  In both
-cases, the process can be monitored with 'C-c C-l'
-('TeX-recenter-output-buffer').  Open the viewer with 'C-c C-v'
-('TeX-view'), as usual in AUCTeX.
-
 
 File: ess.info,  Node: ESS for R,  Next: ESS for SAS,  Prev: Extras,  Up: Top
 
@@ -4755,9 +4713,6 @@ Key index
 * M-;:                                   Indenting.            (line 65)
 * M-?:                                   Object names.         (line 33)
 * M-C-q:                                 Indenting.            (line 49)
-* M-n l:                                 Sweave and AUCTeX.    (line 24)
-* M-n P:                                 Sweave and AUCTeX.    (line 30)
-* M-n s:                                 Sweave and AUCTeX.    (line 20)
 * M-RET:                                 Resubmit.             (line 10)
 * RET:                                   Command-line editing. (line 10)
 * RET <1>:                               Resubmit.             (line 18)
@@ -4872,10 +4827,6 @@ Function and program index
 * ess-submit-bug-report:                 Reporting Bugs.      (line   6)
 * ess-switch-to-end-of-ESS:              Help.                (line 117)
 * ess-switch-to-inferior-or-script-buffer: Other.             (line  12)
-* ess-swv-latex:                         Sweave and AUCTeX.   (line  23)
-* ess-swv-PDF:                           Sweave and AUCTeX.   (line  29)
-* ess-swv-PS:                            Sweave and AUCTeX.   (line  26)
-* ess-swv-weave:                         Sweave and AUCTeX.   (line  19)
 * ess-tracebug:                          ESS tracebug.        (line   6)
 * ess-transcript-clean-region:           Clean.               (line  10)
 * ess-transcript-copy-command:           Resubmit.            (line  13)
@@ -4949,7 +4900,6 @@ Variable index
 * ess-style:                             Styles.               (line 21)
 * ess-style-alist:                       Styles.               (line 28)
 * ess-switch-to-end-of-proc-buffer:      Other.                (line 21)
-* ess-swv-pdflatex-commands:             Sweave and AUCTeX.    (line 35)
 * ess-use-eldoc:                         ESS ElDoc.            (line 13)
 * ess-use-flymake:                       ESS Flymake.          (line 12)
 * iESS program arguments:                Customizing startup.  (line 48)
@@ -5198,34 +5148,34 @@ Node: Rdired151812
 Node: Package listing152875
 Node: Org154259
 Node: Sweave and AUCTeX155213
-Node: ESS for R157765
-Node: ESS(R)--Editing files158065
-Node: iESS(R)--Inferior ESS processes158566
-Node: Philosophies for using ESS(R)161221
-Node: Example ESS usage162148
-Node: ESS for SAS163553
-Node: ESS(SAS)--Design philosophy164276
-Node: ESS(SAS)--Editing files165209
-Node: ESS(SAS)--TAB key167063
-Node: ESS(SAS)--Batch SAS processes168429
-Node: ESS(SAS)--Function keys for batch processing173457
-Node: iESS(SAS)--Interactive SAS processes182944
-Node: iESS(SAS)--Common problems186698
-Node: ESS(SAS)--Graphics188222
-Node: ESS(SAS)--Windows189005
-Node: ESS for BUGS189583
-Node: ESS for JAGS191339
-Node: Mailing lists/bug reports194691
-Node: Bugs194955
-Node: Reporting Bugs196579
-Node: Mailing Lists197494
-Node: Help with Emacs198221
-Node: Customization198753
-Node: Indices199527
-Node: Key index199702
-Node: Function and program index204834
-Node: Variable index214400
-Node: Concept index218107
+Node: ESS for R155798
+Node: ESS(R)--Editing files156098
+Node: iESS(R)--Inferior ESS processes156599
+Node: Philosophies for using ESS(R)159254
+Node: Example ESS usage160181
+Node: ESS for SAS161586
+Node: ESS(SAS)--Design philosophy162309
+Node: ESS(SAS)--Editing files163242
+Node: ESS(SAS)--TAB key165096
+Node: ESS(SAS)--Batch SAS processes166462
+Node: ESS(SAS)--Function keys for batch processing171490
+Node: iESS(SAS)--Interactive SAS processes180977
+Node: iESS(SAS)--Common problems184731
+Node: ESS(SAS)--Graphics186255
+Node: ESS(SAS)--Windows187038
+Node: ESS for BUGS187616
+Node: ESS for JAGS189372
+Node: Mailing lists/bug reports192724
+Node: Bugs192988
+Node: Reporting Bugs194612
+Node: Mailing Lists195527
+Node: Help with Emacs196254
+Node: Customization196786
+Node: Indices197560
+Node: Key index197735
+Node: Function and program index202648
+Node: Variable index211922
+Node: Concept index215556
 
 End Tag Table
 

@@ -4,8 +4,8 @@
 
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
 ;; Homepage: https://github.com/seagle0128/doom-modeline
-;; Package-Version: 20260306.1006
-;; Package-Revision: 755bbebcef57
+;; Package-Version: 20260309.1349
+;; Package-Revision: febde435ae62
 ;; Package-Requires: ((emacs "25.1") (compat "30.1.0.0") (nerd-icons "0.1.0") (shrink-path "0.3.1"))
 ;; Keywords: faces mode-line
 
@@ -41,7 +41,7 @@
 ;; - A customizable mode-line height (see doom-modeline-height)
 ;; - A minor modes segment which is compatible with minions
 ;; - An error/warning count segment for flymake/flycheck
-;; - A workspace number segment for eyebrowse
+;; - A workspace name segment for eyebrowse/tab-bar
 ;; - A perspective name segment for persp-mode
 ;; - A window number segment for winum and window-numbering
 ;; - An indicator for modal editing state, including evil, overwrite, god, ryo
