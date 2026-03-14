@@ -1504,14 +1504,18 @@ regions, 5. The current/total for the highlight term (with `symbol-overlay'),
 (doom-modeline-def-segment bar
   "The bar regulates the height of the `doom-modeline' in GUI."
   (when (display-graphic-p)
-    (if doom-modeline-hud
-        (doom-modeline--hud)
-      (doom-modeline--bar))))
+    (concat
+     (if doom-modeline-hud
+         (doom-modeline--hud)
+       (doom-modeline--bar))
+     (doom-modeline-spc))))
 
 (doom-modeline-def-segment hud
   "Powerline's hud segment reimplemented in the style of bar segment."
   (when (display-graphic-p)
-    (doom-modeline--hud)))
+    (concat
+     (doom-modeline--hud)
+     (doom-modeline-spc))))
 
 
 ;;
@@ -1904,43 +1908,34 @@ TEXT is alternative if icon is not available."
   "The current evil state. Requires `evil-mode' to be enabled."
   (when (bound-and-true-p evil-local-mode)
     (let-alist (cond
-                ((evil-normal-state-p)   '((text    . " NORMAL ")
-                                           (face    . doom-modeline-evil-normal-state)
+                ((evil-normal-state-p)   '((face    . doom-modeline-evil-normal-state)
                                            (icon    . "nf-md-alpha_n_circle")
                                            (unicode . "🅝")))
-                ((evil-emacs-state-p)    '((text    . " EMACS ")
-                                           (face    . doom-modeline-evil-emacs-state)
+                ((evil-emacs-state-p)    '((face    . doom-modeline-evil-emacs-state)
                                            (icon    . "nf-md-alpha_e_circle")
                                            (unicode . "🅔")))
-                ((evil-insert-state-p)   '((text    . " INSERT ")
-                                           (face    . doom-modeline-evil-insert-state)
+                ((evil-insert-state-p)   '((face    . doom-modeline-evil-insert-state)
                                            (icon    . "nf-md-alpha_i_circle")
                                            (unicode . "🅘")))
-                ((evil-motion-state-p)   '((text    . " MOTION ")
-                                           (face    . doom-modeline-evil-motion-state)
+                ((evil-motion-state-p)   '((face    . doom-modeline-evil-motion-state)
                                            (icon    . "nf-md-alpha_m_circle")
                                            (unicode . "🅜")))
-                ((evil-visual-state-p)   '((text    . " VISUAL ")
-                                           (face    . doom-modeline-evil-visual-state)
+                ((evil-visual-state-p)   '((face    . doom-modeline-evil-visual-state)
                                            (icon    . "nf-md-alpha_v_circle")
                                            (unicode . "🅥")))
-                ((evil-operator-state-p) '((text    . " OPERATOR ")
-                                           (face    . doom-modeline-evil-operator-state)
+                ((evil-operator-state-p) '((face    . doom-modeline-evil-operator-state)
                                            (icon    . "nf-md-alpha_o_circle")
                                            (unicode . "🅞")))
-                ((evil-replace-state-p)  '((text    . " REPLACE ")
-                                           (face    . doom-modeline-evil-replace-state)
+                ((evil-replace-state-p)  '((face    . doom-modeline-evil-replace-state)
                                            (icon    . "nf-md-alpha_r_circle")
                                            (unicode . "🅡")))
-                (t                       '((text    . " USER ")
-                                           (face    . doom-modeline-evil-user-state)
+                (t                       '((face    . doom-modeline-evil-user-state)
                                            (icon    . "nf-md-alpha_u_circle")
                                            (unicode . "🅤"))))
       (doom-modeline--modal-icon
-       (if doom-modeline-modal-use-evil-tag
-           (let ((tag (evil-state-property evil-state :tag t)))
-             (if (stringp tag) tag (funcall tag)))
-         .text)
+       ;; Users can set `evil-xxx-state-tag'
+       (let ((tag (evil-state-property evil-state :tag t)))
+         (if (stringp tag) tag (funcall tag)))
        .face
        (evil-state-property evil-state :name t)
        .icon
@@ -1951,21 +1946,21 @@ TEXT is alternative if icon is not available."
   (when (and (bound-and-true-p overwrite-mode)
              (not (bound-and-true-p evil-local-mode)))
     (doom-modeline--modal-icon
-     " OW " 'doom-modeline-overwrite "Overwrite mode"
-     "nf-md-marker" "🅦")))
+     "<W>" 'doom-modeline-overwrite "Overwrite mode"
+     "nf-md-marker" "✍")))
 
 (defsubst doom-modeline--god ()
   "The current god state which is enabled by the command `god-mode'."
   (when (bound-and-true-p god-local-mode)
     (doom-modeline--modal-icon
-     " GOD " 'doom-modeline-god "God mode"
-     "nf-md-account_circle" "🅖")))
+     "<G>" 'doom-modeline-god "God mode"
+     "nf-md-account_circle" "🙏")))
 
 (defsubst doom-modeline--ryo ()
   "The current ryo-modal state which is enabled by the command `ryo-modal-mode'."
   (when (bound-and-true-p ryo-modal-mode)
     (doom-modeline--modal-icon
-     " RYO " 'doom-modeline-ryo "Ryo modal"
+     "<R>" 'doom-modeline-ryo "Ryo modal"
      "nf-md-star_circle" "✪")))
 
 (defsubst doom-modeline--xah-fly-keys ()
@@ -1973,10 +1968,10 @@ TEXT is alternative if icon is not available."
   (when (bound-and-true-p xah-fly-keys)
     (if xah-fly-insert-state-p
         (doom-modeline--modal-icon
-         " INSERT " 'doom-modeline-fly-insert-state "Xah-fly insert mode"
+         "<I>" 'doom-modeline-fly-insert-state "Xah-fly insert mode"
          "nf-md-airplane_edit" "🛧")
       (doom-modeline--modal-icon
-       " NORMAL " 'doom-modeline-fly-normal-state "Xah-fly command mode"
+       "<C>" 'doom-modeline-fly-normal-state "Xah-fly command mode"
        "nf-md-airplane_cog" "🛧"))))
 
 (defsubst doom-modeline--boon ()
@@ -2035,9 +2030,7 @@ Including `evil', `overwrite', `god', `ryo' and `xha-fly-kyes', etc."
            (boon (doom-modeline--boon))
            (meow (doom-modeline--meow))
            (vsep (doom-modeline-vspc))
-           (sep (and doom-modeline-icon
-                     (or doom-modeline-modal-icon doom-modeline-unicode-fallback)
-                     (or evil ow god ryo xf boon meow) (doom-modeline-spc))))
+           (sep (and (or evil ow god ryo xf boon meow) (doom-modeline-spc))))
       (concat sep
               (and evil (concat evil (and (or ow god ryo xf boon meow) vsep)))
               (and ow (concat ow (and (or god ryo xf boon meow) vsep)))

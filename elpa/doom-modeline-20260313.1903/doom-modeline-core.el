@@ -653,7 +653,7 @@ Including `evil', `overwrite', `god', `ryo' and `xah-fly-keys', etc."
   :type 'boolean
   :group 'doom-modeline)
 
-(defcustom doom-modeline-modal-icon nil
+(defcustom doom-modeline-modal-icon t
   "Whether display the modal state icon.
 
 Including `evil', `overwrite', `god', `ryo' and `xah-fly-keys', etc."
@@ -662,11 +662,6 @@ Including `evil', `overwrite', `god', `ryo' and `xah-fly-keys', etc."
 
 (defcustom doom-modeline-modal-modern-icon t
   "Whether display the modern icons for modals."
-  :type 'boolean
-  :group 'doom-modeline)
-
-(defcustom doom-modeline-modal-use-evil-tag nil
-  "Whether use the tag of evil state."
   :type 'boolean
   :group 'doom-modeline)
 
@@ -909,7 +904,7 @@ Also see the face `doom-modeline-unread-number'."
   :group 'doom-modeline-faces)
 
 (defface doom-modeline-bar-inactive
-  `((t (:inherit doom-modeline)))
+  `((t ()))
   "The face used for the left-most bar in the mode-line of an inactive window."
   :group 'doom-modeline-faces)
 
@@ -1035,7 +1030,7 @@ Also see the face `doom-modeline-unread-number'."
   :group 'doom-modeline-faces)
 
 (defface doom-modeline-workspace-name
-  '((t (:inherit (doom-modeline-panel bold))))
+  '((t (:inherit (doom-modeline-emphasis bold))))
   "Face for the workspace name."
   :group 'doom-modeline-faces)
 
@@ -1097,7 +1092,7 @@ Which are not explicitly listed in `doom-modeline-vcs-state-faces-alist'."
   :group 'doom-modeline-faces)
 
 (defface doom-modeline-battery-normal
-  '((t (:inherit (doom-modeline mode-line))))
+  '((t (:inherit doom-modeline)))
   "Face for battery normal status."
   :group 'doom-modeline-faces)
 
@@ -1617,7 +1612,7 @@ ARGS is same as `nerd-icons-octicon' and others."
       (propertize unicode 'face face))
      ;; ASCII text
      (text
-      (propertize text 'face `(:inherit ,face :inverse-video t)))
+      (propertize text 'face face))
      ;; Fallback
      (t ""))))
 

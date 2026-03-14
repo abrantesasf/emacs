@@ -5,8 +5,8 @@
 ;; Author: Vibhav Pant, Fangrui Song, Ivan Yonchovski
 ;; Keywords: languages
 ;; Package-Requires: ((emacs "28.1") (dash "2.18.0") (f "0.21.0") (ht "2.3") (spinner "1.7.3") (markdown-mode "2.3") (lv "0") (eldoc "1.11"))
-;; Package-Version: 20260308.1629
-;; Package-Revision: fd4df7cf1732
+;; Package-Version: 20260310.1423
+;; Package-Revision: 0a56753f227d
 
 ;; URL: https://github.com/emacs-lsp/lsp-mode
 ;; This program is free software; you can redistribute it and/or modify
@@ -946,6 +946,8 @@ Changes take effect only when a new session is started."
     (fsharp-mode . "fsharp")
     (reason-mode . "reason")
     (caml-mode . "ocaml")
+    (neocaml-mode . "ocaml")
+    (neocaml-interface-mode . "ocaml")
     (tuareg-mode . "ocaml")
     (futhark-mode . "futhark")
     (swift-mode . "swift")
@@ -1163,7 +1165,8 @@ must be used for handling a particular message.")
 (defcustom lsp-file-watch-threshold 1000
   "Show warning if the files to watch are more than.
 Set to nil to disable the warning."
-  :type 'number
+  :type '(choice (const :tag "No warning" nil)
+                 (integer :tag "Number of files"))
   :group 'lsp-mode)
 ;;;###autoload(put 'lsp-file-watch-threshold 'safe-local-variable (lambda (i) (or (numberp i) (not i))))
 

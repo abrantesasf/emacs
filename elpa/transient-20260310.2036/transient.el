@@ -6,8 +6,8 @@
 ;; Homepage: https://github.com/magit/transient
 ;; Keywords: extensions
 
-;; Package-Version: 20260305.2144
-;; Package-Revision: e7cae38a1fd6
+;; Package-Version: 20260310.2036
+;; Package-Revision: 7131bec61e55
 ;; Package-Requires: (
 ;;     (emacs   "28.1")
 ;;     (compat  "30.1")
@@ -2619,13 +2619,10 @@ value.  Otherwise return CHILDREN as is.")
       (setq transient--prefix (transient--init-prefix name params))
     (setq name (oref transient--prefix command)))
   (setq transient--refreshp (oref transient--prefix refresh-suffixes))
-  (cond ((and (not transient--refreshp) layout)
-         (setq transient--layout layout)
-         (setq transient--suffixes (transient--flatten-suffixes layout)))
-        (t
-         (setq transient--suffixes nil)
-         (setq transient--layout (transient--init-suffixes name))
-         (setq transient--suffixes (nreverse transient--suffixes))))
+  (setq transient--layout
+        (or (and (not transient--refreshp) layout)
+            (transient--init-suffixes name)))
+  (setq transient--suffixes (transient--flatten-suffixes transient--layout))
   (slot-makeunbound transient--prefix 'value))
 
 (defun transient--init-prefix (name &optional params)
@@ -2645,17 +2642,19 @@ value.  Otherwise return CHILDREN as is.")
     (mapcan (lambda (c) (transient--init-child levels c nil))
             (append (transient--get-children name)
                     (and (not transient--editp)
-                         (transient--get-children 'transient-common-commands))))))
+                         (transient--get-children
+                          'transient-common-commands))))))
 
 (defun transient--flatten-suffixes (layout)
-  (named-let flatten ((def layout))
-    (cond ((stringp def) nil)
-          ((cl-typep def 'transient-information) nil)
-          ((listp def) (mapcan #'flatten def))
-          ((cl-typep def 'transient-group)
-           (mapcan #'flatten (oref def suffixes)))
-          ((cl-typep def 'transient-suffix)
-           (list def)))))
+  (nreverse
+   (named-let flatten ((def layout))
+     (cond ((stringp def) nil)
+           ((cl-typep def 'transient-information) nil)
+           ((listp def) (mapcan #'flatten def))
+           ((cl-typep def 'transient-group)
+            (mapcan #'flatten (oref def suffixes)))
+           ((cl-typep def 'transient-suffix)
+            (list def))))))
 
 (defun transient--init-child (levels spec parent)
   (cl-etypecase spec
@@ -2723,8 +2722,7 @@ value.  Otherwise return CHILDREN as is.")
     (cond ((not (cl-typep obj 'transient-information))
            (transient--init-suffix-key obj)
            (transient-init-scope obj)
-           (transient-init-value obj)
-           (push obj transient--suffixes)))
+           (transient-init-value obj)))
     (list obj)))
 
 (cl-defmethod transient--init-suffix-key ((obj transient-suffix))
@@ -5315,7 +5313,8 @@ Select the help window, and make the help buffer current and return it."
           (cons (lambda () (setq buffer (current-buffer)))
                 temp-buffer-window-setup-hook)))
     (describe-function fn)
-    (set-buffer buffer)))
+    (when buffer
+      (set-buffer buffer))))
 
 (defun transient--show-manual (manual)
   (info manual))
