@@ -112,3 +112,4 @@ const
 constexpr
 typedef
 alignof
+errno
