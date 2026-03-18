@@ -1077,12 +1077,12 @@
       (:authors ("Ihor Radchenko" . "yantar92@posteo.net"))
       (:commit . "05d669e123f411c9582f99a9a6182efa43d01a6b"))])
  (emacs-lisp-intro-es
-  . [(1 0) nil "ELisp intro manual in Spanish" tar
+  . [(1 0 1) nil "ELisp intro manual in Spanish" tar
      ((:keywords "manual" "translation" "spanish" "español")
       (:maintainer "David Arroyo Menéndez" . "davidam@gmail.com")
       (:authors ("David Arroyo Menéndez" . "davidam@gmail.com"))
       (:url . "https://elpa.gnu.org/packages/emacs-lisp-intro-es.html")
-      (:commit . "5543355583f2f1a6327d5e112b370d4d628c9499"))])
+      (:commit . "a2c2c167837cef08a1b8f86f5eb9864f93699300"))])
  (embark
   . [(1 1) ((emacs (27 1)) (compat (29 1 4 0)))
      "Conveniently act on minibuffer completions" tar
@@ -1320,12 +1320,12 @@
       (:authors ("Yuan Fu" . "casouri@gmail.com"))
       (:commit . "d7c243ac3be2a67986f53f3dc31ba1426e82b771"))])
  (futur
-  . [(1 2) nil "Future/promise-based async library" tar
+  . [(1 3) nil "Future/promise-based async library" tar
      ((:keywords "concurrency" "async" "promises" "futures")
       (:maintainer "Stefan Monnier" . "monnier@iro.umontreal.ca")
       (:authors ("Stefan Monnier" . "monnier@iro.umontreal.ca"))
       (:url . "https://elpa.gnu.org/packages/futur.html")
-      (:commit . "576376047c87c4ffd1c653a8a0f75dafc181b4d1"))])
+      (:commit . "0ad88655f83dd7ebd41883951b5d05cfd811fed8"))])
  (gcmh
   . [(0 2 1) ((emacs (24))) "the Garbage Collector Magic Hack" tar
      ((:url . "https://gitlab.com/koral/gcmh") (:keywords "internal")
@@ -1384,15 +1384,13 @@
       (:url . "https://elpa.gnu.org/packages/gnorb.html")
       (:commit . "409e4fc2c83f8406f362028dbcc3a1fc21182819"))])
  (gnosis
-  . [(0 8 0)
-     ((emacs (27 2)) (emacsql (4 1 0)) (compat (29 1 4 2))
-      (transient (0 7 2)) (org-gnosis (0 2 0)))
-     "Knowledge System" tar
+  . [(0 9 0) ((emacs (29 1)) (compat (29 1 4 2))) "Knowledge System"
+     tar
      ((:url . "https://thanosapollo.org/projects/gnosis")
       (:keywords "extensions")
       (:maintainer "Thanos Apollo" . "public@thanosapollo.org")
       (:authors ("Thanos Apollo" . "public@thanosapollo.org"))
-      (:commit . "0d0a43642dc122a1e8e4b27c1862f52303b856e1"))])
+      (:commit . "27d7370e9006c8cadd186df3e253f8fe33f6081e"))])
  (gnu-elpa
   . [(1 1) nil "Advertize GNU ELPA packages" tar
      ((:maintainer "Stefan Monnier" . "monnier@iro.umontreal.ca")
@@ -1955,7 +1953,7 @@
       (:authors ("Ian Martins" . "ianxm@jhu.edu"))
       (:commit . "da128406fca3eeb66358d479082cd78f2fdeabb4"))])
  (matlab-mode
-  . [(8 1 1) ((emacs (27 2))) "Major mode for MATLAB(R) dot-m files"
+  . [(8 1 2) ((emacs (27 2))) "Major mode for MATLAB(R) dot-m files"
      tar
      ((:url . "https://github.com/mathworks/Emacs-MATLAB-Mode")
       (:keywords "matlab(r)")
@@ -1964,7 +1962,7 @@
 		   ("John Ciolfi" . "john.ciolfi.32@gmail.com"))
       (:authors ("Matt Wette" . "mwette@alumni.caltech.edu")
 		("Eric M. Ludlam" . "eludlam@mathworks.com"))
-      (:commit . "e6923314f3ffb291e45ece6b1ce08a0961e31adb"))])
+      (:commit . "f21e88655823e25c6f72c38c6e508a5dada17088"))])
  (mct
   . [(1 1 0) ((emacs (29 1))) "Minibuffer Confines Transcended" tar
      ((:url . "https://github.com/protesilaos/mct")
