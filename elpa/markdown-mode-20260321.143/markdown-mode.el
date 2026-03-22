@@ -6,8 +6,8 @@
 ;; Author: Jason R. Blevins <jblevins@xbeta.org>
 ;; Maintainer: Jason R. Blevins <jblevins@xbeta.org>
 ;; Created: May 24, 2007
-;; Package-Version: 20260315.350
-;; Package-Revision: 877d943cc344
+;; Package-Version: 20260321.143
+;; Package-Revision: 182640f79c3e
 ;; Package-Requires: ((emacs "28.1"))
 ;; Keywords: Markdown, GitHub Flavored Markdown, itex
 ;; URL: https://jblevins.org/projects/markdown-mode/
@@ -9777,7 +9777,7 @@ This function assumes point is on a table."
        (setq fmt (car fmtspec) fmtspec (cdr fmtspec))
        (setq width (car widths) widths (cdr widths))
        (if (equal fmt 'c)
-           (setq cell (concat (make-string (/ (- width (length cell)) 2) ?\s) cell)))
+           (setq cell (concat (make-string (/ (- width (markdown--string-width cell)) 2) ?\s) cell)))
        (unless (equal fmt 'r) (setq width (- width)))
        (format (format " %%%ds " width) cell))
      cells "|")))

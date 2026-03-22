@@ -3292,7 +3292,43 @@ not support these arguments.)
      initialized.
 
 ‘D t’ (‘magit-diff-toggle-refine-hunk’)
-     This command toggles hunk refinement on or off.
+     This command toggles hunk refinement on or off, or switches the
+     refinement method.
+
+     If hunk refinement is currently on, then turn off hunk refinement.
+     If hunk refinement is off, then turn on immediate hunk refinement.
+
+     With a prefix argument, an alternative refinement method comes into
+     play.  When using that method, mode hunks are not refined
+     immediately, instead each hunk is refined once it is selected, and
+     then stays refined until the next refresh of the buffer.  If hunk
+     refinement is currently on, then toggle between refining all hunks
+     up front or only once they are selected.  If hunk refinement is
+     off, then turn on hunk refinement, using the eventual refinement
+     method.
+
+     Customize option ‘magit-diff-refine-hunk’ to change the default
+     method.
+
+‘D T’ (‘magit-diff-toggle-fontify-hunk’)
+     This command toggles hunk fontification on or off, or switches the
+     fontification method.
+
+     If hunk fontification is currently on, then turn off hunk
+     fontification.  If hunk fontification is off, then turn on
+     immediate hunk fontification.
+
+     With a prefix argument, an alternative fontification method comes
+     into play.  When using that method, mode hunks are not refined
+     immediately, instead each hunk is refined once it is selected, and
+     then stays refined until the next refresh of the buffer.  If hunk
+     fontification is currently on, then toggle between refining all
+     hunks up front or only once they are selected.  If hunk
+     fontification is off, then turn on fontification, using the
+     eventual fontification method.
+
+     Customize option ‘magit-diff-fontify-hunk’ to change the default
+     method.
 
 ‘D r’ (‘magit-diff-switch-range-type’)
      This command converts the diff range type from "revA..revB" to
@@ -3414,6 +3450,39 @@ they are available here too.
  -- User Option: magit-diff-refine-ignore-whitespace
      Whether to ignore whitespace changes in word-granularity
      differences.
+
+ -- User Option: magit-diff-fontify-hunk
+     Whether to apply syntax highlighting to diff hunks.
+
+        • ‘nil’ Never fontify diff hunks.
+        • ‘all’ Fontify all diff hunks.
+        • ‘t’ Fontify each hunk once it becomes the current section.
+          Keep the fontification when another section is selected.
+          Refreshing the buffer removes all fontification.  This variant
+          is only provided for performance reasons.
+
+     If this is enabled, then ‘magit-diff-specify-hunk-foreground’
+     should be disabled.  Also consider enabling
+     ‘magit-diff-use-indicator-faces’.  Emacs has to be restarted, after
+     changing the value of the former.
+
+     This is considered experimental and is disabled by default, because
+     the fontification is done synchronously, and that can lead to a
+     noticable delay.  The plan is to make it asynchronous, probably
+     with the help of the new ‘futur’ package, which itself still under
+     heavy development.
+
+ -- User Option: magit-diff-specify-hunk-foreground
+     Whether to specify foreground colors for hunk faces.
+
+     Setting this only has an effect if done before Magit is loaded.
+
+ -- User Option: magit-diff-use-indicator-faces
+     Whether to use separate faces for diff side indicators.
+
+     If non-‘nil’, use, for example, ‘magit-diff-removed-indicator’ for
+     the plus sign at the beginning of a removed line.  If ‘nil’, use
+     the same face as for the rest of the line.
 
  -- User Option: magit-diff-adjust-tab-width
      Whether to adjust the width of tabs in diffs.
@@ -9461,10 +9530,10 @@ Appendix C Keystroke Index
 * ! S:                                   Running Git.         (line 110)
 * $:                                     Running Git.         (line  20)
 * +:                                     Logging.             (line 160)
-* + <1>:                                 Diffing.             (line 154)
+* + <1>:                                 Diffing.             (line 190)
 * -:                                     Logging.             (line 163)
-* - <1>:                                 Diffing.             (line 151)
-* 0:                                     Diffing.             (line 157)
+* - <1>:                                 Diffing.             (line 187)
+* 0:                                     Diffing.             (line 193)
 * 1:                                     Sections.            (line 173)
 * 2:                                     Sections.            (line 173)
 * 3:                                     Sections.            (line 173)
@@ -9538,15 +9607,15 @@ Appendix C Keystroke Index
 * C-<tab>:                               Sections.            (line 148)
 * C-c C-a:                               Committing.          (line 415)
 * C-c C-b:                               Logging.             (line 116)
-* C-c C-b <1>:                           Diffing.             (line 173)
+* C-c C-b <1>:                           Diffing.             (line 209)
 * C-c C-c:                               Logging.             (line 297)
 * C-c C-c <1>:                           Committing.          (line 303)
 * C-c C-c <2>:                           Rebasing.            (line 123)
-* C-c C-d:                               Diffing.             (line 164)
+* C-c C-d:                               Diffing.             (line 200)
 * C-c C-d <1>:                           Committing.          (line 339)
-* C-c C-e:                               Diffing.             (line 199)
+* C-c C-e:                               Diffing.             (line 235)
 * C-c C-f:                               Logging.             (line 119)
-* C-c C-f <1>:                           Diffing.             (line 176)
+* C-c C-f <1>:                           Diffing.             (line 212)
 * C-c C-i:                               Committing.          (line 412)
 * C-c C-k:                               Logging.             (line 302)
 * C-c C-k <1>:                           Committing.          (line 307)
@@ -9556,7 +9625,7 @@ Appendix C Keystroke Index
 * C-c C-p:                               Committing.          (line 430)
 * C-c C-r:                               Committing.          (line 418)
 * C-c C-s:                               Committing.          (line 421)
-* C-c C-t:                               Diffing.             (line 190)
+* C-c C-t:                               Diffing.             (line 226)
 * C-c C-t <1>:                           Committing.          (line 424)
 * C-c C-w:                               Committing.          (line 347)
 * C-c f:                                 Commands for Buffers Visiting Files.
@@ -9699,21 +9768,22 @@ Appendix C Keystroke Index
 * D:                                     Diffing.             (line 105)
 * d c:                                   Diffing.             (line  82)
 * d d:                                   Diffing.             (line  27)
-* D f:                                   Diffing.             (line 134)
-* D F:                                   Diffing.             (line 138)
+* D f:                                   Diffing.             (line 170)
+* D F:                                   Diffing.             (line 174)
 * D g:                                   Diffing.             (line 110)
 * d p:                                   Diffing.             (line  75)
 * d r:                                   Diffing.             (line  49)
-* D r:                                   Diffing.             (line 130)
+* D r:                                   Diffing.             (line 166)
 * d s:                                   Diffing.             (line  67)
 * D s:                                   Diffing.             (line 114)
 * d t:                                   Diffing.             (line  86)
 * D t:                                   Diffing.             (line 127)
+* D T:                                   Diffing.             (line 146)
 * d u:                                   Diffing.             (line  72)
 * d w:                                   Diffing.             (line  62)
 * D w:                                   Diffing.             (line 120)
 * DEL:                                   Logging.             (line 146)
-* DEL <1>:                               Diffing.             (line 231)
+* DEL <1>:                               Diffing.             (line 267)
 * DEL <2>:                               Blaming.             (line 103)
 * DEL <3>:                               Rebasing.            (line 141)
 * e:                                     Ediffing.            (line  10)
@@ -9751,7 +9821,7 @@ Appendix C Keystroke Index
 * H:                                     Sections.            (line 350)
 * I:                                     Creating Repository. (line   7)
 * j:                                     Logging.             (line 127)
-* j <1>:                                 Diffing.             (line 218)
+* j <1>:                                 Diffing.             (line 254)
 * k:                                     Running Git.         (line  27)
 * k <1>:                                 Applying.            (line  40)
 * k <2>:                                 Rebasing.            (line 196)
@@ -9886,7 +9956,7 @@ Appendix C Keystroke Index
 * S <1>:                                 Rebasing.            (line 170)
 * S-<tab>:                               Sections.            (line 167)
 * SPC:                                   Logging.             (line 137)
-* SPC <1>:                               Diffing.             (line 228)
+* SPC <1>:                               Diffing.             (line 264)
 * SPC <2>:                               Blaming.             (line  94)
 * SPC <3>:                               Rebasing.            (line 135)
 * t:                                     Rebasing.            (line 238)
@@ -10159,12 +10229,12 @@ Appendix D Function and Command Index
                                                               (line  52)
 * magit-diff-buffer-file <1>:            Commands for Buffers Visiting Files.
                                                               (line 101)
-* magit-diff-default-context:            Diffing.             (line 157)
+* magit-diff-default-context:            Diffing.             (line 193)
 * magit-diff-dwim:                       Diffing.             (line  27)
-* magit-diff-edit-hunk-commit:           Diffing.             (line 199)
-* magit-diff-flip-revs:                  Diffing.             (line 134)
-* magit-diff-less-context:               Diffing.             (line 151)
-* magit-diff-more-context:               Diffing.             (line 154)
+* magit-diff-edit-hunk-commit:           Diffing.             (line 235)
+* magit-diff-flip-revs:                  Diffing.             (line 170)
+* magit-diff-less-context:               Diffing.             (line 187)
+* magit-diff-more-context:               Diffing.             (line 190)
 * magit-diff-paths:                      Diffing.             (line  75)
 * magit-diff-range:                      Diffing.             (line  49)
 * magit-diff-refresh:                    Diffing.             (line 105)
@@ -10177,10 +10247,11 @@ Appendix D Function and Command Index
 * magit-diff-show-or-scroll-up:          Logging.             (line 137)
 * magit-diff-show-or-scroll-up <1>:      Blaming.             (line  94)
 * magit-diff-staged:                     Diffing.             (line  67)
-* magit-diff-switch-range-type:          Diffing.             (line 130)
-* magit-diff-toggle-file-filter:         Diffing.             (line 138)
+* magit-diff-switch-range-type:          Diffing.             (line 166)
+* magit-diff-toggle-file-filter:         Diffing.             (line 174)
+* magit-diff-toggle-fontify-hunk:        Diffing.             (line 146)
 * magit-diff-toggle-refine-hunk:         Diffing.             (line 127)
-* magit-diff-trace-definition:           Diffing.             (line 190)
+* magit-diff-trace-definition:           Diffing.             (line 226)
 * magit-diff-type:                       Section Plumbing.    (line 206)
 * magit-diff-unstaged:                   Diffing.             (line  72)
 * magit-diff-visit-file:                 Visiting Files and Blobs.
@@ -10195,7 +10266,7 @@ Appendix D Function and Command Index
                                                               (line  87)
 * magit-diff-visit-worktree-file-other-window: Visiting Files and Blobs.
                                                               (line  86)
-* magit-diff-while-committing:           Diffing.             (line 164)
+* magit-diff-while-committing:           Diffing.             (line 200)
 * magit-diff-while-committing <1>:       Committing.          (line 339)
 * magit-diff-working-tree:               Diffing.             (line  62)
 * magit-disable-section-inserter:        Per-Repository Configuration.
@@ -10300,9 +10371,9 @@ Appendix D Function and Command Index
 * magit-git-true:                        Calling Git.         (line  48)
 * magit-git-wash:                        Calling Git.         (line 160)
 * magit-go-backward:                     Logging.             (line 116)
-* magit-go-backward <1>:                 Diffing.             (line 173)
+* magit-go-backward <1>:                 Diffing.             (line 209)
 * magit-go-forward:                      Logging.             (line 119)
-* magit-go-forward <1>:                  Diffing.             (line 176)
+* magit-go-forward <1>:                  Diffing.             (line 212)
 * magit-hunk-set-window-start:           Sections.            (line  69)
 * magit-init:                            Creating Repository. (line   7)
 * magit-insert-am-sequence:              Status Buffer.       (line 128)
@@ -10352,7 +10423,7 @@ Appendix D Function and Command Index
 * magit-insert-untracked-files:          Status Buffer.       (line 187)
 * magit-insert-upstream-branch-header:   Status Buffer.       (line 315)
 * magit-insert-user-header:              Status Buffer.       (line 339)
-* magit-jump-to-diffstat-or-diff:        Diffing.             (line 218)
+* magit-jump-to-diffstat-or-diff:        Diffing.             (line 254)
 * magit-list-repositories:               Repository List.     (line   6)
 * magit-list-submodules:                 Submodules.          (line  18)
 * magit-list-submodules <1>:             Submodules.          (line  97)
@@ -10669,8 +10740,8 @@ Appendix D Function and Command Index
 * magit-worktree-delete:                 Worktree.            (line  22)
 * magit-worktree-move:                   Worktree.            (line  19)
 * magit-worktree-status:                 Worktree.            (line  26)
-* scroll-down:                           Diffing.             (line 231)
-* scroll-up:                             Diffing.             (line 228)
+* scroll-down:                           Diffing.             (line 267)
+* scroll-up:                             Diffing.             (line 264)
 * with-editor-cancel:                    Committing.          (line 307)
 * with-editor-cancel <1>:                Rebasing.            (line 127)
 * with-editor-debug:                     Debugging Tools.     (line  85)
@@ -10744,19 +10815,22 @@ Appendix E Variable Index
 * magit-completing-read-function:        Completion Confirmation and the Selection.
                                                               (line 340)
 * magit-define-global-key-bindings:      Essential Settings.  (line 239)
-* magit-diff-adjust-tab-width:           Diffing.             (line 250)
+* magit-diff-adjust-tab-width:           Diffing.             (line 319)
 * magit-diff-buffer-file-locked:         Commands for Buffers Visiting Files.
                                                               (line 104)
-* magit-diff-extra-stat-arguments:       Diffing.             (line 345)
-* magit-diff-hide-trailing-cr-characters: Diffing.            (line 310)
-* magit-diff-highlight-hunk-region-functions: Diffing.        (line 313)
-* magit-diff-highlight-indentation:      Diffing.             (line 296)
-* magit-diff-highlight-trailing:         Diffing.             (line 292)
-* magit-diff-paint-whitespace:           Diffing.             (line 271)
-* magit-diff-paint-whitespace-lines:     Diffing.             (line 285)
-* magit-diff-refine-hunk:                Diffing.             (line 236)
-* magit-diff-refine-ignore-whitespace:   Diffing.             (line 246)
-* magit-diff-unmarked-lines-keep-foreground: Diffing.         (line 338)
+* magit-diff-extra-stat-arguments:       Diffing.             (line 414)
+* magit-diff-fontify-hunk:               Diffing.             (line 286)
+* magit-diff-hide-trailing-cr-characters: Diffing.            (line 379)
+* magit-diff-highlight-hunk-region-functions: Diffing.        (line 382)
+* magit-diff-highlight-indentation:      Diffing.             (line 365)
+* magit-diff-highlight-trailing:         Diffing.             (line 361)
+* magit-diff-paint-whitespace:           Diffing.             (line 340)
+* magit-diff-paint-whitespace-lines:     Diffing.             (line 354)
+* magit-diff-refine-hunk:                Diffing.             (line 272)
+* magit-diff-refine-ignore-whitespace:   Diffing.             (line 282)
+* magit-diff-specify-hunk-foreground:    Diffing.             (line 307)
+* magit-diff-unmarked-lines-keep-foreground: Diffing.         (line 407)
+* magit-diff-use-indicator-faces:        Diffing.             (line 312)
 * magit-diff-visit-prefer-worktree:      Visiting Files and Blobs.
                                                               (line  92)
 * magit-diff-visit-previous-blob:        Visiting Files and Blobs.
@@ -10771,7 +10845,7 @@ Appendix E Variable Index
 * magit-ediff-dwim-show-on-hunks:        Ediffing.            (line 111)
 * magit-ediff-quit-hook:                 Ediffing.            (line 124)
 * magit-ediff-show-stash-with-index:     Ediffing.            (line 118)
-* magit-format-file-function:            Diffing.             (line 355)
+* magit-format-file-function:            Diffing.             (line 424)
 * magit-generate-buffer-name-function:   Modes and Buffers.   (line 131)
 * magit-git-debug:                       Calling Git.         (line  95)
 * magit-git-executable:                  Running Git.         (line 162)
@@ -10790,7 +10864,7 @@ Appendix E Variable Index
 * magit-log-show-color-graph-limit:      Logging.             (line 174)
 * magit-log-show-refname-after-summary:  Logging.             (line 170)
 * magit-log-show-signatures-limit:       Logging.             (line 180)
-* magit-log-trace-definition-function:   Diffing.             (line 192)
+* magit-log-trace-definition-function:   Diffing.             (line 228)
 * magit-module-sections-hook:            Status Buffer.       (line 358)
 * magit-module-sections-nested:          Status Buffer.       (line 361)
 * magit-no-confirm:                      Completion Confirmation and the Selection.
@@ -10824,10 +10898,10 @@ Appendix E Variable Index
 * magit-remote-git-executable:           Running Git.         (line 168)
 * magit-repolist-columns:                Repository List.     (line  12)
 * magit-repository-directories:          Status Buffer.       (line  57)
-* magit-revision-filter-files-on-follow: Diffing.             (line 415)
-* magit-revision-insert-related-refs:    Diffing.             (line 366)
-* magit-revision-show-gravatars:         Diffing.             (line 375)
-* magit-revision-use-hash-sections:      Diffing.             (line 391)
+* magit-revision-filter-files-on-follow: Diffing.             (line 484)
+* magit-revision-insert-related-refs:    Diffing.             (line 435)
+* magit-revision-show-gravatars:         Diffing.             (line 444)
+* magit-revision-use-hash-sections:      Diffing.             (line 460)
 * magit-root-section:                    Section Plumbing.    (line 199)
 * magit-save-repository-buffers:         Modes and Buffers.   (line 314)
 * magit-section-cache-visibility:        Sections.            (line 229)
@@ -10922,127 +10996,127 @@ Ref: Reflog135168
 Ref: Cherries136721
 Node: Diffing138499
 Ref: Refreshing Diffs142450
-Ref: Commands Available in Diffs146044
-Ref: Diff Options148441
-Ref: Revision Buffer154449
-Node: Ediffing157719
-Node: References Buffer163775
-Ref: References Sections174358
-Node: Bisecting175143
-Node: Visiting Files and Blobs177454
-Ref: General-Purpose Visit Commands177896
-Ref: Visiting Files and Blobs from a Diff178714
-Node: Blaming183968
-Node: Manipulating190956
-Node: Creating Repository191298
-Node: Cloning Repository191835
-Node: Staging and Unstaging198276
-Ref: Staging from File-Visiting Buffers202206
-Node: Applying203223
-Node: Committing205296
-Ref: Initiating a Commit205923
-Ref: Creating a new commit206235
-Ref: Editing the last commit206345
-Ref: Editing any reachable commit208324
-Ref: Editing any reachable commit and rebasing immediately212737
-Ref: Options used by commit commands214385
-Ref: Used by all or most commit commands214457
-Ref: Used by all squash and fixup commands216688
-Ref: Used by specific commit commands217242
-Ref: Editing Commit Messages217566
-Ref: Using the Revision Stack220120
-Ref: Commit Pseudo Headers223082
-Ref: Commit Mode and Hooks224234
-Ref: Commit Message Conventions226947
-Node: Branching228837
-Ref: The Two Remotes228958
-Ref: Branch Commands231527
-Ref: Branch Git Variables244277
-Ref: Auxiliary Branch Commands249524
-Node: Merging250541
-Node: Resolving Conflicts254896
-Node: Rebasing260270
-Ref: Editing Rebase Sequences265230
-Ref: Information About In-Progress Rebase270463
-Ref: Rebasing-Footnote-1279463
-Node: Cherry Picking280059
-Ref: Reverting284369
-Node: Resetting285729
-Node: Stashing287555
-Node: Transferring293802
-Node: Remotes294024
-Ref: Remote Commands294121
-Ref: Remote Git Variables298073
-Node: Fetching299257
-Node: Pulling301740
-Node: Pushing302766
-Node: Plain Patches307057
-Node: Maildir Patches308528
-Node: Miscellaneous310007
-Node: Tagging310353
-Node: Notes312246
-Node: Submodules314581
-Ref: Listing Submodules314742
-Ref: Submodule Transient316809
-Node: Subtree319168
-Node: Worktree321099
-Node: Sparse checkouts322414
-Node: Bundle325190
-Node: Common Commands325565
-Node: Wip Modes328193
-Ref: Wip Graph332771
-Node: Commands for Buffers Visiting Files335210
-Node: Minor Mode for Buffers Visiting Blobs343527
-Node: Customizing344690
-Node: Per-Repository Configuration346286
-Node: Essential Settings348540
-Ref: Safety348829
-Ref: Performance350510
-Ref: Log Performance353303
-Ref: Diff Performance354608
-Ref: Refs Buffer Performance355949
-Ref: Committing Performance356524
-Ref: Microsoft Windows Performance357506
-Ref: MacOS Performance358595
-Ref: Global Bindings359480
-Ref: Essential Settings-Footnote-1361655
-Node: Plumbing361737
-Node: Calling Git362566
-Ref: Getting a Value from Git364025
-Ref: Calling Git for Effect367657
-Node: Section Plumbing373602
-Ref: Creating Sections373754
-Ref: Section Selection377572
-Ref: Matching Sections379271
-Node: Refreshing Buffers385185
-Node: Conventions388329
-Ref: Theming Faces388493
-Node: FAQ396538
-Node: FAQ - How to ...?396976
-Ref: How to pronounce Magit?397109
-Ref: How to show git's output?397803
-Ref: How to install the gitman info manual?398428
-Ref: How to show diffs for gpg-encrypted files?399239
-Ref: How does branching and pushing work?399648
-Ref: Should I disable VC?399812
-Node: FAQ - Issues and Errors400297
-Ref: Magit is slow400442
-Ref: I changed several thousand files at once and now Magit is unusable400588
-Ref: I am having problems committing401127
-Ref: I am using MS Windows and cannot push with Magit401392
-Ref: I am using macOS and SOMETHING works in shell but not in Magit401792
-Ref: Expanding a file to show the diff causes it to disappear402383
-Ref: Point is wrong in the COMMIT_EDITMSG buffer402733
-Ref: The mode-line information isn't always up-to-date403557
-Ref: A branch and tag sharing the same name breaks SOMETHING404396
-Ref: My Git hooks work on the command-line but not inside Magit405044
-Ref: git-commit-mode isn't used when committing from the command-line405636
-Ref: Point ends up inside invisible text when jumping to a file-visiting buffer407634
-Ref: I am no longer able to save popup defaults408226
-Node: Debugging Tools409021
-Node: Keystroke Index412960
-Node: Function and Command Index451056
-Node: Variable Index502628
+Ref: Commands Available in Diffs147734
+Ref: Diff Options150131
+Ref: Revision Buffer157643
+Node: Ediffing160913
+Node: References Buffer166969
+Ref: References Sections177552
+Node: Bisecting178337
+Node: Visiting Files and Blobs180648
+Ref: General-Purpose Visit Commands181090
+Ref: Visiting Files and Blobs from a Diff181908
+Node: Blaming187162
+Node: Manipulating194150
+Node: Creating Repository194492
+Node: Cloning Repository195029
+Node: Staging and Unstaging201470
+Ref: Staging from File-Visiting Buffers205400
+Node: Applying206417
+Node: Committing208490
+Ref: Initiating a Commit209117
+Ref: Creating a new commit209429
+Ref: Editing the last commit209539
+Ref: Editing any reachable commit211518
+Ref: Editing any reachable commit and rebasing immediately215931
+Ref: Options used by commit commands217579
+Ref: Used by all or most commit commands217651
+Ref: Used by all squash and fixup commands219882
+Ref: Used by specific commit commands220436
+Ref: Editing Commit Messages220760
+Ref: Using the Revision Stack223314
+Ref: Commit Pseudo Headers226276
+Ref: Commit Mode and Hooks227428
+Ref: Commit Message Conventions230141
+Node: Branching232031
+Ref: The Two Remotes232152
+Ref: Branch Commands234721
+Ref: Branch Git Variables247471
+Ref: Auxiliary Branch Commands252718
+Node: Merging253735
+Node: Resolving Conflicts258090
+Node: Rebasing263464
+Ref: Editing Rebase Sequences268424
+Ref: Information About In-Progress Rebase273657
+Ref: Rebasing-Footnote-1282657
+Node: Cherry Picking283253
+Ref: Reverting287563
+Node: Resetting288923
+Node: Stashing290749
+Node: Transferring296996
+Node: Remotes297218
+Ref: Remote Commands297315
+Ref: Remote Git Variables301267
+Node: Fetching302451
+Node: Pulling304934
+Node: Pushing305960
+Node: Plain Patches310251
+Node: Maildir Patches311722
+Node: Miscellaneous313201
+Node: Tagging313547
+Node: Notes315440
+Node: Submodules317775
+Ref: Listing Submodules317936
+Ref: Submodule Transient320003
+Node: Subtree322362
+Node: Worktree324293
+Node: Sparse checkouts325608
+Node: Bundle328384
+Node: Common Commands328759
+Node: Wip Modes331387
+Ref: Wip Graph335965
+Node: Commands for Buffers Visiting Files338404
+Node: Minor Mode for Buffers Visiting Blobs346721
+Node: Customizing347884
+Node: Per-Repository Configuration349480
+Node: Essential Settings351734
+Ref: Safety352023
+Ref: Performance353704
+Ref: Log Performance356497
+Ref: Diff Performance357802
+Ref: Refs Buffer Performance359143
+Ref: Committing Performance359718
+Ref: Microsoft Windows Performance360700
+Ref: MacOS Performance361789
+Ref: Global Bindings362674
+Ref: Essential Settings-Footnote-1364849
+Node: Plumbing364931
+Node: Calling Git365760
+Ref: Getting a Value from Git367219
+Ref: Calling Git for Effect370851
+Node: Section Plumbing376796
+Ref: Creating Sections376948
+Ref: Section Selection380766
+Ref: Matching Sections382465
+Node: Refreshing Buffers388379
+Node: Conventions391523
+Ref: Theming Faces391687
+Node: FAQ399732
+Node: FAQ - How to ...?400170
+Ref: How to pronounce Magit?400303
+Ref: How to show git's output?400997
+Ref: How to install the gitman info manual?401622
+Ref: How to show diffs for gpg-encrypted files?402433
+Ref: How does branching and pushing work?402842
+Ref: Should I disable VC?403006
+Node: FAQ - Issues and Errors403491
+Ref: Magit is slow403636
+Ref: I changed several thousand files at once and now Magit is unusable403782
+Ref: I am having problems committing404321
+Ref: I am using MS Windows and cannot push with Magit404586
+Ref: I am using macOS and SOMETHING works in shell but not in Magit404986
+Ref: Expanding a file to show the diff causes it to disappear405577
+Ref: Point is wrong in the COMMIT_EDITMSG buffer405927
+Ref: The mode-line information isn't always up-to-date406751
+Ref: A branch and tag sharing the same name breaks SOMETHING407590
+Ref: My Git hooks work on the command-line but not inside Magit408238
+Ref: git-commit-mode isn't used when committing from the command-line408830
+Ref: Point ends up inside invisible text when jumping to a file-visiting buffer410828
+Ref: I am no longer able to save popup defaults411420
+Node: Debugging Tools412215
+Node: Keystroke Index416154
+Node: Function and Command Index454323
+Node: Variable Index505968
 
 End Tag Table
 

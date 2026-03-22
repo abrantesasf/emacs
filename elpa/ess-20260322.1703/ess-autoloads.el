@@ -79,16 +79,6 @@ This handles Tramp when working on a remote.
 (register-definition-prefixes "ess-inf" '("ess-" "inferior-ess" "update-ess-process-name-list"))
 
 
-;;; Generated autoloads from ess-jags-d.el
-
-(autoload 'ess-jags-mode "ess-jags-d" "\
-Major mode for JAGS.
-
-(fn)" t)
-(add-to-list 'auto-mode-alist '("\\.[Jj][Aa][Gg]\\'" . ess-jags-mode))
-(register-definition-prefixes "ess-jags-d" '("ess-jags-"))
-
-
 ;;; Generated autoloads from ess-julia.el
 
 (autoload 'ess-julia-mode "ess-julia" "\

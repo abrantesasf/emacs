@@ -76,7 +76,9 @@
                           (oref obj scope)))
         (arg (if (oref obj global) "--global" "--local")))
     (oset obj variable variable)
-    (oset obj value (if (magit-get-boolean arg variable) "true" "false"))))
+    (oset obj value
+          (and (zerop (magit-process-git t "config" "--bool" arg variable))
+               (buffer-substring (point-min) (1- (point-max)))))))
 
 ;;;; Read
 
@@ -193,19 +195,15 @@
 (defun magit--git-variable-list-choices (obj)
   (let* ((variable (oref obj variable))
          (choices  (oref obj choices))
-         (globalp  (oref obj global))
-         (value    nil)
-         (global   (magit-git-string "config" "--global" variable))
+         (value    (oref obj value))
+         (global   (and (not (oref obj global))
+                        (magit-git-string "config" "--global" variable)))
          (defaultp (oref obj default))
          (default  (if (functionp defaultp) (funcall defaultp obj) defaultp))
          (fallback (oref obj fallback))
          (fallback (and fallback
                         (and$ (magit-get fallback)
                               (concat fallback ":" $)))))
-    (if (not globalp)
-        (setq value (magit-git-string "config" "--local"  variable))
-      (setq value global)
-      (setq global nil))
     (when (functionp choices)
       (setq choices (funcall choices)))
     (cons (cond (global
