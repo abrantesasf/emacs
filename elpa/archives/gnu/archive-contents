@@ -47,13 +47,13 @@
       (:authors ("Stephen Leake" . "stephen_leake@member.fsf.org"))
       (:commit . "b86a173c1488989fd06f0b612e7b7acee9fda070"))])
  (adaptive-wrap
-  . [(0 8) nil "Smart line-wrapping with wrap-prefix" tar
+  . [(0 9) ((emacs (24 1))) "Smart line-wrapping with wrap-prefix" tar
      ((:maintainer ("Stephen Berman" . "stephen.berman@gmx.net")
 		   ("Stefan Monnier" . "monnier@iro.umontreal.ca"))
       (:authors ("Stephen Berman" . "stephen.berman@gmx.net")
 		("Stefan Monnier" . "monnier@iro.umontreal.ca"))
       (:url . "https://elpa.gnu.org/packages/adaptive-wrap.html")
-      (:commit . "026c35f59174febab2bcdb3c50fb8344c248671c"))])
+      (:commit . "e929b38c12f17aa6f8d6270326301d61fbb09cab"))])
  (adjust-parens
   . [(3 2) ((emacs (24 3)))
      "Indent and dedent Lisp code, automatically adjust close parens"
@@ -914,13 +914,13 @@
       (:url . "https://elpa.gnu.org/packages/docbook.html")
       (:commit . "a59f87c0dc04bcfcf9f55a124658c2e7a585dbd2"))])
  (doric-themes
-  . [(1 0 0) ((emacs (29 1)))
+  . [(1 1 0) ((emacs (29 1)))
      "Highly legible minimalist themes with precise typography" tar
      ((:url . "https://github.com/protesilaos/doric-themes")
       (:keywords "faces" "theme" "accessibility")
       (:maintainer "Protesilaos Stavrou" . "info@protesilaos.com")
       (:authors ("Protesilaos Stavrou" . "info@protesilaos.com"))
-      (:commit . "03c73b9250195e82c0c37055b7767ea39b8016ff"))])
+      (:commit . "09612d87dedf8cf2083e557f6a6536ba9320afc8"))])
  (drepl
   . [(0 4) ((emacs (29 1)) (comint-mime (0 7)))
      "REPL protocol for the dumb terminal" tar
@@ -1384,13 +1384,13 @@
       (:url . "https://elpa.gnu.org/packages/gnorb.html")
       (:commit . "409e4fc2c83f8406f362028dbcc3a1fc21182819"))])
  (gnosis
-  . [(0 9 0) ((emacs (29 1)) (compat (29 1 4 2))) "Knowledge System"
+  . [(0 10 1) ((emacs (29 1)) (compat (29 1 4 2))) "Knowledge System"
      tar
      ((:url . "https://thanosapollo.org/projects/gnosis")
       (:keywords "extensions")
       (:maintainer "Thanos Apollo" . "public@thanosapollo.org")
       (:authors ("Thanos Apollo" . "public@thanosapollo.org"))
-      (:commit . "27d7370e9006c8cadd186df3e253f8fe33f6081e"))])
+      (:commit . "9ac7fc3e23100f22276b94ed6876acc2406c8d35"))])
  (gnu-elpa
   . [(1 1) nil "Advertize GNU ELPA packages" tar
      ((:maintainer "Stefan Monnier" . "monnier@iro.umontreal.ca")
@@ -1451,7 +1451,7 @@
       (:authors ("Sean Allred" . "code@seanallred.com"))
       (:commit . "b57b5ca5d2d0837e1fb4a4f30c051d5f3e643f0f"))])
  (greader
-  . [(0 14 0) ((emacs (26 1)) (seq (2 24)) (compat (29 1 4 5)))
+  . [(0 17 0) ((emacs (26 1)) (seq (2 24)) (compat (29 1 4 5)))
      "Gnamù reader, send buffer contents to a speech engine" tar
      ((:url . "https://gitlab.com/michelangelo-rodriguez/greader")
       (:keywords "tools" "accessibility")
@@ -1459,7 +1459,7 @@
 		   . "michelangelo.rodriguez@gmail.com")
       (:authors
        ("Michelangelo Rodriguez" . "michelangelo.rodriguez@gmail.com"))
-      (:commit . "664a2a52180779e7b7761560c461556a2012e50e"))])
+      (:commit . "4fd1ae83d21f6349cd849f3652e7bf8f00edc9dd"))])
  (greenbar
   . [(1 2 260317) ((emacs (27 1)))
      "Mark comint output with \"greenbar\" background" tar
