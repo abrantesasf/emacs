@@ -1003,16 +1003,16 @@
       (:authors ("Protesilaos Stavrou" . "info@protesilaos.com"))
       (:commit . "af6a2a588f72a40212624458278d87f1c769405b"))])
  (eglot
-  . [(1 21)
-     ((emacs (26 3)) (eldoc (1 14 0)) (external-completion (0 1))
-      (flymake (1 4 2)) (jsonrpc (1 0 26)) (project (0 11 2))
-      (seq (2 23)) (xref (1 6 2)))
+  . [(1 23)
+     ((emacs (26 3)) (eldoc (1 16 0)) (external-completion (0 1))
+      (flymake (1 4 5)) (jsonrpc (1 0 28)) (project (0 11 2))
+      (seq (2 23)) (xref (1 7 0)))
      "The Emacs Client for LSP servers" tar
      ((:url . "https://github.com/joaotavora/eglot")
       (:keywords "convenience" "languages")
       (:maintainer "João Távora" . "joaotavora@gmail.com")
       (:authors ("João Távora" . "joaotavora@gmail.com"))
-      (:commit . "12730179acddc224f0c43a2b8e8a028182d1e40f"))])
+      (:commit . "dc7c36ea1290c295f77ded998f72a0d9f992bef7"))])
  (el-job
   . [(2 7 4) ((emacs (29 1)))
      "Contrived way to call a function using all CPU cores" tar
@@ -1384,13 +1384,13 @@
       (:url . "https://elpa.gnu.org/packages/gnorb.html")
       (:commit . "409e4fc2c83f8406f362028dbcc3a1fc21182819"))])
  (gnosis
-  . [(0 10 1) ((emacs (29 1)) (compat (29 1 4 2))) "Knowledge System"
+  . [(0 10 2) ((emacs (29 1)) (compat (29 1 4 2))) "Knowledge System"
      tar
      ((:url . "https://thanosapollo.org/projects/gnosis")
       (:keywords "extensions")
       (:maintainer "Thanos Apollo" . "public@thanosapollo.org")
       (:authors ("Thanos Apollo" . "public@thanosapollo.org"))
-      (:commit . "9ac7fc3e23100f22276b94ed6876acc2406c8d35"))])
+      (:commit . "dd73eb844c997a5a538549c4f85d5f431d69bfe5"))])
  (gnu-elpa
   . [(1 1) nil "Advertize GNU ELPA packages" tar
      ((:maintainer "Stefan Monnier" . "monnier@iro.umontreal.ca")
@@ -1717,12 +1717,12 @@
       (:url . "https://elpa.gnu.org/packages/json-mode.html")
       (:commit . "2eb4b83db23e61fa2112688148aeedbacfc3c18e"))])
  (jsonrpc
-  . [(1 0 27) ((emacs (25 2))) "JSON-RPC library" tar
+  . [(1 0 28) ((emacs (25 2))) "JSON-RPC library" tar
      ((:keywords "processes" "languages" "extensions")
       (:maintainer "João Távora" . "joaotavora@gmail.com")
       (:authors ("João Távora" . "joaotavora@gmail.com"))
       (:url . "https://elpa.gnu.org/packages/jsonrpc.html")
-      (:commit . "6caf598ac49b3ed592f22e31307fe71e71490f2b"))])
+      (:commit . "f0fcc87a34c27f7d214107dc0a8d1ed96e6baf3b"))])
  (jumpc
   . [(3 1) nil "jump to previous insertion points" tar
      ((:maintainer "Ivan Kanis" . "ivan@kanis.fr")
