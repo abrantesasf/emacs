@@ -169,11 +169,11 @@
       (:authors ("Dave Pearson" . "davep@davep.org"))
       (:commit . "fe676396fa7e4372e01bf2c3d9a62e8d53615d46"))])
  (buttercup
-  . [(1 38) ((emacs (24 4))) "Behavior-Driven Emacs Lisp Testing" tar
+  . [(1 39) ((emacs (24 4))) "Behavior-Driven Emacs Lisp Testing" tar
      ((:url . "https://github.com/jorgenschaefer/emacs-buttercup")
       (:maintainer "Ola Nilsson" . "ola.nilsson@gmail.com")
       (:authors ("Jorgen Schaefer" . "contact@jorgenschaefer.de"))
-      (:commit . "cc5a2ab7c7f18aaaf525fac61fe59bae5ad018dd"))])
+      (:commit . "7baf9e5a60f201542309238d77aa6bb35bd77ec0"))])
  (camera
   . [(0 3) ((emacs (25 1))) "Take picture with your camera" tar
      ((:url . "https://codeberg.org/akib/emacs-camera")
@@ -192,13 +192,13 @@
 		("Damien Doligez" . "damien.doligez@inria.fr"))
       (:commit . "2905a436e956c5bba16c4633a6e4c4fceefa6535"))])
  (casual
-  . [(2 15 0) ((emacs (30 1)) (transient (0 9 0)) (csv-mode (1 27)))
+  . [(2 15 1) ((emacs (30 1)) (transient (0 9 0)) (csv-mode (1 27)))
      "Transient user interfaces for various modes" tar
      ((:url . "https://github.com/kickingvegas/casual")
       (:keywords "tools" "wp")
       (:maintainer "Charles Choi" . "kickingvegas@gmail.com")
       (:authors ("Charles Choi" . "kickingvegas@gmail.com"))
-      (:commit . "81e032d24c46159cc98ec5248e48ee3659025ad0"))])
+      (:commit . "d646190d565cb678db762fcc3663703616327bb7"))])
  (cdlatex
   . [(4 18 5) nil "Fast input methods for LaTeX environments and math"
      tar
@@ -559,12 +559,12 @@
       (:authors ("Sylvain Benner" . "sylvain.benner@gmail.com"))
       (:commit . "3c65fecd9917a41eaf6460f22187e2323821f3ce"))])
  (evil-matchit
-  . [(4 0 1) ((emacs (27 1))) "Vim matchit ported to Evil" tar
+  . [(4 1 0) ((emacs (27 1))) "Vim matchit ported to Evil" tar
      ((:url . "http://github.com/redguardtoo/evil-matchit")
       (:keywords "matchit" "vim" "evil")
       (:maintainer "Chen Bin" . "chenbin.sh@gmail.com")
       (:authors ("Chen Bin" . "chenbin.sh@gmail.com"))
-      (:commit . "84a6d34c1a1282c43c6ccef2ead3eaa41fd1535f"))])
+      (:commit . "8d0bca76ed9958fc5ad460e6085175c83695bbdb"))])
  (evil-nerd-commenter
   . [(3 6 1) ((emacs (26 1)))
      "Comment/uncomment lines efficiently. Like Nerd Commenter in Vim"
@@ -1056,12 +1056,12 @@
       (:keywords "j" "languages")
       (:commit . "1365e5a3fe772609685b3787bbd2960331c1a02f"))])
  (jabber
-  . [(0 10 3) ((emacs (29 1)) (fsm (0 2 0))) "XMPP/Jabber client" tar
+  . [(0 10 5) ((emacs (29 1)) (fsm (0 2 0))) "XMPP/Jabber client" tar
      ((:url . "https://git.thanosapollo.org/emacs-jabber")
       (:keywords "comm")
       (:maintainer "Thanos Apollo" . "public@thanosapollo.org")
       (:authors ("Magnus Henoch" . "mange@freemail.hu"))
-      (:commit . "c303c44003a9f9d5e576c99cc4a302e9cf1142b7"))])
+      (:commit . "2e7019fc32e26b0f05036bfa13d3a01c5a183c85"))])
  (jade-mode
   . [(1 0 1) nil "Major mode for editing .jade files" tar
      ((:url . "https://github.com/brianc/jade-mode")
