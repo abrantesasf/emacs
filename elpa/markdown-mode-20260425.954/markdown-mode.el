@@ -6,8 +6,8 @@
 ;; Author: Jason R. Blevins <jblevins@xbeta.org>
 ;; Maintainer: Jason R. Blevins <jblevins@xbeta.org>
 ;; Created: May 24, 2007
-;; Package-Version: 20260423.1508
-;; Package-Revision: 51ccd3df38d8
+;; Package-Version: 20260425.954
+;; Package-Revision: 1f72cefa6a4b
 ;; Package-Requires: ((emacs "28.1"))
 ;; Keywords: Markdown, GitHub Flavored Markdown, itex
 ;; URL: https://jblevins.org/projects/markdown-mode/
@@ -2932,19 +2932,16 @@ This may be useful for tables and Pandoc's line_blocks extension."
 Also returns t if PROP is a list containing one of the PROP-VALUES.
 Return nil otherwise."
   (catch 'found
-    (cl-loop
-     with props = nil
-     for loc from begin to end
-     do
-     (when (setq props (get-text-property loc prop))
-       (cond ((listp props)
+    (let ((loc begin))
+      (while (<= loc end)
+        (when-let* ((props (get-text-property loc prop)))
+          (if (listp props)
               ;; props is a list, check for membership
               (dolist (val prop-values)
-                (when (memq val props) (throw 'found loc))))
-             (t
-              ;; props is a scalar, check for equality
-              (dolist (val prop-values)
-                (when (eq val props) (throw 'found loc)))))))))
+                (when (memq val props) (throw 'found loc)))
+            (dolist (val prop-values)
+              (when (eq val props) (throw 'found loc)))))
+        (setq loc (next-single-property-change loc prop nil (1+ end)))))))
 
 (defun markdown-range-properties-exist (begin end props)
   (cl-loop

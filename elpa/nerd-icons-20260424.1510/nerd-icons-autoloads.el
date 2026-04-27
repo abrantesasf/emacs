@@ -14,7 +14,8 @@
 (autoload 'nerd-icons-install-fonts "nerd-icons" "\
 Helper function to download and install the latests fonts based on OS.
 The provided Nerd Font is Symbols Nerd Font Mono.
-When PFX is non-nil, ignore the prompt and just install
+When PFX is non-nil, ignore the prompt and just install.
+On Windows only, when PFX is a path, ignore the prompt and download there.
 
 (fn &optional PFX)" t)
 (autoload 'nerd-icons-insert "nerd-icons" "\

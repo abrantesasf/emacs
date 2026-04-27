@@ -4,8 +4,8 @@
 
 ;; Author: Hongyu Ding <rainstormstudio@yahoo.com>, Vincent Zhang <seagle0128@gmail.com>
 ;; Keywords: lisp
-;; Package-Version: 20260325.346
-;; Package-Revision: 1db0b0b9203c
+;; Package-Version: 20260424.1510
+;; Package-Revision: 3f6e8b36436d
 ;; Package-Requires: ((emacs "25.1"))
 ;; URL: https://github.com/rainstormstudio/nerd-icons.el
 ;; Keywords: convenient, lisp
@@ -1195,7 +1195,8 @@ string."
 (defun nerd-icons-install-fonts (&optional pfx)
   "Helper function to download and install the latests fonts based on OS.
 The provided Nerd Font is Symbols Nerd Font Mono.
-When PFX is non-nil, ignore the prompt and just install"
+When PFX is non-nil, ignore the prompt and just install.
+On Windows only, when PFX is a path, ignore the prompt and download there."
   (interactive "P")
   (when (or pfx (yes-or-no-p "This will download and install fonts, are you sure you want to do this?"))
     (let* ((url-format "https://raw.githubusercontent.com/rainstormstudio/nerd-icons.el/main/fonts/%s")
@@ -1212,7 +1213,9 @@ When PFX is non-nil, ignore the prompt and just install"
                                 "/Library/Fonts/"
                                 nerd-icons-fonts-subdirectory))))
            (known-dest? (stringp font-dest))
-           (font-dest (or font-dest (read-directory-name "Font installation directory: " "~/"))))
+           (font-dest (or font-dest
+                          (and (stringp pfx) pfx)
+                          (read-directory-name "Font installation directory: " "~/"))))
 
       (unless (file-directory-p font-dest) (mkdir font-dest t))
 
