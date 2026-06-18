@@ -5,3 +5,6 @@
 
 ;; Activate nice interface between RefTeX and AUCTeX
 (setq reftex-plug-into-AUCTeX t)
+
+;; Desativa scan parciais:
+(setq reftex-enable-partial-scans nil)
