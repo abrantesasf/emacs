@@ -8,3 +8,4 @@
 
 ;; Desativa scan parciais:
 (setq reftex-enable-partial-scans nil)
+(setq reftex-guess-label-type nil)
