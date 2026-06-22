@@ -208,7 +208,7 @@
       (:url . "https://elpa.nongnu.org/nongnu/cdlatex.html")
       (:commit . "fac070f0164ac9f5859cb4cccba7d29a65c337f3"))])
  (cider
-  . [(1 22 1)
+  . [(1 22 2)
      ((emacs (28)) (clojure-mode (5 19)) (compat (30))
       (parseedn (1 2 1)) (queue (0 2)) (spinner (1 7)) (seq (2 22))
       (sesman (0 3 2)) (transient (0 4 1)))
@@ -222,7 +222,7 @@
 		("Artur Malabarba" . "bruce.connor.am@gmail.com")
 		("Hugo Duncan" . "hugo@hugoduncan.org")
 		("Steve Purcell" . "steve@sanityinc.com"))
-      (:commit . "7be1bf49946b757ae229318820d78b4c3d55063f"))])
+      (:commit . "7bba70a194fa6687274a85d17b6201201f732223"))])
  (clojure-mode
   . [(5 23 0) ((emacs (27 1))) "Major mode for Clojure code" tar
      ((:url . "https://github.com/clojure-emacs/clojure-mode")
@@ -277,12 +277,12 @@
       (:authors ("Bozhidar Batsov" . "bozhidar@batsov.dev"))
       (:commit . "7980df10e47eef41d4d1c57cfb690ec406381ed3"))])
  (csv2ledger
-  . [(1 5 4) ((emacs (29 1)) (csv-mode (1 24)))
+  . [(1 5 5) ((emacs (29 1)) (csv-mode (1 24)))
      "Convert csv files to ledger entries" tar
      ((:url . "https://codeberg.org/joostkremers/csv2ledger")
       (:maintainer "Joost Kremers" . "joostkremers@fastmail.fm")
       (:authors ("Joost Kremers" . "joostkremers@fastmail.fm"))
-      (:commit . "5c38ee8a4bd3edd24ff49bcbe63b1b6a659497dc"))])
+      (:commit . "7b095112e7a0a4cbe58e665129c3b2d227f3c96e"))])
  (cyberpunk-theme
   . [(1 22) nil "Cyberpunk Color Theme" tar
      ((:url . "https://github.com/n3mo/cyberpunk-theme.el")

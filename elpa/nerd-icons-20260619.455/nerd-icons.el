@@ -4,8 +4,8 @@
 
 ;; Author: Hongyu Ding <rainstormstudio@yahoo.com>, Vincent Zhang <seagle0128@gmail.com>
 ;; Keywords: lisp
-;; Package-Version: 20260617.300
-;; Package-Revision: 158c5c19f5e3
+;; Package-Version: 20260619.455
+;; Package-Revision: a9a9177e135d
 ;; Package-Requires: ((emacs "25.1"))
 ;; URL: https://github.com/rainstormstudio/nerd-icons.el
 ;; Keywords: convenient, lisp
@@ -679,7 +679,9 @@
     ("google[ _-]drive" nerd-icons-mdicon "nf-md-folder_google_drive")
     ("github"           nerd-icons-sucicon "nf-custom-folder_github")
     ("^atom$"           nerd-icons-devicon "nf-dev-atom")
+    ("^src$"            nerd-icons-octicon "nf-oct-code")
     ("^tests?$"         nerd-icons-octicon "nf-oct-beaker")
+    ("Applications"     nerd-icons-mdicon "nf-md-application")
     ("[Dd]ocuments"     nerd-icons-mdicon "nf-md-folder_file")
     ("[Dd]ownload"      nerd-icons-mdicon "nf-md-folder_download")
     ("[Dd]esktop"       nerd-icons-octicon "nf-oct-device_desktop")
@@ -694,6 +696,7 @@
     ("\\.git"           nerd-icons-sucicon "nf-custom-folder_git")
     ("\\.npm"           nerd-icons-sucicon "nf-custom-folder_npm")
     ("\\.gem"           nerd-icons-faicon "nf-fa-gem")
+    ("\\.ssh"           nerd-icons-mdicon "nf-md-folder_key")
     ("hypr"             nerd-icons-flicon "nf-linux-hyprland")
     ("kitty"            nerd-icons-devicon "nf-dev-terminal")
     ("^gtk-.*"          nerd-icons-flicon "nf-linux-gtk")
