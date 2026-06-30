@@ -4,8 +4,8 @@
 
 ;; Author: Hongyu Ding <rainstormstudio@yahoo.com>, Vincent Zhang <seagle0128@gmail.com>
 ;; Keywords: lisp
-;; Package-Version: 20260619.455
-;; Package-Revision: a9a9177e135d
+;; Package-Version: 20260629.1042
+;; Package-Revision: d7742c5e8fba
 ;; Package-Requires: ((emacs "25.1"))
 ;; URL: https://github.com/rainstormstudio/nerd-icons.el
 ;; Keywords: convenient, lisp
@@ -687,6 +687,7 @@
     ("[Dd]esktop"       nerd-icons-octicon "nf-oct-device_desktop")
     ("[Pp]ictures"      nerd-icons-mdicon "nf-md-folder_image")
     ("[Pp]hotos"        nerd-icons-faicon "nf-fa-camera_retro")
+    ("[Pp]rojects"      nerd-icons-octicon "nf-oct-project_roadmap")
     ("[Mm]usic"         nerd-icons-mdicon "nf-md-folder_music")
     ("[Mm]ovies"        nerd-icons-faicon "nf-fa-film")
     ("[Cc]ode"          nerd-icons-octicon "nf-oct-code")

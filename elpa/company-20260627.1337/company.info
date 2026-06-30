@@ -1,4 +1,4 @@
-This is company.info, produced by makeinfo version 6.8 from
+This is company.info, produced by makeinfo version 7.1.1 from
 company.texi.
 
 This user manual is for Company version 1.0.3-snapshot
@@ -49,7 +49,7 @@ Copyright © 2021-2024 Free Software Foundation, Inc.
 * Troubleshooting:: When Something Goes Wrong
 * Index::
 
-— The Detailed Node Listing —
+-- The Detailed Node Listing --
 
 Overview
 
@@ -124,8 +124,8 @@ configurable through the user option ‘completion-styles’, which see.
 For illustrations on how Company visualizes the matches, *note
 Frontends::.
 
-The package’s name ‘Company’ is based on the combination of the two
-words: ‘Complete’ and ‘Anything’.  These words reflect the package’s
+The package's name ‘Company’ is based on the combination of the two
+words: ‘Complete’ and ‘Anything’.  These words reflect the package's
 commitment to handling completion candidates and its extensible nature
 allowing it to cover a wide range of usage scenarios.
 
@@ -156,10 +156,10 @@ commands for the user to operate with.  For more details, *note
 Customization:: and *note Commands::.
 
 Also, Company is bundled with an alternative workflow configuration
-“company-tng” — defining ‘company-tng-frontend’, ‘company-tng-mode’, and
-‘company-tng-map’ — that allows performing completion with just <TAB>.
-To enable this configuration, add the following line to the Emacs
-initialization file (*note (emacs)Init File::):
+“company-tng” -- defining ‘company-tng-frontend’, ‘company-tng-mode’,
+and ‘company-tng-map’ -- that allows performing completion with just
+<TAB>.  To enable this configuration, add the following line to the
+Emacs initialization file (*note (emacs)Init File::):
 
      (add-hook 'after-init-hook 'company-tng-mode)
 
@@ -218,7 +218,7 @@ File: company.info,  Node: Usage Basics,  Next: Commands,  Prev: Initial Setup, 
 2.3 Usage Basics
 ================
 
-By default — having _company-mode_ enabled (*note Initial Setup::) — a
+By default -- having _company-mode_ enabled (*note Initial Setup::) -- a
 tooltip with completion candidates is shown when the user types a few
 characters.
 
@@ -230,7 +230,7 @@ respectively key bindings ‘C-n’ and ‘C-p’, then do one of the following:
    • Hit <RET> to choose a selected candidate for completion.
 
    • Hit <TAB> to expand the “common part” of all completions.  Exactly
-     what that means, can vary by backend.  In the simplest case it’s
+     what that means, can vary by backend.  In the simplest case it's
      the longest string that all completion start with, but when a
      backend returns _non-prefix matches_, it can implement the same
      kind of expansion logic for the input string.
@@ -263,8 +263,8 @@ commands of the out-of-the-box Company.
 
 ‘TAB’
 ‘<tab>’
-     Insert the _common part_ of all completion candidates or — if no
-     _common part_ is present — select the next candidate
+     Insert the _common part_ of all completion candidates or -- if no
+     _common part_ is present -- select the next candidate
      (‘company-complete-common-or-cycle’).  In the latter case,
      wraparound is implicitly enabled (*note
      company-selection-wrap-around::).
@@ -362,7 +362,7 @@ core settings that influence its overall behavior.
      a lower number than the default value of ‘3’.
 
  -- User Option: company-idle-delay
-     This is the second of the options that configure Company’s
+     This is the second of the options that configure Company's
      auto-start behavior (together with
      ‘company-minimum-prefix-length’).  The value of this option defines
      how fast Company is going to react to the typed input, such that
@@ -392,7 +392,7 @@ core settings that influence its overall behavior.
           (setq company-global-modes '(not erc-mode message-mode eshell-mode))
 
  -- User Option: company-selection-wrap-around
-     Enable this option to loop (cycle) the candidates’ selection: after
+     Enable this option to loop (cycle) the candidates' selection: after
      selecting the last candidate on the list, a command to select the
      next candidate does so with the first candidate.  By default, this
      option is disabled, which means the selection of the next candidate
@@ -400,7 +400,7 @@ core settings that influence its overall behavior.
      influenced by this option similarly.
 
  -- User Option: company-require-match
-     To allow typing in characters that don’t match the candidates, set
+     To allow typing in characters that don't match the candidates, set
      the value of this option to ‘nil’.  For an opposite behavior (that
      is, to disallow non-matching input), set it to ‘t’.  By default,
      Company is configured to require a matching input only if the user
@@ -486,7 +486,7 @@ listed below.
  -- Function: company-pseudo-tooltip-unless-just-one-frontend
      This is one of the default frontends.  It starts displaying a
      tooltip only if more than one completion candidate is available,
-     which nicely combines — and it is done so by default — with
+     which nicely combines -- and it is done so by default -- with
      ‘company-preview-if-just-one-frontend’, *note Preview Frontends::.
 
  -- Function: company-pseudo-tooltip-frontend
@@ -537,7 +537,7 @@ user options.
           [image src="./images/small/tooltip-annotations.png" ]
 
  -- User Option: company-tooltip-annotation-padding
-     Adds left padding to the candidates’ annotations.  It is disabled
+     Adds left padding to the candidates' annotations.  It is disabled
      by default.  If ‘company-tooltip-align-annotations’ is enabled,
      ‘company-tooltip-annotation-padding’ defines the minimum spacing
      between a candidate and annotation, with the default value of 1.
@@ -547,7 +547,7 @@ user options.
  -- User Option: company-tooltip-limit
      Controls the maximum number of the candidates shown simultaneously
      in the tooltip (the default value is ‘10’).  When the number of the
-     available candidates is larger than this option’s value, Company
+     available candidates is larger than this option's value, Company
      paginates the results.
 
           (setq company-tooltip-limit 4)
@@ -624,7 +624,7 @@ user options.
 Candidates Icons
 ----------------
 
-An “icon” is an image or a text that represents a candidate’s kind; it
+An “icon” is an image or a text that represents a candidate's kind; it
 is displayed in front of a candidate.  The term “kind” here stands for a
 high-level category a candidate fits into.  (Such as ‘array’,
 ‘function’, ‘file’, ‘string’, ‘color’, etc.  For an extended list of the
@@ -633,7 +633,7 @@ the variable ‘company-vscode-icons-mapping’.)
 
  -- User Option: company-format-margin-function
      Allows setting a function to format the left margin of a tooltip
-     inner area; namely, to output candidate’s _icons_.  The predefined
+     inner area; namely, to output candidate's _icons_.  The predefined
      formatting functions are listed below.  The user may also set this
      option to a custom function.  To disable left margin formatting,
      set the value of the option to ‘nil’ (this way control over the
@@ -666,7 +666,7 @@ The following user options influence appearance of the _text_ and _dot_
 _icons_.
 
  -- User Option: company-text-icons-mapping
-     Lists candidates’ _kinds_ with their corresponding _icons_
+     Lists candidates' _kinds_ with their corresponding _icons_
      configurations.
 
  -- User Option: company-text-face-extra-attributes
@@ -678,7 +678,7 @@ _icons_.
            [image src="./images/small/tooltip-icon-face.png" ]
 
  -- User Option: company-text-icons-add-background
-     If this option is enabled, when an _icon_ doesn’t have a background
+     If this option is enabled, when an _icon_ doesn't have a background
      configured by ‘company-text-icons-mapping’, then a generated
      background is applied.
 
@@ -698,8 +698,8 @@ Faces
 Out-of-the-box Company defines and configures distinguished faces (*note
 (emacs)Faces::) for light and dark themes.  Moreover, some of the
 built-in and third-party themes fine-tune Company to fit their palettes.
-That is why there’s often no real need to make such adjustments on the
-user’s side.  However, this chapter presents some hints on where to
+That is why there's often no real need to make such adjustments on the
+user's side.  However, this chapter presents some hints on where to
 start customizing Company interface.
 
 Namely, the look of a tooltip is controlled by the ‘company-tooltip*’
@@ -772,7 +772,7 @@ File: company.info,  Node: Echo Frontends,  Next: Candidates Search,  Prev: Prev
 4.3 Echo Frontends
 ==================
 
-The frontends listed in this section display information in the Emacs’s
+The frontends listed in this section display information in the Emacs's
 echo area, *note (emacs)Echo Area::.
 
  -- Function: company-echo-metadata-frontend
@@ -783,7 +783,7 @@ echo area, *note (emacs)Echo Area::.
                [image src="./images/small/echo-meta.png" ]
 
 
-The last pair of the built-in frontends isn’t that commonly used and not
+The last pair of the built-in frontends isn't that commonly used and not
 as full-featured as the previously reviewed _tooltip-_ and _preview-_
 frontends, but still, feel free to play with them and have some fun!
 
@@ -816,7 +816,7 @@ File: company.info,  Node: Candidates Search,  Next: Filter Candidates,  Prev: E
 By default, when _company-mode_ is in action, a key binding ‘C-s’ starts
 looking for matches to additionally typed characters among the displayed
 candidates.  When a search is initiated, an indicator
-‘Search: CHARACTERS’ is shown in the Emacs’s mode line.
+‘Search: CHARACTERS’ is shown in the Emacs's mode line.
 
 To quit the search mode, hit ‘C-g’.
 
@@ -1018,7 +1018,7 @@ roughly outlined groups of the backends.
 
 Some of the backends expose user options for customization; a few of
 these options are introduced below.  For those who would like to fetch
-the full list of a backend’s user options, we suggest doing one of the
+the full list of a backend's user options, we suggest doing one of the
 following:
 
    • Execute command ‘M-x customize-group <RET> <backend-name>’.
@@ -1043,7 +1043,7 @@ File: company.info,  Node: Code Completion,  Next: Text Completion,  Up: Package
 ---------------------
 
  -- Function: company-capf
-     The current trend in the Emacs’s world is to delegate completion
+     The current trend in the Emacs's world is to delegate completion
      logic to the hook ‘completion-at-point-functions’ (CAPF) assigned
      to by the major or minor modes.  It supports a common subset of
      features which is well-supported across different completion UIs.
@@ -1065,8 +1065,8 @@ File: company.info,  Node: Code Completion,  Next: Text Completion,  Up: Package
  -- User Option: company-capf-disabled-functions
      List of completion functions which should be ignored by this
      backend.  By default it contains the functions that duplicate the
-     built-in backends but don’t support the corresponding configuration
-     options and/or alter the intended priority of the default backends’
+     built-in backends but don't support the corresponding configuration
+     options and/or alter the intended priority of the default backends'
      configuration.
 
  -- Function: company-dabbrev-code
@@ -1115,7 +1115,7 @@ File: company.info,  Node: Code Completion,  Next: Text Completion,  Up: Package
      interface of the program ‘clang’, but without any advanced caching
      across calls, or automatic detection of the project structure.
      Which makes it more suitable for small to medium projects,
-     especially if you’re willing to customize
+     especially if you're willing to customize
      ‘company-clang-arguments’.  Otherwise we recommend using one of the
      LSP clients available for Emacs, together with the backend
      ‘company-capf’.
@@ -1139,7 +1139,7 @@ File: company.info,  Node: Code Completion,  Next: Text Completion,  Up: Package
      program _etags_, *note (emacs)Tags Tables::.
 
  -- User Option: company-etags-ignore-case
-     Non-nil to ignore case in this backend’s completions.
+     Non-nil to ignore case in this backend's completions.
 
  -- User Option: company-etags-everywhere
      Non-nil to offer completions in comments and strings.  It can also
@@ -1161,7 +1161,7 @@ File: company.info,  Node: Text Completion,  Next: File Name Completion,  Prev: 
      This backend works similarly to the built-in Emacs package
      _dabbrev_, searching for completion candidates inside the contents
      of the open buffer(s).  It is one of the often used backends, and
-     it has several interesting options for configuration.  Let’s review
+     it has several interesting options for configuration.  Let's review
      a few of them.
 
       -- User Option: company-dabbrev-minimum-length
@@ -1204,7 +1204,7 @@ File: company.info,  Node: Text Completion,  Next: File Name Completion,  Prev: 
           ‘nil’, ‘Enjoy’ is suggested as a completion candidate for the
           typed ‘Enj’ letters, but not for ‘enj’.  When the option is
           set to ‘t’, ‘Enjoy’ is suggested as a candidate for both ‘Enj’
-          and ‘enj’ input; note that ‘enj’ prefix is “overwritten” by
+          and ‘enj’ input; note that ‘enj’ prefix is "overwritten" by
           completing with the ‘Enjoy’ candidate.  The third, default,
           type of behavior solves this issue, keeping the case of the
           typed prefix (and still collecting candidates
@@ -1223,7 +1223,7 @@ File: company.info,  Node: Text Completion,  Next: File Name Completion,  Prev: 
           being suggested.  When the option is set to ‘t’, the
           down-cased candidate ‘enjoy’ is suggested.  By default, this
           option is set to ‘case-replace’, meaning taking a value of the
-          Emacs’s variable ‘case-replace’ (‘t’ is the current default).
+          Emacs's variable ‘case-replace’ (‘t’ is the current default).
 
 
  -- Function: company-ispell
@@ -1233,7 +1233,7 @@ File: company.info,  Node: Text Completion,  Next: File Name Completion,  Prev: 
      _Ispell_ uses only one dictionary at a time (combining several
      dictionaries into one file is an accepted practice).  By default,
      _company-ispell_ suggests candidates from a dictionary specified by
-     the Emacs’s setting ‘ispell-complete-word-dict’.
+     the Emacs's setting ‘ispell-complete-word-dict’.
 
       -- User Option: company-ispell-dictionary
           Optionally, set a file path for _company-ispell_ to use
@@ -1254,7 +1254,7 @@ File: company.info,  Node: File Name Completion,  Next: Template Expansion,  Pre
       -- User Option: company-files-exclusions
           It may be desirable to exclude directories or files from the
           list of suggested completion candidates.  For example,
-          someone’s setup might look this way:
+          someone's setup might look this way:
 
                (setq company-files-exclusions '(".git/" ".DS_Store"))
 
@@ -1380,7 +1380,7 @@ Based on the value of the ‘Used backend’ in the output of the command
      caused by a function listed there.  To identify to which package it
      belongs, type ‘M-x find-function <RET> <function-name> <RET>’.
 
-If the aforementioned steps didn’t help to find the cause of the issue,
+If the aforementioned steps didn't help to find the cause of the issue,
 then file a bug report to
 the Company Issue Tracker (https://github.com/company-mode/company-mode/issues),
 attaching the following information:
@@ -1777,45 +1777,45 @@ Concept Index
 
 
 Tag Table:
-Node: Top653
+Node: Top655
 Node: Overview2162
 Node: Terminology2570
-Node: Structure3877
-Node: Getting Started5368
-Node: Installation5646
-Node: Initial Setup6029
-Node: Usage Basics6877
-Node: Commands7855
-Ref: Commands-Footnote-110253
-Node: Customization10420
-Node: Customization Interface10892
-Node: Configuration File11425
-Ref: company-selection-wrap-around13741
-Node: Frontends16234
-Node: Tooltip Frontends17203
-Ref: Tooltip Frontends-Footnote-127917
-Node: Preview Frontends28154
-Ref: Preview Frontends-Footnote-129412
-Node: Echo Frontends29539
-Node: Candidates Search31072
-Node: Filter Candidates32406
-Node: Quick Access a Candidate33186
-Node: Backends34804
-Node: Backends Usage Basics35834
-Ref: Backends Usage Basics-Footnote-137266
-Node: Grouped Backends37350
-Node: Package Backends38861
-Node: Code Completion39790
-Node: Text Completion45317
-Node: File Name Completion49751
-Node: Template Expansion51299
-Node: Candidates Post-Processing52018
-Node: Troubleshooting54595
-Node: Index56268
-Node: Key Index56431
-Node: Variable Index57930
-Node: Function Index62783
-Node: Concept Index67483
+Node: Structure3873
+Node: Getting Started5363
+Node: Installation5641
+Node: Initial Setup6024
+Node: Usage Basics6872
+Node: Commands7846
+Ref: Commands-Footnote-110242
+Node: Customization10409
+Node: Customization Interface10881
+Node: Configuration File11414
+Ref: company-selection-wrap-around13728
+Node: Frontends16217
+Node: Tooltip Frontends17186
+Ref: Tooltip Frontends-Footnote-127882
+Node: Preview Frontends28119
+Ref: Preview Frontends-Footnote-129377
+Node: Echo Frontends29504
+Node: Candidates Search31033
+Node: Filter Candidates32365
+Node: Quick Access a Candidate33145
+Node: Backends34763
+Node: Backends Usage Basics35793
+Ref: Backends Usage Basics-Footnote-137225
+Node: Grouped Backends37309
+Node: Package Backends38820
+Node: Code Completion39747
+Node: Text Completion45264
+Node: File Name Completion49688
+Node: Template Expansion51234
+Node: Candidates Post-Processing51953
+Node: Troubleshooting54530
+Node: Index56201
+Node: Key Index56364
+Node: Variable Index57863
+Node: Function Index62716
+Node: Concept Index67416
 
 End Tag Table
 

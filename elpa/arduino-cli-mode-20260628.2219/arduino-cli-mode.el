@@ -4,8 +4,8 @@
 
 ;; Author: Love Lagerkvist
 ;; URL: https://github.com/motform/arduino-cli-mode
-;; Package-Version: 20250524.901
-;; Package-Revision: aa93d49dc90c
+;; Package-Version: 20260628.2219
+;; Package-Revision: d5614acdca80
 ;; Package-Requires: ((emacs "25.1"))
 ;; Created: 2019-11-16
 ;; Keywords: processes tools
@@ -189,10 +189,10 @@ or all commands if arduino-cli-compile-only-verbosity is set to nil."
                 ('compile (arduino-cli--compile-flags))
                 (_        (arduino-cli--general-flags)))))
 
-(defun arduino-cli--compile (cmd)
-  "Run arduino-cli CMD in 'arduino-cli-compilation-mode."
+(defun arduino-cli--compile (mode cmd)
+  "Run arduino-cli CMD for MODE using 'arduino-cli-compilation-mode."
   (let* ((cmd  (concat "arduino-cli " cmd " " (shell-quote-argument (expand-file-name default-directory))))
-         (cmd* (arduino-cli--add-flags 'compile cmd)))
+         (cmd* (arduino-cli--add-flags mode cmd)))
     (save-some-buffers (not compilation-ask-about-save) (lambda () default-directory))
     (setf arduino-cli--compilation-buffer
           (compilation-start cmd* 'arduino-cli-compilation-mode))))
@@ -325,7 +325,7 @@ If BOARD has multiple matching_boards, the first one is used."
          (fqbn  (if-let (fqbn (arduino-cli--board-fqbn board)) fqbn
                   (error "ERROR: No fqbn specified")))
          (cmd   (concat "compile --fqbn " fqbn)))
-    (arduino-cli--compile cmd)))
+    (arduino-cli--compile 'compile cmd)))
 
 (defun arduino-cli-compile-and-upload ()
   "Compile and upload Arduino project."
@@ -338,11 +338,13 @@ If BOARD has multiple matching_boards, the first one is used."
          (fqbn  (if-let (fqbn (arduino-cli--board-fqbn board))
                     fqbn
                   (error "ERROR: No fqbn specified")))
-         (port  (if-let (port (arduino-cli--board-address board))
-                    port
-                  (error "ERROR: No port specified")))
-         (cmd   (concat "compile --fqbn " fqbn " --port " port " --upload")))
-    (arduino-cli--compile cmd)))
+         (port  (arduino-cli--board-address board))
+         (cmd   (concat "compile --fqbn "  fqbn
+                        (if port
+                            (concat " --port " port)
+                          "")
+                        " --upload")))
+    (arduino-cli--compile 'compile cmd)))
 
 (defun arduino-cli-upload ()
   "Upload Arduino project."
@@ -355,11 +357,12 @@ If BOARD has multiple matching_boards, the first one is used."
          (fqbn  (if-let (fqbn (arduino-cli--board-fqbn board))
                     fqbn
                   (error "ERROR: No fqbn specified")))
-         (port  (if-let (port (arduino-cli--board-address board))
-                    port
-                  (error "ERROR: No port specified")))
-         (cmd (concat "upload --fqbn " fqbn " --port " port)))
-    (arduino-cli--compile cmd)))
+         (port  (arduino-cli--board-address board))
+         (cmd (concat "upload --fqbn " fqbn
+                      (if port
+                          (concat " --port " port)
+                        ""))))
+    (arduino-cli--compile 'upload cmd)))
 
 (defun arduino-cli-board-list ()
   "Show list of connected Arduino boards."
