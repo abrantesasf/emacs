@@ -24,7 +24,7 @@
 		("Bas Alberts" . "bas@anti.computer"))
       (:commit . "e99165ef5274bc4512b8d77ba2ac208c59b5d456"))])
  (aidermacs
-  . [(1 10)
+  . [(1 11)
      ((emacs (26 1)) (transient (0 3 0)) (compat (30 0 2 0))
       (markdown-mode (2 7)))
      "AI pair programming with Aider" tar
@@ -33,7 +33,7 @@
 		 "tools")
       (:maintainer "Mingde Zeng" . "matthewzmd@posteo.net")
       (:authors ("Mingde Zeng" . "matthewzmd@posteo.net"))
-      (:commit . "7d25f9b2eab3d4b7267fb378084f53383d834b47"))])
+      (:commit . "04c31616481fe55b4362859af01241041b755a6a"))])
  (alect-themes
   . [(0 11) ((emacs (24 0)))
      "Configurable light, dark and black themes for Emacs 24 or later"
@@ -536,13 +536,13 @@
       (:authors ("Connor Smith" . "wconnorsmith@gmail.com"))
       (:commit . "2671071a4a57eaee7cc8c27b9e4b6fc60fd2ccd3"))])
  (evil-collection
-  . [(3 0 0) ((emacs (29 1)) (evil (1 2 13)))
+  . [(3 0 1) ((emacs (29 1)) (evil (1 2 13)))
      "A set of keybindings for Evil mode" tar
      ((:url . "https://github.com/emacs-evil/evil-collection")
       (:keywords "evil" "tools")
       (:maintainer "James Nguyen" . "james@jojojames.com")
       (:authors ("James Nguyen" . "james@jojojames.com"))
-      (:commit . "29acaa81d2992d9c89a4b15ead917abb3af05228"))])
+      (:commit . "fa8da0ebba4bbf2a84a78183420d8303179ef427"))])
  (evil-emacs-cursor-model-mode
   . [(0 1 3) ((emacs (29 1)) (evil (1 15 0)))
      "Emacs' cursor model in evil-mode" tar
@@ -699,7 +699,7 @@
      ((:url . "https://github.com/lewang/flx")
       (:commit . "29e3664b75618847eaaf821713a74eb3c897a124"))])
  (flycheck
-  . [(37 0) ((emacs (28 1)) (seq (2 24))) "On-the-fly syntax checking"
+  . [(38 3) ((emacs (28 1)) (seq (2 24))) "On-the-fly syntax checking"
      tar
      ((:url . "https://github.com/flycheck/flycheck")
       (:keywords "convenience" "languages" "tools")
@@ -708,7 +708,7 @@
        ("fmdkdd" . "fmdkdd@gmail.com")
        ("Bozhidar Batsov" . "bozhidar@batsov.dev"))
       (:authors ("Sebastian Wiesner" . "swiesner@lunaryorn.com"))
-      (:commit . "af6b60fd544c29f68c731d709a066317b8ed0628"))])
+      (:commit . "4414c198f1efe1015c7523119c7c29f152f7243d"))])
  (flymake-guile
   . [(0 5) ((emacs (26 1)) (flymake (1 2 1))) "Guile flymake backend"
      tar
@@ -1108,13 +1108,13 @@
       (:keywords "j" "languages")
       (:commit . "1365e5a3fe772609685b3787bbd2960331c1a02f"))])
  (jabber
-  . [(0 12 4) ((emacs (29 1)) (fsm (0 2 0)) (keymap-popup (0 2)))
+  . [(0 12 5) ((emacs (29 1)) (fsm (0 2 0)) (keymap-popup (0 2)))
      "XMPP/Jabber client" tar
      ((:url . "https://git.thanosapollo.org/emacs-jabber/about/")
       (:keywords "comm")
       (:maintainer "Thanos Apollo" . "public@thanosapollo.org")
       (:authors ("Magnus Henoch" . "mange@freemail.hu"))
-      (:commit . "c96f7cf2729dffdb1cdc3ab00a67273319ac55a1"))])
+      (:commit . "a80e9a704a7c74355995edb7285fff328436c065"))])
  (jade-mode
   . [(1 0 1) nil "Major mode for editing .jade files" tar
      ((:url . "https://github.com/brianc/jade-mode")
@@ -1566,13 +1566,13 @@
       (:authors ("Frédéric Perrin" . "fredericperrinreselfr"))
       (:commit . "176f9fb0c29ac60898e1e938458f26205511cc23"))])
  (projectile
-  . [(3 2 1) ((emacs (28 1)) (compat (30)))
+  . [(3 3 0) ((emacs (28 1)) (compat (30)))
      "Manage and navigate projects in Emacs easily" tar
      ((:url . "https://github.com/bbatsov/projectile")
       (:keywords "project" "convenience")
       (:maintainer "Bozhidar Batsov" . "bozhidar@batsov.dev")
       (:authors ("Bozhidar Batsov" . "bozhidar@batsov.dev"))
-      (:commit . "8ac2834f1f70af977f17944c7968c72ea46bf62c"))])
+      (:commit . "d1cc09ba9beced496b6aca70e6a8a1da07917c16"))])
  (proof-general
   . [(4 5) ((emacs (25 2)))
      "A generic Emacs interface for proof assistants" tar
@@ -1588,7 +1588,7 @@
       (:authors ("David Christiansen" . "david@davidchristiansen.dk"))
       (:commit . "1edda80e2e32b72e77f4f16ae5b83c312c68ee95"))])
  (racket-mode
-  . [(1 0 20260626 0) ((emacs (25 1)) (compat (30 0 2 0)))
+  . [(1 0 20260726 0) ((emacs (25 1)) (compat (30 0 2 0)))
      "Racket editing, REPL, and more" tar
      ((:url . "https://www.racket-mode.com/")
       (:authors
@@ -1745,12 +1745,12 @@
       (:authors ("Matus Goljer" . "matus.goljer@gmail.com"))
       (:commit . "4873352b5d0a1c5142658122de1b6950b8fe7e4d"))])
  (solarized-theme
-  . [(2 1 0) ((emacs (24 1))) "The Solarized color theme" tar
+  . [(2 2 0) ((emacs (24 1))) "The Solarized color theme" tar
      ((:url . "http://github.com/bbatsov/solarized-emacs")
       (:keywords "convenience" "themes" "solarized")
       (:maintainer "Bozhidar Batsov" . "bozhidar@batsov.dev")
       (:authors ("Bozhidar Batsov" . "bozhidar@batsov.dev"))
-      (:commit . "0972a0f1471ed67211b7c8918a3c049380050d7b"))])
+      (:commit . "1443d6dce378ad2d65a8a8c45d5279481a79dfab"))])
  (spacemacs-theme
   . [(0 2) ((emacs (24)))
      "Color theme with a dark and light versions." tar
@@ -2080,12 +2080,12 @@
       (:authors ("Le Wang" . "l26wang@gmail.com"))
       (:commit . "9ee5a7657a22e836618813c2e2b64a548d27d2ff"))])
  (xah-fly-keys
-  . [(28 11 20260712150256) ((emacs (28 3)))
+  . [(28 11 20260729193514) ((emacs (28 3)))
      "ergonomic modal keybinding minor mode." tar
      ((:url . "http://xahlee.info/emacs/misc/xah-fly-keys.html")
       (:keywords "convenience" "vi" "vim" "ergoemacs" "keybinding")
       (:maintainer "Xah Lee" . "xah@xahlee.org")
-      (:commit . "158a4b12fce8e5f63694a68b75df89b064e73e14"))])
+      (:commit . "f3a3f21c5a330f7d2230d5cbbe4ef7f7ea233cb4"))])
  (xkcd
   . [(1 1) ((json (1 3))) "View xkcd from Emacs" tar
      ((:url . "https://github.com/vibhavp/emacs-xkcd")

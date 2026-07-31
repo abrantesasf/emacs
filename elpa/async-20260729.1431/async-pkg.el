@@ -1,10 +1,10 @@
 ;; -*- no-byte-compile: t; lexical-binding: nil -*-
-(define-package "async" "20260318.1803"
+(define-package "async" "20260729.1431"
   "Asynchronous processing in Emacs."
   '((emacs "24.4"))
   :url "https://github.com/jwiegley/emacs-async"
-  :commit "5faab28916603bb324d9faba057021ce028ca847"
-  :revdesc "5faab2891660"
+  :commit "4fdcb061a166e0d6ccc27d3829a28e04415ae825"
+  :revdesc "4fdcb061a166"
   :keywords '("async")
   :authors '(("John Wiegley" . "jwiegley@gmail.com"))
   :maintainers '(("Thierry Volpiatto" . "thievol@posteo.net")))
