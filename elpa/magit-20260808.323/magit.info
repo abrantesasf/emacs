@@ -7137,8 +7137,8 @@ and the push-remote, see *note The Two Remotes::.
 (transient)Enabling and Disabling Suffixes:: for how to enable it.
 
 ‘F U’ (‘magit-pull-into-upstream’)
-     This command update the upstream of the current branch from its own
-     upstream.
+     This command updates the upstream of the current branch from its
+     own upstream.
 
      If the upstream of the current branch is a local branch, and the
      upstream of that is a remote branch, then the local upstream is
@@ -11261,75 +11261,75 @@ Ref: Remote Commands303337
 Ref: Remote Git Variables307281
 Node: Fetching309214
 Node: Pulling311697
-Node: Pushing313234
-Node: Plain Patches318154
-Node: Maildir Patches319625
-Node: Miscellaneous321104
-Node: Tagging321450
-Node: Notes323343
-Node: Submodules325678
-Ref: Listing Submodules325839
-Ref: Submodule Transient327900
-Node: Subtree330253
-Node: Worktree332184
-Node: Sparse checkouts333499
-Node: Bundle336271
-Node: Common Commands336646
-Node: Wip Modes339272
-Ref: Wip Graph343846
-Node: Commands for Buffers Visiting Files346092
-Node: Minor Mode for Buffers Visiting Blobs354764
-Node: Customizing355927
-Node: Per-Repository Configuration357519
-Node: Essential Settings359773
-Ref: Safety360062
-Ref: Performance361737
-Ref: Log Performance364528
-Ref: Diff Performance365827
-Ref: Refs Buffer Performance367168
-Ref: Committing Performance367741
-Ref: Microsoft Windows Performance368721
-Ref: MacOS Performance369808
-Ref: Global Bindings370691
-Ref: Essential Settings-Footnote-1372864
-Node: Plumbing372946
-Node: Calling Git373771
-Ref: Getting a Value from Git375230
-Ref: Calling Git for Effect378848
-Node: Section Plumbing384787
-Ref: Creating Sections384939
-Ref: Section Selection388749
-Ref: Matching Sections390446
-Node: Refreshing Buffers396348
-Node: Conventions399488
-Ref: Theming Faces399652
-Node: FAQ407685
-Node: FAQ - How to ...?408121
-Ref: How to pronounce Magit?408254
-Ref: How to show git's output?408946
-Ref: How to install the gitman info manual?409563
-Ref: How to show diffs for gpg-encrypted files?410368
-Ref: How does branching and pushing work?410777
-Ref: Should I disable VC?410941
-Ref: The diff/log is filtered to one file; how do I show all changes411424
-Node: FAQ - Issues and Errors411796
-Ref: Magit is slow411941
-Ref: I changed several thousand files at once and now Magit is unusable412087
-Ref: I am having problems committing412626
-Ref: I am using MS Windows and cannot push with Magit412891
-Ref: I am using macOS and SOMETHING works in shell but not in Magit413289
-Ref: Expanding a file to show the diff causes it to disappear413876
-Ref: Point is wrong in the COMMIT_EDITMSG buffer414226
-Ref: The mode-line information isn't always up-to-date415050
-Ref: A branch and tag sharing the same name breaks SOMETHING415881
-Ref: My Git hooks work on the command-line but not inside Magit416529
-Ref: git-commit-mode isn't used when committing from the command-line417121
-Ref: Point ends up inside invisible text when jumping to a file-visiting buffer419109
-Ref: I am no longer able to save popup defaults419701
-Node: Debugging Tools420494
-Node: Keystroke Index424429
-Node: Function and Command Index462890
-Node: Variable Index514978
+Node: Pushing313235
+Node: Plain Patches318155
+Node: Maildir Patches319626
+Node: Miscellaneous321105
+Node: Tagging321451
+Node: Notes323344
+Node: Submodules325679
+Ref: Listing Submodules325840
+Ref: Submodule Transient327901
+Node: Subtree330254
+Node: Worktree332185
+Node: Sparse checkouts333500
+Node: Bundle336272
+Node: Common Commands336647
+Node: Wip Modes339273
+Ref: Wip Graph343847
+Node: Commands for Buffers Visiting Files346093
+Node: Minor Mode for Buffers Visiting Blobs354765
+Node: Customizing355928
+Node: Per-Repository Configuration357520
+Node: Essential Settings359774
+Ref: Safety360063
+Ref: Performance361738
+Ref: Log Performance364529
+Ref: Diff Performance365828
+Ref: Refs Buffer Performance367169
+Ref: Committing Performance367742
+Ref: Microsoft Windows Performance368722
+Ref: MacOS Performance369809
+Ref: Global Bindings370692
+Ref: Essential Settings-Footnote-1372865
+Node: Plumbing372947
+Node: Calling Git373772
+Ref: Getting a Value from Git375231
+Ref: Calling Git for Effect378849
+Node: Section Plumbing384788
+Ref: Creating Sections384940
+Ref: Section Selection388750
+Ref: Matching Sections390447
+Node: Refreshing Buffers396349
+Node: Conventions399489
+Ref: Theming Faces399653
+Node: FAQ407686
+Node: FAQ - How to ...?408122
+Ref: How to pronounce Magit?408255
+Ref: How to show git's output?408947
+Ref: How to install the gitman info manual?409564
+Ref: How to show diffs for gpg-encrypted files?410369
+Ref: How does branching and pushing work?410778
+Ref: Should I disable VC?410942
+Ref: The diff/log is filtered to one file; how do I show all changes411425
+Node: FAQ - Issues and Errors411797
+Ref: Magit is slow411942
+Ref: I changed several thousand files at once and now Magit is unusable412088
+Ref: I am having problems committing412627
+Ref: I am using MS Windows and cannot push with Magit412892
+Ref: I am using macOS and SOMETHING works in shell but not in Magit413290
+Ref: Expanding a file to show the diff causes it to disappear413877
+Ref: Point is wrong in the COMMIT_EDITMSG buffer414227
+Ref: The mode-line information isn't always up-to-date415051
+Ref: A branch and tag sharing the same name breaks SOMETHING415882
+Ref: My Git hooks work on the command-line but not inside Magit416530
+Ref: git-commit-mode isn't used when committing from the command-line417122
+Ref: Point ends up inside invisible text when jumping to a file-visiting buffer419110
+Ref: I am no longer able to save popup defaults419702
+Node: Debugging Tools420495
+Node: Keystroke Index424430
+Node: Function and Command Index462891
+Node: Variable Index514979
 
 End Tag Table
 
