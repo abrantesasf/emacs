@@ -5,8 +5,8 @@
 ;; Author: Feng Shu <tumashu@163.com>
 ;; Maintainer: Feng Shu <tumashu@163.com>
 ;; URL: https://github.com/tumashu/posframe
-;; Package-Version: 20260527.857
-;; Package-Revision: 74c8c56131ed
+;; Package-Version: 20260816.2356
+;; Package-Revision: ec0ec37c0d63
 ;; Keywords: convenience, tooltip
 ;; Package-Requires: ((emacs "26.1"))
 
@@ -422,7 +422,8 @@ You can use `posframe-delete-all' to delete all posframes."
          (font-height (with-current-buffer (window-buffer parent-window)
                         (posframe--get-font-height position)))
          (parent-text-scale-mode-amount (with-current-buffer (window-buffer parent-window)
-                                          (and (bound-and-true-p text-scale-mode) text-scale-mode-amount)))
+                                          (and (bound-and-true-p text-scale-mode)
+                                               (bound-and-true-p text-scale-mode-amount))))
          (mode-line-height (window-mode-line-height
                             (and (window-minibuffer-p)
                                  (ignore-errors (window-in-direction 'above)))))
