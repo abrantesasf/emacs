@@ -15,7 +15,7 @@ SLIME
 *****
 
 SLIME is the "Superior Lisp Interaction Mode for Emacs".  This is the
-manual for version 2.32.  (Last updated August 23, 2026)
+manual for version 2.32.  (Last updated August 27, 2026)
 
    Written by Luke Gorrie and others.
 
@@ -2988,16 +2988,18 @@ File: slime.info,  Node: xterm-color,  Next: SLIME Enhanced M-.,  Prev: slime-sp
 8.21 xterm-color
 ================
 
-With a suitably configured Emacs-compiled into ‘(> emacs-major-version
-28)’-this contrib loads the ‘xterm-color’
+With a suitably configured Emacs, which is compiled into ‘(>
+emacs-major-version 29)’ ff., this contrib loads the ‘xterm-color’
 <https://github.com/atomontage/xterm-color> package for the
-interpretation and diplay of ANSI terminal controlsequences.  As opposed
-to the builtin ‘ansi-color’ machinery, this implementation utilizes a
-proper state machine to deal with rather than being incompletely based
-upon regular expressions.
+interpretation and diplay of ANSI terminal control sequences.  As
+opposed to the builtin ‘ansi-color’ machinery as of ‘(>=
+emacs-major-version 31)’ which valiantly tries to be complete via
+regular expressions, this implementation utilizes a state machine.
 
    A sample configuration is given below, for a SLIME that is present on
-the local filesystem under the ‘~/work/slime/’ directory.
+the local filesystem under the ‘~/work/slime/’ directory.  If one wishes
+to use a SLIME under revision control from a package repository, comment
+out the ‘load-path’ clause.
 
          (use-package xterm-color
            :ensure t)
@@ -3014,9 +3016,27 @@ the local filesystem under the ‘~/work/slime/’ directory.
      		     slime-fancy))
            :bind ("\C-cs" . 'slime-selector)) ;; xach likes this methinks
 
+   One may verify that the ‘xterm-color’ package has been usefully
+loaded in the current Emacs session via invoking the interactive
+‘xterm-color-test’ elisp function.
+
    Replacing Emacs's builtin machinery for ANSI sequences can be made
 more efficient by reading the strategies suggested at
 <https://github.com/atomontage/xterm-color/blob/master/README.org>.
+N.b.  The ‘xterm-color’ machinery replaces ANSI sequences while it sets
+Emacs display properties.  This can cause problems with modes such as
+‘ag.el’ and ‘rg.el’ which depend on parsing the ANSI sequence bytes.
+The following workaround fixes such ‘compilation-mode’ derivatives by
+not filtering ANSI sequences on buffers whose name does not start with
+"*compilation".
+
+       (define-advice compilation-filter (:around (f proc string) xterm-color)
+         ;;https://github.com/atomontage/xterm-color/issues/37
+         (let ((string
+     	   (if (string-prefix-p "*compilation" (buffer-name (process-buffer proc)))
+     	       (xterm-color-filter string)
+     	     string)))
+           (funcall f proc string))))
 
 
 File: slime.info,  Node: SLIME Enhanced M-.,  Next: slime-fancy,  Prev: xterm-color,  Up: Contributed Packages
@@ -3742,13 +3762,13 @@ Ref: slime-scratch100203
 Node: SLIME Trace Dialog100854
 Node: slime-sprof104832
 Node: xterm-color105811
-Node: SLIME Enhanced M-.107276
-Node: slime-fancy107658
-Node: Quicklisp108014
-Node: Credits108542
-Node: Key Index115024
-Node: Command Index126814
-Node: Variable Index142056
+Node: SLIME Enhanced M-.108339
+Node: slime-fancy108721
+Node: Quicklisp109077
+Node: Credits109605
+Node: Key Index116087
+Node: Command Index127877
+Node: Variable Index143119
 
 End Tag Table
 

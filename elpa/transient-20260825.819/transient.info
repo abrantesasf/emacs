@@ -1467,6 +1467,8 @@ constructor of that class.
      ‘transient-column’ is used and a warning is displayed.  This
      warning will eventually be replaced with an error.
 
+          ;; -*- lexical-binding:t -*-
+          ;; Before evaluating this example, make sure `lexical-binding' is t.
           (transient-define-prefix my-finder-by-keyword ()
             "Select a keyword and list matching packages."
             ;; The real `finder-by-keyword' is more convenient
@@ -3315,7 +3317,7 @@ Appendix E Concept Index
 * saving values of arguments:            Saving Values.       (line   6)
 * scope of a transient:                  Defining Transients. (line  43)
 * suffix specifications:                 Binding Suffix and Infix Commands.
-                                                              (line 162)
+                                                              (line 164)
 * transient state:                       Transient State.     (line   6)
 * transient-level:                       Enabling and Disabling Suffixes.
                                                               (line  15)
@@ -4067,51 +4069,51 @@ Node: Technical Introduction53426
 Node: Defining Transients59117
 Node: Binding Suffix and Infix Commands62460
 Ref: Group Specifications63251
-Ref: Suffix Specifications70058
-Node: Defining Suffix and Infix Commands74956
-Node: Using Infix Arguments77992
-Node: Using Prefix Scope81020
-Node: Current Suffix Command83056
-Node: Current Prefix Command85413
-Node: Transient State87965
-Ref: Pre-commands for Infixes92268
-Ref: Pre-commands for Suffixes92784
-Ref: Pre-commands for Non-Suffixes95233
-Ref: Special Pre-Commands96369
-Node: Classes and Methods96877
-Node: Group Classes98964
-Node: Group Methods100877
-Node: Prefix Classes102136
-Node: Suffix Classes102977
-Node: Prefix Methods107771
-Node: Suffix Methods110992
-Ref: Suffix Value Methods111252
-Ref: Suffix Format Methods114491
-Node: Prefix Slots117372
-Ref: Value and Scope117522
-Ref: Behavior120510
-Ref: Appearance121851
-Ref: Documentation122535
-Ref: Internal123430
-Node: Suffix Slots124781
-Ref: Slots of transient-child125149
-Ref: Slots of transient-suffix126864
-Ref: Slots of transient-infix129305
-Ref: Slots of transient-variable133058
-Ref: Slots of transient-switches133160
-Node: Predicate Slots133523
-Node: FAQ135860
-Ref: Can I control how the menu buffer is displayed?135989
-Ref: How can I copy text from the menu buffer?136313
-Ref: How can I autoload prefix and suffix commands?137020
-Ref: How does Transient compare to prefix keys and universal arguments?137488
-Ref: How does Transient compare to Magit-Popup and Hydra?137731
-Ref: Why does q not quit popups anymore?137925
-Node: Keystroke Index139026
-Node: Command and Function Index140891
-Node: Variable Index148358
-Node: Concept Index151648
-Node: GNU General Public License154472
+Ref: Suffix Specifications70176
+Node: Defining Suffix and Infix Commands75074
+Node: Using Infix Arguments78110
+Node: Using Prefix Scope81138
+Node: Current Suffix Command83174
+Node: Current Prefix Command85531
+Node: Transient State88083
+Ref: Pre-commands for Infixes92386
+Ref: Pre-commands for Suffixes92902
+Ref: Pre-commands for Non-Suffixes95351
+Ref: Special Pre-Commands96487
+Node: Classes and Methods96995
+Node: Group Classes99082
+Node: Group Methods100995
+Node: Prefix Classes102254
+Node: Suffix Classes103095
+Node: Prefix Methods107889
+Node: Suffix Methods111110
+Ref: Suffix Value Methods111370
+Ref: Suffix Format Methods114609
+Node: Prefix Slots117490
+Ref: Value and Scope117640
+Ref: Behavior120628
+Ref: Appearance121969
+Ref: Documentation122653
+Ref: Internal123548
+Node: Suffix Slots124899
+Ref: Slots of transient-child125267
+Ref: Slots of transient-suffix126982
+Ref: Slots of transient-infix129423
+Ref: Slots of transient-variable133176
+Ref: Slots of transient-switches133278
+Node: Predicate Slots133641
+Node: FAQ135978
+Ref: Can I control how the menu buffer is displayed?136107
+Ref: How can I copy text from the menu buffer?136431
+Ref: How can I autoload prefix and suffix commands?137138
+Ref: How does Transient compare to prefix keys and universal arguments?137606
+Ref: How does Transient compare to Magit-Popup and Hydra?137849
+Ref: Why does q not quit popups anymore?138043
+Node: Keystroke Index139144
+Node: Command and Function Index141009
+Node: Variable Index148476
+Node: Concept Index151766
+Node: GNU General Public License154590
 
 End Tag Table
 

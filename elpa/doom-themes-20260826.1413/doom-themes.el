@@ -6,8 +6,8 @@
 ;; Maintainer: Henrik Lissner <contact@henrik.io>
 ;; Maintainer: Emmanuel Bustos Torres <ema2159@gmail.com>
 ;; Created: May 22, 2016
-;; Package-Version: 20260821.1111
-;; Package-Revision: d114523c4c43
+;; Package-Version: 20260826.1413
+;; Package-Revision: a59202912ad5
 ;; Keywords: themes faces
 ;; Homepage: https://github.com/doomemacs/themes
 ;; Package-Requires: ((emacs "25.1") (cl-lib "0.5"))
