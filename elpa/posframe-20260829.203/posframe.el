@@ -5,8 +5,8 @@
 ;; Author: Feng Shu <tumashu@163.com>
 ;; Maintainer: Feng Shu <tumashu@163.com>
 ;; URL: https://github.com/tumashu/posframe
-;; Package-Version: 20260816.2356
-;; Package-Revision: ec0ec37c0d63
+;; Package-Version: 20260829.203
+;; Package-Revision: 6f89c0acd293
 ;; Keywords: convenience, tooltip
 ;; Package-Requires: ((emacs "26.1"))
 
@@ -710,8 +710,10 @@ ACCEPT-FOCUS."
                    (frame-live-p posframe--frame)
                    ;; For speed reason, posframe will reuse
                    ;; existing frame at possible, but when
-                   ;; user change args, recreating frame
-                   ;; is needed.
+                   ;; user changes args or terminal,
+                   ;; recreating the frame is needed.
+                   (eq (frame-terminal posframe--frame)
+                       (frame-terminal parent-frame))
                    (equal posframe--last-args args))
         (posframe-delete-frame buffer)
         (setq-local posframe--last-args args)

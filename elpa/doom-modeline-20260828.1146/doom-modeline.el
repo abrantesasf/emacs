@@ -4,8 +4,8 @@
 
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
 ;; Homepage: https://github.com/seagle0128/doom-modeline
-;; Package-Version: 20260826.1138
-;; Package-Revision: f35c9c9eb111
+;; Package-Version: 20260828.1146
+;; Package-Revision: 6f911e982bdf
 ;; Package-Requires: ((emacs "25.1") (compat "30.1.0.0") (nerd-icons "0.1.0") (shrink-path "0.3.1"))
 ;; Keywords: faces mode-line
 
@@ -90,7 +90,7 @@
 
 (doom-modeline-def-modeline 'main
   '(eldoc bar window-state workspace-name window-number modals matches follow buffer-info remote-host buffer-position word-count parrot selection-info)
-  '(compilation objed-state misc-info project-name persp-name battery grip irc mu4e gnus github debug repl lsp minor-modes input-method indent-info buffer-encoding major-mode process vcs check time))
+  '(compilation objed-state misc-info project-name persp-name battery grip irc mu4e gnus github debug repl lsp spell minor-modes input-method indent-info buffer-encoding major-mode process vcs check time))
 
 (doom-modeline-def-modeline 'minimal
   '(bar window-number modals matches buffer-info-simple)

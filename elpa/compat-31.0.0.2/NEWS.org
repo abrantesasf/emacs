@@ -1,6 +1,43 @@
-#+link:    compat-srht https://todo.sr.ht/~pkal/compat/
 #+link:    compat-gh   https://github.com/emacs-compat/compat/issues/
 #+options: toc:nil num:nil author:nil
+
+* Release of "Compat" Version 31.0.0.2
+
+- compat-31: Fix extended function =seconds-to-string=.
+
+(Release <2026-07-09 Thu>)
+
+* Release of "Compat" Version 31.0.0.1
+
+- compat-31: Improve =with-work-buffer= implementation.
+
+(Release <2026-05-03 Sun>)
+
+* Release of "Compat" Version 31.0.0.0
+
+- compat-28: New pcase pattern =cl-type=.
+- compat-29: Add =string-glyph-compose= and =string-glyph-decompose=.
+- compat-31: New macros =static-when= and =static-unless=.
+- compat-31: New functions =oddp= and =evenp=.
+- compat-31: New functions =minusp= and =plusp=.
+- compat-31: New macros =incf= and =decf=.
+- compat-31: New function =color-blend=.
+- compat-31: New function =completion-table-with-metadata=.
+- compat-31: New function =completion-list-candidate-at-point=.
+- compat-31: New macro =with-work-buffer=.
+- compat-31: New function =unbuttonize-region=.
+- compat-31: New extended function =seconds-to-string=.
+- compat-31: New function =hash-table-contains-p=.
+- compat-31: New function =remove-display-text-property=.
+- compat-31: New functions =drop-while=, =take-while=, =member-if=, =any=, =all=.
+- compat-31: New function =set-local=.
+- compat-31: New function =ensure-proper-list=.
+- compat-31: New error API functions =error-type-p=, =error-has-type-p=, =error-type=
+  and =error-slot-value=.
+- Drop support for Emacs 24.x. Emacs 25.1 is required now. In case
+  Emacs 24.x support is still needed, Compat 30 can be used.
+
+(Release <2026-05-01 Fri>)
 
 * Release of "Compat" Version 30.1.0.1
 
@@ -275,7 +312,7 @@
 
 * Release of "Compat" Version 28.1.2.2
 
-This is a minor release that hopes to address [[compat-srht:7]].
+This is a minor release.
 
 (Release <2022-08-25 Thu>)
 
@@ -297,8 +334,8 @@ include much more documentation that had been the case previously.
 
 The main change of this release has been the major simplification of
 Compat's initialisation system, improving the situation around issues
-people had been reporting ([[compat-srht:4]], once again) with unconventional
-or unpopular packaging systems.
+people had been reporting with unconventional or unpopular packaging
+systems.
 
 In addition to this, the following functional changes have been made:
 
@@ -314,7 +351,6 @@ Minor improvements to manual are also part of this release.
 
 This release just contains a hot-fix for an issue introduced in the
 last version, where compat.el raises an error during byte compilation.
-See [[compat-srht:4]].
 
 (Release <2022-06-19 Sun>)
 
@@ -322,11 +358,9 @@ See [[compat-srht:4]].
 
 Two main changes have necessitated a new patch release:
 
-1. Fix issues related to the loading of compat when uncompiled.  See
-   [[https://lists.sr.ht/~pkal/compat-devel/%3C20220530191000.2183047-1-jonas%40bernoul.li%3E][this thread]] for more details on the problem.
+1. Fix issues related to the loading of compat when uncompiled.
 2. Fix issues related to the loading of compat on old pre-releases
-   (think of 28.0.50). See [[https://lists.sr.ht/~pkal/compat-devel/%3Cf8635d7d-e233-448f-b325-9e850363241c%40www.fastmail.com%3E][this thread]] for more details on the
-   problem.
+   (think of 28.0.50).
 
 (Released <2022-06-22 Wed>)
 
@@ -334,7 +368,7 @@ Two main changes have necessitated a new patch release:
 
 This is a minor release fixing a bug in =json-serialize=, that could
 cause unintended side-effects, not related to packages using Compat
-directly (see [[compat-srht:2]]).
+directly.
 
 (Released <2022-05-05 Thu>)
 

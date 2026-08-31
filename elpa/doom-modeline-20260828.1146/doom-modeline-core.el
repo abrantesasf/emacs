@@ -391,6 +391,11 @@ It respects `doom-modeline-enable-word-count'."
   :type 'boolean
   :group 'doom-modeline)
 
+(defcustom doom-modeline-spell nil
+  "Whether to display spell information."
+  :type 'boolean
+  :group 'doom-modeline)
+
 ;; It is based upon `editorconfig-indentation-alist' but is used to read indentation levels instead
 ;; of setting them. (https://github.com/editorconfig/editorconfig-emacs)
 (defcustom doom-modeline-indent-alist
@@ -1149,6 +1154,11 @@ Which are not explicitly listed in `doom-modeline-vcs-state-faces-alist'."
 (defface doom-modeline-compilation
   '((t (:inherit doom-modeline-warning :slant italic :height 0.9)))
   "Face for compilation progress."
+  :group 'doom-modeline-faces)
+
+(defface doom-modeline-spell
+  '((t (:inherit doom-modeline-info)))
+  "Face for the spell name."
   :group 'doom-modeline-faces)
 
 

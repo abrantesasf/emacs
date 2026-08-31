@@ -54,8 +54,8 @@
 (defvar battery-mode-line-format)
 (defvar battery-mode-line-limit)
 (defvar battery-mode-line-string)
-(defvar battery-update-functions)
 (defvar battery-status-function)
+(defvar battery-update-functions)
 (defvar boon-command-state)
 (defvar boon-insert-state)
 (defvar boon-off-state)
@@ -80,14 +80,17 @@
 (defvar flycheck-mode-menu-map)
 (defvar flymake--state)
 (defvar flymake-menu)
+(defvar flyspell-mode-line-string)
 (defvar gnus-newsrc-alist)
 (defvar gnus-newsrc-hashtb)
 (defvar grip--process)
 (defvar helm--mode-line-display-prefarg)
 (defvar iedit-occurrences-overlays)
+(defvar ispell-dictionary)
+(defvar ispell-local-dictionary)
 (defvar kele-menu-map)
-(defvar meow--indicator)
 (defvar meow--current-state)
+(defvar meow--indicator)
 (defvar minions-mode-line-lighter)
 (defvar minions-mode-line-minor-modes-map)
 (defvar mlscroll-right-align)
@@ -104,10 +107,10 @@
 (defvar phi-search--selection)
 (defvar phi-search-mode-line-format)
 (defvar projectile-mode-map)
-(defvar reader-current-doc-pagenumber)
-(defvar reader-current-doc-pagecount)
 (defvar rcirc-activity)
 (defvar rcirc-activity-types)
+(defvar reader-current-doc-pagecount)
+(defvar reader-current-doc-pagenumber)
 (defvar symbol-overlay-keywords-alist)
 (defvar symbol-overlay-temp-symbol)
 (defvar text-scale-mode-amount)
@@ -664,7 +667,9 @@ mouse-3: Toggle minor modes"
 mouse-1: Display minor modes menu"
              local-map ,minions-mode-line-minor-modes-map)
             ,sep)
-        `((:propertize ("" minor-mode-alist)
+        `((:propertize ("" ,(if (boundp 'mode-line-minor-modes)
+                                mode-line-minor-modes
+                              minor-mode-alist))
            face ,face
            mouse-face ,mouse-face
            help-echo ,help-echo
@@ -3538,6 +3543,42 @@ Otherwise, it displays the message like `message' would."
                'face (doom-modeline-face)
                'mouse-face 'doom-modeline-highlight)
    (doom-modeline-spc)))
+
+;;
+;; Spell
+;;
+
+(doom-modeline-def-segment spell
+  (when (and doom-modeline-spell
+             (bound-and-true-p flyspell-mode))
+    (let ((sep (doom-modeline-spc))
+          (vsep (doom-modeline-vspc))
+          (face (doom-modeline-face 'doom-modeline-spell)))
+      (propertize
+       (concat
+        sep
+        (doom-modeline-icon 'mdicon "nf-md-spellcheck" "🖉"
+                            flyspell-mode-line-string
+                            :face face)
+        vsep
+        (propertize (substring (or ispell-local-dictionary
+			                       ispell-dictionary
+                                   "--")
+                               0 2)
+                    'face face)
+        sep)
+       'help-echo "mouse-1: Change dictionary
+mouse-2: Show help for minor mode"
+       'mouse-face 'doom-modeline-highlight
+       'local-map (let ((map (make-sparse-keymap)))
+                    (define-key map [mode-line mouse-1]
+                      #'ispell-change-dictionary)
+                    (define-key map [mode-line mouse-2]
+                      (lambda ()
+                        (interactive)
+                        (describe-function 'flyspell-mode)))
+                    map)))))
+
 
 ;;
 ;; Kubernetes
