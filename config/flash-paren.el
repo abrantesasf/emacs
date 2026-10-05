@@ -1,3 +1,4 @@
+;;-*- lexical-binding: t; -*-
 ;;; flash-paren.el --- flash matching parens a la Zmacs
 
 ;; Copyright (C) 1995, 1997, 1999 Noah S. Friedman

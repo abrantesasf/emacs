@@ -1,3 +1,4 @@
+;;-*- lexical-binding: t; -*-
 ;;--------------------------------------------------------------------------- ;;
 ;; Atualiza cabeçalho padronizado de data (basicamente para os meus códigos
 ;; de programas em C).

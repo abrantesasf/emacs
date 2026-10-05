@@ -1,3 +1,4 @@
+;;-*- lexical-binding: t; -*-
 ;;----------------------------------------------------------;;
 ;; Ajuste do tamanho da fonte ao estilo Firefox e, além
 ;; disso, aumenta o tamanho padrão da fonte da tela

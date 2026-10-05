@@ -1,3 +1,4 @@
+;;-*- lexical-binding: t; -*-
 ;; Realce para KEYWORD1
 (font-lock-add-keywords
  'c++-mode
