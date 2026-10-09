@@ -5,8 +5,8 @@
 ;; Author: Feng Shu <tumashu@163.com>
 ;; Maintainer: Feng Shu <tumashu@163.com>
 ;; URL: https://github.com/tumashu/posframe
-;; Package-Version: 20260930.2214
-;; Package-Revision: 4b69cc261f5a
+;; Package-Version: 20261008.904
+;; Package-Revision: 45450ee132d0
 ;; Keywords: convenience, tooltip
 ;; Package-Requires: ((emacs "26.1"))
 
@@ -808,8 +808,11 @@ ACCEPT-FOCUS."
       (set-frame-parameter posframe--frame 'parent-frame parent-frame)
 
       ;; Set text scale based on the parent frame text scale.
-      (text-scale-set
-       (funcall posframe-text-scale-factor-function parent-text-scale-mode-amount))
+      (require 'face-remap)
+      (let ((target-scale (funcall posframe-text-scale-factor-function
+                                   parent-text-scale-mode-amount)))
+        (unless (equal target-scale text-scale-mode-amount)
+          (text-scale-set target-scale)))
 
       posframe--frame)))
 

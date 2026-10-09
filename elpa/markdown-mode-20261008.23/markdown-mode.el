@@ -6,8 +6,8 @@
 ;; Author: Jason R. Blevins <jblevins@xbeta.org>
 ;; Maintainer: Jason R. Blevins <jblevins@xbeta.org>
 ;; Created: May 24, 2007
-;; Package-Version: 20260827.909
-;; Package-Revision: c6843032aa95
+;; Package-Version: 20261008.23
+;; Package-Revision: aa79129f3de3
 ;; Package-Requires: ((emacs "28.1"))
 ;; Keywords: Markdown, GitHub Flavored Markdown, itex
 ;; URL: https://jblevins.org/projects/markdown-mode/
@@ -9113,8 +9113,21 @@ Returns nil if there is no task list item at the point."
     (let ((case-fold-search t))
       (save-excursion
         (while (re-search-forward markdown-regex-gfm-checkbox end t)
-          (make-button (match-beginning 1) (match-end 1)
-                       :type 'markdown-gfm-checkbox-button))))))
+          (let ((btn-start (match-beginning 1))
+                (btn-end (match-end 1))
+                found)
+            ;; Keep a button which has already been made for this checkbox and
+            ;; remove stale checkbox buttons whose range no longer matches it
+            (dolist (ov (overlays-in btn-start btn-end))
+              (when (and (overlay-get ov 'button)
+                         (eq (overlay-get ov 'type) 'markdown-gfm-checkbox-button))
+                (if (and (not found)
+                         (= (overlay-start ov) btn-start)
+                         (= (overlay-end ov) btn-end))
+                    (setq found t)
+                  (delete-overlay ov))))
+            (unless found
+              (make-button btn-start btn-end :type 'markdown-gfm-checkbox-button))))))))
 
 ;; Called when any modification is made to buffer text.
 (defun markdown-gfm-checkbox-after-change-function (beg end _)

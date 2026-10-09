@@ -5,8 +5,8 @@
 ;; Author: Vibhav Pant, Fangrui Song, Ivan Yonchovski
 ;; Keywords: languages
 ;; Package-Requires: ((emacs "29.1") (dash "2.18.0") (f "0.21.0") (ht "2.3") (spinner "1.7.3") (markdown-mode "2.3") (lv "0") (eldoc "1.11"))
-;; Package-Version: 20261002.228
-;; Package-Revision: 638393e51dec
+;; Package-Version: 20261007.2144
+;; Package-Revision: bfc712f6e627
 
 ;; URL: https://github.com/emacs-lsp/lsp-mode
 ;; This program is free software; you can redistribute it and/or modify
@@ -3593,7 +3593,8 @@ CANCEL-HANDLER will be called in case the request is being canceled.
 If NO-MERGE is non-nil, don't merge the results but return alist
 workspace->result.
 CANCEL-TOKEN is the token that can be used to cancel request."
-  (lsp--send-request-async `(:jsonrpc "2.0" :method ,method :params ,params)
+  (lsp--send-request-async (append `(:jsonrpc "2.0" :method ,method)
+                                   (when params `(:params ,params)))
                            callback mode error-handler cancel-handler no-merge cancel-token))
 
 (defun lsp--create-request-cancel (id workspaces hook buf method cancel-callback)
@@ -3917,7 +3918,6 @@ disappearing, unset all the variables related to it."
                       (diagnostic . ((dynamicRegistration . :json-false)
                                      (relatedDocumentSupport . :json-false)))
                       (linkedEditingRange . ((dynamicRegistration . t)))
-                      (inlineCompletion . ())
                       ,@(when lsp-inlay-hint-enable
                           '((inlayHint . ((dynamicRegistration . :json-false)
                                           (resolveSupport . ((properties . ["textEdits" "tooltip"])))))))))
@@ -8323,8 +8323,9 @@ SESSION is the active session."
                                 :version (emacs-version))
               :rootUri (lsp--path-to-uri root)
               :capabilities (lsp--client-capabilities custom-capabilities)
-              :initializationOptions initialization-options
               :workDoneToken "1")
+        (when initialization-options
+          (list :initializationOptions initialization-options))
         (when lsp-server-trace
           (list :trace lsp-server-trace))
         (->> (or workspace-folders (list root))

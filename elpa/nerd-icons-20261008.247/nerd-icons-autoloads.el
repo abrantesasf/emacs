@@ -11,57 +11,57 @@
 
 ;;; Generated autoloads from nerd-icons.el
 
-(autoload 'nerd-icons-install-fonts "nerd-icons" "\
-Helper function to download and install the latests fonts based on OS.
+(autoload 'nerd-icons-install-fonts "nerd-icons"
+"Helper function to download and install the latests fonts based on OS.
 The provided Nerd Font is Symbols Nerd Font Mono.
 When PFX is non-nil, ignore the prompt and just install.
 On Windows only, when PFX is a path, ignore the prompt and download there.
 
 (fn &optional PFX)" t)
-(autoload 'nerd-icons-insert "nerd-icons" "\
-Interactive icon insertion function.
+(autoload 'nerd-icons-insert "nerd-icons"
+"Interactive icon insertion function.
 When Prefix ARG is non-nil, insert the propertized icon.
 When GLYPH-SET is non-nil, limit the candidates to the icon set matching it.
 
 (fn &optional ARG GLYPH-SET)" t)
-(autoload 'nerd-icons-icon-for-dir "nerd-icons" "\
-Get the formatted icon for DIR.
+(autoload 'nerd-icons-icon-for-dir "nerd-icons"
+"Get the formatted icon for DIR.
 ARG-OVERRIDES should be a plist containining `:height',
 `:v-adjust' or `:face' properties like in the normal icon
 inserting functions.
 
 (fn DIR &rest ARG-OVERRIDES)")
-(autoload 'nerd-icons-icon-for-file "nerd-icons" "\
-Get the formatted icon for FILE.
+(autoload 'nerd-icons-icon-for-file "nerd-icons"
+"Get the formatted icon for FILE.
 ARG-OVERRIDES should be a plist containining `:height',
 `:v-adjust' or `:face' properties like in the normal icon
 inserting functions.
 
 (fn FILE &rest ARG-OVERRIDES)")
-(autoload 'nerd-icons-icon-for-extension "nerd-icons" "\
-Get the formatted icon for EXT.
+(autoload 'nerd-icons-icon-for-extension "nerd-icons"
+"Get the formatted icon for EXT.
 ARG-OVERRIDES should be a plist containining `:height',
 `:v-adjust' or `:face' properties like in the normal icon
 inserting functions.
 
 (fn EXT &rest ARG-OVERRIDES)")
-(autoload 'nerd-icons-icon-for-mode "nerd-icons" "\
-Get the formatted icon for MODE.
+(autoload 'nerd-icons-icon-for-mode "nerd-icons"
+"Get the formatted icon for MODE.
 ARG-OVERRIDES should be a plist containining `:height',
 `:v-adjust' or `:face' properties like in the normal icon
 inserting functions.
 
 (fn MODE &rest ARG-OVERRIDES)")
-(autoload 'nerd-icons-icon-for-url "nerd-icons" "\
-Get the formatted icon for URL.
+(autoload 'nerd-icons-icon-for-url "nerd-icons"
+"Get the formatted icon for URL.
 If an icon for URL isn't found in `nerd-icons-url-alist', a globe is used.
 ARG-OVERRIDES should be a plist containining `:height',
 `:v-adjust' or `:face' properties like in the normal icon
 inserting functions.
 
 (fn URL &rest ARG-OVERRIDES)")
-(autoload 'nerd-icons-icon-for-buffer "nerd-icons" "\
-Get the formatted icon for the current buffer.
+(autoload 'nerd-icons-icon-for-buffer "nerd-icons"
+"Get the formatted icon for the current buffer.
 
 ARG-OVERRIDES should be a plist containing `:height',
 `:v-adjust' or `:face' properties like in the normal icon
