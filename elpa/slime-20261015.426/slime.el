@@ -3,8 +3,8 @@
 ;; URL: https://github.com/slime/slime
 ;; Package-Requires: ((emacs "24.3") (macrostep "0.9"))
 ;; Keywords: languages, lisp, slime
-;; Package-Version: 20261011.214
-;; Package-Revision: 56d528fefd80
+;; Package-Version: 20261015.426
+;; Package-Revision: 73699f4b39b4
 
 ;;;; License and Commentary
 
@@ -1598,10 +1598,34 @@ EVAL'd by Lisp."
                  (progn
                    (decode-coding-region start end 'utf-8-unix)
                    (setq end (point-max))
-                   (read (current-buffer)))
+                   ;; Swank never sends #N= syntax.  Rejecting it means
+                   ;; slime-net-check-object doesn't need to check for cycles.
+                   (let ((read-circle nil))
+                     (slime-net-check-object (read (current-buffer)))))
                (error
                 (slime-handle-net-read-error error))))
       (delete-region (point-min) end))))
+
+(defun slime-net-check-object (object)
+  "Signal an error unless OBJECT is known safe.
+Accepts conses, symbols, numbers, and strings without text properties.
+Text properties like `display' can run Elisp when the string is shown.
+Return OBJECT."
+  (cond ((consp object)
+         (cl-loop for tail on object
+                  do (slime-net-check-object (car tail))
+                  ;; final tail is nil for normal lists,
+                  ;; or the last element in a dotted list
+                  finally (slime-net-check-object tail)))
+        ((stringp object)
+         (when (or (text-properties-at 0 object) (next-property-change 0 object))
+           (signal 'invalid-read-syntax
+                   '("Text properties are not allowed in Swank messages"))))
+        ((not (or (symbolp object) (numberp object)))
+         (signal 'invalid-read-syntax
+                 (list (format "%s is not allowed in Swank messages"
+                               (type-of object))))))
+  object)
 
 (defun slime-net-decode-length ()
   (string-to-number (buffer-substring-no-properties (point) (+ (point) 6))
@@ -2601,7 +2625,7 @@ region that will be compiled.")
                (:conc-name slime-compilation-result.)
                (:constructor nil)
                (:copier nil))
-  tag notes successp duration loadp faslfile)
+  tag notes successp duration loadp faslfile return-type)
 
 (defvar slime-last-compilation-result nil
   "The result of the most recently issued compilation.")
@@ -2723,12 +2747,16 @@ ASK asks the user."
     (always t)
     (ask (y-or-n-p "Compilation failed.  Load fasl file anyway? "))))
 
+(defvar slime-show-return-type-after-compilation nil)
+
 (defun slime-compilation-finished (result)
   (with-struct (slime-compilation-result. notes duration successp
-                                          loadp faslfile) result
+                                          loadp faslfile return-type) result
     (setf slime-last-compilation-result result)
     (slime-show-note-counts notes duration (cond ((not loadp) successp)
-                                                 (t (and faslfile successp))))
+                                                 (t (and faslfile successp)))
+                            (and slime-show-return-type-after-compilation
+                                 return-type))
     (when slime-highlight-compiler-notes
       (slime-highlight-notes notes))
     (run-hook-with-args 'slime-compilation-finished-hook notes)
@@ -2737,7 +2765,7 @@ ASK asks the user."
                    (slime-load-failed-fasl-p)))
       (slime-eval-async `(swank:load-file ,faslfile)))))
 
-(defun slime-show-note-counts (notes secs successp)
+(defun slime-show-note-counts (notes secs successp &optional return-type)
   (message (concat
             (cond (successp "Compilation finished")
                   (t (slime-add-face 'font-lock-warning-face
@@ -2752,7 +2780,10 @@ ASK asks the user."
              (sort (slime-alistify notes #'slime-note.severity #'eq)
                    (lambda (x y) (slime-severity< (car y) (car x))))
              "  ")
-            (if secs (format "  [%.2f secs]" secs)))))
+            (if secs (format "  [%.2f secs]" secs))
+            (when return-type
+              " => ")
+            return-type)))
 
 (defun slime-highlight-notes (notes)
   "Highlight compiler notes, warnings, and errors in the buffer."
@@ -2881,7 +2912,7 @@ Each newlines and following indentation is replaced by a single space."
     (slime-insert-compilation-log notes)
     (compilation-mode)))
 
-(defun slime-maybe-show-compilation-log (notes)
+(defun slime-maybe-show-compilation-log (notes &optional return-type)
   "Display the log on failed compilations or if NOTES is non-nil."
   (slime-create-compilation-log notes)
   (with-struct (slime-compilation-result. notes duration successp)
@@ -4694,6 +4725,7 @@ source-location."
 
 (defun slime-xref-prev-line ()
   (interactive)
+  (beginning-of-line)
   (let ((loc (slime-search-property 'slime-location t)))
     (when slime-xref-next-line-show
       (slime-xref-show-location loc))))
@@ -7108,6 +7140,36 @@ Only considers buffers that are not already visible."
         (t
          spec)))
 
+(defconst slime-safe-indentation-functions
+  '(lisp-indent-tagbody lisp-indent-do lisp-indent-defsetf
+    lisp-indent-defmethod lisp-indent-function-lambda-hack
+    lisp-indent-loop common-lisp-indent-if*)
+  "Indent functions from slime-cl-indent and cl-indent that specs may name.
+These only inspect the buffer and dispatch through fixed specs, so
+calling them with any arguments is harmless.")
+
+(defun slime-safe-indentation-spec-p (spec)
+  "Return non-nil if SPEC cannot make Emacs call an arbitrary function.
+SPEC has already been processed by `slime-intern-indentation-spec'.
+
+SPEC is safe if it is (as SYMBOL), an alias to SYMBOL's locally
+configured indentation, or a tree whose leaves are all integers,
+members of `slime-safe-indentation-functions', or one of nil, defun,
+&lambda, &body, &rest, &whole.  The indenters run code only by calling
+a symbol taken from the spec, and none of these leaves is callable
+except the known-safe indent functions, so this holds however the
+leaves are arranged.  A malformed spec can at worst make indentation
+signal an error."
+  (pcase spec
+    (`(as ,(pred symbolp)) t)
+    (_ (cl-labels ((safe-p (x)
+                     (if (consp x)
+                         (and (safe-p (car x)) (safe-p (cdr x)))
+                       (or (integerp x)
+                           (memq x '(nil defun &lambda &body &rest &whole))
+                           (memq x slime-safe-indentation-functions)))))
+         (safe-p spec)))))
+
 ;; FIXME: restore the old version without per-package
 ;; stuff. slime-indentation.el should be able tho disable the simple
 ;; version if needed.
@@ -7121,17 +7183,19 @@ is setup, unless the user already set one explicitly."
     (let ((symbol (intern (car info)))
           (indent (slime-intern-indentation-spec (cl-second info)))
           (packages (cl-third info)))
-      (if (and (boundp 'common-lisp-system-indentation)
-               (fboundp 'slime-update-system-indentation))
-          ;; A table provided by slime-cl-indent.el.
-          (funcall #'slime-update-system-indentation symbol indent packages)
-        ;; Does the symbol have an indentation value that we set?
-        (when (equal (get symbol 'common-lisp-indent-function)
-                     (get symbol 'slime-indent))
-          (put symbol 'common-lisp-indent-function indent)
-          (put symbol 'slime-indent indent)))
-      (run-hook-with-args 'slime-indentation-update-hooks
-                          symbol indent packages))))
+      (if (not (slime-safe-indentation-spec-p indent))
+          (message "Ignoring unsafe indentation spec for %s" symbol)
+        (if (and (boundp 'common-lisp-system-indentation)
+                 (fboundp 'slime-update-system-indentation))
+            ;; A table provided by slime-cl-indent.el.
+            (funcall #'slime-update-system-indentation symbol indent packages)
+          ;; Does the symbol have an indentation value that we set?
+          (when (equal (get symbol 'common-lisp-indent-function)
+                       (get symbol 'slime-indent))
+            (put symbol 'common-lisp-indent-function indent)
+            (put symbol 'slime-indent indent)))
+        (run-hook-with-args 'slime-indentation-update-hooks
+                            symbol indent packages)))))
 
 
 ;;;; Contrib modules

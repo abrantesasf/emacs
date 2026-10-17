@@ -384,18 +384,15 @@ Usually this is just its basename."
          (when (match-end 4)
            (magit--put-face (or (match-beginning 3) (match-beginning 4))
                             (match-end 4) 'error v)))
-       (cond ((not v) nil)
-             ((string-match "\\`[0-9]" v)
-              (concat " " v))
-             ((string-match "\\`[^0-9]+" v)
-              (magit--put-face 0 (match-end 0) 'shadow v)
-              v))))
-    [[v (magit-rev-format "#%cd-g%h" nil "--date=format:%Y%m%d")]]
-    ([_(magit-anything-modified-p)]
-     [v (magit--propertize-face (concat v "-dirty") 'shadow)]
-     (magit--put-face 9 (length v) 'error v)
-     v)
-    ((magit--propertize-face v 'shadow))))
+       (when (string-match-p "\\`[0-9]" v)
+         (setq v (concat " " v)))
+       v))
+    ([v (magit-rev-format "#%cd-g%h" nil "--date=format:%Y%m%d")]
+     (magit--put-face 0 (length v) 'shadow v)
+     (when (magit-anything-modified-p)
+       (setq v (concat v "-dirty"))
+       (magit--put-face 9 (length v) 'error v))
+     v)))
 
 (defun magit-repolist-version< (a b)
   (save-match-data
