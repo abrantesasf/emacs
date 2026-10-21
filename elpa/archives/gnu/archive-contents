@@ -458,14 +458,14 @@
       (:authors ("Augusto Stoffel" . "arstoffel@gmail.com"))
       (:commit . "caffb420be106cebbdfe4474ed0507a601603f83"))])
  (colorful-mode
-  . [(1 2 5) ((emacs (28 1)) (compat (30 1 0 0)))
+  . [(1 2 6) ((emacs (28 1)) (compat (31)) (cl-lib (1 0)))
      "Preview any color in your buffer in real time" tar
      ((:url . "https://github.com/DevelopmentCool2449/colorful-mode")
       (:keywords "faces" "tools" "matching" "convenience")
       (:maintainer ("Jen-Chieh" . "jcs090218@gmail.com")
 		   ("Elias G. Perez" . "eg642616@gmail.com"))
       (:authors ("Elias G. Perez" . "eg642616@gmail.com"))
-      (:commit . "484d1b8e7c3e98ef7ccf99eddfcea2e30f5c63a2"))])
+      (:commit . "439e679f7a60e6107e5402bb6fe4cbb561b9fe94"))])
  (comint-mime
   . [(0 7) ((emacs (28 1)) (compat (29 1)) (mathjax (0 1)))
      "Display content of various MIME types in comint buffers" tar
@@ -1377,12 +1377,12 @@
       (:authors ("Yuan Fu" . "casouri@gmail.com"))
       (:commit . "d7c243ac3be2a67986f53f3dc31ba1426e82b771"))])
  (futur
-  . [(2 0) nil "Future/promise-based async library" tar
-     ((:keywords "concurrency" "async" "promises" "futures")
+  . [(2 1) ((emacs (27 1))) "Future/promise-based async library" tar
+     ((:url . "https://elpa.gnu.org/packages/futur.html")
+      (:keywords "concurrency" "async" "promises" "futures")
       (:maintainer "Stefan Monnier" . "monnier@iro.umontreal.ca")
       (:authors ("Stefan Monnier" . "monnier@iro.umontreal.ca"))
-      (:url . "https://elpa.gnu.org/packages/futur.html")
-      (:commit . "2bd1d6cb405e8e27719a3be4f2de79668b1c5d2f"))])
+      (:commit . "aca9a958ff533122eef4e22721471263389eccc4"))])
  (gcmh
   . [(0 2 1) ((emacs (24))) "the Garbage Collector Magic Hack" tar
      ((:url . "https://gitlab.com/koral/gcmh") (:keywords "internal")
@@ -1656,6 +1656,12 @@
       (:maintainer "Thierry Volpiatto" . "thievol@posteo.net")
       (:authors ("Thierry Volpiatto" . "thievol@posteo.net"))
       (:commit . "33bf6f73e314ade8da27dd793c69c21312c97f10"))])
+ (isbn
+  . [(0 2 0) ((emacs (28 1))) "ISBN library" tar
+     ((:url . "https://git.sr.ht/~cook/isbn.el") (:keywords "data")
+      (:maintainer "Maximilian Cook" . "maximilian@fclr.net")
+      (:authors ("Maximilian Cook" . "maximilian@fclr.net"))
+      (:commit . "e52d1c194e4fd7c0da7c3bf67b33e6923f785059"))])
  (isearch-mb
   . [(0 8) ((emacs (27 1))) "Control isearch from the minibuffer" tar
      ((:url . "https://github.com/astoff/isearch-mb")
@@ -3059,13 +3065,13 @@
       (:authors ("Artur Malabarba" . "emacs@endlessparentheses.com"))
       (:commit . "fffe8d0b42b143a2e7df0470d9049fa57b6ecac5"))])
  (spacious-padding
-  . [(0 9 0) ((emacs (28 1)))
+  . [(0 9 1) ((emacs (28 1)))
      "Increase the padding/spacing of frames and windows" tar
      ((:url . "https://github.com/protesilaos/spacious-padding")
       (:keywords "convenience" "focus" "writing" "presentation")
       (:maintainer "Protesilaos" . "info@protesilaos.com")
       (:authors ("Protesilaos" . "info@protesilaos.com"))
-      (:commit . "b390a5b95a6398ff83f8eeb623b29147f42582a7"))])
+      (:commit . "7461d9a9c8aa3e706c169a11c33cf4925c46c43f"))])
  (speedrect
   . [(0 7) ((emacs (29 1)) (compat (30)))
      "Fast modal rectangle commands" tar
@@ -3422,13 +3428,13 @@
       (:authors ("Toby Cubitt" . "toby-predictive@dr-qubit.org"))
       (:commit . "e7326a61b1cd2605867063fcfc5ddddaeed6d993"))])
  (triples
-  . [(0 6 2) ((seq (2 0)) (emacs (28 1)))
+  . [(0 7 1) ((seq (2 0)) (emacs (28 1)))
      "A flexible triple-based database for use in apps" tar
      ((:url . "https://github.com/ahyatt/triples")
       (:keywords "triples" "kg" "data" "sqlite")
       (:maintainer "Andrew Hyatt" . "ahyatt@gmail.com")
       (:authors ("Andrew Hyatt" . "ahyatt@gmail.com"))
-      (:commit . "127e42e98f7df3997d538d72a67604c9584517dd"))])
+      (:commit . "0aa53e6dda315ff05c3138cb4e86e0ff53266f37"))])
  (truename-cache
   . [(0 3 7) ((emacs (27 1)) (compat (30 1)))
      "Efficiently de-dup file-names" tar
@@ -3699,12 +3705,12 @@
       (:url . "https://elpa.gnu.org/packages/which-key.html")
       (:commit . "34b832fce1d01c22aa644196cd6e6b50b1d403ee"))])
  (window-commander
-  . [(3 0 2) ((emacs (27 1))) "Simply execute commands on windows" tar
+  . [(3 1) ((emacs (27 1))) "Simply execute commands on windows" tar
      ((:url . "https://dsemy.com/projects/window-commander")
       (:keywords "convenience")
       (:maintainer "Daniel Semyonov" . "daniel@dsemy.com")
       (:authors ("Daniel Semyonov" . "daniel@dsemy.com"))
-      (:commit . "ad92c184ccc06f46b2caf001bc8201d983eca626"))])
+      (:commit . "26e021f2cf0aa510a72cb61a673fa652670bead9"))])
  (window-tool-bar
   . [(0 3) ((emacs (27 1)) (compat (29 1)))
      "Add tool bars inside windows" tar
