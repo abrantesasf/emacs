@@ -1,18 +1,60 @@
-Para usar o "--with-json", instalar:
-apt install libjansson4 libjansson-dev
+Emacs 31.1
+==========
 
-Emacs 29.1:
------------
-./configure --prefix=/opt/emacs-29.1 --enable-checking --enable-autodepend --enable-gcc-warnings=warn-only --enable-check-lisp-object-type --with-mailutils --with-kerberos5 --with-hesiod --with-sound=yes --with-x-toolkit=gtk3 --with-imagemagick --with-json --with-xwidgets --with-x --with-gpm
+1) Antes de configurar: instalar a libgccjit (para native-comp)
+---------------------------------------------------------------
+A native-comp compila o Elisp (do Emacs e dos pacotes) para código de máquina,
+deixando o Emacs mais rápido. Ela precisa da libgccjit na MESMA versão do GCC
+que vai compilar o Emacs (veja com "gcc --version"; hoje é o GCC 14):
 
-Emacs 29.4:
------------
-./configure --prefix=/opt/emacs-29.4 --enable-checking --enable-autodepend --enable-gcc-warnings=warn-only --enable-check-lisp-object-type --with-mailutils --with-kerberos5 --with-hesiod --with-sound=yes --with-x-toolkit=gtk3 --with-imagemagick --with-json --with-tree-sitter --with-xwidgets --with-x
+sudo apt install libgccjit-14-dev
 
-make
+(de forma genérica: sudo apt install libgccjit-$(gcc -dumpversion | cut -d. -f1)-dev)
+
+
+2) Configurar
+-------------
+Dentro do diretório do código-fonte do Emacs 31.1 (se o diretório já foi usado
+em outro build, rode antes "make distclean"):
+
+./configure --prefix=/opt/emacs-31.1 --with-native-compilation=yes --with-mailutils --with-kerberos5 --with-hesiod --with-sound=yes --with-x-toolkit=gtk3 --with-imagemagick --with-tree-sitter --with-dbus --with-xwidgets --with-x
+
+Observações:
+  - Ao final, o configure deve mostrar:
+        Does Emacs have native lisp compiler?                   yes
+    Se mostrar "no" (ou der erro), a libgccjit não foi encontrada.
+  - Com "--with-native-compilation=aot" todo o Lisp do próprio Emacs é
+    compilado já no "make" (o build demora bem mais); com "yes" ele é compilado
+    sob demanda, na primeira vez que for usado.
+  - Opções retiradas em relação aos builds anteriores:
+      --enable-checking, --enable-check-lisp-object-type:
+          verificações internas para depurar o próprio Emacs; deixam o
+          Emacs mais lento.
+      --enable-gcc-warnings=warn-only:
+          avisos do GCC para quem desenvolve o Emacs.
+      --enable-autodepend:
+          já é o padrão.
+      --with-json:
+          sem efeito desde o Emacs 30 (o JSON agora é nativo e não usa mais a
+          libjansson).
+
+
+3) Compilar, testar e instalar
+------------------------------
+make -j$(nproc)
 
 src/emacs -Q
+   (para testar; dentro dele, M-: (native-comp-available-p) deve retornar t)
 
 sudo make install
 
-sudo ln -s /opt/emacs-29.4 /opt/emacs
+sudo ln -sfn /opt/emacs-31.1 /opt/emacs
+   (o link já existe se /opt/emacs aponta para o 31.1; o comando só garante)
+
+
+4) Depois da instalação
+-----------------------
+Na primeira vez que o Emacs for aberto, os pacotes do elpa/ serão compilados
+em segundo plano (pode demorar alguns minutos e mostrar avisos no buffer
+*Warnings*). O resultado fica em ~/.emacs.d/eln-cache/, que é ignorado
+pelo Git.

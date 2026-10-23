@@ -2,11 +2,7 @@
 ;;----------------------------------------------------------;;
 ;; Configuração do Company para GTK em programas C/C++
 ;;----------------------------------------------------------;;
-
-(add-hook 'c-mode-hook 'company-mode)
-(add-hook 'c++-mode-hook 'company-mode)
-
-(setq company-backends '((company-clang company-files)))
+;; Os backends do company são definidos em company_config.el.
 
 ;; Obter os diretórios das header files com:
 ;; pkg-config --cflags --libs gtk+-3.0
@@ -18,7 +14,7 @@
 ;      "-I/usr/include/gtk-3.0" "-I/usr/include/gio-unix-2.0"
 ;      "-I/usr/include/cairo" "-I/usr/include/pango-1.0"
 ;      "-I/usr/include/fribidi" "-I/usr/include/harfbuzz"
-;      "-I/usr/include/atk-1.0" "-I/usr/include/cairo" 
+;      "-I/usr/include/atk-1.0" "-I/usr/include/cairo"
 ;      "-I/usr/include/pixman-1" "-I/usr/include/uuid"
 ;      "-I/usr/include/freetype2" "-I/usr/include/libpng16"
 ;      "-I/usr/include/gdk-pixbuf-2.0" "-I/usr/include/libmount"

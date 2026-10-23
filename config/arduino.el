@@ -5,14 +5,17 @@
 
 (add-to-list 'auto-mode-alist '("\\.ino\\'" . c++-mode))
 
+(load "arduino_highlighting_code.el")
+
+;; Só para arquivos .ino (os demais arquivos C++ não são afetados).
+;; Parênteses e indentação automáticos já são globais (ver c.el).
 (add-hook 'c++-mode-hook
   (lambda ()
-    (c-set-style "k&r")
-    (setq c-basic-offset 4)
-    (electric-pair-mode 1)     ;; Adicionar parênteses e aspas automaticamente
-    (electric-indent-mode 1))) ;; Auto-indentar
-
-(load-file "/home/abrantesasf/.emacs.d/config/arduino_highlighting_code.el")
+    (when (and buffer-file-name
+               (string-match-p "\\.ino\\'" buffer-file-name))
+      (c-set-style "k&r")
+      (setq c-basic-offset 4)
+      (arduino-realce-codigo))))
 
 ;(setq-default flycheck-clang-include-path
 ;  '("/home/abrantesasf/.arduino15/packages/arduino/hardware/avr/1.8.6/cores/arduino/"))

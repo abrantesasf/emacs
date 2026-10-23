@@ -5,27 +5,26 @@
 ;;--------------------------------------------------------------------------- ;;
 
 ;; Modo de funcionamento:
-;;   a) Procura por texto com o formato:
+;;   a) Procura pela primeira linha com um dos formatos:
 ;;      " * Date : 2025-04-21 14:12 -0300"
-;;   b) Troca a data, hora e timezone pelos valores atuais.
+;;      " * Data : 2025-04-21 14:12 -0300"
+;;   b) Troca o que vem depois dos dois-pontos pela data, hora e timezone
+;;      atuais, mantendo o alinhamento original da linha.
 (defun atualizar-data-cabecalho ()
-  "Procura por uma linha de data no formato '* Date ...' e a atualiza.
-  É flexível quanto ao espaçamento no início da linha e ao redor dos elementos."
+  "Procura por uma linha de data no formato `* Date :' ou `* Data :' e a atualiza.
+É flexível quanto ao espaçamento no início da linha e ao redor dos elementos."
   (interactive)
   (save-excursion
     ;; Começa a buscar em point-min (início do buffer):
-    (goto-char (point-min)) 
+    (goto-char (point-min))
     ;; Expressão regular de busca:
-    (if (re-search-forward "^\\s-*\\(\\*\\s-+Date\\s-*:\\s-+\\)" nil t)
+    (if (re-search-forward "^[ \t]*\\*[ \t]+Dat[ae][ \t]*:" nil t)
         ;; Se encontrou, executa a substituição
         (progn
-          ; Vai para o início da linha
-          (goto-char (match-beginning 0))
-          ; Apaga a linha inteira
-          (kill-line)
-          ;; Insere a nova linha com a data atual e formatação padronizada
-          (insert (format " * Date    : %s"
-                          (format-time-string "%Y-%m-%d %H:%M %z"))))
+          ;; Apaga o que vem depois dos dois-pontos (sem usar o kill-ring)
+          (delete-region (point) (line-end-position))
+          ;; Insere a data atual
+          (insert " " (format-time-string "%Y-%m-%d %H:%M %z")))
       ;; Se NÃO encontrou, exibe uma mensagem
       (message "A linha de Data não foi encontrada!"))))
 

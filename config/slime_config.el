@@ -17,8 +17,12 @@
 (require 'slime-autoloads)
 (setq slime-contribs '(slime-fancy slime-asdf slime-sprof slime-mdot-fu
                        slime-compiler-notes-tree slime-hyperdoc
-                       slime-indentation slime-repl inferior-slime slime-autodoc))
-(setq slime-complete-symbol-function 'slime-fuzzy-complete-symbol)
+                       slime-indentation slime-repl inferior-slime slime-autodoc
+                       slime-highlight-edits))
+;; Variável obsoleta, mas ainda é a única forma de usar a completação fuzzy
+;; como completação padrão do SLIME:
+(with-suppressed-warnings ((obsolete slime-complete-symbol-function))
+  (setq slime-complete-symbol-function 'slime-fuzzy-complete-symbol))
 (setq slime-net-coding-system 'utf-8-unix)
 (setq slime-startup-animation nil)
 (setq slime-auto-select-connection 'always)
@@ -32,8 +36,11 @@
 (setq slime-repl-history-remove-duplicates t)
 (setq slime-repl-history-trim-whitespaces t)
 (setq slime-export-symbol-representation-auto t)
-(setq slime-highlight-edits-mode t)
-(setq lisp-indent-function 'common-lisp-indent-function)
+;; Indentação Common Lisp só nos buffers Common Lisp (se for global, o
+;; Emacs Lisp também passa a ser indentado com as regras do Common Lisp):
+(add-hook 'lisp-mode-hook
+          (lambda ()
+            (setq-local lisp-indent-function 'common-lisp-indent-function)))
 (setq lisp-loop-indent-subclauses nil)
 (setq lisp-loop-indent-forms-like-keywords t)
 (setq lisp-lambda-list-keyword-parameter-alignment t)

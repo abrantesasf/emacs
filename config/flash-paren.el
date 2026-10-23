@@ -136,7 +136,7 @@ the mode, respectively."
                                 (>= (prefix-numeric-value prefix) 0)
                               (not flash-paren-mode)))
 
-  (and (interactive-p)
+  (and (called-interactively-p 'interactive)
        (if flash-paren-mode
            (message "flash-paren-mode is enabled")
          (message "flash-paren-mode is disabled")))
@@ -513,7 +513,7 @@ the mode, respectively."
     (defalias 'flash-paren-matching-paren 'matching-paren)
   (defun flash-paren-matching-paren (c)
     (and (memq (char-syntax c) '(?\( ?\)))
-         (lsh (aref (syntax-table) c) -8))))
+         (ash (aref (syntax-table) c) -8))))
 
 (defalias 'flash-paren-characterp
   (if (fboundp 'characterp)

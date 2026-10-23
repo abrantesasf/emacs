@@ -21,8 +21,6 @@
 (define-key company-active-map (kbd "\C-d") 'company-show-doc-buffer)
 (define-key company-active-map (kbd "M-.") 'company-show-location)
 
-(add-hook 'c-mode-hook 'company-mode)
-(add-hook 'c++-mode-hook 'company-mode)
 (setq company-backends '((company-clang company-files company-capf company-dabbrev-code)))
 
 ;; Includes básicos para C/C++:

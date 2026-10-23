@@ -5,13 +5,13 @@
 
 ;; Lista de pacotes a serem instalados
 (setq package-list
-  '(dash dash-functional s ag all-the-icons async company pos-tip
+  '(dash s ag all-the-icons async company pos-tip
     company-quickhelp f shrink-path doom-modeline doom-themes
     elisp-refs expand-region transient with-editor
     helpful loop macrostep magit memoize multiple-cursors neotree
     paredit slime slime-company smex sublime-themes yasnippet
     yasnippet-snippets yasnippet-classic-snippets ess org
-    auto-package-update use-package markdown-toc markdown-soma
+    auto-package-update markdown-toc markdown-soma
     markdown-mode sml-mode slime-repl-ansi-color
     company-quickhelp-terminal auctex lua-mode drag-stuff
     arduino-mode arduino-cli-mode flycheck auto-minor-mode

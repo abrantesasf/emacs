@@ -52,4 +52,7 @@ flycheck_*.el
 # Atualização automática
 .last-package-update-day
 
+# Native-comp (gerado automaticamente para cada versão do Emacs)
+/eln-cache/
+
 

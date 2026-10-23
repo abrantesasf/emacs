@@ -15,5 +15,7 @@
 ;;(add-to-list 'default-frame-alist 
 ;;	     '(font . "Courier Prime-22"))
 ;;(set-frame-font "Courier Prime" nil t)
+;;(add-to-list 'default-frame-alist
+;;	     '(font . "Berkeley Mono SemiBold-22"))
 (add-to-list 'default-frame-alist 
 	     '(font . "Berkeley Mono-22"))

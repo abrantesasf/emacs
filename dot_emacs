@@ -145,7 +145,7 @@
  '(global-display-line-numbers-mode t)
  '(indent-tabs-mode nil)
  '(package-selected-packages
-   '(drag-stuff lua-mode org-board org ess ag all-the-icons async company company-quickhelp dash-functional doom-modeline doom-themes elisp-refs expand-region f git-commit helpful loop macrostep magit memoize multiple-cursors neotree paredit pos-tip s shrink-path slime slime-company smex sublime-themes transient with-editor yasnippet yasnippet-snippets dash))
+   '(drag-stuff lua-mode org-board org ess ag all-the-icons async company company-quickhelp doom-modeline doom-themes elisp-refs expand-region f helpful loop macrostep magit memoize multiple-cursors neotree paredit pos-tip s shrink-path slime slime-company smex sublime-themes transient with-editor yasnippet yasnippet-snippets dash yasnippet-classic-snippets auto-package-update markdown-toc markdown-soma markdown-mode sml-mode slime-repl-ansi-color company-quickhelp-terminal auctex arduino-mode arduino-cli-mode flycheck auto-minor-mode company-arduino lsp-mode xterm-color polymode poly-noweb poly-markdown poly-R))
  '(ps-font-size '(11 . 11))
  '(ps-left-margin 24)
  '(ps-right-header

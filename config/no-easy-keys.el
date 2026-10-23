@@ -64,13 +64,12 @@
   "A minor mode that disables the arrow-keys, pg-up/down, delete
 and backspace.
 
-Use 'M-x no-easy-keys' to toggle this mode in all buffers except
+Use `M-x no-easy-keys' to toggle this mode in all buffers except
 the minibuffer.
 
 Add (no-easy-keys 1) to your .emacs to enable no-easy-keys by
 default."
-
-nil nil 'no-easy-keys-minor-mode-map)
+  :keymap no-easy-keys-minor-mode-map)
 
 (defun no-easy-keys-hook ()
   (interactive)
@@ -78,7 +77,8 @@ nil nil 'no-easy-keys-minor-mode-map)
     (no-easy-keys-minor-mode 1)))
 
 (define-globalized-minor-mode no-easy-keys
-  no-easy-keys-minor-mode no-easy-keys-hook)
+  no-easy-keys-minor-mode no-easy-keys-hook
+  :group 'convenience)
 
 (provide 'no-easy-keys)
 ;;; no-easy-keys.el ends here
