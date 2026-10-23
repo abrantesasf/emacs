@@ -6,6 +6,10 @@
 ;; Configura diretório para packages e configurações adicionais:
 (setq load-path (append (list "~/.emacs.d/config") load-path))
 
+;; Pacotes de terceiros sem o cookie de lexical-binding: registra o aviso
+;; no buffer *Warnings*, mas não abre a janela a cada inicialização:
+(add-to-list 'warning-suppress-types '(files missing-lexbind-cookie))
+
 ;; Configura repositórios MELPA e outros:
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
