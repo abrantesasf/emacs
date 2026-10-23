@@ -9,7 +9,7 @@
 ;; Desabilita a toolbar:
 (tool-bar-mode -1)
 
-;; Desabilita a scroolbar:
+;; Desabilita a scrollbar:
 (scroll-bar-mode -1)
 
 ;; Desabilita a menu bar:

@@ -4,13 +4,16 @@
 ;;----------------------------------------------------------;;
 ;; Retirado de: http://www.emacswiki.org/emacs/FullScreen
 
-(defun toggle-fullscreen (&optional f)
+;; Guarda o estado anterior ao fullscreen:
+(defvar old-fullscreen nil)
+
+(defun toggle-fullscreen ()
   (interactive)
   (let ((current-value (frame-parameter nil 'fullscreen)))
     (set-frame-parameter
      nil 'fullscreen
      (if (equal 'fullboth current-value)
-         (if (boundp 'old-fullscreen) old-fullscreen nil)
+         old-fullscreen
        (progn (setq old-fullscreen current-value)
               'fullboth)))))
 

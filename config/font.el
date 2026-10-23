@@ -1,6 +1,6 @@
 ;;-*- lexical-binding: t; -*-
 ;;----------------------------------------------------------;;
-;; Ajusta a fonta padrão para o Emacs
+;; Ajusta a fonte padrão para o Emacs
 ;;----------------------------------------------------------;;
 
 ;; Ajusta a fonte padrão no Ubuntu (necessário a partir do Emacs 28):

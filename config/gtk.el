@@ -3,6 +3,8 @@
 ;; Configuração do Company para GTK em programas C/C++
 ;;----------------------------------------------------------;;
 ;; Os backends do company são definidos em company_config.el.
+;; Este arquivo não é carregado por padrão: para usá-lo, descomente os
+;; includes abaixo e a linha (load "gtk.el") no dot_emacs.
 
 ;; Obter os diretórios das header files com:
 ;; pkg-config --cflags --libs gtk+-3.0

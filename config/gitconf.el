@@ -9,10 +9,11 @@
 ;; abaixo, que está funcionando, mas só Jesus sabe porque funciona...
 ;;
 ;; Colocar em "~/.gnupg/gpg-agent.conf" e fazer o reload do agent
-;; com "gpgconf --kill gpg-agent":
+;; com "gpgconf --reload gpg-agent":
 ;;     allow-emacs-pinentry
-;;     allow-loopback-pinentry
 ;;     pinentry-program /usr/bin/pinentry-gnome3
+;; (o modo loopback, usado abaixo, já é permitido por padrão no GnuPG 2.4;
+;; o pinentry-gnome3 usa o modo texto quando não há ambiente gráfico)
 
 (require 'epg)
 (setq epg-gpg-program "gpg")
@@ -20,7 +21,7 @@
 (setq epg-pinentry-mode 'loopback)
 
 ;; Configurações para fazer com que o Emacs NÃO SIGA os links simbólicos
-;; de diretórios ao abrir aquivos, fazendo com que ele abra os arquivos
+;; de diretórios ao abrir arquivos, fazendo com que ele abra os arquivos
 ;; "dentro" do diretório que é um link simbólico, e não no diretório
 ;; apontado pelo link:
 (setq find-file-visit-truename nil)

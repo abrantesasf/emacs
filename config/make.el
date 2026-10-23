@@ -4,8 +4,9 @@
 ;;----------------------------------------------------------;;
 
 (defun run-make-in-file-directory ()
-  "Run 'make' in the directory of the current file if a Makefile exists.
-Keep the current buffer in focus and display the *compilation* buffer in the background."
+  "Run `make' in the directory of the current file if a Makefile exists.
+Keep the current buffer in focus and display the *compilation* buffer
+in the background."
   (interactive)
   (if buffer-file-name
       (let ((file-dir (file-name-directory buffer-file-name))

@@ -1,6 +1,6 @@
 ;;-*- lexical-binding: t; -*-
 ;;----------------------------------------------------------;;
-;; Aparência geral do Emacs
+;; Instalação e atualização automática de pacotes
 ;;----------------------------------------------------------;;
 
 ;; Lista de pacotes a serem instalados
@@ -15,7 +15,7 @@
     markdown-mode sml-mode slime-repl-ansi-color
     company-quickhelp-terminal auctex lua-mode drag-stuff
     arduino-mode arduino-cli-mode flycheck auto-minor-mode
-    company-arduino lsp-mode))
+    company-arduino lsp-mode org-board))
 
 ; fetch the list of packages available 
 (unless package-archive-contents

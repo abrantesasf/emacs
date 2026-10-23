@@ -13,7 +13,7 @@
 ;; Inicializa packages:
 (package-initialize)
 
-;; Instala packages neessários, se não estiverem instalados:
+;; Instala packages necessários, se não estiverem instalados:
 (load "instala_packages.el")
 
 
@@ -92,8 +92,9 @@
 ;; Configurações para desenvolvimento GTK com C/C++
 ;;----------------------------------------------------------;;
 
-;; Configuração de opções do company para GTK:
-(load "gtk.el")
+;; Configuração de opções do company para GTK (descomente se for
+;; usar os includes do GTK definidos em gtk.el):
+;(load "gtk.el")
 
 
 ;;----------------------------------------------------------;;
