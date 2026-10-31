@@ -99,6 +99,8 @@ this."
 
 (defun magit--early-process-lines (program &rest args)
   "Only used to initialize custom options."
+  ;; `magit-process-environment' isn't defined yet
+  ;; and uses this function, so it cannot be used here.
   (let ((process-environment
          (append magit-git-environment process-environment)))
     (ignore-error file-missing
@@ -164,7 +166,8 @@ run by the Git hooks `post-commit', `post-merge' and `post-rewrite'.
 Use `magit-user-githook-file' (which see) to define additional hooks.
 
 Git hooks can only run Lisp hooks, if Magit invokes Git asynchronously
-and on the local machine, and at least Git v2.54.0 is used."
+and on the local machine, `with-editor-emacsclient-executable' is set,
+and at least Git v2.54.0 is used."
   :package-version '(magit . "4.6.0")
   :group 'magit-process
   :type 'boolean)
@@ -405,17 +408,21 @@ kludge to fix an unusable value of `shell-file-name'."
        ,@body)))
 
 (defmacro magit--with-temp-process-buffer (&rest body)
-  "Like `with-temp-buffer', but always propagate `process-environment'.
-When that var is buffer-local in the calling buffer, it is not
-propagated by `with-temp-buffer', so we explicitly ensure that
-happens, so that processes will be invoked consistently.  BODY is
-as for that macro."
+  "Like `with-temp-buffer', but propagate `process-environment' binding.
+
+When that variable is buffer-local in the previously current buffer,
+it is not propagated by `with-temp-buffer', so we explicitly ensure
+that happens, so that processes are invoked consistently.  BODY is
+as for that macro.
+
+Note that itself Magit does not ever make this variable buffer-local.
+This macro only exists to cope with third-party code doing that."
   (declare (indent 0) (debug (body)))
   (let ((p (gensym)))
     `(let ((,p process-environment))
        (with-temp-buffer
-         (setq-local process-environment ,p)
-         ,@body))))
+         (let ((process-environment ,p))
+           ,@body)))))
 
 (defsubst magit-git-executable ()
   "Return value of `magit-git-executable' or `magit-remote-git-executable'.

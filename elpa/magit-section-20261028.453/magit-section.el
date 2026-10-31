@@ -8,8 +8,8 @@
 ;; Homepage: https://github.com/magit/magit
 ;; Keywords: tools
 
-;; Package-Version: 20261024.1048
-;; Package-Revision: 70e5b6350689
+;; Package-Version: 20261028.453
+;; Package-Revision: 7ec7988604c6
 ;; Package-Requires: (
 ;;     (emacs   "28.1")
 ;;     (compat  "31.0")
@@ -1854,7 +1854,7 @@ evaluated its BODY.  Admittedly that's a bit of a hack."
 
 (defun magit-section-update-paint (section focused-sections)
   (cl-flet ((paint (highlight)
-              (let ((inhibit-read-only t))
+              (with-silent-modifications
                 (save-excursion
                   (goto-char (oref section start))
                   (magit-section-paint section highlight))))

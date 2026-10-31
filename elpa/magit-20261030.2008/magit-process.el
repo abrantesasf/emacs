@@ -61,6 +61,8 @@ If t, use ptys: this enables Magit to prompt for passphrases when needed."
 (defcustom magit-need-cygwin-noglob
   (and (eq system-type 'windows-nt)
        (with-temp-buffer
+         ;; `magit-process-environment' isn't defined yet
+         ;; and uses this variable, so it cannot be used here.
          (let ((process-environment
                 (append magit-git-environment process-environment)))
            (condition-case e
@@ -546,19 +548,33 @@ eol conversion."
     (apply #'process-file process infile buffer display args)))
 
 (defun magit-process-environment ()
+  "Prepend `magit-git-environment' to `process-environment'.
+
+This is intended to be used in bindings directly around calls
+to git.  No copy of `process-environment' is created, because
+there is no expectation that the binding is further modified.
+
+On Windows (except on a remote system), prepend additional
+variables (whose values are calculated here), addressing path
+and glob incompatibilities."
   (cond
     ((file-remote-p default-directory)
      `(,@magit-git-environment
        ,@process-environment))
+    ;; The various w32 hacks are only applicable when running on the local
+    ;; machine.  A local binding of process-environment different from the
+    ;; top-level value affects the environment used by Tramp.
     (`(,@magit-git-environment
        ,@(and magit-githook-directory
-              (not (file-remote-p default-directory))
-              (list (format "PATH=%s:%s"
-                            magit-githook-directory
-                            (getenv "PATH"))))
-       ;; The various w32 hacks are only applicable when running on the
-       ;; local machine.  A local binding of process-environment different
-       ;; from the top-level value affects the environment used by Tramp.
+              (list
+               (concat "PATH="
+                       ;; Inspired by code setting magit-git-executable.
+                       (or (and (eq system-type 'windows-nt)
+                                (car (magit--early-process-lines
+                                      "cygpath" "-w" magit-githook-directory)))
+                           magit-githook-directory)
+                       path-separator
+                       (getenv "PATH"))))
        ,@(cdr (assoc magit-git-executable magit--git-w32-path-hack))
        ,@(and magit-need-cygwin-noglob
               (mapcar (lambda (var)
@@ -624,8 +640,12 @@ See `magit-start-process' for more information."
              (let ((m (string-join (flatten-tree args) " ")))
                (remove-list-of-text-properties 0 (length m) '(face) m)
                m))
-  (with-editor* "MAGIT_HOOK_EDITOR"
-    (magit-start-git nil args)))
+  (if (or (not magit-run-hooks-from-githooks)
+          (not with-editor-emacsclient-executable)
+          (file-remote-p default-directory))
+      (magit-start-git nil args)
+    (with-editor* "MAGIT_HOOK_EDITOR"
+      (magit-start-git nil args))))
 
 (defun magit-run-git-with-editor (&rest args)
   "Export GIT_EDITOR and start Git.
@@ -644,11 +664,13 @@ See `magit-start-process' and `with-editor' for more information."
                (remove-list-of-text-properties 0 (length m) '(face) m)
                m))
   (magit--record-separated-gitdir)
-  (with-editor* "MAGIT_HOOK_EDITOR"
-    (with-environment-variables
-        ((magit-with-editor-envvar (getenv "MAGIT_HOOK_EDITOR")))
-      (let ((magit-process-popup-time -1))
-        (magit-start-git nil args)))))
+  (magit-with-editor
+    (if (or (not magit-run-hooks-from-githooks)
+            (not with-editor-emacsclient-executable)
+            (file-remote-p default-directory))
+        (magit-start-git nil args)
+      (setenv "MAGIT_HOOK_EDITOR" (getenv magit-with-editor-envvar))
+      (magit-start-git nil args))))
 
 (defun magit-run-git-sequencer (&rest args)
   "Export GIT_EDITOR and start Git.

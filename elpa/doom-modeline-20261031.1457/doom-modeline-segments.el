@@ -419,7 +419,10 @@ mouse-1: Previous buffer\nmouse-3: Next buffer"
 
 (defvar doom-modeline-tab-bar-string '(""))
 (defun doom-modeline-tab-bar-format-global ()
-  "Alternative to `tab-bar-format-global'."
+  "Alternative to `tab-bar-format-global'.
+
+To use this function, add `doom-modeline-tab-bar-format-global' to the
+`tab-bar-format' list."
   (mapcar (lambda (string)
             `(global menu-item ,(format-mode-line string) ignore))
           doom-modeline-tab-bar-string))
@@ -690,6 +693,21 @@ mouse-3: Toggle minor modes"
   "The process info."
   (doom-modeline-display-text
    (format-mode-line mode-line-process)))
+
+
+;;
+;; Minibuffer Recursive Editing Depth
+;;
+
+(doom-modeline-def-segment minibuffer-depth
+  "The minibuffer recursive edit depth.
+Normally, the depth is at 0, and 1 when performing something in the minibuffer.
+Show an indicator if the depth goes higher than 1."
+  (let* ((sep (doom-modeline-spc))
+         (depth (minibuffer-depth))
+         (face (doom-modeline-face 'doom-modeline-minibuffer-depth)))
+    (when (> depth 1)
+      (concat (propertize (format "(%d)" depth) 'face face) sep))))
 
 
 ;;
@@ -2119,6 +2137,12 @@ TEXT is alternative if icon is not available."
        .icon
        .unicode))))
 
+(defsubst doom-modeline--calc-embedded ()
+  "The current state which is enabled by command `calc-embedded'."
+  (when (bound-and-true-p calc-embedded-info)
+    (doom-modeline--modal-icon
+     "<EC>" 'doom-modeline-notification "Embedded Calc mode" "nf-md-alpha_c_circle" "🅒")))
+
 (doom-modeline-def-segment modals
   "Displays modal editing states.
 
@@ -2131,16 +2155,18 @@ Including `evil', `overwrite', `god', `ryo' and `xha-fly-kyes', etc."
            (xf (doom-modeline--xah-fly-keys))
            (boon (doom-modeline--boon))
            (meow (doom-modeline--meow))
+           (calc (doom-modeline--calc-embedded))
            (vsep (doom-modeline-vspc))
            (sep (and (or evil ow god ryo xf boon meow) (doom-modeline-spc))))
       (concat sep
-              (and evil (concat evil (and (or ow god ryo xf boon meow) vsep)))
-              (and ow (concat ow (and (or god ryo xf boon meow) vsep)))
-              (and god (concat god (and (or ryo xf boon meow) vsep)))
-              (and ryo (concat ryo (and (or xf boon meow) vsep)))
-              (and xf (concat xf (and (or boon meow) vsep)))
-              (and boon (concat boon (and meow vsep)))
-              meow
+              (and evil (concat evil (and (or ow god ryo xf boon meow calc) vsep)))
+              (and ow (concat ow (and (or god ryo xf boon meow calc) vsep)))
+              (and god (concat god (and (or ryo xf boon meow calc) vsep)))
+              (and ryo (concat ryo (and (or xf boon meow calc ) vsep)))
+              (and xf (concat xf (and (or boon meow calc) vsep)))
+              (and boon (concat boon (and (or meow calc) vsep)))
+              (and meow (concat meow (and calc vsep)))
+              calc
               sep))))
 
 ;;
@@ -3040,23 +3066,25 @@ mouse-3: Switch to next unread buffer")))
 
 (defun doom-modeline-override-rcirc ()
   "Override default `rcirc' mode-line."
+  (pcase doom-modeline-display-tab-bar-string
+    ('nil
+     (setq doom-modeline-tab-bar-string
+           (delq 'rcirc-activity-string doom-modeline-tab-bar-string))))
   (if (and doom-modeline-irc
            (bound-and-true-p doom-modeline-mode))
       (progn
-        (when (and rcirc-track-minor-mode
-                   (not (memq 'rcirc-activity-string doom-modeline-tab-bar-string)))
-          (setq doom-modeline-tab-bar-string
-                (append doom-modeline-tab-bar-string '(rcirc-activity-string))))
+        (when doom-modeline-display-tab-bar-string
+          (add-to-list 'doom-modeline-tab-bar-string 'rcirc-activity-string t))
         (setq global-mode-string
               (delq 'rcirc-activity-string global-mode-string)))
+    (pcase doom-modeline-display-tab-bar-string
+      ('active
+       (setq doom-modeline-tab-bar-string
+             (delq 'rcirc-activity-string doom-modeline-tab-bar-string))))
     (when (and rcirc-track-minor-mode
                (not (memq 'rcirc-activity-string global-mode-string)))
-      (progn
-        (when (memq 'rcirc-activity-string doom-modeline-tab-bar-string)
-          (setq doom-modeline-tab-bar-string
-                (delq 'rcirc-activity-string doom-modeline-tab-bar-string)))
-        (setq global-mode-string
-              (append global-mode-string '(rcirc-activity-string)))))))
+      (setq global-mode-string
+            (append global-mode-string '(rcirc-activity-string))))))
 (add-hook 'rcirc-track-minor-mode-hook #'doom-modeline-override-rcirc)
 (add-hook 'doom-modeline-mode-hook #'doom-modeline-override-rcirc)
 
@@ -3214,26 +3242,26 @@ Uses `nerd-icons-mdicon' to fetch the icon."
 
 (defun doom-modeline-override-battery ()
   "Override default battery mode-line."
-  (if (and doom-modeline-battery
-           (bound-and-true-p doom-modeline-mode))
+  (pcase doom-modeline-display-tab-bar-string
+    ('nil
+     (setq doom-modeline-tab-bar-string
+           (delq 'battery-mode-line-string doom-modeline-tab-bar-string))))
+  (if (and doom-modeline-battery (bound-and-true-p doom-modeline-mode))
       (progn
         (advice-add #'battery-update :override #'doom-modeline-update-battery-status)
-        (when (not (memq 'battery-mode-line-string doom-modeline-tab-bar-string))
-          (setq doom-modeline-tab-bar-string
-                (append doom-modeline-tab-bar-string '(battery-mode-line-string))))
-        (setq global-mode-string
-	          (delq 'battery-mode-line-string global-mode-string))
+        (when doom-modeline-display-tab-bar-string
+          (add-to-list 'doom-modeline-tab-bar-string 'battery-mode-line-string t))
+        (setq global-mode-string (delq 'battery-mode-line-string global-mode-string))
         (and (bound-and-true-p display-battery-mode) (battery-update)))
-    (progn
-      (advice-remove #'battery-update #'doom-modeline-update-battery-status)
-      (when (and display-battery-mode battery-status-function battery-mode-line-format
-                 (not (memq 'battery-mode-line-string global-mode-string)))
-        (progn
-          (when (memq 'battery-mode-line-string doom-modeline-tab-bar-string)
-            (setq doom-modeline-tab-bar-string
-                  (delq 'battery-mode-line-string doom-modeline-tab-bar-string)))
-          (setq global-mode-string
-		        (append global-mode-string '(battery-mode-line-string))))))))
+    (advice-remove #'battery-update #'doom-modeline-update-battery-status)
+    (pcase doom-modeline-display-tab-bar-string
+      ('active
+       (setq doom-modeline-tab-bar-string
+             (delq 'battery-mode-line-string doom-modeline-tab-bar-string))))
+    (when (and display-battery-mode battery-status-function battery-mode-line-format
+               (not (memq 'battery-mode-line-string global-mode-string)))
+      (setq global-mode-string
+	    (append global-mode-string '(battery-mode-line-string))))))
 (add-hook 'display-battery-mode-hook #'doom-modeline-override-battery)
 (add-hook 'doom-modeline-mode-hook #'doom-modeline-override-battery)
 
@@ -3521,22 +3549,22 @@ When the svg library is not available, return nil."
 (defun doom-modeline-override-time ()
   "Override default `display-time' mode-line."
   (or global-mode-string (setq global-mode-string '("")))
-  (if (and doom-modeline-time
-           (bound-and-true-p doom-modeline-mode))
+  (pcase doom-modeline-display-tab-bar-string
+    ('nil
+     (setq doom-modeline-tab-bar-string
+           (delq 'display-time-string doom-modeline-tab-bar-string))))
+  (if (and doom-modeline-time (bound-and-true-p doom-modeline-mode))
       (progn
-        (when (not (memq 'display-time-string doom-modeline-tab-bar-string))
-          (setq doom-modeline-tab-bar-string
-                (append doom-modeline-tab-bar-string '(display-time-string))))
+        (when doom-modeline-display-tab-bar-string
+          (add-to-list 'doom-modeline-tab-bar-string 'display-time-string t))
         (setq global-mode-string
-              (delq 'display-time-string global-mode-string))
-        )
-    (or (memq 'display-time-string global-mode-string)
-        (progn
-          (when (memq 'display-time-string doom-modeline-tab-bar-string)
-            (setq doom-modeline-tab-bar-string
-                  (delq 'display-time-string doom-modeline-tab-bar-string)))
-	      (setq global-mode-string
-		        (append global-mode-string '(display-time-string)))))))
+              (delq 'display-time-string global-mode-string)))
+    (pcase doom-modeline-display-tab-bar-string
+      ('active
+       (setq doom-modeline-tab-bar-string
+             (delq 'display-time-string doom-modeline-tab-bar-string))))
+    (unless (memq 'display-time-string global-mode-string)
+      (add-to-list 'global-mode-string 'display-time-string t))))
 (add-hook 'display-time-mode-hook #'doom-modeline-override-time)
 (add-hook 'doom-modeline-mode-hook #'doom-modeline-override-time)
 

@@ -19,5 +19,5 @@
 (column-number-mode 1)
 
 ;; Maximiza o Emacs ao iniciar:
-(add-to-list 'initial-frame-alist '(fullscreen . maximized))
+(add-to-list 'default-frame-alist '(fullscreen . maximized))
 

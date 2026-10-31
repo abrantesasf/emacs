@@ -584,13 +584,13 @@
       (:authors ("Daniel Mendler" . "mail@daniel-mendler.de"))
       (:commit . "b468efac023dda39332acc943edc9895c80b5a6f"))])
  (coterm
-  . [(1 6) ((emacs (26 1)) (compat (28 1 2 0)))
+  . [(1 7) ((emacs (26 1)) (compat (31 1)))
      "Terminal emulation for comint" tar
      ((:url . "https://repo.or.cz/emacs-coterm.git")
       (:keywords "processes")
-      (:maintainer "jakanakaevangeli" . "jakanakaevangeli@chiru.no")
-      (:authors ("jakanakaevangeli" . "jakanakaevangeli@chiru.no"))
-      (:commit . "d8e1b04cd359d9f27ab7c6dbf8cae90dde834085"))])
+      (:maintainer "Miha Rihtaršič" . "miha@kamnitnik.top")
+      (:authors ("Miha Rihtaršič" . "miha@kamnitnik.top"))
+      (:commit . "8b379d89b9f25e617aa4398708ef18465df638d5"))])
  (counsel
   . [(0 15 1) ((emacs (24 5)) (ivy (0 15 1)) (swiper (0 15 1)))
      "Various completion functions using Ivy" tar
@@ -675,11 +675,11 @@
       (:url . "https://elpa.gnu.org/packages/cycle-quotes.html")
       (:commit . "836b19b39651419876e65cdb1a91e3eef83cc4e7"))])
  (dape
-  . [(0 27 1) ((emacs (29 1)) (jsonrpc (1 0 25)))
+  . [(0 28 0) ((emacs (29 1)) (jsonrpc (1 0 25)))
      "Debug Adapter Protocol for Emacs" tar
      ((:url . "https://github.com/svaante/dape")
       (:maintainer "Daniel Pettersson" . "daniel@dpettersson.net")
-      (:commit . "dcbdffc68a3c89bbb89956161edde9f0fe062e64"))])
+      (:commit . "1d45904b40bfdbdbe0e29546a13d7859a478f710"))])
  (darkroom
   . [(0 3) ((cl-lib (0 5)))
      "Remove visual distractions and focus on writing" tar
@@ -1603,7 +1603,7 @@
       (:authors ("Oleh Krehel" . "ohwoeowho@gmail.com"))
       (:commit . "7081ee6d443dbf2b58e77fa7357c90e495173a2f"))])
  (hyperbole
-  . [(9 3 1) ((emacs (28)))
+  . [(9 3 2) ((emacs (28)))
      "GNU Hyperbole: The Everyday Hypertextual Information Manager"
      tar
      ((:url . "http://www.gnu.org/software/hyperbole")
@@ -1613,7 +1613,7 @@
       (:maintainer ("Robert Weiner" . "rsw@gnu.org")
 		   ("Mats Lidell" . "matsl@gnu.org"))
       (:authors ("Robert Weiner" . "rsw@gnu.org"))
-      (:commit . "de73191feea2823d1b2599d96ea0f41f63b77dc8"))])
+      (:commit . "3b57036078e7b198856116fa9cb9a189624cd29f"))])
  (ibuffer-sidebar
   . [(1 0 0) ((emacs (29 1))) "Sidebar for `ibuffer'" tar
      ((:url . "https://github.com/jojojames/ibuffer-sidebar")
@@ -1790,12 +1790,12 @@
       (:url . "https://elpa.gnu.org/packages/json-mode.html")
       (:commit . "2eb4b83db23e61fa2112688148aeedbacfc3c18e"))])
  (jsonrpc
-  . [(1 0 29) ((emacs (25 2))) "JSON-RPC library" tar
+  . [(1 0 30) ((emacs (25 2))) "JSON-RPC library" tar
      ((:keywords "processes" "languages" "extensions")
       (:maintainer "João Távora" . "joaotavora@gmail.com")
       (:authors ("João Távora" . "joaotavora@gmail.com"))
       (:url . "https://elpa.gnu.org/packages/jsonrpc.html")
-      (:commit . "f52457d17ef3fb426b9dff07dec8b99aae3ff54c"))])
+      (:commit . "434890b61eeee1eedbfb9560ca8572f917db3fa7"))])
  (jumpc
   . [(3 1) nil "jump to previous insertion points" tar
      ((:maintainer "Ivan Kanis" . "ivan@kanis.fr")
@@ -2831,6 +2831,14 @@
       (:maintainer "Antoine Kalmbach" . "ane@iki.fi")
       (:authors ("Jose E. Marchesi" . "jemarch@gnu.org"))
       (:commit . "8d9b73870acdd0a282a5c2829b139a93a39366dc"))])
+ (refactor
+  . [(0 1) ((emacs (26 3)) (eldoc (1 14 0)))
+     "Language-agnostic refactoring interface" tar
+     ((:keywords "convenience" "languages")
+      (:maintainer "João Távora" . "joaotavora@gmail.com")
+      (:authors ("João Távora" . "joaotavora@gmail.com"))
+      (:url . "https://elpa.gnu.org/packages/refactor.html")
+      (:commit . "f2568db52eb1503f98085a74467d55e9f65f2248"))])
  (register-list
   . [(0 1) nil "Interactively list/edit registers" tar
      ((:keywords "register")

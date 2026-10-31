@@ -1623,8 +1623,12 @@ refspec.
 (autoload 'magit-list-repositories "magit-repos"
 "Display a list of repositories.
 
-Use the option `magit-repository-directories' to control which
-repositories are displayed." t)
+Use option `magit-repository-directories' to control which repositories
+are displayed.  Use \".dir-locals.el\" to specify a different set of
+repositories to be listed, when invoked from below a certain directory.
+With a prefix argument, always display the global list.
+
+(fn &optional FORCE-GLOBAL)" t)
 (register-definition-prefixes "magit-repos" '("magit-"))
 
 

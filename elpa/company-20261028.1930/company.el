@@ -5,8 +5,8 @@
 ;; Author: Nikolaj Schumacher
 ;; Maintainer: Dmitry Gutov <dmitry@gutov.dev>
 ;; URL: http://company-mode.github.io/
-;; Package-Version: 20261025.259
-;; Package-Revision: 0790d828bf74
+;; Package-Version: 20261028.1930
+;; Package-Revision: 0029cbb435c7
 ;; Keywords: abbrev, convenience, matching
 ;; Package-Requires: ((emacs "26.1") (posframe "1.5.1"))
 
@@ -875,13 +875,6 @@ This is a default value of `company-quick-access-hint-function'."
   "If enabled, selecting item before first or after last wraps around."
   :type '(choice (const :tag "off" nil)
                  (const :tag "on" t)))
-
-(defcustom company-async-redisplay-delay 0.005
-  "Delay before redisplay when fetching candidates asynchronously.
-
-You might want to set this to a higher value if your backends respond
-quickly, to avoid redisplaying twice per each typed character."
-  :type 'number)
 
 (defvar company-async-wait 0.03
   "Pause between checks to see if the value's been set when turning an
@@ -1845,6 +1838,8 @@ update if FORCE-UPDATE."
                      common))
             (car company-candidates)))))
 
+(defvar-local company--show-inline nil)
+
 (defun company-calculate-candidates (prefix ignore-case suffix)
   (let ((candidates (cdr (assoc prefix company-candidates-cache))))
     (or candidates
@@ -1858,17 +1853,13 @@ update if FORCE-UPDATE."
                 (setq candidates (all-completions prefix prev))
                 (cl-return t)))))
         ;; No cache match, call the backend.
-        (let ((refresh-timer (run-with-timer company-async-redisplay-delay
-                                             nil
-                                             #'company--sneaky-refresh
-                                             prefix suffix)))
-          (unwind-protect
-              (setq candidates (company--preprocess-candidates
-                                (company--fetch-candidates prefix suffix)))
-            ;; If the backend is synchronous, no chance for the timer to run.
-            (cancel-timer refresh-timer))
+        (progn
+          (company--early-refresh prefix suffix)
+          (setq candidates (company--preprocess-candidates
+                            (company--fetch-candidates prefix suffix)))
           ;; Save in cache.
           (push (cons prefix candidates) company-candidates-cache)))
+    (setq company--show-inline nil)
     ;; Only now apply the predicate and transformers.
     (company--postprocess-candidates candidates)))
 
@@ -1912,7 +1903,7 @@ update if FORCE-UPDATE."
               (throw 'interrupted 'new-input)
             res-was))))))
 
-(defun company--sneaky-refresh (prefix suffix)
+(defun company--early-refresh (prefix suffix)
   (when company-candidates
     (let* ((company-prefix prefix)
            (company-suffix suffix))
@@ -1920,7 +1911,8 @@ update if FORCE-UPDATE."
            (company-call-frontends 'unhide))))
   (let (inhibit-redisplay)
     (redisplay))
-  (when company-candidates (company-call-frontends 'pre-command)))
+  (let ((inhibit-redisplay t))
+    (when company-candidates (company-call-frontends 'pre-command))))
 
 (defun company--flyspell-workaround-p ()
   ;; https://debbugs.gnu.org/23980
@@ -3589,16 +3581,16 @@ from the candidates list.")
   "Show the documentation buffer for the selection."
   (let ((other-window-scroll-buffer)
         (selection (or company-selection 0)))
-      (let* ((selected (nth selection company-candidates))
-             (doc-buffer (or (company-call-backend 'doc-buffer selected)
-                             (user-error "No documentation available")))
-             start)
-        (when (consp doc-buffer)
-          (setq start (cdr doc-buffer)
-                doc-buffer (car doc-buffer)))
-        (setq other-window-scroll-buffer (get-buffer doc-buffer))
-        (let ((win (display-buffer doc-buffer t)))
-          (set-window-start win (if start start (point-min)))))))
+    (let* ((selected (nth selection company-candidates))
+           (doc-buffer (or (company-call-backend 'doc-buffer selected)
+                           (user-error "No documentation available")))
+           start)
+      (when (consp doc-buffer)
+        (setq start (cdr doc-buffer)
+              doc-buffer (car doc-buffer)))
+      (setq other-window-scroll-buffer (get-buffer doc-buffer))
+      (let ((win (display-buffer doc-buffer t)))
+        (set-window-start win (if start start (point-min)))))))
 
 (defun company--fake-capf-complete-common (&rest _)
   #'company-complete-common)
@@ -4702,6 +4694,18 @@ Delay is determined by `company-tooltip-idle-delay'."
     (company-preview-frontend command)))
 
 (defun company--show-inline-p ()
+  ;; This function is called from frontends' `pre-command' and `unhide', the
+  ;; former before the prefix change, and the latter after.  But with
+  ;; `company-candidates' still having the previous value.  So we check whether
+  ;; inline display fit both old and new prefixes.
+  (let* ((new (or (company--show-inline-check) 'no))
+         (_ (unless company--show-inline
+              (setq company--show-inline new)))
+         (old
+          (not (eq company--show-inline 'no))))
+    (and old (not (eq new 'no)))))
+
+(defun company--show-inline-check ()
   (let* ((boundaries (and company-candidates (company--boundaries)))
          (prefix (car boundaries))
          (suffix (cdr boundaries))

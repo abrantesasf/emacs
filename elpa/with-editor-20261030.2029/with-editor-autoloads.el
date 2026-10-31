@@ -20,10 +20,10 @@ current Emacs instance as \"the editor\".
 
 PROCESS is only intended for use by `eat-exec-hook'.  When invoked
 interactively, INTERACTIVE is non-nil, which suppresses the call to
-\"clear\" (only relevant in `vterm-mode' and `eat-mode').
+\"clear\" (only relevant in `vterm-mode', `eat-mode', and `ghostel-mode').
 
 This command can be used in `shell-mode', `term-mode', `eshell-mode',
-`vterm-mode' and `eat-mode'.
+`vterm-mode', `eat-mode' and `ghostel-mode'.
 
 (fn &optional (ENVVAR \"EDITOR\") PROCESS INTERACTIVE)" t)
 (autoload 'with-editor-export-git-editor "with-editor"

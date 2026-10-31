@@ -251,9 +251,10 @@ appropriate mode hooks:
      (add-hook 'shell-mode-hook #'with-editor-export-git-editor)
 
  -- Command: with-editor-export-editor
-     When invoked in a ‘shell-mode’, ‘eshell-mode’, ‘term-mode’ or
-     ‘vterm-mode’ buffer, this command teaches shell commands to use the
-     current Emacs instance as the editor, by exporting ‘$EDITOR’.
+     When invoked in a ‘shell-mode’, ‘eshell-mode’, ‘term-mode’,
+     ‘vterm-mode’ or ‘eat-mode’ buffer, this command teaches shell
+     commands to use the current Emacs instance as the editor, by
+     exporting ‘$EDITOR’.
 
  -- Command: with-editor-export-git-editor
      This command is like ‘with-editor-export-editor’ but exports
@@ -360,9 +361,9 @@ Appendix B Function and Command Index
 * with-editor-export-editor:             Using With-Editor commands.
                                                                (line 60)
 * with-editor-export-git-editor:         Using With-Editor commands.
-                                                               (line 65)
+                                                               (line 66)
 * with-editor-export-hg-editor:          Using With-Editor commands.
-                                                               (line 69)
+                                                               (line 70)
 * with-editor-locate-emacsclient:        Configuring With-Editor.
                                                                (line 41)
 * with-editor-set-process-filter:        Using With-Editor as a library.
@@ -395,12 +396,12 @@ Node: Top801
 Node: Using the With-Editor package2662
 Node: Configuring With-Editor3247
 Node: Using With-Editor commands7802
-Node: Using With-Editor as a library11186
-Node: Debugging13214
-Node: FAQ14083
-Node: I am unable to commit with Magit14262
-Node: Function and Command Index14438
-Node: Variable Index15930
+Node: Using With-Editor as a library11207
+Node: Debugging13235
+Node: FAQ14104
+Node: I am unable to commit with Magit14283
+Node: Function and Command Index14459
+Node: Variable Index15951
 
 End Tag Table
 
