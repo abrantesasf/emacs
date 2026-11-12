@@ -192,13 +192,14 @@
 		("Damien Doligez" . "damien.doligez@inria.fr"))
       (:commit . "2905a436e956c5bba16c4633a6e4c4fceefa6535"))])
  (casual
-  . [(3 0 2) ((emacs (30 1)) (transient (0 9 0)) (csv-mode (1 27)))
+  . [(3 1 0)
+     ((emacs (30 1)) (transient (0 9 0)) (org (9 3)) (csv-mode (1 27)))
      "Transient user interfaces for various modes" tar
      ((:url . "https://github.com/kickingvegas/casual")
       (:keywords "tools" "wp")
       (:maintainer "Charles Choi" . "kickingvegas@gmail.com")
       (:authors ("Charles Choi" . "kickingvegas@gmail.com"))
-      (:commit . "60259e256e34d4f6ae64ef950c740cacbe8b4d37"))])
+      (:commit . "d5166240f23e4481a32672cd952f7d117c647a0f"))])
  (cdlatex
   . [(4 18 5) nil "Fast input methods for LaTeX environments and math"
      tar
@@ -419,15 +420,15 @@
       (:authors ("Akib Azmain Turja" . "akib@disroot.org"))
       (:commit . "c91451f2d17453c19d3fa76faa4945cbe54e14ce"))])
  (ebuild-mode
-  . [(1 89) ((emacs (26 3))) "edit ebuild and eclass files" tar
+  . [(1 90) ((emacs (26 3))) "edit ebuild and eclass files" tar
      ((:keywords "languages" "processes")
-      (:maintainer nil . "emacs@gentoo.org")
+      (:maintainer "Gentoo Emacs project" . "emacs@gentoo.org")
       (:authors ("Matthew Kennedy" . "mkennedy@gentoo.org")
 		("Diego Pettenò" . "flameeyes@gentoo.org")
 		("Christian Faulhammer" . "fauli@gentoo.org")
 		("Ulrich Müller" . "ulm@gentoo.org"))
       (:url . "https://elpa.nongnu.org/nongnu/ebuild-mode.html")
-      (:commit . "9b8609e9e298d78bf8b62732ec729c76a7f45a99"))])
+      (:commit . "080f9f62b3cd5a8651c4d159df5960261f770083"))])
  (edit-indirect
   . [(0 1 13) ((emacs (24 3))) "Edit regions in separate buffers" tar
      ((:url . "https://github.com/Fanael/edit-indirect")
@@ -690,12 +691,12 @@
       (:authors ("Paul Pogonyshev" . "pogonyshev@gmail.com"))
       (:commit . "c7af95865ef083327d299b86c254ca87fa88a504"))])
  (fedi
-  . [(0 5) ((emacs (28 1)) (markdown-mode (2 5)))
+  . [(0 6) ((emacs (28 1)) (markdown-mode (2 5)))
      "Helper functions for fediverse clients" tar
      ((:url . "https://codeberg.org/martianh/fedi.el")
       (:maintainer "Marty Hiatt" . "martianh@disroot.org")
       (:authors ("Marty Hiatt" . "martianh@disroot.org"))
-      (:commit . "6eee9c67589c56da9a801756142e6563e1fa4384"))])
+      (:commit . "a41695624789b25523904749d0c6fa2dfbb8cd93"))])
  (fj
   . [(0 53)
      ((emacs (29 1)) (compat (31)) (fedi (0 5)) (tp (0 8))

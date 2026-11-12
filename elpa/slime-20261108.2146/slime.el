@@ -3,8 +3,8 @@
 ;; URL: https://github.com/slime/slime
 ;; Package-Requires: ((emacs "24.3") (macrostep "0.9"))
 ;; Keywords: languages, lisp, slime
-;; Package-Version: 20261102.1514
-;; Package-Revision: 728a05ed0afc
+;; Package-Version: 20261108.2146
+;; Package-Revision: 26cdc8bb6182
 
 ;;;; License and Commentary
 
@@ -6682,23 +6682,29 @@ If PREV resp. NEXT are true insert more-buttons as needed."
     (when (and next (< end len))
       (slime-inspector-insert-more-button end nil))))
 
+(defcustom slime-inspector-ispec-functions nil
+  "List of functions to handle custom ispecs."
+  :type 'hook
+  :group 'slime)
+
 (defun slime-inspector-insert-ispec (ispec)
   (if (stringp ispec)
       (insert ispec)
-    (slime-dcase ispec
-      ((:value string id)
-       (slime-propertize-region
-           (list 'slime-part-number id
-                 'mouse-face 'highlight
-                 'face 'slime-inspector-value-face)
-         (insert string)))
-      ((:label string)
-       (insert (slime-inspector-fontify label string)))
-      ((:action string id)
-       (slime-insert-propertized (list 'slime-action-number id
-                                       'mouse-face 'highlight
-                                       'face 'slime-inspector-action-face)
-                                 string)))))
+    (or (run-hook-with-args-until-success 'slime-inspector-ispec-functions ispec)
+        (slime-dcase ispec
+          ((:value string id)
+           (slime-propertize-region
+               (list 'slime-part-number id
+                     'mouse-face 'highlight
+                     'face 'slime-inspector-value-face)
+             (insert string)))
+          ((:label string)
+           (insert (slime-inspector-fontify label string)))
+          ((:action string id)
+           (slime-insert-propertized (list 'slime-action-number id
+                                           'mouse-face 'highlight
+                                           'face 'slime-inspector-action-face)
+                                     string))))))
 
 (defun slime-inspector-position ()
   "Return a pair (Y-POSITION X-POSITION) representing the

@@ -6,8 +6,8 @@
 ;; Homepage: https://github.com/magit/with-editor
 ;; Keywords: processes terminals
 
-;; Package-Version: 20261101.1104
-;; Package-Revision: 3218d480d2c2
+;; Package-Version: 20261109.2119
+;; Package-Revision: 1e1e0a322e6c
 ;; Package-Requires: (
 ;;     (emacs   "28.1")
 ;;     (compat  "31.1")
@@ -767,7 +767,7 @@ current Emacs instance as \"the editor\".
 
 PROCESS is only intended for use by `eat-exec-hook'.  When invoked
 interactively, INTERACTIVE is non-nil, which suppresses the call to
-\"clear\" (only relevant in `vterm-mode', `eat-mode', and `ghostel-mode').
+\"clear\" (only relevant in `vterm-mode', `eat-mode' and `ghostel-mode').
 
 This command can be used in `shell-mode', `term-mode', `eshell-mode',
 `vterm-mode', `eat-mode' and `ghostel-mode'."
@@ -778,7 +778,7 @@ This command can be used in `shell-mode', `term-mode', `eshell-mode',
   (user-error "with-editor-export-editor cannot be used in %s buffers"
               major-mode))
 
-(cl-defmethod with-editor--export-editor ;commit-mode
+(cl-defmethod with-editor--export-editor ;comint-mode
   (envvar _ _ &context (major-mode comint-mode))
   (when-let ((process (get-buffer-process (current-buffer))))
     (goto-char (process-mark process))
