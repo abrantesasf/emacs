@@ -6,8 +6,8 @@
 ;; Homepage: https://github.com/magit/transient
 ;; Keywords: extensions
 
-;; Package-Version: 20261101.1108
-;; Package-Revision: 08d85042ced6
+;; Package-Version: 20261113.1458
+;; Package-Revision: 93423bb0c97a
 ;; Package-Requires: (
 ;;     (emacs   "28.1")
 ;;     (compat  "31.1")
@@ -122,7 +122,7 @@ similar defect.") :emergency))
          ,(macroexp-progn body))
      ((debug error)
       (transient--emergency-exit ,id)
-      (static-if (version< emacs-version "31.0.50")
+      (static-if (< emacs-major-version 31)
           (signal (car err) (cdr err))
         (condition-case nil
             (signal err)
@@ -977,6 +977,9 @@ the prototype is stored in the clone's `prototype' slot.")
     :documentation "Enable if level of prefix is equal or greater.")
    (inactive
     :initform nil)
+   (hide
+    :initarg :hide
+    :initform nil)
    (if
     :initarg :if
     :initform nil
@@ -1153,7 +1156,6 @@ They become the value of this argument.")
 
 (defclass transient-group (transient-child)
   ((suffixes       :initarg :suffixes       :initform nil)
-   (hide           :initarg :hide           :initform nil)
    (description    :initarg :description    :initform nil)
    (pad-keys       :initarg :pad-keys       :initform nil)
    (info-format    :initarg :info-format    :initform nil)
@@ -1239,10 +1241,10 @@ to the setup function:
               `(lambda ,arglist ,@body)
             `(lambda ()
                (interactive)
-               (transient-setup ',name))))
+               (transient-setup ',name)))
+         ,docstr)
        :autoload-end
        (put ',name 'interactive-only ,interactive-only)
-       (put ',name 'function-documentation ,docstr)
        (put ',name 'transient--prefix
             (,(or class 'transient-prefix) :command ',name ,@slots))
        (transient--set-layout
@@ -1293,10 +1295,10 @@ ARGLIST.  The infix arguments are usually accessed by using
        (defalias ',name
          ,(if (and (not body) class (oref-default class definition))
               `(oref-default ',class definition)
-            `(lambda ,arglist ,@body)))
+            `(lambda ,arglist ,@body))
+         ,docstr)
        :autoload-end
        (put ',name 'interactive-only ,interactive-only)
-       (put ',name 'function-documentation ,docstr)
        (put ',name 'transient--suffix
             (,(or class 'transient-suffix) :command ',name ,@slots)))))
 (put 'transient-define-suffix 'autoload-macro 'expand)
@@ -1310,10 +1312,8 @@ Similar to `transient-define-suffix' but define a suffix object only.
   (pcase-let
       ((`(,class ,slots)
         (transient--expand-define-args args nil 'transient-augment-suffix t)))
-    :autoload-end
     `(put ',name 'transient--suffix
           (,(or class 'transient-suffix) :command ',name ,@slots))))
-(put 'transient-define-infix 'autoload-macro 'expand)
 
 (defmacro transient-define-infix (name arglist &rest args)
   "Define NAME as a transient infix command.
@@ -1356,10 +1356,9 @@ keyword.
       ((`(,class ,slots ,_ ,docstr ,_ ,interactive-only)
         (transient--expand-define-args args arglist 'transient-define-infix t)))
     `(progn
-       (defalias ',name #'transient--default-infix-command)
+       (defalias ',name #'transient--default-infix-command ,docstr)
        (put ',name 'interactive-only ,interactive-only)
        (put ',name 'completion-predicate #'transient--suffix-only)
-       (put ',name 'function-documentation ,docstr)
        (put ',name 'transient--suffix
             (,(or class 'transient-switch) :command ',name ,@slots)))))
 
@@ -1746,8 +1745,7 @@ Intended for use in a group's `:setup-children' function."
                          (equal (transient--suffix-predicate suf)
                                 (transient--suffix-predicate conflict)))))
          (transient-remove-suffix prefix key)
-         (let ((eg (transient--locate-child prefix loc)))
-           (setq elt (car eg) group (cadr eg))))
+         (pcase-setq `(,elt ,group) (transient--locate-child prefix loc)))
        (let ((mem (memq elt (aref group 2))))
          (pcase-exhaustive action
            ('insert  (setcdr mem (cons elt (cdr mem)))
@@ -4797,13 +4795,7 @@ have a history of their own.")
      ,@body))
 
 (defun transient--insert-groups ()
-  (let ((groups (mapcan (lambda (group)
-                          (let ((hide (oref group hide)))
-                            (and (not (and (functionp hide)
-                                           (transient-with-shadowed-buffer
-                                             (funcall hide))))
-                                 (list group))))
-                        transient--layout)))
+  (let ((groups (seq-remove #'transient--hidden-child transient--layout)))
     (while-let ((group (pop groups)))
       (when (transient--active-suffixes group)
         (transient--insert-group group)
@@ -4813,8 +4805,16 @@ have a history of their own.")
 (defun transient--active-suffixes (group)
   (seq-remove (lambda (suffix)
                 (and (cl-typep suffix 'transient-suffix)
-                     (oref suffix inactive)))
+                     (or (oref suffix inactive)
+                         (transient--hidden-child suffix))))
               (oref group suffixes)))
+
+(defun transient--hidden-child (child)
+  (let ((hide (oref child hide)))
+    (if (functionp hide)
+        (transient-with-shadowed-buffer
+          (funcall hide))
+      hide)))
 
 (defvar transient--max-group-level 1)
 
@@ -5594,8 +5594,7 @@ With a prefix argument, do an incremental regular expression
 search instead."
   (interactive "P")
   (transient--isearch-setup)
-  (let ((isearch-mode-map transient--isearch-mode-map))
-    (isearch-mode nil regexp-p)))
+  (isearch-mode nil regexp-p))
 
 (defun transient-isearch-forward (&optional regexp-p)
   "Do incremental search forward.
@@ -5603,8 +5602,7 @@ With a prefix argument, do an incremental regular expression
 search instead."
   (interactive "P")
   (transient--isearch-setup)
-  (let ((isearch-mode-map transient--isearch-mode-map))
-    (isearch-mode t regexp-p)))
+  (isearch-mode t regexp-p))
 
 (defun transient-isearch-exit ()
   "Like `isearch-exit' but adapted for `transient'."
@@ -5631,6 +5629,7 @@ search instead."
 
 (defun transient--isearch-setup ()
   (select-window transient--window)
+  (setq-local isearch-mode-map transient--isearch-mode-map)
   (transient--suspend-override t))
 
 (defun transient--isearch-exit ()
