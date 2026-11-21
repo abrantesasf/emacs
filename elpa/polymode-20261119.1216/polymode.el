@@ -3,8 +3,8 @@
 ;; Author: Vitalie Spinu
 ;; Maintainer: Vitalie Spinu <spinuvit@gmail.com>
 ;; Copyright (C) 2013-2022  Free Software Foundation, Inc.
-;; Package-Version: 20260505.1803
-;; Package-Revision: 8cb72fa5dcc0
+;; Package-Version: 20261119.1216
+;; Package-Revision: b313feab15a8
 ;; Package-Requires: ((emacs "25"))
 ;; URL: https://github.com/polymode/polymode
 ;; Keywords: languages, multi-modes, processes
@@ -51,7 +51,7 @@
   "Default prefix key in `polymode-minor-mode-map'.
 Not effective after loading the polymode library.
 
-Instead of setting this key you can programatically bind it directly
+Instead of setting this key you can programmatically bind it directly
 in `polymode-minor-mode-map` keymap:
 
  (define-key polymode-minor-mode-map (kbd \"M-n\") nil)
@@ -502,7 +502,7 @@ the entire configuration for this polymode.
 PARENT is either the polymode configuration object or a polymode
 mode (there is 1-to-1 correspondence between config
 objects (`pm-polymode') and mode functions). The new polymode
-MODE inherits alll the behavior from PARENT except for the
+MODE inherits all the behavior from PARENT except for the
 overwrites specified by the keywords (see below). The new MODE
 runs all the hooks from the PARENT-mode and inherits its MODE-map
 from PARENT-map.

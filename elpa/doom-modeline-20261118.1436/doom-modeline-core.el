@@ -1388,12 +1388,18 @@ Example:
         (rhs-forms (doom-modeline--prepare-segments rhs)))
     (defalias sym
       (lambda ()
-        (list lhs-forms
-              (let* ((rhs-str (format-mode-line `("" ,@rhs-forms)))
-                     (rhs-width (progn
-                                  (add-face-text-property
-                                   0 (length rhs-str) 'mode-line t rhs-str)
-                                  (doom-modeline-string-pixel-width rhs-str))))
+        (let* ((rhs-str (format-mode-line `("" ,@rhs-forms)))
+               ;; Measure a copy: `add-face-text-property' mutates its
+               ;; argument, but the RHS returned below must stay exactly as
+               ;; `format-mode-line' produced it.  Appending the `mode-line'
+               ;; face to the returned string would override segment faces
+               ;; that carry their own colors.
+               (measure-str (copy-sequence rhs-str))
+               (rhs-width (progn
+                            (add-face-text-property
+                             0 (length measure-str) 'mode-line t measure-str)
+                            (doom-modeline-string-pixel-width measure-str))))
+          (list lhs-forms
                 (propertize
                  " "
                  'face (doom-modeline-face)
@@ -1401,9 +1407,9 @@ Example:
                  ;; Backport from `mode-line-right-align-edge' in 30
                  (if (and (display-graphic-p)
                           (not (eq mode-line-right-align-edge 'window)))
-		             `(space :align-to (- ,mode-line-right-align-edge
+                     `(space :align-to (- ,mode-line-right-align-edge
                                           (,rhs-width)))
-		           `(space :align-to (,(- (window-pixel-width)
+                   `(space :align-to (,(- (window-pixel-width)
                                           (window-scroll-bar-width)
                                           (window-right-divider-width)
                                           (* (or (car (window-margins)) 0)
@@ -1418,8 +1424,11 @@ Example:
                                             ('right-fringe
                                              (or (cadr (window-fringes)) 0))
                                             (_ 0))
-                                          rhs-width))))))
-              rhs-forms))
+                                          rhs-width)))))
+                ;; Return the already-rendered string instead of RHS-FORMS.
+                ;; Returning the forms made Emacs evaluate every RHS segment
+                ;; a second time (once here for width, once at display time).
+                rhs-str)))
       (concat "Modeline:\n"
               (format "  %s\n  %s"
                       (prin1-to-string lhs)
@@ -1577,12 +1586,32 @@ If INACTIVE-FACE is nil, `mode-line-inactive' face will be added."
   "Apply FACE or `doom-modeline-spc-face-overrides' to `doom-modeline-face'."
   `(:inherit (,(doom-modeline-face) ,face ,doom-modeline-spc-face-overrides)))
 
+(defvar doom-modeline--pixel-width-cache nil
+  "Cache of the most recent mode-line pixel width measurement.
+A cons of (KEY . WIDTH), where KEY is (FRAME . STRING).  Only one entry is
+kept: consecutive redisplays usually measure the same string, while the
+right-hand side may contain a clock that changes every second, so a bounded
+single entry avoids both repeated expensive measurement and unbounded growth.")
+
 (defun doom-modeline-string-pixel-width (str)
-  "Return the width of STR in pixels."
-  (if (fboundp 'string-pixel-width)
-      (string-pixel-width str)
-    (* (string-width str) (window-font-width nil 'mode-line)
-       (if (display-graphic-p) 1.05 1.0))))
+  "Return the width of STR in pixels, cached across consecutive redisplays.
+Measuring a typical mode-line right-hand side is expensive (tens of
+microseconds) and happens on every redisplay, while the measured string is
+often unchanged.  The cache key includes FRAME and the text properties of STR,
+so switching frames or changing the string's faces forces a fresh measurement."
+  (let* ((frame (selected-frame))
+         (cached doom-modeline--pixel-width-cache))
+    (if (and cached
+             (eq (car (car cached)) frame)
+             (equal-including-properties (cdr (car cached)) str))
+        (cdr cached)
+      (let ((width (if (fboundp 'string-pixel-width)
+                       (string-pixel-width str)
+                     (* (string-width str) (window-font-width nil 'mode-line)
+                        (if (display-graphic-p) 1.05 1.0)))))
+        (setq doom-modeline--pixel-width-cache
+              (cons (cons frame str) width))
+        width))))
 
 ;; Per-frame cache for mode-line font height.
 (defvar doom-modeline--font-height-cache (make-hash-table :test 'eq :weakness 'key)
@@ -1656,34 +1685,97 @@ See https://github.com/seagle0128/doom-modeline/issues/301."
                                      :height  ,(or height 1.0))))))
     (doom-modeline-propertize-text icon face)))
 
+(defconst doom-modeline-icon-cache-max 256
+  "Maximum number of entries in `doom-modeline--icon-cache'.
+
+The cache is bounded because icon keys include the TEXT argument; an
+unbounded cache would grow forever if a caller ever passed dynamic text.
+A FIFO policy evicts the oldest entry at capacity.  256 comfortably holds
+every icon rendered in a single redisplay.")
+
+(defvar doom-modeline--icon-cache (make-hash-table :test #'equal)
+  "Cache of icons rendered by `doom-modeline-icon'.
+
+nerd-icons caches only the lookup functions (`nerd-icons-icon-for-file',
+etc.), not the icon-set constructors (`nerd-icons-mdicon', ...) nor the
+propertization done by `doom-modeline-propertize-icon'.  Since mode-line
+segments call `doom-modeline-icon' on every redisplay, that work is repeated
+needlessly.  The cache key includes the function arguments plus every global
+option the result depends on, so it invalidates itself when those change.
+Entries are bounded by `doom-modeline-icon-cache-max' and evicted FIFO;
+`doom-modeline--icon-cache-order' tracks insertion order for eviction.")
+
+(defvar doom-modeline--icon-cache-order nil
+  "Keys of `doom-modeline--icon-cache', newest first.
+Used by `doom-modeline--icon-cache-put' to evict the oldest entry when the
+cache reaches `doom-modeline-icon-cache-max'.")
+
+(defun doom-modeline--icon-cache-put (key value)
+  "Store VALUE under KEY in `doom-modeline--icon-cache', evicting FIFO.
+Only genuinely new keys are appended to the order list; refreshing an
+existing key leaves it in place.  Once the cache exceeds
+`doom-modeline-icon-cache-max', the oldest keys are dropped from both the
+order list and the hash table.  The hit path in `doom-modeline-icon' does
+not call this function, so lookups stay O(1)."
+  (let ((table doom-modeline--icon-cache))
+    (unless (gethash key table)
+      (setq doom-modeline--icon-cache-order
+            (cons key doom-modeline--icon-cache-order))
+      (let ((n 0)
+            (keys doom-modeline--icon-cache-order)
+            (kept nil))
+        (dolist (k keys)
+          (setq n (1+ n))
+          (if (<= n doom-modeline-icon-cache-max)
+              (push k kept)
+            (remhash k table)))
+        (setq doom-modeline--icon-cache-order (nreverse kept))))
+    (puthash key value table)))
+
 (defun doom-modeline-icon (icon-set icon-name unicode text &rest args)
   "Display icon of ICON-NAME with ARGS in mode-line.
 
 ICON-SET includes `ipsicon', `octicon', `pomicon', `powerline', `faicon',
 `wicon', `sucicon', `devicon', `codicon', `flicon' and `mdicon', etc.
 UNICODE is the unicode char fallback.  TEXT is the ASCII char fallback.
-ARGS is same as `nerd-icons-octicon' and others."
-  (let ((face `(:inherit (doom-modeline
-                          ,(or (plist-get args :face) 'mode-line)))))
-    (cond
-     ;; Icon
-     ((and doom-modeline-icon
-           icon-name
-           (not (string-empty-p icon-name)))
-      (let* ((func (nerd-icons--function-name icon-set))
-             (icon (and (fboundp func) (apply func icon-name args))))
-        (doom-modeline-propertize-icon icon face)))
-     ;; Unicode fallback
-     ((and doom-modeline-unicode-fallback
-           unicode
-           (not (string-empty-p unicode))
-           (char-displayable-p (string-to-char unicode)))
-      (doom-modeline-propertize-text unicode face))
-     ;; ASCII text
-     (text
-      (doom-modeline-propertize-text text face))
-     ;; Fallback
-     (t ""))))
+ARGS is same as `nerd-icons-octicon' and others.
+
+The result is cached, keyed by the arguments and the relevant global options."
+  (let* ((key (list doom-modeline-icon
+                    doom-modeline-unicode-fallback
+                    (display-graphic-p)
+                    ;; nerd-icons options that affect the rendered icon.
+                    nerd-icons-scale-factor
+                    nerd-icons-default-adjust
+                    nerd-icons-font-family
+                    nerd-icons-color-icons
+                    icon-set icon-name unicode text args))
+         (cached (gethash key doom-modeline--icon-cache)))
+    (if cached
+        (copy-sequence cached)
+      (let* ((face `(:inherit (doom-modeline
+                               ,(or (plist-get args :face) 'mode-line))))
+             (icon (cond
+                    ;; Icon
+                    ((and doom-modeline-icon
+                          icon-name
+                          (not (string-empty-p icon-name)))
+                     (let* ((func (nerd-icons--function-name icon-set))
+                            (raw (and (fboundp func) (apply func icon-name args))))
+                       (doom-modeline-propertize-icon raw face)))
+                    ;; Unicode fallback
+                    ((and doom-modeline-unicode-fallback
+                          unicode
+                          (not (string-empty-p unicode))
+                          (char-displayable-p (string-to-char unicode)))
+                     (doom-modeline-propertize-text unicode face))
+                    ;; ASCII text
+                    (text
+                     (doom-modeline-propertize-text text face))
+                    ;; Fallback
+                    (t ""))))
+        (doom-modeline--icon-cache-put key (copy-sequence icon))
+        icon))))
 
 (defun doom-modeline-icon-for-buffer ()
   "Get the formatted icon for the current buffer."
@@ -1796,10 +1888,15 @@ Return nil if no project was found."
  (lambda (_sym val op _where)
    (when (eq op 'set)
      (setq doom-modeline-project-detection val)
+     ;; Invalidate the buffer-local project-root cache on every buffer so the
+     ;; next redisplay recomputes it with the new detection backend.  Do NOT
+     ;; `revert-buffer' here: that re-reads every visited file from disk,
+     ;; re-runs major mode and font-lock, and with NOCONFIRM=t can discard
+     ;; unsaved edits on unrelated buffers.  None of it is needed to refresh
+     ;; a mode-line value.
      (dolist (buf (buffer-list))
        (with-current-buffer buf
-         (setq doom-modeline--project-root nil)
-         (and buffer-file-name (revert-buffer t t)))))))
+         (setq doom-modeline--project-root nil))))))
 
 (defun doom-modeline-project-p ()
   "Check if the file is in a project."
@@ -1820,65 +1917,116 @@ Return `default-directory' if no project was found."
         buffer-file-name)))
 
 (defun doom-modeline--format-buffer-file-truename (b-f-n)
-  "Get and format buffer file truename via B-F-N."
-  (let ((buffer-file-truename (file-local-name
-                               (or (file-truename b-f-n) ""))))
+  "Get and format buffer file truename via B-F-N.
+Prefer Emacs' cached `buffer-file-truename' of the base buffer, which is
+resolved at find-file time, over a synchronous `file-truename' call.  This
+keeps filesystem I/O off the redisplay path on cold starts; fall back to
+`file-truename' only when the cached value is unavailable."
+  (let* ((base (buffer-base-buffer))
+         ;; Emacs caches the truename at find-file time.  Reading it is O(1);
+         ;; `file-truename' performs synchronous symlink resolution (~11us).
+         ;; Only trust the cached value when B-F-N is the genuine file name;
+         ;; a custom `doom-modeline-buffer-file-name-function' may rewrite it
+         ;; into a different path, in which case fall back to resolving B-F-N.
+         (genuine-name-p (eq doom-modeline-buffer-file-name-function #'identity))
+         (cached-truename (and genuine-name-p
+                               (buffer-local-value 'buffer-file-truename
+                                                   (or base (current-buffer)))))
+         (truename (file-local-name
+                    (or cached-truename (file-truename b-f-n) ""))))
     (or (and doom-modeline-buffer-file-truename-function
-             (funcall doom-modeline-buffer-file-truename-function buffer-file-truename))
-        buffer-file-truename)))
+             (funcall doom-modeline-buffer-file-truename-function truename))
+        truename)))
+
+(defvar-local doom-modeline--buffer-file-name-format-cache nil
+  "Cached result of `doom-modeline-buffer-file-name'.
+A cons of (KEY . STRING).  KEY lists every input the formatter reads, so
+the whole chain -- including `shrink-path' directory probing -- runs only
+when one of those inputs changes.  The cache is buffer-local because both
+the file name and the project root are buffer-specific.  Filesystem changes
+made behind Emacs' back (e.g. a symlink retargeted outside this session)
+are not covered; Emacs' own `buffer-file-truename' update is.")
 
 (defun doom-modeline-buffer-file-name ()
   "Propertize file name based on `doom-modeline-buffer-file-name-style'."
-  (let* ((buffer-file-name (doom-modeline--format-buffer-file-name))
-         (buffer-file-truename (doom-modeline--format-buffer-file-truename buffer-file-name))
-         (file-name
-          (pcase doom-modeline-buffer-file-name-style
-            ('auto
-             (if (doom-modeline-project-p)
-                 (doom-modeline--buffer-file-name buffer-file-name buffer-file-truename 'shrink 'shrink 'hide)
-               (propertize (buffer-name) 'face 'doom-modeline-buffer-file)))
-            ('truncate-upto-project
-             (doom-modeline--buffer-file-name buffer-file-name buffer-file-truename 'shrink))
-            ('truncate-from-project
-             (doom-modeline--buffer-file-name buffer-file-name buffer-file-truename nil 'shrink))
-            ('truncate-with-project
-             (doom-modeline--buffer-file-name buffer-file-name buffer-file-truename 'shrink 'shrink 'hide))
-            ('truncate-except-project
-             (doom-modeline--buffer-file-name buffer-file-name buffer-file-truename 'shrink 'shrink))
-            ('truncate-upto-root
-             (doom-modeline--buffer-file-name-truncate buffer-file-name buffer-file-truename))
-            ('truncate-all
-             (doom-modeline--buffer-file-name-truncate buffer-file-name buffer-file-truename t))
-            ('truncate-nil
-             (doom-modeline--buffer-file-name buffer-file-name buffer-file-truename))
-            ('relative-to-project
-             (doom-modeline--buffer-file-name-relative buffer-file-name buffer-file-truename))
-            ('relative-from-project
-             (doom-modeline--buffer-file-name buffer-file-name buffer-file-truename nil nil 'hide))
-            ('file-name
-             (propertize (file-name-nondirectory buffer-file-name)
-                         'face 'doom-modeline-buffer-file))
-            ('file-name-with-project
-             (format "%s|%s"
-                     (propertize (file-name-nondirectory
-                                  (directory-file-name (file-local-name (doom-modeline-project-root))))
-                                 'face 'doom-modeline-project-dir)
-                     (propertize (file-name-nondirectory buffer-file-name)
-                                 'face 'doom-modeline-buffer-file)))
-            ('project
-             (propertize (file-name-nondirectory
-                          (directory-file-name (file-local-name (doom-modeline-project-root))))
-                         'face 'doom-modeline-project-dir))
-            ((or 'buffer-name _)
-             (propertize (buffer-name) 'face 'doom-modeline-buffer-file)))))
-    (propertize file-name
-                'mouse-face 'mode-line-highlight
-                'help-echo (concat buffer-file-truename
-                                   (unless (string= (file-name-nondirectory buffer-file-truename)
-                                                    (buffer-name))
-                                     (concat "\n" (buffer-name)))
-                                   "\nmouse-1: Previous buffer\nmouse-3: Next buffer")
-                'local-map mode-line-buffer-identification-keymap)))
+  (let* ((base (buffer-base-buffer))
+         ;; Resolve the root before building the key: the first call then
+         ;; caches the final root instead of nil, avoiding a second render
+         ;; on the next call.  Subsequent reads hit the root's own cache.
+         (project-root (doom-modeline--project-root))
+         (key (list (buffer-file-name base)
+                    ;; Emacs resolves this at find-file time.  Reading it is
+                    ;; O(1) and tracks renames without touching the disk.
+                    (buffer-local-value 'buffer-file-truename
+                                        (or base (current-buffer)))
+                    (buffer-name)
+                    default-directory
+                    doom-modeline-buffer-file-name-style
+                    doom-modeline-buffer-file-name-function
+                    doom-modeline-buffer-file-truename-function
+                    doom-modeline-buffer-file-true-name
+                    doom-modeline-project-detection
+                    project-root
+                    mode-line-buffer-identification-keymap))
+         (cached doom-modeline--buffer-file-name-format-cache))
+    (if (and cached (equal (car cached) key))
+        ;; Never hand out the cached string itself: callers may add faces to
+        ;; a mode-line string in place (the RHS measurement copies first,
+        ;; but this function is also public).
+        (copy-sequence (cdr cached))
+      (let* ((buffer-file-name (doom-modeline--format-buffer-file-name))
+             (buffer-file-truename
+              (doom-modeline--format-buffer-file-truename buffer-file-name))
+             (file-name
+              (pcase doom-modeline-buffer-file-name-style
+                ('auto
+                 (if (doom-modeline-project-p)
+                     (doom-modeline--buffer-file-name buffer-file-name buffer-file-truename 'shrink 'shrink 'hide)
+                   (propertize (buffer-name) 'face 'doom-modeline-buffer-file)))
+                ('truncate-upto-project
+                 (doom-modeline--buffer-file-name buffer-file-name buffer-file-truename 'shrink))
+                ('truncate-from-project
+                 (doom-modeline--buffer-file-name buffer-file-name buffer-file-truename nil 'shrink))
+                ('truncate-with-project
+                 (doom-modeline--buffer-file-name buffer-file-name buffer-file-truename 'shrink 'shrink 'hide))
+                ('truncate-except-project
+                 (doom-modeline--buffer-file-name buffer-file-name buffer-file-truename 'shrink 'shrink))
+                ('truncate-upto-root
+                 (doom-modeline--buffer-file-name-truncate buffer-file-name buffer-file-truename))
+                ('truncate-all
+                 (doom-modeline--buffer-file-name-truncate buffer-file-name buffer-file-truename t))
+                ('truncate-nil
+                 (doom-modeline--buffer-file-name buffer-file-name buffer-file-truename))
+                ('relative-to-project
+                 (doom-modeline--buffer-file-name-relative buffer-file-name buffer-file-truename))
+                ('relative-from-project
+                 (doom-modeline--buffer-file-name buffer-file-name buffer-file-truename nil nil 'hide))
+                ('file-name
+                 (propertize (file-name-nondirectory buffer-file-name)
+                             'face 'doom-modeline-buffer-file))
+                ('file-name-with-project
+                 (format "%s|%s"
+                         (propertize (file-name-nondirectory
+                                      (directory-file-name (file-local-name (doom-modeline-project-root))))
+                                     'face 'doom-modeline-project-dir)
+                         (propertize (file-name-nondirectory buffer-file-name)
+                                     'face 'doom-modeline-buffer-file)))
+                ('project
+                 (propertize (file-name-nondirectory
+                              (directory-file-name (file-local-name (doom-modeline-project-root))))
+                             'face 'doom-modeline-project-dir))
+                ((or 'buffer-name _)
+                 (propertize (buffer-name) 'face 'doom-modeline-buffer-file))))
+             (result (propertize file-name
+                                 'mouse-face 'mode-line-highlight
+                                 'help-echo (concat buffer-file-truename
+                                                    (unless (string= (file-name-nondirectory buffer-file-truename)
+                                                                     (buffer-name))
+                                                      (concat "\n" (buffer-name)))
+                                                    "\nmouse-1: Previous buffer\nmouse-3: Next buffer")
+                                 'local-map mode-line-buffer-identification-keymap)))
+        (setq doom-modeline--buffer-file-name-format-cache (cons key result))
+        (copy-sequence result)))))
 
 (defun doom-modeline--buffer-file-name-truncate (file-path true-file-path &optional truncate-tail)
   "Propertize file name that truncates every dir along path.

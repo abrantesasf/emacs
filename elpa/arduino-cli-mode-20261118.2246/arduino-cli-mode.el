@@ -4,8 +4,8 @@
 
 ;; Author: Love Lagerkvist
 ;; URL: https://github.com/motform/arduino-cli-mode
-;; Package-Version: 20260628.2219
-;; Package-Revision: d5614acdca80
+;; Package-Version: 20261118.2246
+;; Package-Revision: f7216a5c025e
 ;; Package-Requires: ((emacs "25.1"))
 ;; Created: 2019-11-16
 ;; Keywords: processes tools
@@ -82,6 +82,14 @@
   :group 'arduino-cli
   :type  '(choice 
 	   (const :tag "No default (error message if board selection fails)" 
+		  nil)
+	   (string :tag "Fully qualified board name")))
+
+(defcustom arduino-cli-override-fqbn nil
+  "Manually specified fqbn to override automatic board selection."
+  :group 'arduino-cli
+  :type  '(choice
+	   (const :tag "None"
 		  nil)
 	   (string :tag "Fully qualified board name")))
 
@@ -251,13 +259,14 @@ PATH should be an absolute directory name."
 (defun arduino-cli--board-fqbn (board)
   "Get FQBN of BOARD.
 If BOARD has multiple matching_boards, the first one is used."
-  (let* ((matching-boards (cdr (assoc 'matching_boards board)))
-         ;; TODO: does the order here make sense?
-         (first-matching-board (if matching-boards
-                                   (aref matching-boards 0)
-                                 board))
-         (fqbn (cdr (assoc 'fqbn first-matching-board))))
-    fqbn))
+  (or arduino-cli-override-fqbn
+      (let* ((matching-boards (cdr (assoc 'matching_boards board)))
+             ;; TODO: does the order here make sense?
+             (first-matching-board (if matching-boards
+                                       (aref matching-boards 0)
+                                     board))
+             (fqbn (cdr (assoc 'fqbn first-matching-board))))
+        fqbn)))
 
 (defun arduino-cli--board-address (board)
   "Get port address of BOARD."

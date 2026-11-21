@@ -294,7 +294,10 @@
      (setq doom-modeline-icon val)
      (dolist (buf (buffer-list))
        (with-current-buffer buf
-         (doom-modeline-update-buffer-file-icon))))))
+         (doom-modeline-update-buffer-file-icon)
+         ;; The state icon embeds icons too; invalidate it so the next
+         ;; redisplay reflects the new `doom-modeline-icon' value.
+         (doom-modeline-update-buffer-file-state-icon))))))
 
 (defun doom-modeline-buffer-file-state-icon (icon unicode text face)
   "Displays an ICON of buffer state with FACE.
@@ -303,65 +306,73 @@ Uses `nerd-icons-mdicon' to fetch the icon."
   (doom-modeline-icon 'mdicon icon unicode text :face face))
 
 (defvar-local doom-modeline--buffer-file-state-icon nil)
+(defvar-local doom-modeline--buffer-state-icon-cache nil
+  "Cached rendered buffer state icon for the current buffer.")
+
 (defun doom-modeline-update-buffer-file-state-icon (&rest _)
-  "Update the buffer or file state in mode-line."
-  (when doom-modeline-buffer-state-icon
-    (concat
-     ;; modified/readonly
-     (or (cond (buffer-read-only
-                (propertize
-	             (doom-modeline-buffer-file-state-icon
-                  "nf-md-lock" "🔒" "%1*"
-                  'doom-modeline-warning)
-	             'help-echo 'mode-line-read-only-help-echo
-                 'local-map (make-mode-line-mouse-map
-                             'mouse-1
-                             #'mode-line-toggle-read-only)
-	             'mouse-face 'doom-modeline-highlight))
-               ((and doom-modeline-buffer-modification-icon
-                     buffer-file-name
-                     (buffer-modified-p))
-                (propertize
-	             (doom-modeline-buffer-file-state-icon
-                  "nf-md-content_save_edit" "💾" "%1+"
-                  'doom-modeline-warning)
-	             'help-echo 'mode-line-read-only-help-echo
-                 'local-map (make-mode-line-mouse-map
-                             'mouse-1
-                             #'mode-line-toggle-modified)
-	             'mouse-face 'doom-modeline-highlight)))
-         doom-modeline--buffer-file-state-icon)
+  "Compute and cache the buffer or file state icon for the current buffer.
+The result is stored in `doom-modeline--buffer-state-icon-cache' so that
+redisplay only reads a string instead of recomputing it."
+  (setq doom-modeline--buffer-state-icon-cache
+        (when doom-modeline-buffer-state-icon
+          (concat
+           ;; modified/readonly
+           (or (cond (buffer-read-only
+                      (propertize
+	                   (doom-modeline-buffer-file-state-icon
+                        "nf-md-lock" "🔒" "%1*"
+                        'doom-modeline-warning)
+	                   'help-echo 'mode-line-read-only-help-echo
+                       'local-map (make-mode-line-mouse-map
+                                   'mouse-1
+                                   #'mode-line-toggle-read-only)
+	                   'mouse-face 'doom-modeline-highlight))
+                     ((and doom-modeline-buffer-modification-icon
+                           buffer-file-name
+                           (buffer-modified-p))
+                      (propertize
+	                   (doom-modeline-buffer-file-state-icon
+                        "nf-md-content_save_edit" "💾" "%1+"
+                        'doom-modeline-warning)
+	                   'help-echo 'mode-line-read-only-help-echo
+                       'local-map (make-mode-line-mouse-map
+                                   'mouse-1
+                                   #'mode-line-toggle-modified)
+	                   'mouse-face 'doom-modeline-highlight)))
+               doom-modeline--buffer-file-state-icon)
 
-     ;; narrow
-     (when (or (buffer-narrowed-p)
-               (and (bound-and-true-p fancy-narrow-mode)
-                    (fancy-narrow-active-p))
-               (bound-and-true-p dired-narrow-mode))
-       (doom-modeline-buffer-file-state-icon
-        "nf-md-unfold_less_horizontal" "↕" "^"
-        'doom-modeline-warning))
+           ;; narrow
+           (when (or (buffer-narrowed-p)
+                     (and (bound-and-true-p fancy-narrow-mode)
+                          (fancy-narrow-active-p))
+                     (bound-and-true-p dired-narrow-mode))
+             (doom-modeline-buffer-file-state-icon
+              "nf-md-unfold_less_horizontal" "↕" "^"
+              'doom-modeline-warning))
 
-     ;; remote
-     (when (file-remote-p default-directory)
-       (propertize
-        (doom-modeline-buffer-file-state-icon
-         "nf-md-remote_desktop" "@" "%1@"
-         'doom-modeline-info)
-	    'mouse-face 'doom-modeline-highlight
-        'help-echo (lambda (window _object _point)
-                     (format "%s"
-                             (with-selected-window window
-                               (if (stringp default-directory)
-                                   (concat
-                                    (if (file-remote-p default-directory)
-                                        "Current directory is remote: "
-                                      "Current directory is local: ")
-                                    default-directory)
-                                 "Current directory is nil")))))))))
+           ;; remote
+           (when (file-remote-p default-directory)
+             (propertize
+              (doom-modeline-buffer-file-state-icon
+               "nf-md-remote_desktop" "@" "%1@"
+               'doom-modeline-info)
+	          'mouse-face 'doom-modeline-highlight
+              'help-echo (lambda (window _object _point)
+                           (format "%s"
+                                   (with-selected-window window
+                                     (if (stringp default-directory)
+                                         (concat
+                                          (if (file-remote-p default-directory)
+                                              "Current directory is remote: "
+                                            "Current directory is local: ")
+                                          default-directory)
+                                       "Current directory is nil"))))))))))
 
 ;; PERF: `file-exists' and `verify-visited-file-modtime' consume resources heavily
 (defun doom-mdeline-refresh-buffer-file-state ()
-  "Refresh buffer file state."
+  "Refresh buffer file state.
+
+The files may be deleted or modified by outside applications."
   (setq doom-modeline--buffer-file-state-icon
         (when doom-modeline-buffer-state-icon
           (cond ((and buffer-file-name
@@ -382,6 +393,10 @@ Uses `nerd-icons-mdicon' to fetch the icon."
 (defvar doom-modeline--refresh-state-icon-timer nil)
 (defun doom-modeline-refresh-buffer-file-state-icon ()
   "Refresh the file state icon on demand."
+  ;; Cheap, state-dependent icons (modified/readonly/narrow/remote) are
+  ;; refreshed on every command so they stay accurate; the expensive
+  ;; `file-exists-p'/modtime checks below stay debounced on idle.
+  (doom-modeline-update-buffer-file-state-icon)
   (when doom-modeline--refresh-state-icon-timer
     (cancel-timer doom-modeline--refresh-state-icon-timer))
   (setq doom-modeline--refresh-state-icon-timer
@@ -459,8 +474,12 @@ To use this function, add `doom-modeline-tab-bar-format-global' to the
          (doom-modeline-vspc))))))
 
 (defsubst doom-modeline--buffer-state-icon ()
-  "The icon of the current buffer state."
-  (when-let* ((icon (doom-modeline-update-buffer-file-state-icon)))
+  "The cached icon of the current buffer state.
+The value is maintained by `doom-modeline-update-buffer-file-state-icon';
+compute it lazily on first use in case no hook has populated it yet."
+  (when-let* ((icon (or doom-modeline--buffer-state-icon-cache
+                        (and doom-modeline-buffer-state-icon
+                             (doom-modeline-update-buffer-file-state-icon)))))
     (unless (string-empty-p icon)
       (concat
        (doom-modeline-display-icon icon)
@@ -524,6 +543,25 @@ read-only or non-existent)."
       (doom-modeline-vspc)))
    (doom-modeline--buffer-simple-name)))
 
+(defvar-local doom-modeline--default-directory-cache nil
+  "Cache of values derived from `default-directory'.
+Cons of (DIR . (HOST . ABBREV)), where DIR is the `default-directory' the
+values were computed for.  Both `file-remote-p' (path parsing) and
+`abbreviate-file-name' are needlessly repeated on every redisplay, so they
+are computed once per distinct directory and reused.  A mismatch on DIR
+invalidates the cache without any hook.")
+
+(defun doom-modeline--default-directory-info ()
+  "Return (HOST . ABBREV) for the current `default-directory', cached.
+HOST is the remote host string or nil; ABBREV is the abbreviated directory."
+  (let ((dir default-directory))
+    (unless (and doom-modeline--default-directory-cache
+                 (equal (car doom-modeline--default-directory-cache) dir))
+      (setq doom-modeline--default-directory-cache
+            (cons dir (cons (file-remote-p dir 'host)
+                            (abbreviate-file-name dir)))))
+    (cdr doom-modeline--default-directory-cache)))
+
 (doom-modeline-def-segment buffer-default-directory
   "Displays `default-directory' with the icon and state.
 
@@ -541,7 +579,7 @@ project directory is important."
             'octicon "nf-oct-file_directory_fill" "🖿" "" :face face)
            (doom-modeline-vspc)))
      (doom-modeline--buffer-state-icon)
-     (propertize (abbreviate-file-name default-directory) 'face face))))
+     (propertize (cdr (doom-modeline--default-directory-info)) 'face face))))
 
 (doom-modeline-def-segment buffer-default-directory-simple
   "Displays `default-directory'.
@@ -556,7 +594,7 @@ project directory is important."
            (doom-modeline-icon
             'octicon "nf-oct-file_directory_fill" "🖿" "" :face face)
            (doom-modeline-vspc)))
-     (propertize (abbreviate-file-name default-directory) 'face face))))
+     (propertize (cdr (doom-modeline--default-directory-info)) 'face face))))
 
 
 ;;
@@ -647,7 +685,7 @@ project directory is important."
 (doom-modeline-def-segment remote-host
   "Hostname for remote buffers."
   (when (and doom-modeline-remote-host default-directory)
-    (when-let* ((host (file-remote-p default-directory 'host)))
+    (when-let* ((host (car (doom-modeline--default-directory-info))))
       (propertize
        (concat "@" host)
        'face (doom-modeline-face 'doom-modeline-host)))))
@@ -1144,14 +1182,14 @@ BACKEND is either `flymake' or `flycheck'."
   (or (cdr (assq backend doom-modeline--check-keymaps))
       (let ((map (make-sparse-keymap)))
         (define-key map [mode-line down-mouse-1]
-                    (if (eq backend 'flymake)
-                        flymake-menu
-                      flycheck-mode-menu-map))
+          (if (eq backend 'flymake)
+              flymake-menu
+            flycheck-mode-menu-map))
         (define-key map [mode-line mouse-2]
-                    (lambda ()
-                      (interactive)
-                      (describe-function
-                       (if (eq backend 'flymake) 'flymake-mode 'flycheck-mode))))
+          (lambda ()
+            (interactive)
+            (describe-function
+             (if (eq backend 'flymake) 'flymake-mode 'flycheck-mode))))
         (push (cons backend map) doom-modeline--check-keymaps)
         map)))
 
@@ -1349,13 +1387,27 @@ re-splitting and rewrapping the string each time is pure overhead."
 ;; Word Count
 ;;
 
+(defvar-local doom-modeline--word-count nil
+  "Cached word count of the current buffer, or nil when stale.
+Computing `count-words' scans the whole buffer, so it must not run on
+every redisplay.  It is invalidated by `after-change-functions' and computed
+lazily when the segment is next rendered.")
+
+(defun doom-modeline--invalidate-word-count (&rest _)
+  "Mark the cached word count of the current buffer as stale."
+  (setq doom-modeline--word-count nil))
+
+(add-hook 'after-change-functions #'doom-modeline--invalidate-word-count)
+
 (doom-modeline-def-segment word-count
   "The buffer word count.
 Displayed when in a major mode in `doom-modeline-continuous-word-count-modes'.
 Respects `doom-modeline-enable-word-count'."
   (when (and doom-modeline-enable-word-count
              (member major-mode doom-modeline-continuous-word-count-modes))
-    (propertize (format " %dW" (count-words (point-min) (point-max)))
+    (unless doom-modeline--word-count
+      (setq doom-modeline--word-count (count-words (point-min) (point-max))))
+    (propertize (format " %dW" doom-modeline--word-count)
                 'face (doom-modeline-face))))
 
 
@@ -1367,6 +1419,33 @@ Respects `doom-modeline-enable-word-count'."
   "Get the column of the position `POS'."
   (save-excursion (goto-char pos)
                   (current-column)))
+
+(defvar-local doom-modeline--selection-cache nil
+  "Cache of selection statistics for the current buffer.
+A plist of :beg, :end, :tick, :count-words and :lines/:chars/:words.
+Selection statistics (`count-lines' and `count-words') scan the region and
+must not be recomputed on every redisplay while the region is unchanged; a
+mismatch on the region bounds, the buffer's modification tick, or the
+word-count option invalidates the cache.")
+
+(defun doom-modeline--selection-stats (beg end want-words)
+  "Return (LINES CHARS . WORDS) for the region BEG..END, cached.
+WANT-WORDS is `doom-modeline-enable-word-count'; WORDS is nil when false."
+  (let ((cache doom-modeline--selection-cache)
+        (tick (buffer-modified-tick)))
+    (unless (and cache
+                 (= (plist-get cache :beg) beg)
+                 (= (plist-get cache :end) end)
+                 (= (plist-get cache :tick) tick)
+                 (eq (plist-get cache :count-words) want-words))
+      (setq doom-modeline--selection-cache
+            (list :beg beg :end end :tick tick :count-words want-words
+                  :lines (count-lines beg (min end (point-max)))
+                  :chars (- end beg)
+                  :words (when want-words (count-words beg end)))))
+    (let ((cache doom-modeline--selection-cache))
+      (cons (plist-get cache :lines)
+            (cons (plist-get cache :chars) (plist-get cache :words))))))
 
 (doom-modeline-def-segment selection-info
   "Information about the current selection.
@@ -1381,8 +1460,12 @@ block selection."
         (if (and (bound-and-true-p evil-local-mode) (eq evil-state 'visual))
             (cons evil-visual-beginning evil-visual-end)
           (cons (region-beginning) (region-end)))
-      (propertize
-       (let ((lines (count-lines beg (min end (point-max)))))
+      (let* ((stats (doom-modeline--selection-stats
+                     beg end doom-modeline-enable-word-count))
+             (lines (car stats))
+             (chars (cadr stats))
+             (words (cddr stats)))
+        (propertize
          (concat
           " "
           (cond ((or (bound-and-true-p rectangle-mark-mode)
@@ -1395,13 +1478,13 @@ block selection."
                       (eq evil-visual-selection 'line))
                  (format "%dL" lines))
                 ((> lines 1)
-                 (format "%dC %dL" (- end beg) lines))
+                 (format "%dC %dL" chars lines))
                 (t
-                 (format "%dC" (- end beg))))
+                 (format "%dC" chars)))
           (when doom-modeline-enable-word-count
-            (format " %dW" (count-words beg end)))
-          " "))
-       'face 'doom-modeline-emphasis))))
+            (format " %dW" words))
+          " ")
+         'face 'doom-modeline-emphasis)))))
 
 
 ;;
@@ -1974,50 +2057,68 @@ Keymap for what is displayed by `mode-line-window-dedicated'."))
 ;; Workspace
 ;;
 
+(defvar doom-modeline--workspace-keymap-cache nil
+  "Cached mode-line keymap for the workspace segment.
+Cons of (KIND . MAP), where KIND is `eyebrowse' or `tab-bar'.  The keymap
+depends only on the active backend, not on the workspace name, so it is
+built once per backend instead of allocating a sparse keymap and several
+`define-key' entries on every redisplay.")
+
+(defun doom-modeline--workspace-keymap (kind)
+  "Return the cached mode-line keymap for workspace backend KIND."
+  (unless (eq (car doom-modeline--workspace-keymap-cache) kind)
+    (setq doom-modeline--workspace-keymap-cache
+          (cons kind
+                (let ((map (make-sparse-keymap)))
+                  (pcase kind
+                    ('eyebrowse
+                     (define-key map [mode-line mouse-1]
+                       #'eyebrowse-switch-to-window-config)
+                     (define-key map [mode-line mouse-2]
+                       (lambda ()
+                         (interactive)
+                         (describe-function 'eyebrowse-mode))))
+                    ('tab-bar
+                     (define-key map [mode-line mouse-1] #'tab-bar-switch-to-tab)
+                     (define-key map [mode-line mouse-2]
+                       (lambda ()
+                         (interactive)
+                         (describe-function 'tab-bar-mode)))))
+                  map))))
+  (cdr doom-modeline--workspace-keymap-cache))
+
 (doom-modeline-def-segment workspace-name
   "The current workspace name.
 Requires `eyebrowse-mode' to be enabled or `tab-bar-mode' tabs to be created."
   (when (and doom-modeline-workspace-name
              (not doom-modeline--limited-width-p))
-    (when-let*
-        ((name (cond
-                ((and (bound-and-true-p eyebrowse-mode)
-                      (length> (eyebrowse--get 'window-configs) 1))
-                 (setq mode-line-misc-info
-                       (assq-delete-all 'eyebrowse-mode mode-line-misc-info))
-                 (when-let*
-                     ((num (eyebrowse--get 'current-slot))
-                      (tag (nth 2 (assoc num (eyebrowse--get 'window-configs)))))
-                   (if (length> tag 0) tag (int-to-string num))))
-                ((and (fboundp 'tab-bar-mode)
-                      (length> (frame-parameter nil 'tabs) 1))
-                 (let* ((current-tab (tab-bar--current-tab))
-                        (tab-index (tab-bar--current-tab-index))
-                        (explicit-name (alist-get 'explicit-name current-tab))
-                        (tab-name (alist-get 'name current-tab)))
-                   (if explicit-name tab-name (+ 1 tab-index))))))
-         (keymap (let ((map (make-sparse-keymap)))
-                   (cond ((and (bound-and-true-p eyebrowse-mode)
-                               (length> (eyebrowse--get 'window-configs) 1))
-                          (define-key map [mode-line mouse-1] #'eyebrowse-switch-to-window-config)
-                          (define-key map [mode-line mouse-2]
-                            (lambda ()
-                              (interactive)
-                              (describe-function 'eyebrowse-mode))))
-                         ((and (fboundp 'tab-bar-mode)
-                               (length> (frame-parameter nil 'tabs) 1))
-                          (define-key map [mode-line mouse-1] #'tab-bar-switch-to-tab)
-                          (define-key map [mode-line mouse-2]
-                            (lambda ()
-                              (interactive)
-                              (describe-function 'tab-bar-mode)))))
-                   map)))
-      (propertize (format " %s " name)
-                  'face (doom-modeline-face 'doom-modeline-workspace-name)
-                  'mouse-face 'mode-line-highlight
-                  'help-echo "mouse-1: Switch workspace
+    (let (kind name)
+      ;; Determine the backend and name in one pass; the old implementation
+      ;; queried `eyebrowse--get'/`frame-parameter' again in the keymap branch.
+      (cond
+       ((and (bound-and-true-p eyebrowse-mode)
+             (length> (eyebrowse--get 'window-configs) 1))
+        (setq kind 'eyebrowse)
+        (setq mode-line-misc-info
+              (assq-delete-all 'eyebrowse-mode mode-line-misc-info))
+        (when-let* ((num (eyebrowse--get 'current-slot))
+                    (tag (nth 2 (assoc num (eyebrowse--get 'window-configs)))))
+          (setq name (if (length> tag 0) tag (int-to-string num)))))
+       ((and (fboundp 'tab-bar-mode)
+             (length> (frame-parameter nil 'tabs) 1))
+        (setq kind 'tab-bar)
+        (let* ((current-tab (tab-bar--current-tab))
+               (tab-index (tab-bar--current-tab-index))
+               (explicit-name (alist-get 'explicit-name current-tab))
+               (tab-name (alist-get 'name current-tab)))
+          (setq name (if explicit-name tab-name (+ 1 tab-index))))))
+      (when name
+        (propertize (format " %s " name)
+                    'face (doom-modeline-face 'doom-modeline-workspace-name)
+                    'mouse-face 'mode-line-highlight
+                    'help-echo "mouse-1: Switch workspace
 mouse-2: Show help for minor mode"
-                  'local-map keymap))))
+                    'local-map (doom-modeline--workspace-keymap kind))))))
 
 
 ;;
@@ -2088,6 +2189,17 @@ By default, this shows the information specified by `global-mode-string'."
 ;; Position
 ;;
 
+(defvar-local doom-modeline--total-lines nil
+  "Cached total line number of the current buffer, or nil when stale.
+`line-number-at-pos' with `point-max' scans the whole buffer, so the
+result is cached and invalidated by `after-change-functions'.")
+
+(defun doom-modeline--invalidate-total-lines (&rest _)
+  "Mark the cached total line number of the current buffer as stale."
+  (setq doom-modeline--total-lines nil))
+
+(add-hook 'after-change-functions #'doom-modeline--invalidate-total-lines)
+
 (doom-modeline-def-segment buffer-position
   "The buffer position information.
 Respects `doom-modeline-enable-buffer-position'."
@@ -2118,7 +2230,11 @@ mouse-1: Display Line and Column Mode Menu")
                "%c" "%C" (car doom-modeline-position-column-format)))))
           (doom-modeline-total-line-number
            ,(and doom-modeline-total-line-number
-                 (format "/%d" (line-number-at-pos (point-max))))))
+                 (progn
+                   (unless doom-modeline--total-lines
+                     (setq doom-modeline--total-lines
+                           (line-number-at-pos (point-max))))
+                   (format "/%d" doom-modeline--total-lines)))))
          face ,face
          help-echo ,help-echo
          mouse-face ,mouse-face

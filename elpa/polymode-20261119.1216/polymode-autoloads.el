@@ -16,8 +16,8 @@
 
 ;;; Generated autoloads from polymode.el
 
-(autoload 'define-polymode "polymode" "\
-Define a new polymode MODE.
+(autoload 'define-polymode "polymode"
+"Define a new polymode MODE.
 This macro defines command MODE and an indicator variable MODE
 which becomes t when MODE is active and nil otherwise.
 
@@ -37,7 +37,7 @@ the entire configuration for this polymode.
 PARENT is either the polymode configuration object or a polymode
 mode (there is 1-to-1 correspondence between config
 objects (`pm-polymode') and mode functions). The new polymode
-MODE inherits alll the behavior from PARENT except for the
+MODE inherits all the behavior from PARENT except for the
 overwrites specified by the keywords (see below). The new MODE
 runs all the hooks from the PARENT-mode and inherits its MODE-map
 from PARENT-map.
@@ -83,7 +83,6 @@ most frequently used slots are:
   objects which specify the behavior of inner modes (or submodes).
 
 (fn MODE &optional PARENT DOC &rest BODY)" nil t)
-(function-put 'define-polymode 'lisp-indent-function 'defun)
 (function-put 'define-polymode 'doc-string-elt 3)
 (register-definition-prefixes "polymode" '("pm-" "poly"))
 
@@ -105,13 +104,13 @@ most frequently used slots are:
 
 ;;; Generated autoloads from polymode-core.el
 
-(defvar-local polymode-default-inner-mode nil "\
-Inner mode for chunks with unspecified modes.
+(defvar-local polymode-default-inner-mode nil
+"Inner mode for chunks with unspecified modes.
 Intended to be used as local variable in polymode buffers. A
 special value `host' means use the host mode.")
 (put 'polymode-default-inner-mode 'safe-local-variable #'symbolp)
-(autoload 'define-hostmode "polymode-core" "\
-Define a hostmode with name NAME.
+(autoload 'define-hostmode "polymode-core"
+"Define a hostmode with name NAME.
 Optional PARENT is a name of a hostmode to be derived (cloned)
 from. If missing, the optional documentation string DOC is
 generated automatically. KEY-ARGS is a list of key-value pairs.
@@ -120,9 +119,8 @@ possible values.
 
 (fn NAME &optional PARENT DOC &rest KEY-ARGS)" nil t)
 (function-put 'define-hostmode 'doc-string-elt 3)
-(function-put 'define-hostmode 'lisp-indent-function 'defun)
-(autoload 'define-innermode "polymode-core" "\
-Ddefine an innermode with name NAME.
+(autoload 'define-innermode "polymode-core"
+"Ddefine an innermode with name NAME.
 Optional PARENT is a name of a innermode to be derived (cloned)
 from. If missing the optional documentation string DOC is
 generated automatically. KEY-ARGS is a list of key-value pairs.
@@ -131,9 +129,8 @@ possible values.
 
 (fn NAME &optional PARENT DOC &rest KEY-ARGS)" nil t)
 (function-put 'define-innermode 'doc-string-elt 3)
-(function-put 'define-innermode 'lisp-indent-function 'defun)
-(autoload 'define-auto-innermode "polymode-core" "\
-Ddefine an auto innermode with name NAME.
+(autoload 'define-auto-innermode "polymode-core"
+"Ddefine an auto innermode with name NAME.
 Optional PARENT is a name of an auto innermode to be
 derived (cloned) from. If missing the optional documentation
 string DOC is generated automatically. KEY-ARGS is a list of
@@ -142,45 +139,47 @@ key-value pairs. See the documentation of the class
 
 (fn NAME &optional PARENT DOC &rest KEY-ARGS)" nil t)
 (function-put 'define-auto-innermode 'doc-string-elt 3)
-(function-put 'define-auto-innermode 'lisp-indent-function 'defun)
 (register-definition-prefixes "polymode-core" '("*span*" "polymode-"))
 
 
 ;;; Generated autoloads from polymode-debug.el
 
-(autoload 'pm-debug-minor-mode "polymode-debug" "\
-Turns on/off useful facilities for debugging polymode.
+(autoload 'pm-debug-minor-mode "polymode-debug"
+"Turns on/off useful facilities for debugging polymode.
 
 Key bindings:
 \\{pm-debug-minor-mode-map}
 
-This is a minor mode.  If called interactively, toggle the
-`Pm-Debug minor mode' mode.  If the prefix argument is positive,
-enable the mode, and if it is zero or negative, disable the mode.
+This is a minor mode.  If called interactively, toggle the `Pm-Debug
+minor mode' mode.  If the prefix argument is positive, enable the mode,
+and if it is zero or negative, disable the mode.
 
-If called from Lisp, toggle the mode if ARG is `toggle'.  Enable
-the mode if ARG is nil, omitted, or is a positive number.
-Disable the mode if ARG is a negative number.
+If called from Lisp, toggle the mode if ARG is `toggle'.  Enable the
+mode if ARG is nil, omitted, or is a positive number.  Disable the mode
+if ARG is a negative number.
 
 To check whether the minor mode is enabled in the current buffer,
-evaluate `pm-debug-minor-mode'.
+evaluate the variable `pm-debug-minor-mode'.
 
-The mode's hook is called both when the mode is enabled and when
-it is disabled.
+The mode's hook is called both when the mode is enabled and when it is
+disabled.
 
 (fn &optional ARG)" t)
 (autoload 'pm-debug-minor-mode-on "polymode-debug")
 (put 'pm-debug-mode 'globalized-minor-mode t)
-(defvar pm-debug-mode nil "\
-Non-nil if Pm-Debug mode is enabled.
+(defvar pm-debug-mode nil
+"Non-nil if Pm-Debug mode is enabled.
 See the `pm-debug-mode' command
 for a description of this minor mode.
 Setting this variable directly does not take effect;
 either customize it (see the info node `Easy Customization')
 or call the function `pm-debug-mode'.")
 (custom-autoload 'pm-debug-mode "polymode-debug" nil)
-(autoload 'pm-debug-mode "polymode-debug" "\
-Toggle Pm-Debug minor mode in all buffers.
+(autoload 'pm-debug-mode "polymode-debug"
+"Toggle Pm-Debug minor mode in many buffers.
+Specifically, Pm-Debug minor mode is enabled in all buffers where
+`pm-debug-minor-mode-on' would do it.
+
 With prefix ARG, enable Pm-Debug mode if ARG is positive; otherwise,
 disable it.
 
@@ -188,28 +187,25 @@ If called from Lisp, toggle the mode if ARG is `toggle'.
 Enable the mode if ARG is nil, omitted, or is a positive number.
 Disable the mode if ARG is a negative number.
 
-Pm-Debug minor mode is enabled in all buffers where
-`pm-debug-minor-mode-on' would do it.
-
 See `pm-debug-minor-mode' for more information on Pm-Debug minor
 mode.
 
 (fn &optional ARG)" t)
-(autoload 'pm-toggle-tracing "polymode-debug" "\
-Toggle polymode tracing.
+(autoload 'pm-toggle-tracing "polymode-debug"
+"Toggle polymode tracing.
 With numeric prefix toggle tracing for that LEVEL. Currently
 universal argument toggles maximum level of tracing (15). See
 `pm-traced-functions'. Default level is 4.
 
 (fn LEVEL)" t)
-(autoload 'pm-trace "polymode-debug" "\
-Trace function FN.
+(autoload 'pm-trace "polymode-debug"
+"Trace function FN.
 Use `untrace-function' to untrace or `untrace-all' to untrace all
 currently traced functions.
 
 (fn FN)" t)
-(autoload 'pm-debug-relevant-variables "polymode-debug" "\
-Get the relevant polymode variables.
+(autoload 'pm-debug-relevant-variables "polymode-debug"
+"Get the relevant polymode variables.
 If OUT-TYPE is `buffer', print the variables in the dedicated buffer,
 if `message' issue a message, if nil just return a list of values.
 
